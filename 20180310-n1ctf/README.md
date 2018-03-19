@@ -1,6 +1,26 @@
 # N1CTF 2018
-
-[TOC]
+   * [N1CTF 2018](#n1ctf-2018)
+      * [Pwn](#pwn)
+         * [null (kevin47)](#null-kevin47)
+         * [memsafety (kevin47)](#memsafety-kevin47)
+         * [beeper(4w4rD)](#beeper4w4rd)
+         * [vote (how2hack)](#vote-how2hack)
+      * [Rev](#rev)
+         * [patience (sces60107)](#patience-sces60107)
+         * [baby neural network (sasdf)](#baby-neural-network-sasdf)
+            * [Entry](#entry)
+            * [Dig into](#dig-into)
+            * [Flag???](#flag)
+      * [Web](#web)
+         * [77777 (sasdf, bookgin)](#77777-sasdf-bookgin)
+         * [77777 2 (bookgin) unsolved](#77777-2-bookgin-unsolved)
+         * [babysqli (bookgin) unsolved](#babysqli-bookgin-unsolved)
+      * [Crypto](#crypto)
+         * [baby_N1ES (shw)](#baby_n1es-shw)
+         * [rsa_padding (shw)](#rsa_padding-shw)
+      * [PPC](#ppc)
+         * [losetome (how2hack)](#losetome-how2hack)
+      * [Misc](#misc)
 
 ## Pwn
 
