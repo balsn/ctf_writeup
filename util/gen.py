@@ -5,10 +5,11 @@ import argparse
 import subprocess
 import sys
 import re
+import os
 
 def main(argv):
     def generateTOC(filename):
-        return subprocess.check_output(['./lib/gh-md-toc', filename]).decode()
+        return subprocess.check_output([os.path.join(os.path.dirname(__file__), 'lib/gh-md-toc'), filename]).decode()
 
     with open(argv.filename, 'r+') as f:
         origin_content = f.read()
