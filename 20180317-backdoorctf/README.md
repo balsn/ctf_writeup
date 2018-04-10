@@ -1,21 +1,22 @@
 # backdoor CTF 2018
 
-* [backdoor CTF 2018](#backdoor-ctf-2018)
-  * [Pwn](#pwn)
-     * [shelter (sces60107)](#shelter-sces60107)
-  * [rev](#rev)
-     * [re-curse (sces60107)](#re-curse-sces60107)
-     * [mind-fcuk (sces60107)](#mind-fcuk-sces60107)
-  * [forensic](#forensic)
-     * [random-noise (qazwsxedcrfvtg14 sces60107)](#random-noise-qazwsxedcrfvtg14-sces60107)
-     * [vm-service 1 &amp; 2 (sces60107 qazwsxedcrfvtg14)](#vm-service-1--2-sces60107-qazwsxedcrfvtg14)
-  * [misc](#misc)
-     * [cats-everywhere (sces60107)](#cats-everywhere-sces60107)
-  * [crypto](#crypto)
-  * [web](#web)
-  * [BF-CAPTCHA-REVENGE (solved by qazwsxedcrfvtg14, written by bookgin)](#bf-captcha-revenge-solved-by-qazwsxedcrfvtg14-written-by-bookgin)
-     * [Get-hired (solved by sasdf, written by bookgin)](#get-hired-solved-by-sasdf-written-by-bookgin)
-     * [Get-hired 2 (unsolved)](#get-hired-2-unsolved)
+ - [backdoor CTF 2018](#backdoor-ctf-2018)
+   - [Pwn](#pwn)
+     - [shelter (sces60107)](#shelter-sces60107)
+   - [rev](#rev)
+     - [re-curse (sces60107)](#re-curse-sces60107)
+     - [mind-fcuk (sces60107)](#mind-fcuk-sces60107)
+   - [forensic](#forensic)
+     - [random-noise (qazwsxedcrfvtg14 sces60107)](#random-noise-qazwsxedcrfvtg14-sces60107)
+     - [vm-service 1 &amp; 2 (sces60107 qazwsxedcrfvtg14)](#vm-service-1--2-sces60107-qazwsxedcrfvtg14)
+   - [misc](#misc)
+     - [cats-everywhere (sces60107)](#cats-everywhere-sces60107)
+   - [crypto](#crypto)
+   - [web](#web)
+     - [BF-CAPTCHA-REVENGE (solved by qazwsxedcrfvtg14, written by bookgin)](#bf-captcha-revenge-solved-by-qazwsxedcrfvtg14-written-by-bookgin)
+     - [Get-hired (solved by sasdf, written by bookgin)](#get-hired-solved-by-sasdf-written-by-bookgin)
+     - [Get-hired 2 (unsolved, written by bookgin)](#get-hired-2-unsolved-written-by-bookgin)
+
 
 ## Pwn 
 
@@ -86,7 +87,7 @@ The flag is `CTF{f5g4s8g4dyjj4f48f5d}`
 
 ## web
 
-## BF-CAPTCHA-REVENGE (solved by qazwsxedcrfvtg14, written by bookgin)
+### BF-CAPTCHA-REVENGE (solved by qazwsxedcrfvtg14, written by bookgin)
 
 The challenge is a website which shows some brainfuck code and an audio captcha, and I don't bother to solve it at all.
 
@@ -178,7 +179,7 @@ ifr.postMessage({
 </script>
 ```
 
-### Get-hired 2 (unsolved)
+### Get-hired 2 (unsolved, written by bookgin)
 
 It adds an origin verification function.
 
