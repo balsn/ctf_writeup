@@ -1400,6 +1400,8 @@ The flag is `HITB{---->}!}<0>cccc}`.
 
 I think this challenge requires some guessing. Until the competition ends, icchy (Tokyo westerns) is the only one who solves this challenge. Additionally, they solve it very quickly after the challenge releases. Congraz to them. They definitely have brorder knowledge!
 
+Update: According to Tokey Westerns' writeup, this problem seems to provide an output with more details when the organizer first releases the challenge, `/data/k989ug3pzj 127.0.0.1(rw,all_squash)`. However, the organizer seems to update this challenge during the competition. The output becomes `/data/k989ug3pzj`, which is less informational. I think the hint in the problem `bug fixed of baby fs on creating directory` explains this. They acctually "fixed" a hint. I don't think it's fair.
+
 ### 3pigs (unsolved, written by how2hack)
 #### Hint
 >1) this is web pwn
