@@ -2,9 +2,9 @@
 
 Written by BFS
 
-BFS consists of four CTF team form Taiwan
+BFS consists of four CTF teams form Taiwan
 
-We are Balsn, Bamboofox, DoubleSigma, Kerkeryuan
+We are Balsn, Bamboofox, DoubleSigma, KerKerYuan
 
  - [DEF CON CTF Qualifier 2018](#def-con-ctf-qualifier-2018)
    - [Amuse Bouche](#amuse-bouche)
