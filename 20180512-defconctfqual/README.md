@@ -23,6 +23,7 @@ We are Balsn, Bamboofox, DoubleSigma, KerKerYuan
      - [elastic cloud compute (memory) corruption](#elastic-cloud-compute-memory-corruption)
      - [Race Wars](#race-wars)
      - [Say Hi!](#say-hi)
+     - [exzendtential-crisis (unsolved)](#exzendtential-crisis-unsolved)
    - [Guest Chefs](#guest-chefs)
      - [PHP Eval White-List](#php-eval-white-list)
      - [ghettohackers: Throwback](#ghettohackers-throwback)
