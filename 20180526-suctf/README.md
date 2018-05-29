@@ -23,10 +23,8 @@
      - [Enjoy (b04902036)](#enjoy-b04902036)
      - [Rsa good (b04902036)](#rsa-good-b04902036)
      - [magic (sasdf)](#magic-sasdf)
-     - [rsa (sasdf)](#rsa-sasdf)
-     - [pass (sasdf)](#pass-sasdf)
-       - [Authentication scheme](#authentication-scheme)
-       - [PRNG](#prng)
+     - [rsa (sasdf)](https://balsn.github.io/ctf_writeup/20180526-suctf/#rsa-sasdf)
+     - [pass (sasdf)](https://balsn.github.io/ctf_writeup/20180526-suctf/#pass-sasdf)
 
 
 ## web
@@ -744,36 +742,13 @@ flag : SUCTF{Ju5t_hav3_fun_1n_R34_4Ga1N!}
 The hash algorithm in `playMagic` is `sum(bin(magic[i] & key)) % 2`, repeating 256 times to generate 256 bit hash. So we have 256 simultaneous equtations of key under Galois field $F_2$. Solve the equations by Gaussian elimination to get the flag.
 
 ### rsa (sasdf)
-$$  
-\begin{align}  
-c &= m^e \times r^e \mod n \\  
-m &= c^d \times r^{-1} \mod n  
-\end{align}
-$$
+
+Refer to https://balsn.github.io/ctf_writeup/20180526-suctf/#rsa-sasdf
 
 ### pass (sasdf)
-Typically, crypto challenge without source or binary is a sign or bad guessing challenge, which takes a lot of time to guess and then solved by trival techniques :(
+
+Refer to https://balsn.github.io/ctf_writeup/20180526-suctf/#pass-sasdf
 
 #### Authentication scheme
-This challenge is about an authentication service using some diffie-hellman variant. Authentication scheme on the client side is:
-$$  
-\begin{align}  
-a &= \text{rand}(\text{seed}) \\  
-A &= g^a \mod N \\  
-&\text{send A, recv B} \\  
-x &= \text{password} \\  
-S &= B - 3 \times (g^x \mod N) \\  
-u &= \text{sha256}(A+B) \\  
-T &= S^{a + ux} = S^a \times S^{ux} \mod N \\  
-&\text{authenticate using T} 
-\end{align}
-$$  
-The service needs to verify our token T is correct, it knows $A, B, S, x, u$, so it's trival to generate $S^{ux}$ but not $S^a$. There's some ways to solve it:
-1. Solve discrete logarithm problem by using special N (e.g. smooth prime). N is a prime so this is not the case.
-2. Solve discrete logarithm problem to find a, the provided client only 20 bits random integer for $a$. But the service doesn't crash if I send zero as $A$. So this is not the case.
-3. Select special B such as $B = (g^k \mod N) + 3 \times (g^x \mod N)$, so $S^a = A^k \mod N$. There's some sign of this case: B is always smaller than 4N but some times greater than 3N.
 
 #### PRNG
-The provided client generate $a$ using current time as seed. If we open multiple connection within one second, the service replies same salt and $B$, which means remote also use PRNG with time as seed. Moreover, the service generated salt is same as our $a$, so we can predict remote's PRNG !!
-
-We guess the service generate $k$ using same PRNG after salt. To verify it, $S - B = 3 \times (g^x \mod N)$ should be multiple of 3. Bingo! Now we have $g^x, S$, we can generate $T = S^a \times (g^x)^{uk} \mod N$
