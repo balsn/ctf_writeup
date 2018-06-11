@@ -1,5 +1,7 @@
 # AIS3 Pre-exam 2018
 
+[好讀版 - beta](https://balsn.github.io/ctf_writeup/20180601-ais3preexam/)
+
 - [AIS3 Pre-exam 2018](#ais3-pre-exam-2018)
  - [Rev](#rev)
  - [Pwn](#pwn)
