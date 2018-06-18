@@ -20,15 +20,15 @@ cp -r balsn node_modules/markdown-styles/layouts/
 
 ## Generate a CTF Writeup
 
-Make sure your working directory is the root of Git repository.
-
 ### Automatically
 
 ```sh
-
+./util/gen.sh YYYYMMDD-ctfname your-ctf-writeup.md
 ```
 
 ### Manually
+
+Make sure your working directory is the root of Git repository.
 
 ```sh
 mkdir YYYYMMDD-ctfname
