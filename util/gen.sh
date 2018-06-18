@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+if [ $# -ne 2 ]; then
+    echo "Usage: ./util/gen.sh YYYYMMDD-ctfname your-ctf-writeup.md"
+    exit -1
+fi
+
+root_dir=`git rev-parse --show-toplevel`
+ctf_dir="$root_dir/$1"
+md="$2"
+
+mkdir $ctf_dir
+cp $md $ctf_dir/README.md
+$root_dir/util/markdown-to-html/node_modules/markdown-styles/bin/generate-md \
+  --layout balsn \
+  --input $ctf_dir/README.md \
+  --output $ctf_dir
+mv $ctf_dir/README.html $ctf_dir/index.html
+$root_dir/util/markdown-to-html/gen-sidebar.py $ctf_dir/index.html
+$root_dir/util/markdown-toc-generator/gen-toc.py $ctf_dir/README.md

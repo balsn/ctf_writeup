@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Python 3.6.4
+# Python 3.6.5
 
 import argparse
 import subprocess
@@ -13,6 +13,7 @@ def main(argv):
 
     with open(argv.filename, 'r+') as f:
         origin_content = f.read()
+        assert re.findall(r'\[TOC\]', origin_content), f'[TOC] tag is not found in {argv.filename}'
         toc = generateTOC(argv.filename)
         new_content = re.sub(r'\[TOC\]', toc, origin_content)
         f.seek(0)
