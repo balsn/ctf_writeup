@@ -1,6 +1,6 @@
 # HackIT CTF 2018
 
-This write-up is already published on GitHub. Instead of updating the writeup here, please send a pull request to GitHub.
+[Web version](https://balsn.github.io/ctf_writeup/20180908-hackitctf/)
 
  - [HackIT CTF 2018](#hackit-ctf-2018)
    - [Welcome](#welcome)
