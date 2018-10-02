@@ -16,6 +16,7 @@ $root_dir/util/markdown-to-html/node_modules/markdown-styles/bin/generate-md \
   --layout balsn \
   --input $ctf_dir/README.md \
   --output $ctf_dir
+sed -r 's/^<p>\[TOC\]<\/p>$//' -i $ctf_dir/README.html
 mv $ctf_dir/README.html $ctf_dir/index.html
 $root_dir/util/markdown-to-html/gen-sidebar.py $ctf_dir/index.html
 $root_dir/util/markdown-toc-generator/gen-toc.py $ctf_dir/README.md
