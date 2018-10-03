@@ -1,5 +1,9 @@
 # Volgactf CTF 2018
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180324-volgactf/) of this writeup.**
+
+
  - [Volgactf CTF 2018](#volgactf-ctf-2018)
    - [Pwn](#pwn)
    - [reverse](#reverse)
@@ -13,6 +17,7 @@
      - [Shop request (no one solved)](#shop-request-no-one-solved)
    - [Crypto](#crypto)
    - [forensics](#forensics)
+
 
 
 ## Pwn 

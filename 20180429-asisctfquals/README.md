@@ -1,5 +1,9 @@
 # ASIS CTF Quals 2018
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180429-asisctfquals/) of this writeup.**
+
+
  - [ASIS CTF Quals 2018](#asis-ctf-quals-2018)
    - [Web](#web)
      - [Nice code (unsolved, written by bookgin)](#nice-code-unsolved-written-by-bookgin)
@@ -35,6 +39,8 @@
      - [the_early_school (shw)](#the_early_school-shw)
      - [Iran (shw and sasdf)](#iran-shw-and-sasdf)
        - [First-half](#first-half)
+
+
 
 
 ## Web

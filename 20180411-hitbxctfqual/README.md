@@ -1,5 +1,9 @@
 # HITB-XCTF GSEC CTF 2018 Quals
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180411-hitbxctfqual/) of this writeup.**
+
+
  - [HITB-XCTF GSEC CTF 2018 Quals](#hitb-xctf-gsec-ctf-2018-quals)
    - [rev](#rev)
      - [hacku (sces60107)](#hacku-sces60107)
@@ -66,6 +70,7 @@
    - [mobile](#mobile)
      - [kivy simple (sces60107)](#kivy-simple-sces60107)
      - [multicheck (sasdf)](#multicheck-sasdf)
+
 
 
 ## rev

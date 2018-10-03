@@ -1,5 +1,9 @@
 # SUCTF 2018
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180526-suctf/) of this writeup.**
+
+
  - [SUCTF 2018](#suctf-2018)
    - [web](#web)
      - [Anonymous (bookgin)](#anonymous-bookgin)
@@ -23,8 +27,11 @@
      - [Enjoy (b04902036)](#enjoy-b04902036)
      - [Rsa good (b04902036)](#rsa-good-b04902036)
      - [magic (sasdf)](#magic-sasdf)
-     - [rsa (sasdf)](https://balsn.github.io/ctf_writeup/20180526-suctf/#rsa-sasdf)
-     - [pass (sasdf)](https://balsn.github.io/ctf_writeup/20180526-suctf/#pass-sasdf)
+     - [rsa (sasdf)](#rsa-sasdf)
+     - [pass (sasdf)](#pass-sasdf)
+       - [Authentication scheme](#authentication-scheme)
+       - [PRNG](#prng)
+
 
 
 ## web

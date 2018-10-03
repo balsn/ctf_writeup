@@ -1,5 +1,9 @@
 # *ctf 2018
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180421-*ctf/) of this writeup.**
+
+
  - [*ctf 2018](#ctf-2018)
    - [rev](#rev)
      - [wasm (sces60107)](#wasm-sces60107)
@@ -20,6 +24,8 @@
      - [primitive (sasdf)](#primitive-sasdf)
      - [ssss (sasdf)](#ssss-sasdf)
      - [ssss2 (sasdf)](#ssss2-sasdf)
+
+
 
 The official repository is [here](https://github.com/sixstars/starctf2018)
 

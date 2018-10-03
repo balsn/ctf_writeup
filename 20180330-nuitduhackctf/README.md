@@ -1,5 +1,9 @@
 # Nuit du Hack CTF Quals 2018
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180330-nuitduhackctf/) of this writeup.**
+
+
  - [Nuit du Hack CTF Quals 2018](#nuit-du-hack-ctf-quals-2018)
    - [Pwn](#pwn)
    - [reverse](#reverse)
@@ -10,6 +14,7 @@
      - [CoinGame (bookgin)](#coingame-bookgin)
      - [WaWaCoin (unsolved, written by bookgin)](#wawacoin-unsolved-written-by-bookgin)
      - [Cryptolol (solved by sasdf)](#cryptolol-solved-by-sasdf)
+
 
 
 ## Pwn 

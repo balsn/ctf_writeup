@@ -1,20 +1,18 @@
-<!doctype html>
-<!--
-Modified from https://www.codeply.com/go/7XYosZ7VH5
--->
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>AIS3 Pre-exam 2018</title>
-    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
-    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
-    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
   </head>
   <style>
   body {
@@ -91,29 +89,27 @@ Modified from https://www.codeply.com/go/7XYosZ7VH5
     height:56px; /* fixed header height*/
     margin:-56px 0 0; /* negative fixed header height */
   }
-
   </style>
   
   <script>
-// https://stackoverflow.com/a/48330533
-$(window).on('activate.bs.scrollspy', function (event) {
-  let active_collapse = $($('.list-group-item.active').parents()[0]);
-  $(".collapse").removeClass("show");
-  active_collapse.addClass("show");
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
 
-  let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
-  $('a[href^="#submenu"]').css("border-left", "");
-  parent_menu.css("border-left","#e69138 solid 4px");
-});
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
 
-// http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    processEscapes: true
-  }
-});
-
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
   </script>
 
   <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
@@ -127,10 +123,11 @@ MathJax.Hub.Config({
       </a>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav my-2 my-lg-0">
-          <!-- This menu is hidden in bigger devices with d-sm-none. 
-            The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
             
             <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 rev
               </a>
@@ -196,7 +193,6 @@ MathJax.Hub.Config({
               </div>
             </li>
     
-            <!-- Smaller devices menu END -->
         </ul>
       </div>
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
@@ -206,15 +202,9 @@ MathJax.Hub.Config({
         </ul>
       </div>
     </nav>
-    <!-- NavBar END -->
-    <!-- Bootstrap row -->
     <div class="row" id="body-row">
-      <!-- Sidebar -->
       <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
-        <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
-        <!-- Bootstrap List Group -->
         <ul class="list-group sticky-top sticky-offset">
-          <!-- Menu with submenu -->
           
           <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
             <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
@@ -316,15 +306,11 @@ MathJax.Hub.Config({
     
           </div>
     
-          <!-- Separator with title -->
         </ul>
-        <!-- List Group END-->
       </div>
-      <!-- sidebar-container END -->
-
-      <!-- MAIN -->
       <div class="col-10 py-3">
         <article class="markdown-body"><h1 id="ais3-pre-exam-2018"><a class="header-link" href="#ais3-pre-exam-2018"></a>AIS3 Pre-exam 2018</h1>
+
 <p><a href="https://ais3.org/">AIS3 (Advanced Information Security Summer School)</a> is a cyber security course in Taiwan. Therefore this writeup will be written in Chinese:)</p>
 <p>By @bookgin, @sces60107</p>
 <p>And thanks to @how2hack for the writeup of crypto 3!</p>
@@ -995,10 +981,6 @@ server.sendline(b64)
 server.interactive()
 <span class="hljs-comment">#print(server.recv())</span></code></pre>        </article>
       </div>
-      <!-- Main Col END -->
-
     </div>
-    <!-- body-row END -->
   </body>
 </html>
-

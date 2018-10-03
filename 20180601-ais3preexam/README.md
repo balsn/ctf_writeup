@@ -1,25 +1,28 @@
 # AIS3 Pre-exam 2018
 
-[好讀版 - beta](https://balsn.github.io/ctf_writeup/20180601-ais3preexam/)
 
-- [AIS3 Pre-exam 2018](#ais3-pre-exam-2018)
- - [Rev](#rev)
- - [Pwn](#pwn)
- - [Misc](#misc)
-   - [Misc 1](#misc-1)
-   - [Misc 2](#misc-2)
-   - [Misc 3](#misc-3)
-   - [Misc 4](#misc-4)
- - [Web](#web)
-   - [Web 1](#web-1)
-   - [Web 2](#web-2)
-   - [Web 3](#web-3)
-   - [Web 4](#web-4)
- - [Crypto](#crypto)
-   - [Crypto 1](#crypto-1)
-   - [Crypto 2](#crypto-2)
-   - [Crypto 3 (unsolved, thanks to @how2hack)](#crypto-3-unsolved-thanks-to-how2hack)
-   - [Crypto 4](#crypto-4)
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180601-ais3preexam/) of this writeup.**
+
+
+ - [AIS3 Pre-exam 2018](#ais3-pre-exam-2018)
+   - [Rev](#rev)
+   - [Pwn](#pwn)
+   - [Misc](#misc)
+     - [Misc 1](#misc-1)
+     - [Misc 2](#misc-2)
+     - [Misc 3](#misc-3)
+     - [Misc 4](#misc-4)
+   - [Web](#web)
+     - [Web 1](#web-1)
+     - [Web 2](#web-2)
+     - [Web 3](#web-3)
+     - [Web 4](#web-4)
+   - [Crypto](#crypto)
+     - [Crypto 1](#crypto-1)
+     - [Crypto 2](#crypto-2)
+     - [Crypto 3 (unsolved, thanks to @how2hack)](#crypto-3-unsolved-thanks-to-how2hack)
+     - [Crypto 4](#crypto-4)
+
 
 
 [AIS3 (Advanced Information Security Summer School)](https://ais3.org/) is a cyber security course in Taiwan. Therefore this writeup will be written in Chinese:)
@@ -27,6 +30,7 @@
 By @bookgin, @sces60107
 
 And thanks to @how2hack for the writeup of crypto 3!
+
 
 ## Rev
 

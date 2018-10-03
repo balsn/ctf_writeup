@@ -1,9 +1,14 @@
 # PlaidCTF 2018
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180505-plaidctf/) of this writeup.**
+
+
  - [PlaidCTF 2018](#plaidctf-2018)
    - [web](#web)
      - [idIoT: Action (bookgin)](#idiot-action-bookgin)
      - [idIoT: Camera (unsolved, written by bookgin)](#idiot-camera-unsolved-written-by-bookgin)
+
 
 
 ## web

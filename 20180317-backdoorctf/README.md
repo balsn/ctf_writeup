@@ -1,6 +1,8 @@
 # backdoor CTF 2018
 
-This write-up is already published on [GitHub](https://github.com/balsn/ctf_writeup/tree/master/20180317-backdoorctf). Instead of updating the writeup here, please send a pull request to GitHub.
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180317-backdoorctf/) of this writeup.**
+
 
  - [backdoor CTF 2018](#backdoor-ctf-2018)
    - [Pwn](#pwn)
@@ -18,6 +20,7 @@ This write-up is already published on [GitHub](https://github.com/balsn/ctf_writ
      - [BF-CAPTCHA-REVENGE (solved by qazwsxedcrfvtg14, written by bookgin)](#bf-captcha-revenge-solved-by-qazwsxedcrfvtg14-written-by-bookgin)
      - [Get-hired (solved by sasdf, written by bookgin)](#get-hired-solved-by-sasdf-written-by-bookgin)
      - [Get-hired 2 (unsolved, written by bookgin)](#get-hired-2-unsolved-written-by-bookgin)
+
 
 
 ## Pwn 

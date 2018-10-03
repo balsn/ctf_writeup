@@ -1,5 +1,9 @@
 # HITCON CTF 2017 Quals
 
+
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20171104-hitconctfquals/) of this writeup.**
+
+
  - [HITCON CTF 2017 Quals](#hitcon-ctf-2017-quals)
    - [crypto](#crypto)
      - [Luaky](#luaky)
@@ -18,6 +22,7 @@
      - [家徒四壁 <del>Everlasting Imaginative Void</del>](#家徒四壁-everlasting-imaginative-void)
    - [web](#web)
      - [BabyFirst Revenge](#babyfirst-revenge)
+
 
 
 ## crypto

@@ -1,6 +1,7 @@
 # HackIT CTF 2018
 
-[Web version](https://balsn.github.io/ctf_writeup/20180908-hackitctf/)
+**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180908-hackitctf/) of this writeup.**
+
 
  - [HackIT CTF 2018](#hackit-ctf-2018)
    - [Welcome](#welcome)
