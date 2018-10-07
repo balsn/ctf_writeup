@@ -27,6 +27,7 @@ $root_dir/util/markdown-to-html/node_modules/markdown-styles/bin/generate-md \
   --layout balsn \
   --input $root_dir/README.md \
   --output $root_dir
+mv $root_dir/README.html $root_dir/index.html
 $root_dir/util/markdown-to-html/gen-sidebar.py $root_dir/index.html
 sed -i '1,16s/\.\.\/assets/assets/' $root_dir/index.html
 
