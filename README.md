@@ -6,6 +6,7 @@ For more information, please refer to [our website](https://balsn.github.io/).
 
 ## Table of Contents
 
+- [20180929-teaserdragonctf](20180929-teaserdragonctf/)
 - [20180922-dctfquals2018](20180922-dctfquals2018/)
 - [20180914-trendmicroctf](20180914-trendmicroctf/)
 - [20180908-hackitctf](20180908-hackitctf/)
