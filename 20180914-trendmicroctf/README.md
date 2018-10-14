@@ -1,7 +1,7 @@
 # Trend Micro CTF 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180914-trendmicroctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180914-trendmicroctf/) of this writeup.**
 
 
  - [Trend Micro CTF 2018](#trend-micro-ctf-2018)

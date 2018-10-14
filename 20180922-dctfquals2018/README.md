@@ -1,6 +1,6 @@
 # D-CTF Quals 2018
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180922-dctfquals2018/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180922-dctfquals2018/) of this writeup.**
 
 
  - [D-CTF Quals 2018](#d-ctf-quals-2018)

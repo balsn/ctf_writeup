@@ -1,6 +1,6 @@
 # Teaser Dragon CTF 2018
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180929-teaserdragonctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180929-teaserdragonctf/) of this writeup.**
 
 
  - [Teaser Dragon CTF 2018](#teaser-dragon-ctf-2018)

@@ -1,7 +1,7 @@
 # SUCTF 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180526-suctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180526-suctf/) of this writeup.**
 
 
  - [SUCTF 2018](#suctf-2018)
@@ -750,11 +750,11 @@ The hash algorithm in `playMagic` is `sum(bin(magic[i] & key)) % 2`, repeating 2
 
 ### rsa (sasdf)
 
-Refer to https://balsn.github.io/ctf_writeup/20180526-suctf/#rsa-sasdf
+Refer to https://balsn.tw/ctf_writeup/20180526-suctf/#rsa-sasdf
 
 ### pass (sasdf)
 
-Refer to https://balsn.github.io/ctf_writeup/20180526-suctf/#pass-sasdf
+Refer to https://balsn.tw/ctf_writeup/20180526-suctf/#pass-sasdf
 
 #### Authentication scheme
 

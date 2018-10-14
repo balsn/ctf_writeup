@@ -1,7 +1,7 @@
 # HITB-XCTF GSEC CTF 2018 Quals
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180411-hitbxctfqual/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180411-hitbxctfqual/) of this writeup.**
 
 
  - [HITB-XCTF GSEC CTF 2018 Quals](#hitb-xctf-gsec-ctf-2018-quals)

@@ -1,7 +1,7 @@
 # Volgactf CTF 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180324-volgactf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180324-volgactf/) of this writeup.**
 
 
  - [Volgactf CTF 2018](#volgactf-ctf-2018)

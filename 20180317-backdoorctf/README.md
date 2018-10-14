@@ -1,7 +1,7 @@
 # backdoor CTF 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180317-backdoorctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180317-backdoorctf/) of this writeup.**
 
 
  - [backdoor CTF 2018](#backdoor-ctf-2018)

@@ -1,7 +1,7 @@
 # AIS3 Pre-exam 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180601-ais3preexam/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180601-ais3preexam/) of this writeup.**
 
 
  - [AIS3 Pre-exam 2018](#ais3-pre-exam-2018)

@@ -1,7 +1,7 @@
 # Hackover CTF 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20181006-hackoverctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20181006-hackoverctf/) of this writeup.**
 
 
  - [Hackover CTF 2018](#hackover-ctf-2018)

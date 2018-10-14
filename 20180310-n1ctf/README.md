@@ -1,7 +1,7 @@
 # N1CTF 2018
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180310-n1ctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180310-n1ctf/) of this writeup.**
 
 
  - [N1CTF 2018](#n1ctf-2018)

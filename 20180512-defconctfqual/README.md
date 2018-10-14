@@ -7,7 +7,7 @@ BFS consists of four CTF teams form Taiwan
 We are Balsn, Bamboofox, DoubleSigma, KerKerYuan
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20180512-defconctfqual/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180512-defconctfqual/) of this writeup.**
 
 
  - [DEF CON CTF Qualifier 2018](#def-con-ctf-qualifier-2018)

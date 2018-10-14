@@ -1,7 +1,7 @@
 # HITCON CTF 2017 Quals
 
 
-**It's recommended to read our responsive [web version](https://balsn.github.io/ctf_writeup/20171104-hitconctfquals/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20171104-hitconctfquals/) of this writeup.**
 
 
  - [HITCON CTF 2017 Quals](#hitcon-ctf-2017-quals)
