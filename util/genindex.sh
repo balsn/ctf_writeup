@@ -14,7 +14,7 @@ cat << EOF
 
 Balsn is CTF team from [Taiwan](https://taiwan.gov.tw/), founded in 2016. 
 
-For more information, please refer to [our website](https://balsn.github.io/).
+For more information, please refer to [our website](https://balsn.tw/).
 
 ## Table of Contents
 
