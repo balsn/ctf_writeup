@@ -1,6 +1,8 @@
 # HITCON CTF 2018 Write up
 
-BFKinesiS consists of 4 different CTF teams from Taiwan, including [Balsn](https://balsn.tw/), [BambooFox](https://bamboofox.github.io/), KerKerYuan and DoubleSigma. We rank 3rd place among 1118 teams.
+Written by BFKinesiS
+
+BFKinesiS consists of 4 different CTF teams from Taiwan, including [Balsn](https://balsn.tw/), [BambooFox](https://bamboofox.github.io/), KerKerYuan and DoubleSigma. We rank 3rd place in HITCON CTF 2018 among 1118 teams.
 
 **It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20181019-hitconctf/) of this writeup.**
 
