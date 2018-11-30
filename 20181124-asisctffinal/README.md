@@ -926,9 +926,9 @@ FWEASD
 
 This is a simple PPC question. It ask us to find a integer $x$ , $\ s.t\ \ \  x^x\equiv a\pmod p$ where $p$ is a prime number.
 Solution:
-assume $x = n * p + a$ by Fermat's little theorem
-$x^x\equiv (n*p+a)^{(n*p+a)}\equiv  a\pmod p$
-now $let\ n+a=m*(p-1)+1$, so we can pick $m=1\Rightarrow n=p-a\Rightarrow x=p^2-a*p+a$
+assume $x = n \times p + a$ by Fermat's little theorem
+$x^x \equiv (n \times p+a)^{(n \times p+a)}\equiv  a\pmod p$
+now $let\ n+a=m \times (p-1)+1$, so we can pick $m=1\Rightarrow n=p-a\Rightarrow x=p^2-a \times p+a$
 
 Exploit script : 
 ```python
