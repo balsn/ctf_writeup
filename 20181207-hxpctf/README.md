@@ -4,6 +4,12 @@
 
 
  - [hxp CTF 2018](#hxp-ctf-2018)
+   - [Crypto](#crypto)
+     - [blind](#blind)
+     - [oops2](#oops2)
+     - [curve12833227](#curve12833227)
+     - [blinder](#blinder)
+     - [blinder_v2](#blinder_v2)
    - [Web](#web)
      - [time for h4x0rpsch0rr?](#time-for-h4x0rpsch0rr)
      - [unpack0r](#unpack0r)
@@ -11,6 +17,38 @@
      - [µblog](#µblog)
        - [Failled Attempts](#failled-attempts)
 
+
+## Crypto
+
+### blind
+
+sasdf
+
+https://sasdf.cf/ctf/writeup/2018/hxp/crypto/blind/
+
+### oops2
+
+sasdf
+
+https://sasdf.cf/ctf/writeup/2018/hxp/crypto/oops/
+
+### curve12833227
+
+sasdf
+
+https://sasdf.cf/ctf/writeup/2018/hxp/crypto/curve/
+
+### blinder
+
+sasdf
+
+https://sasdf.cf/ctf/writeup/2018/hxp/crypto/blinder/
+
+### blinder_v2
+
+sasdf
+
+https://sasdf.cf/ctf/writeup/2018/hxp/crypto/blinder_v2/
 
 ## Web
 
