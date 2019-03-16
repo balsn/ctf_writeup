@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pragyan CTF 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensics
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#welcome">welcome</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#mandatory-php">mandatory-php</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                binary
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensics</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#welcome" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">welcome</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#mandatory-php" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">mandatory-php</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">binary</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="pragyan-ctf-2019"><a class="header-link" href="#pragyan-ctf-2019"></a>Pragyan CTF 2019</h1>
+
+<h2 id="forensics"><a class="header-link" href="#forensics"></a>Forensics</h2>
+<h3 id="welcome"><a class="header-link" href="#welcome"></a>Welcome</h3>
+<ul class="list">
+<li>welcome.jpeg:
+<img src="https://i.imgur.com/HbwpkgB.png" alt="">
+Use binwalk to extract <code>d.zip</code>, unzip it we got <code>a.zip</code> and <code>secret.bmp</code>.</li>
+<li>secret.bmp:<pre class="hljs"><code><span class="xml">okdq09i39jkc-evw.;[</span><span class="hljs-number">23760</span><span class="xml">o-keqayiuhxnk42092jokdspb;gf&amp;</span><span class="hljs-keyword">^IFG</span><span class="xml">{:DSV&gt;{&gt;#Fqe'plverH%</span><span class="hljs-keyword">^rw</span><span class="xml">[.b]w[evweA#km7687/*</span><span class="hljs-number">98</span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">M)}?</span>&gt;</span>_{":}&gt;{&gt;~?!@{%pb;gf&amp;</span><span class="hljs-keyword">^IFG</span><span class="xml">{:DSV&gt;{&gt;#Fqe'plverH%</span><span class="hljs-keyword">^rw</span><span class="xml">[.b]w[evweA#km7687/*</span><span class="hljs-number">98</span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">M)}?</span>&gt;</span>_{":}&gt;{&gt;~?!?@{%&amp;{:keqay</span><span class="hljs-keyword">^IFG</span><span class="xml">{wfdoiajwlnh[</span><span class="hljs-number">8</span><span class="xml"></span><span class="hljs-number">-7.</span><span class="xml">=p54.b=dGhlIHBhc3N3b3JkIGlzOiBoMzExMF90aDNyMyE==</span></code></pre></li>
+<li><code>echo dGhlIHBhc3N3b3JkIGlzOiBoMzExMF90aDNyMyE== | base64 -D</code><ul class="list">
+<li>the password is: h3110_th3r3!</li>
+</ul>
+</li>
+</ul>
+<p>Unzip a.zip, got a.png.</p>
+<ul class="list">
+<li>a.png:
+<img src="https://i.imgur.com/EnrLKWY.png" alt=""></li>
+<li>stegosolve
+<img src="https://i.imgur.com/y7yLxjv.png" alt=""></li>
+</ul>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="mandatory-php"><a class="header-link" href="#mandatory-php"></a>Mandatory PHP</h3>
+<blockquote>
+<p>bookgin</p>
+</blockquote>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">include</span> <span class="hljs-string">'flag.php'</span>;
+highlight_file(<span class="hljs-string">'index.php'</span>);
+$a = $_GET[<span class="hljs-string">"val1"</span>];
+$b = $_GET[<span class="hljs-string">"val2"</span>];
+$c = $_GET[<span class="hljs-string">"val3"</span>];
+$d = $_GET[<span class="hljs-string">"val4"</span>];
+<span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">'/[^A-Za-z]/'</span>, $a))
+<span class="hljs-keyword">die</span>(<span class="hljs-string">'oh my gawd...'</span>);
+$a=hash(<span class="hljs-string">"sha256"</span>,$a);
+$a=(log10($a**(<span class="hljs-number">0.5</span>)))**<span class="hljs-number">2</span>;
+<span class="hljs-keyword">if</span>($c&gt;<span class="hljs-number">0</span>&amp;&amp;$d&gt;<span class="hljs-number">0</span>&amp;&amp;$d&gt;$c&amp;&amp;$a==$c*$c+$d*$d)
+$s1=<span class="hljs-string">"true"</span>;
+<span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"Bye..."</span>);
+<span class="hljs-keyword">if</span>($s1===<span class="hljs-string">"true"</span>)
+    <span class="hljs-keyword">echo</span> $flag1;
+<span class="hljs-keyword">for</span>($i=<span class="hljs-number">1</span>;$i&lt;=<span class="hljs-number">10</span>;$i++){
+    <span class="hljs-keyword">if</span>($b==urldecode($b))
+        <span class="hljs-keyword">die</span>(<span class="hljs-string">'duck'</span>);
+    <span class="hljs-keyword">else</span>
+        $b=urldecode($b);
+}    
+<span class="hljs-keyword">if</span>($b===<span class="hljs-string">"WoAHh!"</span>)
+$s2=<span class="hljs-string">"true"</span>;
+<span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'oops..'</span>);
+<span class="hljs-keyword">if</span>($s2===<span class="hljs-string">"true"</span>)
+    <span class="hljs-keyword">echo</span> $flag2;
+<span class="hljs-keyword">die</span>(<span class="hljs-string">'end...'</span>);
+<span class="hljs-meta">?&gt;</span> </code></pre><p>The payload:</p>
+<pre class="hljs"><code><span class="hljs-symbol">http:</span><span class="hljs-comment">//159.89.166.12:14000/?val1=jM&amp;val3=1e-309&amp;val4=1e-308&amp;val2=WoAHh%2525252525252525252521</span>
+
+<span class="hljs-meta"># pctf{b3_c4r3fu1_w1th_pHp_f31145}</span></code></pre><p>Explanation:</p>
+<ul class="list">
+<li>val2: It need one more <code>%25</code> because Apache/PHP will decode it first before passing into php engine.</li>
+<li>val1: Because <code>sha256(&quot;jM&quot;)=01bd8c1....</code>, when casting to integer, it becomes <code>1</code>.</li>
+<li>val3, val4: We abuse floating-point &quot;precision&quot;.</li>
+</ul>
+<pre class="hljs"><code>php &gt; var_dump(<span class="hljs-number">1e-308</span>*<span class="hljs-number">1e-308</span>);
+float(<span class="hljs-number">0</span>)</code></pre><h2 id="binary"><a class="header-link" href="#binary"></a>Binary</h2>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
