@@ -6,6 +6,7 @@ For more information, please refer to [our website](https://balsn.tw/).
 
 ## Table of Contents
 
+- [20190513-defconctfqual](20190513-defconctfqual/)
 - [20190427-*ctf](20190427-*ctf/)
 - [20190413-plaidctf](20190413-plaidctf/)
 - [20190406-midnightsunctf](20190406-midnightsunctf/)

