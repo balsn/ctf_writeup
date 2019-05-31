@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Security Fest 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#cactus">cactus</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#darkwebmessageboard">darkwebmessageboard</a>
+    
+                <a class="dropdown-item" href="#locksmith">locksmith</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#cactus" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cactus</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#darkwebmessageboard" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">darkwebmessageboard</span>
+            </a>
+    
+<a href="#locksmith" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">locksmith</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="security-fest-2019"><a class="header-link" href="#security-fest-2019"></a>Security Fest 2019</h1>
+
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="cactus"><a class="header-link" href="#cactus"></a>cactus</h3>
+<p>This is a weird challange :no_mouth:
+here&#39;s the chal script (with some modification):</p>
+<pre class="hljs"><code>
+import random
+from flag import FLAG
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Oracle</span>:</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, secret, bits=<span class="hljs-number">512</span>)</span></span>:
+        <span class="hljs-keyword">self</span>.secret = secret
+        <span class="hljs-keyword">self</span>.bits = bits
+        <span class="hljs-keyword">self</span>.range = <span class="hljs-number">2</span>*<span class="hljs-keyword">self</span>.bits
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sample</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, w)</span></span>:
+        r = random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>^<span class="hljs-keyword">self</span>.range)
+        idx = range(<span class="hljs-keyword">self</span>.bits)
+        random.shuffle(idx)
+        e = sum(<span class="hljs-number">1</span>&lt;&lt;i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> idx[<span class="hljs-symbol">:w</span>])
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.secret*r+e
+
+assert (type(FLAG) is int)
+o = Oracle(FLAG)
+f = open(<span class="hljs-string">'output.txt'</span>, <span class="hljs-string">'w'</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+    f.write(str(o.sample(<span class="hljs-number">10</span>)) + <span class="hljs-string">'\n'</span>)
+f.close()
+</code></pre><p>The point is, r is calculated as <code>random.randint(0, 2^self.range)</code>, while e is calculated as <code>sum(1&lt;&lt;i for i in idx[:w])</code>, the scale of these two differ quite a lot, so we can simply bruteforce <code>r</code></p>
+<h4 id="first-guess"><a class="header-link" href="#first-guess"></a>First Guess</h4>
+<p>Note that the scale of <code>e</code> is 512 bits, and it only contains 10 non-zero bits, so it is quite possible that <code>output / r</code> still contains the flag header <code>sctf</code>. Simply bruteforce this and we can get a broken flag
+<code>sctf�wh@0ps_th4t_w4s�t_sxp0nent1ati0n}</code></p>
+<h4 id="final-guess"><a class="header-link" href="#final-guess"></a>Final Guess</h4>
+<p>The rest is quite the same:</p>
+<ol class="list">
+<li>guess a small snippet of flag</li>
+<li>bruteforce <code>r</code> to find possible one</li>
+<li>fix the broken flag</li>
+</ol>
+<p>flag : <code>sctf{wh00ps_th4t_w4snt_3xp0nent1ati0n}</code></p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="darkwebmessageboard"><a class="header-link" href="#darkwebmessageboard"></a>Darkwebmessageboard</h3>
+<p>In html source:</p>
+<p><code>&lt;!-- | Dark Web Message Board | DEVELOPED BY K1tsCr3w | Open source at Kits-AB | --&gt;</code></p>
+<p>then I serached github and found this repo: <a href="https://github.com/kits-ab/the-dark-message-board">https://github.com/kits-ab/the-dark-message-board</a></p>
+<p>and there is a encrypted message in the <code>http://darkboard-01.pwn.beer:5001/boards/1</code>:</p>
+<p><code>rW+fOddzrtdP7ufLj9KTQa9W8T9JhEj7a2AITFA4a2UbeEAtV/ocxB/t4ikLCMsThUXXWz+UFnyXzgLgD9RM+2toOvWRiJPBM2ASjobT+bLLi31F2M3jPfqYK1L9NCSMcmpVGs+OZZhzJmTbfHLdUcDzDwdZcjKcGbwEGlL6Z7+CbHD7RvoJk7Ft3wvFZ7PWIUHPneVAsAglOalJQCyWKtkksy9oUdDfCL9yvLDV4H4HoXGfQwUbLJL4Qx4hXHh3fHDoplTqYdkhi/5E4l6HO0Qh/jmkNLuwUyhcZVnFMet1vK07ePAuu7kkMe6iZ8FNtmluFlLnrlQXrE74Z2vHbQ==</code></p>
+<p>the production key is in the git log: <a href="https://github.com/kits-ab/the-dark-message-board/commit/d95b029a044491a954b909a280ebebcf6e357ef4#diff-ea209ce78604d811cf3f3771a0f89ea2">https://github.com/kits-ab/the-dark-message-board/commit/d95b029a044491a954b909a280ebebcf6e357ef4#diff-ea209ce78604d811cf3f3771a0f89ea2</a></p>
+<p>with this log message: <code>from some file that reminds me of the song &#39;here i am something like a hurricane&#39;</code></p>
+<p>after searching <code>here i am something like a hurricane</code> on google, I got this <code>here i am. Rock you like a hurricane</code>.</p>
+<p>so we need to brute force the password from <code>rockyou.txt</code>.</p>
+<p>we use this <a href="https://github.com/bwall/pemcracker.git">tool</a> to crack the password.</p>
+<p>Result: <code>Password is falloutboy for test.pem</code></p>
+<p>the plaintext of the encrypted message is <code>Bank url: http://bankofsweden-01.pwn.beer</code></p>
+<p>but 80 port of this website is closed.</p>
+<p>so I use nmap to scan all ports of this site, then I found 5000 port is open.</p>
+<p><a href="http://bankofsweden-01.pwn.beer:5000">http://bankofsweden-01.pwn.beer:5000</a></p>
+<p>It is a bank website.</p>
+<p>In register step, there is a parameter <code>is_active</code>, if we set to <code>1</code>, then we will become authenticated user.</p>
+<p>After login, I found there is a LFI vulnerability in export function.</p>
+<p>So I download the <code>app.py</code> and got the flag: <code>SECFEST{h4ck3r5_60nn4_h4ck_4nd_b4nk3r5_60nn4_cr4ck}</code></p>
+<h3 id="locksmith"><a class="header-link" href="#locksmith"></a>Locksmith</h3>
+<p>This challange starts with 9 random number $v_1$ to $v_9$, it also provides us 9 kinds of operation, each of them will add 9 positive number to each of $v_i$, the goal is to make all $v_i$ to a given constant.
+The point is, we can send multiple request at one time, which can massively reduce the overhead of IO. The rest is just a simply linear algebra.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
