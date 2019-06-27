@@ -11,7 +11,7 @@ ctf_dir="$root_dir/$1"
 md="$2"
 
 mkdir $ctf_dir
-cp $md $ctf_dir/README.md
+cp "$md" $ctf_dir/README.md
 $root_dir/util/markdown-to-html/node_modules/markdown-styles/bin/generate-md \
   --layout balsn \
   --input $ctf_dir/README.md \
