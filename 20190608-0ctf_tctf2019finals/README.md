@@ -152,7 +152,8 @@ find a good function pionter.
 1. I choose_IO_str_seekoff
 2. fp->_IO_read_ptr=fp->_IO_read_base+base;
 3. Copy_libc_start_main to address B
-4. 
+
+
 ## Reverse
 ### BabyMath
 
@@ -162,21 +163,22 @@ Given $f(n)$ you are suppose to recover n (~$2^{56}$)
 
 $$
 \begin{bmatrix}
-  f(n-2) \\
-  f(n-1) \\
+  f(n-2) \\\\
+  f(n-1) \\\\
   f(n)
 \end{bmatrix} =
-\begin{bmatrix} 
-  0 & 1 & 0 \\
-  0 & 0 & 1 \\
+\begin{bmatrix}
+  0 & 1 & 0 \\\\
+  0 & 0 & 1 \\\\
   1 & 1 & 1
 \end{bmatrix}
 \begin{bmatrix}
-  f(n-3) \\
-  f(n-2) \\
+  f(n-3) \\\\
+  f(n-2) \\\\
   f(n-1)
 \end{bmatrix}
 $$
+
 
 Reduce to discrete logarithm of matrix
 Baby-step giant-step

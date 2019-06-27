@@ -491,26 +491,25 @@ find a good function pionter.</li>
 <li>I choose_IO_str_seekoff</li>
 <li>fp-&gt;_IO_read_ptr=fp-&gt;_IO_read_base+base;</li>
 <li>Copy_libc_start_main to address B</li>
-<li><h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
-<h3 id="babymath"><a class="header-link" href="#babymath"></a>BabyMath</h3>
-</li>
 </ol>
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="babymath"><a class="header-link" href="#babymath"></a>BabyMath</h3>
 <p>author is github.com/septyem</p>
 <p>Given $f(n)$ you are suppose to recover n (~$2^{56}$)</p>
 <p>$$
 \begin{bmatrix}
-  f(n-2) \
-  f(n-1) \
+  f(n-2) \\
+  f(n-1) \\
   f(n)
 \end{bmatrix} =
-\begin{bmatrix} 
-  0 &amp; 1 &amp; 0 \
-  0 &amp; 0 &amp; 1 \
+\begin{bmatrix}
+  0 &amp; 1 &amp; 0 \\
+  0 &amp; 0 &amp; 1 \\
   1 &amp; 1 &amp; 1
 \end{bmatrix}
 \begin{bmatrix}
-  f(n-3) \
-  f(n-2) \
+  f(n-3) \\
+  f(n-2) \\
   f(n-1)
 \end{bmatrix}
 $$</p>
