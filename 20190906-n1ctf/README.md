@@ -5,6 +5,8 @@
 
  - [N1 CTF 2019](#n1-ctf-2019)
    - [Web](#web)
+     - [sql_manage-(unsolved)](#sql_manage-unsolved)
+     - [Part4-Micro Nya-(unsolved)](#part4-micro-nya-unsolved)
      - [Old Attack(step1)](#old-attackstep1)
      - [Pentest N1ctf2019.lab(step1)](#pentest-n1ctf2019labstep1)
    - [Reverse](#reverse)
@@ -23,7 +25,28 @@
      - [BabyKernel](#babykernel)
 
 
+The official repo is [here](https://github.com/Nu1LCTF/n1ctf-2019).
+
 ## Web
+
+### sql\_manage-(unsolved)
+
+Rogue Mysql server + MySQL LOAD DATA will trigger `phar` deserialization + ThinkPHP POP chain
+
+- Writeup in [Chinese](https://www.smi1e.top/n1ctf2019-sql_manage%e5%87%ba%e9%a2%98%e7%ac%94%e8%ae%b0/)
+- Writeup in [English](https://github.com/Nu1LCTF/n1ctf-2019/blob/master/WEB/sql_manage/EN_writeup.md)
+
+### Part4-Micro Nya-(unsolved)
+
+The author said in the telegram channel:
+
+> just download github.com/gogs/gogs and review the code.
+> and issue 5767 is a RCE
+> you can get a reverse shell
+> And it's a undisclousred 0-day, which is similar to a known 1-day
+
+So basically it's a 0-day/1-day RCE in gogs: [issue-5767](https://github.com/gogs/gogs/issues/5767). The issue indicates that the latest gogs version `0.11.90.0801` is vulnerable......
+
 
 ### Old Attack(step1)
 

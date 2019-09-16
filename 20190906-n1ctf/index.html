@@ -132,7 +132,11 @@
                 web
               </a>
               <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                                <a class="dropdown-item" href="#old-attack(step1)">old-attack(step1)</a>
+                                <a class="dropdown-item" href="#sql\_manage-(unsolved)">sql\_manage-(unsolved)</a>
+    
+                <a class="dropdown-item" href="#part4-micro-nya-(unsolved)">part4-micro-nya-(unsolved)</a>
+    
+                <a class="dropdown-item" href="#old-attack(step1)">old-attack(step1)</a>
     
                 <a class="dropdown-item" href="#pentest-n1ctf2019.lab(step1)">pentest-n1ctf2019.lab(step1)</a>
     
@@ -212,7 +216,15 @@
             </div>
           </a>
           <div id="submenu0" class="collapse sidebar-submenu">
-            <a href="#old-attack(step1)" class="list-group-item list-group-item-action text-white bg-dark">
+            <a href="#sql\_manage-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sql\_manage-(unsolved)</span>
+            </a>
+    
+<a href="#part4-micro-nya-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">part4-micro-nya-(unsolved)</span>
+            </a>
+    
+<a href="#old-attack(step1)" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">old-attack(step1)</span>
             </a>
     
@@ -307,7 +319,23 @@
       <div class="col-10 py-3">
         <article class="markdown-body"><h1 id="n1-ctf-2019"><a class="header-link" href="#n1-ctf-2019"></a>N1 CTF 2019</h1>
 
+<p>The official repo is <a href="https://github.com/Nu1LCTF/n1ctf-2019">here</a>.</p>
 <h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="sql\_manage-(unsolved)"><a class="header-link" href="#sql\_manage-(unsolved)"></a>sql_manage-(unsolved)</h3>
+<p>Rogue Mysql server + MySQL LOAD DATA will trigger <code>phar</code> deserialization + ThinkPHP POP chain</p>
+<ul class="list">
+<li>Writeup in <a href="https://www.smi1e.top/n1ctf2019-sql_manage%e5%87%ba%e9%a2%98%e7%ac%94%e8%ae%b0/">Chinese</a></li>
+<li>Writeup in <a href="https://github.com/Nu1LCTF/n1ctf-2019/blob/master/WEB/sql_manage/EN_writeup.md">English</a></li>
+</ul>
+<h3 id="part4-micro-nya-(unsolved)"><a class="header-link" href="#part4-micro-nya-(unsolved)"></a>Part4-Micro Nya-(unsolved)</h3>
+<p>The author said in the telegram channel:</p>
+<blockquote>
+<p>just download github.com/gogs/gogs and review the code.
+and issue 5767 is a RCE
+you can get a reverse shell
+And it&#39;s a undisclousred 0-day, which is similar to a known 1-day</p>
+</blockquote>
+<p>So basically it&#39;s a 0-day/1-day RCE in gogs: <a href="https://github.com/gogs/gogs/issues/5767">issue-5767</a>. The issue indicates that the latest gogs version <code>0.11.90.0801</code> is vulnerable......</p>
 <h3 id="old-attack(step1)"><a class="header-link" href="#old-attack(step1)"></a>Old Attack(step1)</h3>
 <p>This is actually a warm-up crypto challenge.</p>
 <p>After registering an account, we will be set a cookie <code>auth_name</code> which is base64 encoded.</p>
