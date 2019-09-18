@@ -14,6 +14,7 @@
      - [MoP](#mop)
        - [open_basedir bypass](#open_basedir-bypass)
    - [Web](#web)
+     - [hCoream (unsolved)](#hcoream-unsolved)
      - [crawl box (unsolved)](#crawl-box-unsolved)
        - [Failed Attempts](#failed-attempts)
      - [Mission Invisible](#mission-invisible)
@@ -512,6 +513,14 @@ Please refer to [@Blaklis_'s tweet (@edgarboda retweets)](https://twitter.com/ed
 
 
 ## Web
+
+### hCoream (unsolved)
+
+This is a latest Chrome XSS auditor bypass challenge. Basically it's a 0-day challenge :), though Chrome will retire the XSS auditor in the next release.
+
+For the solution please see:
+- [@trichimtrich's svg XSS](https://twitter.com/trichimtrich/status/1173492135993073664)
+- [@stereotype32's utf-16 payload](https://twitter.com/stereotype32/status/1173422028847599616?s=21)
 
 ### crawl box (unsolved)
 

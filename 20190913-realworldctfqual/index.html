@@ -160,7 +160,9 @@
                 web
               </a>
               <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                                <a class="dropdown-item" href="#crawl-box-(unsolved)">crawl-box-(unsolved)</a>
+                                <a class="dropdown-item" href="#hcoream-(unsolved)">hcoream-(unsolved)</a>
+    
+                <a class="dropdown-item" href="#crawl-box-(unsolved)">crawl-box-(unsolved)</a>
     
                 <a class="dropdown-item" href="#mission-invisible">mission-invisible</a>
     
@@ -242,7 +244,11 @@
             </div>
           </a>
           <div id="submenu2" class="collapse sidebar-submenu">
-            <a href="#crawl-box-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+            <a href="#hcoream-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hcoream-(unsolved)</span>
+            </a>
+    
+<a href="#crawl-box-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">crawl-box-(unsolved)</span>
             </a>
     
@@ -724,6 +730,13 @@ $zip2-&gt;addFromString(<span class="hljs-string">'bash -c "bash &gt; /dev/tcp/I
 <p>Rumor has that this exploit still works in this challenge, even if it&#39;s PHP 7.4 ~ 8. Then you can get those juicy addresses under <code>/proc</code> through <code>echo file_get_contents(&#39;/proc/self/maps&#39;);</code> Actually I didn&#39;t realize they still haven&#39;t fixed this bug...... It&#39;s almost half of a year ago.</p>
 <p>Please refer to <a href="https://twitter.com/edgarboda/status/1113839230608797696">@Blaklis_&#39;s tweet (@edgarboda retweets)</a></p>
 <h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="hcoream-(unsolved)"><a class="header-link" href="#hcoream-(unsolved)"></a>hCoream (unsolved)</h3>
+<p>This is a latest Chrome XSS auditor bypass challenge. Basically it&#39;s a 0-day challenge :), though Chrome will retire the XSS auditor in the next release.</p>
+<p>For the solution please see:</p>
+<ul class="list">
+<li><a href="https://twitter.com/trichimtrich/status/1173492135993073664">@trichimtrich&#39;s svg XSS</a></li>
+<li><a href="https://twitter.com/stereotype32/status/1173422028847599616?s=21">@stereotype32&#39;s utf-16 payload</a></li>
+</ul>
 <h3 id="crawl-box-(unsolved)"><a class="header-link" href="#crawl-box-(unsolved)"></a>crawl box (unsolved)</h3>
 <p>The server uses scrapy with headless chromium to crawl the page. We search for some keyword about scrapy, and found <a href="https://medium.com/alertot/web-scraping-considered-dangerous-exploiting-the-telnet-service-in-scrapy-1-5-2-ad5260fea0db">this post</a>.</p>
 <p>I leverage somd <a href="https://bookgin.tw/2019/01/05/abusing-dns-browser-based-port-scanning-and-dns-rebinding/">DNS-based browser port scanning</a> technique to check that the <code>127.0.0.1:6023</code> is opened. The following DNS record for example.com is configured:</p>
