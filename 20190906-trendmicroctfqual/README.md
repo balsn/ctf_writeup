@@ -1,6 +1,6 @@
 # Trend Micro CTF 2019 Quals
 
-**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20190913-trendmicroctf/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20190906-trendmicroctfqual/) of this writeup.**
 
 
  - [Trend Micro CTF 2019 Quals](#trend-micro-ctf-2019-quals)
