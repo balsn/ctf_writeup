@@ -381,7 +381,7 @@ ok! here is your flag!!
 
 ```shell
 $ mkfifo pipe
-$ cat pipe | /readflag |(read l;read l;echo "$(($l))\n" > pipe;cat) <dflag ((read 1;read l;echo .4(($1))\n. > pipe;cat) 
+$ cat pipe | ./readflag |(read l;read l;echo "$(($l))" > pipe;cat)
 input your answer: 
 ok! here is your flag!! 
 ...

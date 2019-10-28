@@ -640,9 +640,9 @@ ok! here is your flag!!
 <blockquote>
 <p>kaibro</p>
 </blockquote>
-<pre class="hljs"><code>$ mkfifo pipe
-$ <span class="hljs-keyword">cat</span> pipe | /readflag |(<span class="hljs-keyword">read</span> <span class="hljs-keyword">l</span>;<span class="hljs-keyword">read</span> <span class="hljs-keyword">l</span>;echo <span class="hljs-string">"$(($l))\n"</span> &gt; pipe;<span class="hljs-keyword">cat</span>) &lt;dflag ((<span class="hljs-keyword">read</span> 1;<span class="hljs-keyword">read</span> <span class="hljs-keyword">l</span>;echo .4((<span class="hljs-variable">$1</span>))\<span class="hljs-keyword">n</span>. &gt; pipe;<span class="hljs-keyword">cat</span>) 
-<span class="hljs-keyword">input</span> your answer: 
+<pre class="hljs"><code>$ mkfifo <span class="hljs-keyword">pipe</span>
+$ cat <span class="hljs-keyword">pipe</span> | ./readflag |(<span class="hljs-keyword">read</span> l;<span class="hljs-keyword">read</span> l;echo <span class="hljs-string">"$(($l))"</span> &gt; <span class="hljs-keyword">pipe</span>;cat)
+input your answer: 
 ok! here is your flag!! 
 ...
 </code></pre><h3 id="996game"><a class="header-link" href="#996game"></a>996game</h3>
