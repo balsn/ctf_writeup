@@ -9,8 +9,6 @@
      - [Shithappens](#shithappens)
 
 
----
-
 ## Web
 
 ### hackingforso
