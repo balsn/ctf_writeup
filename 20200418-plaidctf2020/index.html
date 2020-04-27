@@ -132,7 +132,11 @@
                 web
               </a>
               <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                                <a class="dropdown-item" href="#contrived-web-problem">contrived-web-problem</a>
+                                <a class="dropdown-item" href="#catelog-(not-solved)">catelog-(not-solved)</a>
+    
+                <a class="dropdown-item" href="#contrived-web-problem">contrived-web-problem</a>
+    
+                <a class="dropdown-item" href="#mooz-chat-(not-solved)">mooz-chat-(not-solved)</a>
     
               </div>
             </li>
@@ -168,8 +172,16 @@
             </div>
           </a>
           <div id="submenu0" class="collapse sidebar-submenu">
-            <a href="#contrived-web-problem" class="list-group-item list-group-item-action text-white bg-dark">
+            <a href="#catelog-(not-solved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">catelog-(not-solved)</span>
+            </a>
+    
+<a href="#contrived-web-problem" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">contrived-web-problem</span>
+            </a>
+    
+<a href="#mooz-chat-(not-solved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">mooz-chat-(not-solved)</span>
             </a>
     
           </div>
@@ -194,6 +206,25 @@
         <article class="markdown-body"><h1 id="plaid-ctf-2020"><a class="header-link" href="#plaid-ctf-2020"></a>Plaid CTF 2020</h1>
 
 <h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="catelog-(not-solved)"><a class="header-link" href="#catelog-(not-solved)"></a>Catelog (not solved)</h3>
+<p>Problem Details:</p>
+<pre class="hljs"><code>[<span class="hljs-string">Here’s the site</span>](<span class="hljs-link">http://catalog.pwni.ng/</span>). The flag is on [<span class="hljs-string">this page</span>](<span class="hljs-link">http://catalog.pwni.ng/issue.php?id=3</span>).
+
+Browser: Chromium with uBlock Origin 1.26.0 installed and in its default configuration
+
+Flag format: /^PCTF{[A-Z0-9_]+}$/
+
+Hints:
+<span class="hljs-bullet">* </span>To view your post, the admin will click on a link on the admin page.
+<span class="hljs-bullet">* </span>You might want to read up on User Activation.
+<span class="hljs-bullet">* </span>The intended solution does not require you to submit hundreds of captchas.
+
+<span class="hljs-strong">**Hint: Admin Bot Timeout**</span>
+
+The admin bot will always disconnect after about 30 seconds.</code></pre><p>The challenge is about exploiting Chrome&#39;s <a href="https://www.chromestatus.com/feature/4733392803332096">Scroll To Text Fragment</a> to leak data with lazy-loading images <code>&lt;img loading=&quot;lazy&quot;&gt;</code>. The uBlock Origin is intended to be used to duplicate the user activation to trigger multiple text fragment leakage. See <a href="https://twitter.com/lbherrera_/status/1251994130298875904">@lbherrera_</a>&#39;s partial solver for more details.</p>
+<p>The author <a href="https://twitter.com/thebluepichu">@thebluepichu</a> (I think so?) said in the IRC channel:</p>
+<p>Catalog has two injections: the image tag on the issue page and the username when you fail to login. Use the image tag one with a meta redirect to get offsite. Hint 1 + inclusion of uBlock: admin clicks on a link which gives a user activation to the active frame, uBlock sends a postMessage to its extension iframe, which duplicates the user activation. Whenever a page loads, the frontend gets a postMessage from the uBlock frame, and thus duplicates the activation back again. Now make a no-cors POST to use the failed login injection, then send them to issue.php?id=3. So now we have arbitrary content with a user activation on the correct page, but still no code exec.</p>
+<p>Ok, but what can we do? A recent addition to Chromium was scroll-to-text-fragment, which lets you search the page for text (in entire words only) and scroll to it, though this consumes the user activation. If you could search for a letter at a time, then you could use your injection to add a bunch of whitespace and a lazy-loading image to detect the scroll. It turns out you can: the whole-word match counts tag boundaries as word boundaries, and the <code>&lt;em&gt;</code> tag gets split into a <code>&lt;span&gt;</code> for each individual letter on load! So you can do text searches of the form #:~:text=F-,{,-X for example to search for an X at the beginning of the flag. You can specify multiple text searches to do a binary search across the whole alphabet. Also include a meta refresh to send back offsite again after a short delay and you can leak ~5 characters per captcha. Repeat 5 or 6 times to get the whole flag.</p>
 <h3 id="contrived-web-problem"><a class="header-link" href="#contrived-web-problem"></a>Contrived Web Problem</h3>
 <blockquote>
 <p>bookgin</p>
@@ -357,6 +388,8 @@ u = <span class="hljs-string">'http://contrived.pwni.ng/api/'</span>
 <p class="img-container"><img src="https://i.imgur.com/DdMa59A.png" alt=""></p>
 <p><code>PCTF{not_that_contrived_i_guess}</code></p>
 <p>By the way, I spent 2+ hours on debugging only to find out I type the incorrect internel IP address......</p>
+<h3 id="mooz-chat-(not-solved)"><a class="header-link" href="#mooz-chat-(not-solved)"></a>Mooz Chat (not solved)</h3>
+<p>See <a href="https://twitter.com/pastenctf">@pastenctf</a>&#39;s writeup <a href="https://github.com/koolkdev/ctf-writeups/tree/master/plaid2020/mooz-chat">here</a>. Part 1 is about Go reversing + command injection. Part 2 is WebRTC + MitM  Diffie-Hellman.</p>
 <h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
 <h3 id="json-bourne"><a class="header-link" href="#json-bourne"></a>JSON Bourne</h3>
 <p>This is a Bash command injection challenge. Quickly browse the code and find this interesting:</p>

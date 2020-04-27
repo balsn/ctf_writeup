@@ -5,17 +5,48 @@
 
  - [Plaid CTF 2020](#plaid-ctf-2020)
    - [Web](#web)
+     - [Catelog (not solved)](#catelog-not-solved)
      - [Contrived Web Problem](#contrived-web-problem)
        - [The Weapon: SSRF](#the-weapon-ssrf)
        - [Identify the Target](#identify-the-target)
        - [Make SSRF Great Again with Active FTP](#make-ssrf-great-again-with-active-ftp)
        - [Craft the SSRF Payload](#craft-the-ssrf-payload)
+     - [Mooz Chat (not solved)](#mooz-chat-not-solved)
    - [Misc](#misc)
      - [JSON Bourne](#json-bourne)
 
 
-
 ## Web
+
+### Catelog (not solved)
+
+Problem Details:
+
+```
+[Here’s the site](http://catalog.pwni.ng/). The flag is on [this page](http://catalog.pwni.ng/issue.php?id=3).
+
+Browser: Chromium with uBlock Origin 1.26.0 installed and in its default configuration
+
+Flag format: /^PCTF\{[A-Z0-9_]+\}$/
+
+Hints:
+* To view your post, the admin will click on a link on the admin page.
+* You might want to read up on User Activation.
+* The intended solution does not require you to submit hundreds of captchas.
+
+**Hint: Admin Bot Timeout**
+
+The admin bot will always disconnect after about 30 seconds.
+```
+
+The challenge is about exploiting Chrome's [Scroll To Text Fragment](https://www.chromestatus.com/feature/4733392803332096) to leak data with lazy-loading images `<img loading="lazy">`. The uBlock Origin is intended to be used to duplicate the user activation to trigger multiple text fragment leakage. See [@lbherrera_](https://twitter.com/lbherrera_/status/1251994130298875904)'s partial solver for more details.
+
+The author [@thebluepichu](https://twitter.com/thebluepichu) (I think so?) said in the IRC channel:
+
+Catalog has two injections: the image tag on the issue page and the username when you fail to login. Use the image tag one with a meta redirect to get offsite. Hint 1 + inclusion of uBlock: admin clicks on a link which gives a user activation to the active frame, uBlock sends a postMessage to its extension iframe, which duplicates the user activation. Whenever a page loads, the frontend gets a postMessage from the uBlock frame, and thus duplicates the activation back again. Now make a no-cors POST to use the failed login injection, then send them to issue.php?id=3. So now we have arbitrary content with a user activation on the correct page, but still no code exec.
+
+Ok, but what can we do? A recent addition to Chromium was scroll-to-text-fragment, which lets you search the page for text (in entire words only) and scroll to it, though this consumes the user activation. If you could search for a letter at a time, then you could use your injection to add a bunch of whitespace and a lazy-loading image to detect the scroll. It turns out you can: the whole-word match counts tag boundaries as word boundaries, and the `<em>` tag gets split into a `<span>` for each individual letter on load! So you can do text searches of the form #:~:text=F-,{,-X for example to search for an X at the beginning of the flag. You can specify multiple text searches to do a binary search across the whole alphabet. Also include a meta refresh to send back offsite again after a short delay and you can leak ~5 characters per captcha. Repeat 5 or 6 times to get the whole flag.
+
 
 ### Contrived Web Problem
 
@@ -241,6 +272,10 @@ Check the email and profit!
 `PCTF{not_that_contrived_i_guess}`
 
 By the way, I spent 2+ hours on debugging only to find out I type the incorrect internel IP address......
+
+### Mooz Chat (not solved)
+
+See [@pastenctf](https://twitter.com/pastenctf)'s writeup [here](https://github.com/koolkdev/ctf-writeups/tree/master/plaid2020/mooz-chat). Part 1 is about Go reversing + command injection. Part 2 is WebRTC + MitM  Diffie-Hellman.
 
 ## Misc
 
