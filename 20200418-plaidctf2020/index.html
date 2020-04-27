@@ -207,6 +207,10 @@
 
 <h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
 <h3 id="catelog-(not-solved)"><a class="header-link" href="#catelog-(not-solved)"></a>Catelog (not solved)</h3>
+<blockquote>
+<p>bookgin</p>
+</blockquote>
+<p>Disclaimer: I didn&#39;t solve this challenge. I just want to put a few useful links here.</p>
 <p>Problem Details:</p>
 <pre class="hljs"><code>[<span class="hljs-string">Here’s the site</span>](<span class="hljs-link">http://catalog.pwni.ng/</span>). The flag is on [<span class="hljs-string">this page</span>](<span class="hljs-link">http://catalog.pwni.ng/issue.php?id=3</span>).
 
@@ -221,10 +225,10 @@ Hints:
 
 <span class="hljs-strong">**Hint: Admin Bot Timeout**</span>
 
-The admin bot will always disconnect after about 30 seconds.</code></pre><p>The challenge is about exploiting Chrome&#39;s <a href="https://www.chromestatus.com/feature/4733392803332096">Scroll To Text Fragment</a> to leak data with lazy-loading images <code>&lt;img loading=&quot;lazy&quot;&gt;</code>. The uBlock Origin is intended to be used to duplicate the user activation to trigger multiple text fragment leakage. See <a href="https://twitter.com/lbherrera_/status/1251994130298875904">@lbherrera_</a>&#39;s partial solver for more details.</p>
+The admin bot will always disconnect after about 30 seconds.</code></pre><p>The challenge is about exploiting Chrome&#39;s <a href="https://www.chromestatus.com/feature/4733392803332096">Scroll To Text Fragment</a> to leak data with lazy-loading images <code>&lt;img loading=&quot;lazy&quot;&gt;</code>. The uBlock Origin is intended to be used to duplicate the user activation to trigger multiple text fragment leakage. See <a href="https://twitter.com/lbherrera_/status/1251994130298875904">@lbherrera_&#39;s partial solver </a> for more details.</p>
 <p>The author <a href="https://twitter.com/thebluepichu">@thebluepichu</a> (I think so?) said in the IRC channel:</p>
 <p>Catalog has two injections: the image tag on the issue page and the username when you fail to login. Use the image tag one with a meta redirect to get offsite. Hint 1 + inclusion of uBlock: admin clicks on a link which gives a user activation to the active frame, uBlock sends a postMessage to its extension iframe, which duplicates the user activation. Whenever a page loads, the frontend gets a postMessage from the uBlock frame, and thus duplicates the activation back again. Now make a no-cors POST to use the failed login injection, then send them to issue.php?id=3. So now we have arbitrary content with a user activation on the correct page, but still no code exec.</p>
-<p>Ok, but what can we do? A recent addition to Chromium was scroll-to-text-fragment, which lets you search the page for text (in entire words only) and scroll to it, though this consumes the user activation. If you could search for a letter at a time, then you could use your injection to add a bunch of whitespace and a lazy-loading image to detect the scroll. It turns out you can: the whole-word match counts tag boundaries as word boundaries, and the <code>&lt;em&gt;</code> tag gets split into a <code>&lt;span&gt;</code> for each individual letter on load! So you can do text searches of the form #:~:text=F-,{,-X for example to search for an X at the beginning of the flag. You can specify multiple text searches to do a binary search across the whole alphabet. Also include a meta refresh to send back offsite again after a short delay and you can leak ~5 characters per captcha. Repeat 5 or 6 times to get the whole flag.</p>
+<p>Ok, but what can we do? A recent addition to Chromium was scroll-to-text-fragment, which lets you search the page for text (in entire words only) and scroll to it, though this consumes the user activation. If you could search for a letter at a time, then you could use your injection to add a bunch of whitespace and a lazy-loading image to detect the scroll. It turns out you can: the whole-word match counts tag boundaries as word boundaries, and the <code>&lt;em&gt;</code> tag gets split into a <code>&lt;span&gt;</code> for each individual letter on load! So you can do text searches of the form <code>#:~:text=F-,{,-X</code> for example to search for an X at the beginning of the flag. You can specify multiple text searches to do a binary search across the whole alphabet. Also include a meta refresh to send back offsite again after a short delay and you can leak ~5 characters per captcha. Repeat 5 or 6 times to get the whole flag.</p>
 <h3 id="contrived-web-problem"><a class="header-link" href="#contrived-web-problem"></a>Contrived Web Problem</h3>
 <blockquote>
 <p>bookgin</p>
