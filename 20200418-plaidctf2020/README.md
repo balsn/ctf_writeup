@@ -1,5 +1,6 @@
 # Plaid CTF 2020
 
+
 **It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20200418-plaidctf2020/) of this writeup.**
 
 
@@ -16,6 +17,7 @@
      - [JSON Bourne](#json-bourne)
 
 
+
 ## Web
 
 ### Catelog (not solved)
@@ -23,6 +25,11 @@
 > bookgin
 
 Disclaimer: I didn't solve this challenge. I just want to put a few useful links here.
+
+
+- [Full Write-up in Chinese by @ZeddYu_Lu](https://twitter.com/ZeddYu_Lu/status/1253890138469367810)
+- [Full Write-up by the author @thebluepichu](https://dttw.tech/posts/B19RXWzYL)
+
 
 Problem Details:
 
