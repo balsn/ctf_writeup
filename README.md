@@ -6,6 +6,7 @@ For more information, please refer to [our website](https://balsn.tw/).
 
 ## Table of Contents
 
+- [20210703-0ctf_tctf2021quals](20210703-0ctf_tctf2021quals/)
 - [20201128-hitconctf](20201128-hitconctf/)
 - [20200928-tokyowesternsctf2020](20200928-tokyowesternsctf2020/)
 - [20200905-confidence2020ctffinals](20200905-confidence2020ctffinals/)
