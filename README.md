@@ -1,11 +1,13 @@
 # Balsn CTF writeups
 
-Balsn is CTF team from [Taiwan](https://taiwan.gov.tw/), founded in 2016. 
+Balsn is CTF team from Taiwan founded in 2016. We actively participate in CTF competitions, and publish writeups on challenges.
+The writeups are in markdown + kaTeX format in our GitHub repository [balsn/ctf_writeup](https://github.com/balsn/ctf_writeup).
 
 For more information, please refer to [our website](https://balsn.tw/).
 
 ## Table of Contents
 
+- [20210717-googlectf2021](20210717-googlectf2021/)
 - [20210703-0ctf_tctf2021quals](20210703-0ctf_tctf2021quals/)
 - [20201128-hitconctf](20201128-hitconctf/)
 - [20200928-tokyowesternsctf2020](20200928-tokyowesternsctf2020/)
