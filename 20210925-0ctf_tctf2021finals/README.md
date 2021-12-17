@@ -1,6 +1,6 @@
 # 0CTF/TCTF 2021 Finals
 
-**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/0ctf_tctf2021finals-20210925/) of this writeup.**
+**It's recommended to read our responsive [web version](https://balsn.tw/ctf_writeup/20210925-0ctf_tctf2021finals/) of this writeup.**
 
 
  - [0CTF/TCTF 2021 Finals](#0ctftctf-2021-finals)

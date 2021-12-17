@@ -10,6 +10,7 @@ For more information, please refer to [our website](https://balsn.tw/).
 - [20211211-secconctf2021](20211211-secconctf2021/)
 - [20211203-hitconctf2021](20211203-hitconctf2021/)
 - [20211127-dragonctf2021](20211127-dragonctf2021/)
+- [20210925-0ctf_tctf2021finals](20210925-0ctf_tctf2021finals/)
 - [20210904-allesctf](20210904-allesctf/)
 - [20210717-googlectf2021](20210717-googlectf2021/)
 - [20210703-0ctf_tctf2021quals](20210703-0ctf_tctf2021quals/)
@@ -73,7 +74,6 @@ For more information, please refer to [our website](https://balsn.tw/).
 - [20180317-backdoorctf](20180317-backdoorctf/)
 - [20180310-n1ctf](20180310-n1ctf/)
 - [20171104-hitconctfquals](20171104-hitconctfquals/)
-- [0ctf_tctf2021finals-20210925](0ctf_tctf2021finals-20210925/)
 
 
 ## Questions
