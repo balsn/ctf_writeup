@@ -6,7 +6,8 @@ The writeups are in markdown + kaTeX format in our GitHub repository [balsn/ctf_
 For more information, please refer to [our website](https://balsn.tw/).
 
 ## Table of Contents
-
+- [20220226-tsjctf](20220226-tsjctf/)
+- [20220205-dicectf](20220205-dicectf/)
 - [20220121-realworldctf](20220121-realworldctf/)
 - [20211217-hxpctf2021](20211217-hxpctf2021/)
 - [20211211-secconctf2021](20211211-secconctf2021/)
